@@ -24,37 +24,74 @@ jobs:
       - name: Install yfinance
         run: pip install yfinance
 
-      - name: Download RELIANCE data
+      - name: Download market data
         run: |
           python - <<'PY'
           import yfinance as yf
           import json
+          import os
+          import time
 
-          ticker = yf.Ticker("RELIANCE.NS")
-          df = ticker.history(period="5y", interval="1d", auto_adjust=False)
+          os.makedirs("data", exist_ok=True)
 
-          candles = []
+          with open("symbols.txt", "r") as f:
+              symbols = [
+                  line.strip().upper()
+                  for line in f
+                  if line.strip()
+              ]
 
-          for date, row in df.iterrows():
-              candles.append({
-                  "time": date.strftime("%Y-%m-%d"),
-                  "open": round(float(row["Open"]), 2),
-                  "high": round(float(row["High"]), 2),
-                  "low": round(float(row["Low"]), 2),
-                  "close": round(float(row["Close"]), 2),
-                  "volume": int(row["Volume"])
-              })
+          print(f"Found {len(symbols)} symbols")
 
-          with open("data/RELIANCE.json", "w") as f:
-              json.dump(candles, f, indent=2)
+          for symbol in symbols:
+              print(f"\nFetching {symbol}...")
 
-          print(f"Saved {len(candles)} candles")
+              try:
+                  ticker = yf.Ticker(symbol + ".NS")
+
+                  df = ticker.history(
+                      period="5y",
+                      interval="1d",
+                      auto_adjust=False
+                  )
+
+                  if df.empty:
+                      print(f"NO DATA: {symbol}")
+                      continue
+
+                  candles = []
+
+                  for date, row in df.iterrows():
+                      candles.append({
+                          "time": date.strftime("%Y-%m-%d"),
+                          "open": round(float(row["Open"]), 2),
+                          "high": round(float(row["High"]), 2),
+                          "low": round(float(row["Low"]), 2),
+                          "close": round(float(row["Close"]), 2),
+                          "volume": int(row["Volume"])
+                      })
+
+                  filename = f"data/{symbol}.json"
+
+                  with open(filename, "w") as f:
+                      json.dump(candles, f, indent=2)
+
+                  print(f"SUCCESS: {symbol} -> {len(candles)} candles")
+
+              except Exception as e:
+                  print(f"ERROR: {symbol} -> {e}")
+
+              time.sleep(2)
+
           PY
 
       - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/RELIANCE.json
-          git diff --cached --quiet || git commit -m "Update RELIANCE market data"
+
+          git add data/
+
+          git diff --cached --quiet || git commit -m "Update market data"
+
           git push
