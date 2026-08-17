@@ -1,0 +1,60 @@
+name: Update Market Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 12 * * 1-5"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install yfinance
+        run: pip install yfinance
+
+      - name: Download RELIANCE data
+        run: |
+          python - <<'PY'
+          import yfinance as yf
+          import json
+
+          ticker = yf.Ticker("RELIANCE.NS")
+          df = ticker.history(period="5y", interval="1d", auto_adjust=False)
+
+          candles = []
+
+          for date, row in df.iterrows():
+              candles.append({
+                  "time": date.strftime("%Y-%m-%d"),
+                  "open": round(float(row["Open"]), 2),
+                  "high": round(float(row["High"]), 2),
+                  "low": round(float(row["Low"]), 2),
+                  "close": round(float(row["Close"]), 2),
+                  "volume": int(row["Volume"])
+              })
+
+          with open("data/RELIANCE.json", "w") as f:
+              json.dump(candles, f, indent=2)
+
+          print(f"Saved {len(candles)} candles")
+          PY
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/RELIANCE.json
+          git diff --cached --quiet || git commit -m "Update RELIANCE market data"
+          git push
