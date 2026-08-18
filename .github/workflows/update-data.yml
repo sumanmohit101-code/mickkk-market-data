@@ -11,6 +11,7 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
 
     steps:
       - name: Checkout repository
@@ -21,8 +22,10 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install yfinance
-        run: pip install yfinance
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install yfinance pandas
 
       - name: Download market data
         run: |
@@ -31,59 +34,124 @@ jobs:
           import json
           import os
           import time
+          import pandas as pd
 
           os.makedirs("data", exist_ok=True)
 
+          # Read symbols
           with open("symbols.txt", "r") as f:
-              symbols = [
+              symbols = list(dict.fromkeys(
                   line.strip().upper()
                   for line in f
                   if line.strip()
-              ]
+              ))
 
           print(f"Found {len(symbols)} symbols")
 
-          for symbol in symbols:
-              print(f"\nFetching {symbol}...")
+          # Download in batches
+          BATCH_SIZE = 50
+
+          for start in range(0, len(symbols), BATCH_SIZE):
+
+              batch = symbols[start:start + BATCH_SIZE]
+
+              print("\n" + "=" * 60)
+              print(
+                  f"Batch {start // BATCH_SIZE + 1} | "
+                  f"Symbols {start + 1}-{start + len(batch)}"
+              )
+              print("=" * 60)
+
+              tickers = [symbol + ".NS" for symbol in batch]
 
               try:
-                  ticker = yf.Ticker(symbol + ".NS")
-
-                  df = ticker.history(
+                  df = yf.download(
+                      tickers=tickers,
                       period="5y",
                       interval="1d",
-                      auto_adjust=False
+                      auto_adjust=False,
+                      group_by="ticker",
+                      threads=True,
+                      progress=False
                   )
 
-                  if df.empty:
-                      print(f"NO DATA: {symbol}")
-                      continue
-
-                  candles = []
-
-                  for date, row in df.iterrows():
-                      candles.append({
-                          "time": date.strftime("%Y-%m-%d"),
-                          "open": round(float(row["Open"]), 2),
-                          "high": round(float(row["High"]), 2),
-                          "low": round(float(row["Low"]), 2),
-                          "close": round(float(row["Close"]), 2),
-                          "volume": int(row["Volume"])
-                      })
-
-                  filename = f"data/{symbol}.json"
-
-                  with open(filename, "w") as f:
-                      json.dump(candles, f, indent=2)
-
-                  print(f"SUCCESS: {symbol} -> {len(candles)} candles")
-
               except Exception as e:
-                  print(f"ERROR: {symbol} -> {e}")
+                  print(f"BATCH ERROR: {e}")
+                  time.sleep(5)
+                  continue
 
+              for symbol in batch:
+
+                  try:
+                      ticker = symbol + ".NS"
+
+                      # Get this symbol's data
+                      if len(batch) == 1:
+                          stock_df = df.copy()
+                      elif ticker in df.columns.get_level_values(0):
+                          stock_df = df[ticker].copy()
+                      else:
+                          print(f"NO DATA: {symbol}")
+                          continue
+
+                      if stock_df.empty:
+                          print(f"NO DATA: {symbol}")
+                          continue
+
+                      candles = []
+
+                      for date, row in stock_df.iterrows():
+
+                          try:
+                              open_price = float(row["Open"])
+                              high_price = float(row["High"])
+                              low_price = float(row["Low"])
+                              close_price = float(row["Close"])
+                              volume = int(row["Volume"])
+
+                              if pd.isna(close_price) or close_price <= 0:
+                                  continue
+
+                              candles.append({
+                                  "time": date.strftime("%Y-%m-%d"),
+                                  "open": round(open_price, 2),
+                                  "high": round(high_price, 2),
+                                  "low": round(low_price, 2),
+                                  "close": round(close_price, 2),
+                                  "volume": volume
+                              })
+
+                          except Exception:
+                              continue
+
+                      if not candles:
+                          print(f"NO VALID DATA: {symbol}")
+                          continue
+
+                      filename = f"data/{symbol}.json"
+
+                      with open(filename, "w") as f:
+                          json.dump(candles, f, separators=(",", ":"))
+
+                      print(
+                          f"SUCCESS: {symbol} -> "
+                          f"{len(candles)} candles"
+                      )
+
+                  except Exception as e:
+                      print(f"ERROR: {symbol} -> {e}")
+
+              # Small pause between batches
               time.sleep(2)
 
+          print("\nFinished downloading market data.")
+
           PY
+
+      - name: Show generated file count
+        run: |
+          echo "Generated JSON files:"
+          find data -maxdepth 1 -name "*.json" | wc -l
 
       - name: Commit updated data
         run: |
@@ -92,6 +160,9 @@ jobs:
 
           git add data/
 
-          git diff --cached --quiet || git commit -m "Update market data"
-
-          git push
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update market data"
+            git push
+          fi
