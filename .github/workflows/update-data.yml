@@ -24,134 +24,198 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install yfinance pandas
 
-      - name: Download market data
+      - name: Organize existing data into A-Z folders
         run: |
           python - <<'PY'
-          import yfinance as yf
+          from pathlib import Path
+          import shutil
+          import re
+
+          data_dir = Path("data")
+          data_dir.mkdir(exist_ok=True)
+
+          def bucket(symbol):
+              first = symbol[:1].upper()
+              return first if re.fullmatch(r"[A-Z]", first) else "0-9"
+
+          moved = 0
+
+          for src in data_dir.glob("*.json"):
+              if src.name == "symbols.json":
+                  continue
+
+              symbol = src.stem.upper()
+              dest_dir = data_dir / bucket(symbol)
+              dest_dir.mkdir(exist_ok=True)
+              dest = dest_dir / src.name
+
+              if src.resolve() != dest.resolve():
+                  shutil.move(str(src), str(dest))
+                  moved += 1
+
+          print(f"Moved existing root JSON files: {moved}")
+          PY
+
+      - name: Download and update market data
+        run: |
+          python - <<'PY'
           import json
           import os
+          import re
           import time
+          from pathlib import Path
+
           import pandas as pd
+          import yfinance as yf
 
-          os.makedirs("data", exist_ok=True)
+          DATA_DIR = Path("data")
+          DATA_DIR.mkdir(exist_ok=True)
 
-          # Read symbols
-          with open("symbols.txt", "r") as f:
+          with open("symbols.txt", "r", encoding="utf-8") as f:
               symbols = list(dict.fromkeys(
                   line.strip().upper()
                   for line in f
                   if line.strip()
               ))
 
-          print(f"Found {len(symbols)} symbols")
+          print(f"Found {len(symbols)} unique symbols")
 
-          # Download in batches
+          def bucket(symbol):
+              first = symbol[:1].upper()
+              return first if re.fullmatch(r"[A-Z]", first) else "0-9"
+
+          def save_candles(symbol, stock_df):
+              if stock_df is None or stock_df.empty:
+                  return 0
+
+              candles = []
+
+              for date, row in stock_df.iterrows():
+                  try:
+                      close = float(row["Close"])
+                      if pd.isna(close) or close <= 0:
+                          continue
+
+                      open_price = float(row["Open"])
+                      high = float(row["High"])
+                      low = float(row["Low"])
+                      volume = int(float(row["Volume"]))
+
+                      if any(pd.isna(x) for x in [open_price, high, low]):
+                          continue
+
+                      candles.append({
+                          "time": date.strftime("%Y-%m-%d"),
+                          "open": round(open_price, 2),
+                          "high": round(high, 2),
+                          "low": round(low, 2),
+                          "close": round(close, 2),
+                          "volume": volume
+                      })
+                  except Exception:
+                      continue
+
+              if not candles:
+                  return 0
+
+              dest_dir = DATA_DIR / bucket(symbol)
+              dest_dir.mkdir(parents=True, exist_ok=True)
+
+              filename = dest_dir / f"{symbol}.json"
+              with open(filename, "w", encoding="utf-8") as f:
+                  json.dump(candles, f, separators=(",", ":"))
+
+              return len(candles)
+
           BATCH_SIZE = 50
 
           for start in range(0, len(symbols), BATCH_SIZE):
-
               batch = symbols[start:start + BATCH_SIZE]
+              tickers = [f"{symbol}.NS" for symbol in batch]
 
-              print("\n" + "=" * 60)
+              print("\n" + "=" * 70)
               print(
-                  f"Batch {start // BATCH_SIZE + 1} | "
-                  f"Symbols {start + 1}-{start + len(batch)}"
+                  f"Batch {start // BATCH_SIZE + 1}: "
+                  f"{start + 1}-{start + len(batch)} / {len(symbols)}"
               )
-              print("=" * 60)
+              print("=" * 70)
 
-              tickers = [symbol + ".NS" for symbol in batch]
+              downloaded = None
 
-              try:
-                  df = yf.download(
-                      tickers=tickers,
-                      period="5y",
-                      interval="1d",
-                      auto_adjust=False,
-                      group_by="ticker",
-                      threads=True,
-                      progress=False
-                  )
+              for attempt in range(1, 4):
+                  try:
+                      downloaded = yf.download(
+                          tickers=tickers,
+                          period="5y",
+                          interval="1d",
+                          auto_adjust=False,
+                          group_by="ticker",
+                          threads=True,
+                          progress=False
+                      )
 
-              except Exception as e:
-                  print(f"BATCH ERROR: {e}")
-                  time.sleep(5)
+                      if downloaded is not None and not downloaded.empty:
+                          break
+
+                      print(f"Batch returned no data, attempt {attempt}/3")
+                  except Exception as e:
+                      print(f"Batch error on attempt {attempt}/3: {e}")
+
+                  time.sleep(5 * attempt)
+
+              if downloaded is None or downloaded.empty:
+                  print("BATCH FAILED: no data returned")
+                  for symbol in batch:
+                      print(f"NO DATA: {symbol}")
                   continue
 
               for symbol in batch:
+                  ticker = f"{symbol}.NS"
 
                   try:
-                      ticker = symbol + ".NS"
+                      if isinstance(downloaded.columns, pd.MultiIndex):
+                          level0 = downloaded.columns.get_level_values(0)
+                          level1 = downloaded.columns.get_level_values(1)
 
-                      # Get this symbol's data
-                      if len(batch) == 1:
-                          stock_df = df.copy()
-                      elif ticker in df.columns.get_level_values(0):
-                          stock_df = df[ticker].copy()
-                      else:
-                          print(f"NO DATA: {symbol}")
-                          continue
-
-                      if stock_df.empty:
-                          print(f"NO DATA: {symbol}")
-                          continue
-
-                      candles = []
-
-                      for date, row in stock_df.iterrows():
-
-                          try:
-                              open_price = float(row["Open"])
-                              high_price = float(row["High"])
-                              low_price = float(row["Low"])
-                              close_price = float(row["Close"])
-                              volume = int(row["Volume"])
-
-                              if pd.isna(close_price) or close_price <= 0:
-                                  continue
-
-                              candles.append({
-                                  "time": date.strftime("%Y-%m-%d"),
-                                  "open": round(open_price, 2),
-                                  "high": round(high_price, 2),
-                                  "low": round(low_price, 2),
-                                  "close": round(close_price, 2),
-                                  "volume": volume
-                              })
-
-                          except Exception:
+                          if ticker in level0:
+                              stock_df = downloaded[ticker].copy()
+                          elif ticker in level1:
+                              stock_df = downloaded.xs(ticker, axis=1, level=1).copy()
+                          else:
+                              print(f"NO DATA: {symbol}")
                               continue
+                      else:
+                          # Single-ticker fallback
+                          stock_df = downloaded.copy()
 
-                      if not candles:
+                      count = save_candles(symbol, stock_df)
+
+                      if count:
+                          print(f"SUCCESS: {symbol} -> {count} candles")
+                      else:
                           print(f"NO VALID DATA: {symbol}")
-                          continue
-
-                      filename = f"data/{symbol}.json"
-
-                      with open(filename, "w") as f:
-                          json.dump(candles, f, separators=(",", ":"))
-
-                      print(
-                          f"SUCCESS: {symbol} -> "
-                          f"{len(candles)} candles"
-                      )
 
                   except Exception as e:
                       print(f"ERROR: {symbol} -> {e}")
 
-              # Small pause between batches
               time.sleep(2)
 
           print("\nFinished downloading market data.")
-
           PY
 
-      - name: Show generated file count
+      - name: Show data structure
         run: |
-          echo "Generated JSON files:"
-          find data -maxdepth 1 -name "*.json" | wc -l
+          echo "Root JSON files:"
+          find data -maxdepth 1 -type f -name "*.json" | wc -l
+
+          echo "Stock JSON files inside folders:"
+          find data -mindepth 2 -maxdepth 2 -type f -name "*.json" | wc -l
+
+          echo "Total JSON files:"
+          find data -type f -name "*.json" | wc -l
 
       - name: Commit updated data
         run: |
