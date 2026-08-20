@@ -1,0 +1,308 @@
+[
+  {
+    "symbol": "NIFTY50",
+    "name": "NIFTY 50",
+    "category": "broad",
+    "yahoo": "^NSEI"
+  },
+  {
+    "symbol": "NIFTYNEXT50",
+    "name": "NIFTY Next 50",
+    "category": "broad",
+    "yahoo": "^NSMIDCP"
+  },
+  {
+    "symbol": "NIFTY100",
+    "name": "NIFTY 100",
+    "category": "broad",
+    "yahoo": "^CNX100"
+  },
+  {
+    "symbol": "NIFTY200",
+    "name": "NIFTY 200",
+    "category": "broad",
+    "yahoo": "^CNX200"
+  },
+  {
+    "symbol": "NIFTY500",
+    "name": "NIFTY 500",
+    "category": "broad",
+    "yahoo": "^CRSLDX"
+  },
+  {
+    "symbol": "NIFTYMIDCAP50",
+    "name": "NIFTY Midcap 50",
+    "category": "broad",
+    "yahoo": "^NSEMDCP50"
+  },
+  {
+    "symbol": "NIFTYMIDCAP100",
+    "name": "NIFTY Midcap 100",
+    "category": "broad",
+    "yahoo": "^NSEMDCP100"
+  },
+  {
+    "symbol": "NIFTYMIDCAP150",
+    "name": "NIFTY Midcap 150",
+    "category": "broad",
+    "yahoo": "^NIFTYMIDCAP150"
+  },
+  {
+    "symbol": "NIFTYMIDCAPSELECT",
+    "name": "NIFTY Midcap Select",
+    "category": "broad",
+    "yahoo": "^NIFTY_MID_SELECT"
+  },
+  {
+    "symbol": "NIFTYSMALLCAP50",
+    "name": "NIFTY Smallcap 50",
+    "category": "broad",
+    "yahoo": "^NIFTYSC50"
+  },
+  {
+    "symbol": "NIFTYSMALLCAP100",
+    "name": "NIFTY Smallcap 100",
+    "category": "broad",
+    "yahoo": "^NIFTYSC100"
+  },
+  {
+    "symbol": "NIFTYSMALLCAP250",
+    "name": "NIFTY Smallcap 250",
+    "category": "broad",
+    "yahoo": "^NIFTYSC250"
+  },
+  {
+    "symbol": "NIFTYSMALLCAP500",
+    "name": "NIFTY Smallcap 500",
+    "category": "broad",
+    "yahoo": "^NIFTYSMALLCAP500"
+  },
+  {
+    "symbol": "NIFTYTOTALMARKET",
+    "name": "NIFTY Total Market",
+    "category": "broad",
+    "yahoo": "^NIFTY_TOTAL_MKT"
+  },
+  {
+    "symbol": "NIFTYNEXT100",
+    "name": "NIFTY Next 100",
+    "category": "broad",
+    "yahoo": "^NIFTYNEXT100"
+  },
+  {
+    "symbol": "NIFTYBANK",
+    "name": "NIFTY Bank",
+    "category": "sectoral",
+    "yahoo": "^NSEBANK"
+  },
+  {
+    "symbol": "NIFTYAUTO",
+    "name": "NIFTY Auto",
+    "category": "sectoral",
+    "yahoo": "^CNXAUTO"
+  },
+  {
+    "symbol": "NIFTYCAPITALGOODS",
+    "name": "NIFTY Capital Goods",
+    "category": "sectoral",
+    "yahoo": "^CNXCAPITAL"
+  },
+  {
+    "symbol": "NIFTYCEMENT",
+    "name": "NIFTY Cement",
+    "category": "sectoral",
+    "yahoo": "^CNXCEMENT"
+  },
+  {
+    "symbol": "NIFTYCHEMICALS",
+    "name": "NIFTY Chemicals",
+    "category": "sectoral",
+    "yahoo": "^CNXCHEM"
+  },
+  {
+    "symbol": "NIFTYCOMMERCIALTRANSPORT",
+    "name": "NIFTY Commercial & Transport Services",
+    "category": "sectoral",
+    "yahoo": "^NIFTY_COM_TRANS"
+  },
+  {
+    "symbol": "NIFTYCONSTRUCTION",
+    "name": "NIFTY Construction",
+    "category": "sectoral",
+    "yahoo": "^NIFTY_CONSTRUCTION"
+  },
+  {
+    "symbol": "NIFTYCONSUMERDURABLES",
+    "name": "NIFTY Consumer Durables",
+    "category": "sectoral",
+    "yahoo": "^CNXCONSUMER"
+  },
+  {
+    "symbol": "NIFTYCONSUMERSERVICES",
+    "name": "NIFTY Consumer Services",
+    "category": "sectoral",
+    "yahoo": "^CNXCONSUMER_SERV"
+  },
+  {
+    "symbol": "NIFTYFINANCIALSERVICES",
+    "name": "NIFTY Financial Services",
+    "category": "sectoral",
+    "yahoo": "^CNXFINANCE"
+  },
+  {
+    "symbol": "NIFTYFINANCIALSERVICES2550",
+    "name": "NIFTY Financial Services 25/50",
+    "category": "sectoral",
+    "yahoo": "^NIFTY_FIN_SERVICE_25_50"
+  },
+  {
+    "symbol": "NIFTYFINANCIALSERVICESXBANK",
+    "name": "NIFTY Financial Services Ex-Bank",
+    "category": "sectoral",
+    "yahoo": "^NIFTY_FIN_EX_BANK"
+  },
+  {
+    "symbol": "NIFTYFMCG",
+    "name": "NIFTY FMCG",
+    "category": "sectoral",
+    "yahoo": "^CNXFMCG"
+  },
+  {
+    "symbol": "NIFTYHEALTHCARE",
+    "name": "NIFTY Healthcare",
+    "category": "sectoral",
+    "yahoo": "^CNXHEALTHCARE"
+  },
+  {
+    "symbol": "NIFTYHOSPITALS",
+    "name": "NIFTY Hospitals",
+    "category": "sectoral",
+    "yahoo": "^NIFTY_HOSPITAL"
+  },
+  {
+    "symbol": "NIFTYHOUSINGFINANCE",
+    "name": "NIFTY Housing Finance",
+    "category": "sectoral",
+    "yahoo": "^NIFTY_HOUSING"
+  },
+  {
+    "symbol": "NIFTYINSURANCE",
+    "name": "NIFTY Insurance",
+    "category": "sectoral",
+    "yahoo": "^CNXINSURANCE"
+  },
+  {
+    "symbol": "NIFTYIT",
+    "name": "NIFTY IT",
+    "category": "sectoral",
+    "yahoo": "^CNXIT"
+  },
+  {
+    "symbol": "NIFTYMEDIA",
+    "name": "NIFTY Media",
+    "category": "sectoral",
+    "yahoo": "^CNXMEDIA"
+  },
+  {
+    "symbol": "NIFTYMETAL",
+    "name": "NIFTY Metal",
+    "category": "sectoral",
+    "yahoo": "^CNXMETAL"
+  },
+  {
+    "symbol": "NIFTYNBFC",
+    "name": "NIFTY NBFC",
+    "category": "sectoral",
+    "yahoo": "^CNXNBFC"
+  },
+  {
+    "symbol": "NIFTYOILANDGAS",
+    "name": "NIFTY Oil & Gas",
+    "category": "sectoral",
+    "yahoo": "^CNXENERGY"
+  },
+  {
+    "symbol": "NIFTYPHARMA",
+    "name": "NIFTY Pharma",
+    "category": "sectoral",
+    "yahoo": "^CNXPHARMA"
+  },
+  {
+    "symbol": "NIFTYPOWER",
+    "name": "NIFTY Power",
+    "category": "sectoral",
+    "yahoo": "^CNXPOWER"
+  },
+  {
+    "symbol": "NIFTYPRIVATEBANK",
+    "name": "NIFTY Private Bank",
+    "category": "sectoral",
+    "yahoo": "^CNXPVTBANK"
+  },
+  {
+    "symbol": "NIFTYPSUBANK",
+    "name": "NIFTY PSU Bank",
+    "category": "sectoral",
+    "yahoo": "^CNXPSUBANK"
+  },
+  {
+    "symbol": "NIFTYREALTY",
+    "name": "NIFTY Realty",
+    "category": "sectoral",
+    "yahoo": "^CNXREALTY"
+  },
+  {
+    "symbol": "NIFTYREITSREALTY",
+    "name": "NIFTY REITs & Realty",
+    "category": "sectoral",
+    "yahoo": "^NIFTY_REITS_REALTY"
+  },
+  {
+    "symbol": "NIFTYRETAIL",
+    "name": "NIFTY Retail",
+    "category": "sectoral",
+    "yahoo": "^NIFTY_RETAIL"
+  },
+  {
+    "symbol": "NIFTYTELECOMMUNICATIONS",
+    "name": "NIFTY Telecommunications",
+    "category": "sectoral",
+    "yahoo": "^NIFTY_TELECOM"
+  },
+  {
+    "symbol": "NIFTY500HEALTHCARE",
+    "name": "NIFTY500 Healthcare",
+    "category": "sectoral",
+    "yahoo": "^NIFTY500_HEALTHCARE"
+  },
+  {
+    "symbol": "NIFTYMIDSMALLFINANCIALSERVICES",
+    "name": "NIFTY MidSmall Financial Services",
+    "category": "sectoral",
+    "yahoo": "^NIFTY_MIDSMALL_FIN"
+  },
+  {
+    "symbol": "NIFTYMIDSMALLHEALTHCARE",
+    "name": "NIFTY MidSmall Healthcare",
+    "category": "sectoral",
+    "yahoo": "^NIFTY_MIDSMALL_HEALTH"
+  },
+  {
+    "symbol": "NIFTYMIDSMALLITTELECOM",
+    "name": "NIFTY MidSmall IT & Telecom",
+    "category": "sectoral",
+    "yahoo": "^NIFTY_MIDSMALL_IT"
+  },
+  {
+    "symbol": "SENSEX",
+    "name": "BSE Sensex",
+    "category": "other",
+    "yahoo": "^BSESN"
+  },
+  {
+    "symbol": "INDIAVIX",
+    "name": "India VIX",
+    "category": "other",
+    "yahoo": "^INDIAVIX"
+  }
+]
