@@ -205,7 +205,7 @@ jobs:
           print("\nFinished downloading stock market data.")
           PY
 
-      - name: Download Nifty, Sensex and India VIX index data
+      - name: Download Indices Data (Yahoo First -> NSE Fallback)
         run: |
           python - <<'PY'
           import json
@@ -213,7 +213,6 @@ jobs:
           import time
           from datetime import date, timedelta
           from pathlib import Path
-
           import pandas as pd
           import yfinance as yf
           from nse import NSE
@@ -226,7 +225,9 @@ jobs:
 
           TODAY = date.today()
           FROM_DATE = TODAY - timedelta(days=5 * 365)
+          MIN_REQUIRED_CANDLES = 1000  # Threshold to bypass NSE fallback (~4 Years)
 
+          # ---------- Helper Functions ----------
           def norm(value):
               return re.sub(r"[^a-z0-9]+", "", str(value).lower())
 
@@ -278,22 +279,42 @@ jobs:
                   json.dump(candles, f, separators=(",", ":"))
               return len(candles)
 
-          # NSE's historical index endpoint has been observed to cap/limit large
-          # ranges on some requests. Fetch in ~300-day chunks and merge them.
+          def fetch_yahoo(yahoo_ticker):
+              if not yahoo_ticker: return []
+              try:
+                  df = yf.download(yahoo_ticker, period="5y", interval="1d", auto_adjust=False, progress=False, threads=False)
+                  if df is None or df.empty: return []
+                  
+                  if isinstance(df.columns, pd.MultiIndex):
+                      if yahoo_ticker in df.columns.get_level_values(1):
+                          df = df.xs(yahoo_ticker, axis=1, level=1)
+                      elif yahoo_ticker in df.columns.get_level_values(0):
+                          df = df[yahoo_ticker]
+                      else:
+                          df.columns = df.columns.get_level_values(0)
+                          
+                  rows = []
+                  for dt, row in df.iterrows():
+                      rows.append({
+                          "EOD_TIMESTAMP": dt.strftime("%Y-%m-%d"),
+                          "OPEN": row["Open"], "HIGH": row["High"],
+                          "LOW": row["Low"], "CLOSE": row["Close"],
+                      })
+                  return candles_from_rows(rows)
+              except Exception as e:
+                  print(f"      [Yahoo Error] {e}")
+                  return []
+
           def fetch_index_in_chunks(nse, request_name, start_date, end_date):
               all_rows = []
               chunk_end = end_date
               while chunk_end >= start_date:
                   chunk_start = max(start_date, chunk_end - timedelta(days=299))
-                  print(f"    {chunk_start} to {chunk_end}")
-                  rows = nse.fetch_historical_index_data(
-                      request_name,
-                      from_date=chunk_start,
-                      to_date=chunk_end,
-                  )
+                  print(f"      NSE Chunk: {chunk_start} to {chunk_end}")
+                  rows = nse.fetch_historical_index_data(request_name, from_date=chunk_start, to_date=chunk_end)
                   all_rows.extend(rows or [])
                   chunk_end = chunk_start - timedelta(days=1)
-                  time.sleep(0.8)
+                  time.sleep(1) # Added slightly more delay for safety
               return all_rows
 
           def fetch_vix_in_chunks(nse, start_date, end_date):
@@ -301,14 +322,11 @@ jobs:
               chunk_end = end_date
               while chunk_end >= start_date:
                   chunk_start = max(start_date, chunk_end - timedelta(days=299))
-                  print(f"    VIX {chunk_start} to {chunk_end}")
-                  rows = nse.fetch_historical_vix_data(
-                      from_date=chunk_start,
-                      to_date=chunk_end,
-                  )
+                  print(f"      NSE VIX Chunk: {chunk_start} to {chunk_end}")
+                  rows = nse.fetch_historical_vix_data(from_date=chunk_start, to_date=chunk_end)
                   all_rows.extend(rows or [])
                   chunk_end = chunk_start - timedelta(days=1)
-                  time.sleep(0.8)
+                  time.sleep(1)
               return all_rows
 
           aliases = {
@@ -338,71 +356,65 @@ jobs:
 
               available_map = {norm(x): x for x in available}
 
-              # FAST TEST: only recent NIFTY 50 data. If this fails, stop now.
-              print("Testing NSE historical index endpoint with NIFTY 50...")
-              try:
-                  test_rows = nse.fetch_historical_index_data(
-                      available_map.get(norm("NIFTY 50"), "NIFTY 50"),
-                      from_date=TODAY - timedelta(days=60),
-                      to_date=TODAY,
-                  )
-                  test_count = len(candles_from_rows(test_rows))
-                  print(f"NIFTY 50 test -> {test_count} usable candles")
-                  if test_count < 10:
-                      raise RuntimeError("NIFTY 50 test returned too few rows")
-              except Exception as e:
-                  raise SystemExit(f"NSE historical index endpoint test FAILED: {e}")
-
               for item in indices:
                   symbol = item["symbol"]
                   name = item["name"]
-
+                  yahoo_ticker = item.get("yahoo")
+                  
+                  print(f"\nProcessing {name} [{symbol}]")
+                  
+                  # 1. STRICTLY Sensex bypasses NSE completely
                   if symbol == "SENSEX":
-                      print(f"\nFetching BSE Sensex [{symbol}] via Yahoo Finance")
-                      try:
-                          df = yf.download(
-                              "^BSESN", period="5y", interval="1d", auto_adjust=False,
-                              progress=False, threads=False
-                          )
-                          if isinstance(df.columns, pd.MultiIndex):
-                              try:
-                                  df = df.xs("^BSESN", axis=1, level=1)
-                              except Exception:
-                                  df.columns = df.columns.get_level_values(0)
-                          rows = []
-                          for dt, row in df.iterrows():
-                              rows.append({
-                                  "EOD_TIMESTAMP": dt.strftime("%Y-%m-%d"),
-                                  "OPEN": row["Open"], "HIGH": row["High"],
-                                  "LOW": row["Low"], "CLOSE": row["Close"],
-                              })
-                          count = save_candles(item, candles_from_rows(rows))
-                          print(f"SUCCESS: {symbol} -> {count} candles" if count else f"NO DATA: {symbol}")
-                      except Exception as e:
-                          print(f"ERROR: {symbol} -> {e}")
+                      print(f"  -> Fetching BSE Sensex via Yahoo Finance ONLY")
+                      y_candles = fetch_yahoo(yahoo_ticker)
+                      if y_candles:
+                          count = save_candles(item, y_candles)
+                          print(f"  -> SUCCESS: {count} candles saved.")
+                      else:
+                          print("  -> FAILED: Sensex data unavailable on Yahoo.")
                       continue
 
-                  if symbol == "INDIAVIX":
-                      print(f"\nFetching India VIX [{symbol}] from NSE")
-                      try:
-                          rows = fetch_vix_in_chunks(nse, FROM_DATE, TODAY)
-                          count = save_candles(item, candles_from_rows(rows))
-                          print(f"SUCCESS: {symbol} -> {count} candles" if count else f"NO DATA: {symbol}")
-                      except Exception as e:
-                          print(f"ERROR: {symbol} -> {e}")
+                  # 2. Try Yahoo Finance for all other indices
+                  candles_yahoo = []
+                  if yahoo_ticker:
+                      print(f"  -> Fetching from Yahoo ({yahoo_ticker})...")
+                      candles_yahoo = fetch_yahoo(yahoo_ticker)
+                  
+                  # Check if Yahoo data is sufficient
+                  if len(candles_yahoo) >= MIN_REQUIRED_CANDLES:
+                      count = save_candles(item, candles_yahoo)
+                      print(f"  -> SUCCESS (Yahoo): Perfect dataset ({count} candles).")
                       continue
+                      
+                  if candles_yahoo:
+                      print(f"  -> Yahoo data incomplete ({len(candles_yahoo)} candles). Initiating NSE Fallback...")
+                  else:
+                      print(f"  -> Yahoo data missing. Initiating NSE Fallback...")
 
-                  request_name = aliases.get(name, available_map.get(norm(name), name))
-                  print(f"\nFetching index: {name} [{symbol}] as '{request_name}'")
+                  # 3. NSE Fallback System
+                  candles_nse = []
                   try:
-                      rows = fetch_index_in_chunks(nse, request_name, FROM_DATE, TODAY)
-                      count = save_candles(item, candles_from_rows(rows))
-                      print(f"SUCCESS: {symbol} -> {count} candles" if count else f"NO DATA: {symbol}")
+                      if symbol == "INDIAVIX":
+                          rows = fetch_vix_in_chunks(nse, FROM_DATE, TODAY)
+                          candles_nse = candles_from_rows(rows)
+                      else:
+                          request_name = aliases.get(name, available_map.get(norm(name), name))
+                          rows = fetch_index_in_chunks(nse, request_name, FROM_DATE, TODAY)
+                          candles_nse = candles_from_rows(rows)
                   except Exception as e:
-                      # Keep going: one unsupported/new index must not block all others.
-                      print(f"ERROR: {symbol} -> {e}")
+                      print(f"  -> NSE Fallback Failed: {e}")
 
-          print("\nFinished downloading index data from NSE.")
+                  # 4. Compare and pick the best dataset (Max Length)
+                  best_candles = candles_yahoo if len(candles_yahoo) > len(candles_nse) else candles_nse
+                  
+                  if best_candles:
+                      count = save_candles(item, best_candles)
+                      source = "Yahoo" if best_candles == candles_yahoo else "NSE"
+                      print(f"  -> SUCCESS: Saved {count} candles (Best Source: {source})")
+                  else:
+                      print(f"  -> NO VALID DATA for {symbol} from either source.")
+
+          print("\nFinished downloading index data.")
           PY
 
       - name: Show data structure
