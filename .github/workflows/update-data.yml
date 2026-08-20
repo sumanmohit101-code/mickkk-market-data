@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install yfinance pandas requests cloudscraper
+          pip install yfinance pandas 'nse[server]==3.2.1'
 
       - name: Organize existing stock data into A-Z folders
         run: |
@@ -205,17 +205,18 @@ jobs:
           print("\nFinished downloading stock market data.")
           PY
 
-      - name: Download Nifty and India VIX index data from NSE Indices
+      - name: Download Nifty, Sensex and India VIX index data
         run: |
           python - <<'PY'
           import json
+          import re
           import time
           from datetime import date, timedelta
           from pathlib import Path
 
           import pandas as pd
           import yfinance as yf
-          import cloudscraper
+          from nse import NSE
 
           DATA_DIR = Path("data/indices")
           DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -223,172 +224,185 @@ jobs:
           with open("data/indices.json", "r", encoding="utf-8") as f:
               indices = json.load(f)
 
-          END_DATE = date.today()
-          START_DATE = END_DATE - timedelta(days=5 * 365)
-          ENDPOINT = "https://www.niftyindices.com/Backpage.aspx/getHistoricaldatatabletoString"
-          PAGE = "https://www.niftyindices.com/reports/historical-data"
+          TODAY = date.today()
+          FROM_DATE = TODAY - timedelta(days=5 * 365)
 
-          scraper = cloudscraper.create_scraper(
-              browser={"browser": "chrome", "platform": "linux", "mobile": False}
-          )
-          scraper.headers.update({
-              "Accept": "application/json, text/javascript, */*; q=0.01",
-              "Content-Type": "application/json; charset=UTF-8",
-              "X-Requested-With": "XMLHttpRequest",
-              "Origin": "https://www.niftyindices.com",
-              "Referer": PAGE,
-              "Accept-Language": "en-US,en;q=0.9,hi;q=0.8",
-          })
+          def norm(value):
+              return re.sub(r"[^a-z0-9]+", "", str(value).lower())
 
-          def save_candles(item, rows):
+          def num(row, *names):
+              for name in names:
+                  if name in row:
+                      try:
+                          value = float(str(row[name]).replace(",", ""))
+                          if pd.notna(value):
+                              return value
+                      except Exception:
+                          pass
+              return None
+
+          def date_value(row):
+              for key in ("EOD_TIMESTAMP", "TIMESTAMP", "DATE", "Date", "date"):
+                  if key in row and row[key]:
+                      value = str(row[key]).strip()
+                      try:
+                          return pd.to_datetime(value, dayfirst=True).strftime("%Y-%m-%d")
+                      except Exception:
+                          pass
+              return None
+
+          def candles_from_rows(rows):
               candles = {}
               for row in rows or []:
-                  try:
-                      dt = row.get("HistoricalDate") or row.get("Date")
-                      if not dt:
-                          continue
-                      dt = pd.to_datetime(dt, dayfirst=True).strftime("%Y-%m-%d")
+                  t = date_value(row)
+                  op = num(row, "EOD_OPEN_INDEX_VAL", "OPEN_INDEX_VAL", "OPEN")
+                  hi = num(row, "EOD_HIGH_INDEX_VAL", "HIGH_INDEX_VAL", "HIGH")
+                  lo = num(row, "EOD_LOW_INDEX_VAL", "LOW_INDEX_VAL", "LOW")
+                  cl = num(row, "EOD_CLOSE_INDEX_VAL", "CLOSE_INDEX_VAL", "CLOSE")
+                  if not t or any(v is None for v in (op, hi, lo, cl)) or cl <= 0:
+                      continue
+                  candles[t] = {
+                      "time": t,
+                      "open": round(op, 2),
+                      "high": round(hi, 2),
+                      "low": round(lo, 2),
+                      "close": round(cl, 2),
+                      "volume": 0
+                  }
+              return [candles[k] for k in sorted(candles)]
 
-                      op = float(str(row.get("OPEN", "")).replace(",", ""))
-                      hi = float(str(row.get("HIGH", "")).replace(",", ""))
-                      lo = float(str(row.get("LOW", "")).replace(",", ""))
-                      cl = float(str(row.get("CLOSE", "")).replace(",", ""))
-                      if cl <= 0 or any(pd.isna(v) for v in (op, hi, lo, cl)):
-                          continue
+          def save_candles(item, candles):
+              if not candles:
+                  return 0
+              with open(DATA_DIR / f"{item['symbol']}.json", "w", encoding="utf-8") as f:
+                  json.dump(candles, f, separators=(",", ":"))
+              return len(candles)
 
-                      candles[dt] = {
-                          "time": dt,
-                          "open": round(op, 2),
-                          "high": round(hi, 2),
-                          "low": round(lo, 2),
-                          "close": round(cl, 2),
-                          "volume": 0
-                      }
-                  except Exception:
+          # NSE's historical index endpoint has been observed to cap/limit large
+          # ranges on some requests. Fetch in ~300-day chunks and merge them.
+          def fetch_index_in_chunks(nse, request_name, start_date, end_date):
+              all_rows = []
+              chunk_end = end_date
+              while chunk_end >= start_date:
+                  chunk_start = max(start_date, chunk_end - timedelta(days=299))
+                  print(f"    {chunk_start} to {chunk_end}")
+                  rows = nse.fetch_historical_index_data(
+                      request_name,
+                      from_date=chunk_start,
+                      to_date=chunk_end,
+                  )
+                  all_rows.extend(rows or [])
+                  chunk_end = chunk_start - timedelta(days=1)
+                  time.sleep(0.8)
+              return all_rows
+
+          def fetch_vix_in_chunks(nse, start_date, end_date):
+              all_rows = []
+              chunk_end = end_date
+              while chunk_end >= start_date:
+                  chunk_start = max(start_date, chunk_end - timedelta(days=299))
+                  print(f"    VIX {chunk_start} to {chunk_end}")
+                  rows = nse.fetch_historical_vix_data(
+                      from_date=chunk_start,
+                      to_date=chunk_end,
+                  )
+                  all_rows.extend(rows or [])
+                  chunk_end = chunk_start - timedelta(days=1)
+                  time.sleep(0.8)
+              return all_rows
+
+          aliases = {
+              "NIFTY Healthcare": "NIFTY HEALTHCARE INDEX",
+              "NIFTY MidSmallcap 400": "NIFTY MIDSMALLCAP400",
+              "NIFTY MidSmallcap400": "NIFTY MIDSMALLCAP400",
+              "NIFTY MidSmallcap 400 50:50": "NIFTY MIDSMALLCAP400 50:50",
+              "NIFTY LargeMidcap 250": "NIFTY LARGEMIDCAP 250",
+              "NIFTY Microcap 250": "NIFTY MICROCAP 250",
+              "NIFTY India Consumption": "NIFTY INDIA CONSUMPTION",
+              "NIFTY Financial Services Ex-Bank": "NIFTY FINANCIAL SERVICES EX-BANK",
+              "NIFTY Reits & Realty": "NIFTY REITS & REALTY",
+          }
+
+          with NSE(download_folder=".", server=True, timeout=30) as nse:
+              print("Loading current NSE index catalogue...")
+              available = []
+              try:
+                  names = nse.fetch_index_names()
+                  for group, values in names.items():
+                      for value in values:
+                          if isinstance(value, (list, tuple)):
+                              for v in value[:2]:
+                                  available.append(str(v))
+              except Exception as e:
+                  print(f"WARNING: could not load NSE index catalogue: {e}")
+
+              available_map = {norm(x): x for x in available}
+
+              # FAST TEST: only recent NIFTY 50 data. If this fails, stop now.
+              print("Testing NSE historical index endpoint with NIFTY 50...")
+              try:
+                  test_rows = nse.fetch_historical_index_data(
+                      available_map.get(norm("NIFTY 50"), "NIFTY 50"),
+                      from_date=TODAY - timedelta(days=60),
+                      to_date=TODAY,
+                  )
+                  test_count = len(candles_from_rows(test_rows))
+                  print(f"NIFTY 50 test -> {test_count} usable candles")
+                  if test_count < 10:
+                      raise RuntimeError("NIFTY 50 test returned too few rows")
+              except Exception as e:
+                  raise SystemExit(f"NSE historical index endpoint test FAILED: {e}")
+
+              for item in indices:
+                  symbol = item["symbol"]
+                  name = item["name"]
+
+                  if symbol == "SENSEX":
+                      print(f"\nFetching BSE Sensex [{symbol}] via Yahoo Finance")
+                      try:
+                          df = yf.download(
+                              "^BSESN", period="5y", interval="1d", auto_adjust=False,
+                              progress=False, threads=False
+                          )
+                          if isinstance(df.columns, pd.MultiIndex):
+                              try:
+                                  df = df.xs("^BSESN", axis=1, level=1)
+                              except Exception:
+                                  df.columns = df.columns.get_level_values(0)
+                          rows = []
+                          for dt, row in df.iterrows():
+                              rows.append({
+                                  "EOD_TIMESTAMP": dt.strftime("%Y-%m-%d"),
+                                  "OPEN": row["Open"], "HIGH": row["High"],
+                                  "LOW": row["Low"], "CLOSE": row["Close"],
+                              })
+                          count = save_candles(item, candles_from_rows(rows))
+                          print(f"SUCCESS: {symbol} -> {count} candles" if count else f"NO DATA: {symbol}")
+                      except Exception as e:
+                          print(f"ERROR: {symbol} -> {e}")
                       continue
 
-              ordered = [candles[k] for k in sorted(candles)]
-              if not ordered:
-                  return 0
-
-              with open(DATA_DIR / f"{item['symbol']}.json", "w", encoding="utf-8") as f:
-                  json.dump(ordered, f, separators=(",", ":"))
-              return len(ordered)
-
-          def bootstrap():
-              try:
-                  r = scraper.get(PAGE, timeout=15)
-                  print(f"Nifty Indices page bootstrap: HTTP {r.status_code}, {len(r.text)} bytes")
-                  return r.status_code == 200
-              except Exception as e:
-                  print(f"Nifty page bootstrap warning: {e}")
-                  return False
-
-          def fetch_nifty(index_name):
-              payload = {
-                  "cinfo": (
-                      "{"
-                      f"'name':'{index_name}',"
-                      f"'startDate':'{START_DATE.strftime('%d-%b-%Y')}',"
-                      f"'endDate':'{END_DATE.strftime('%d-%b-%Y')}',"
-                      f"'indexName':'{index_name}'"
-                      "}"
-                  )
-              }
-
-              for attempt in range(1, 3):
-                  try:
-                      # Refresh the page before the first request and after a blocked response.
-                      if attempt == 1:
-                          bootstrap()
-
-                      r = scraper.post(ENDPOINT, json=payload, timeout=45)
-                      print(f"  HTTP {r.status_code}, {len(r.text)} bytes")
-                      r.raise_for_status()
-
+                  if symbol == "INDIAVIX":
+                      print(f"\nFetching India VIX [{symbol}] from NSE")
                       try:
-                          body = r.json()
-                      except ValueError:
-                          print(f"  NON-JSON response: {r.text[:180]!r}")
-                          if attempt == 1:
-                              time.sleep(2)
-                              bootstrap()
-                          continue
+                          rows = fetch_vix_in_chunks(nse, FROM_DATE, TODAY)
+                          count = save_candles(item, candles_from_rows(rows))
+                          print(f"SUCCESS: {symbol} -> {count} candles" if count else f"NO DATA: {symbol}")
+                      except Exception as e:
+                          print(f"ERROR: {symbol} -> {e}")
+                      continue
 
-                      raw = body.get("d", "[]")
-                      if isinstance(raw, str):
-                          try:
-                              rows = json.loads(raw)
-                          except ValueError:
-                              print(f"  Invalid 'd' JSON: {raw[:180]!r}")
-                              rows = []
-                      else:
-                          rows = raw or []
-
-                      if rows:
-                          return rows
-
-                      print(f"  No rows returned for {index_name}")
-                      return []
-
-                  except Exception as e:
-                      print(f"  attempt {attempt}/2 failed for {index_name}: {e}")
-                      if attempt == 1:
-                          time.sleep(2)
-                          bootstrap()
-
-              return []
-
-          # Quick connectivity test BEFORE processing all 57 indices.
-          print("Testing NSE Indices endpoint with NIFTY 50...")
-          test_rows = fetch_nifty("NIFTY 50")
-          if not test_rows:
-              raise SystemExit(
-                  "NSE Indices historical API is not returning JSON/rows from this GitHub Actions runner. "
-                  "Stopping index step instead of looping for an hour."
-              )
-          print(f"NIFTY 50 test OK -> {len(test_rows)} rows")
-
-          for item in indices:
-              symbol = item["symbol"]
-              name = item["name"]
-
-              if symbol == "SENSEX":
-                  print(f"\nFetching BSE Sensex [{symbol}] via Yahoo Finance")
+                  request_name = aliases.get(name, available_map.get(norm(name), name))
+                  print(f"\nFetching index: {name} [{symbol}] as '{request_name}'")
                   try:
-                      df = yf.download(
-                          "^BSESN", period="5y", interval="1d", auto_adjust=False,
-                          progress=False, threads=False
-                      )
-                      if isinstance(df.columns, pd.MultiIndex):
-                          try:
-                              df = df.xs("^BSESN", axis=1, level=1)
-                          except Exception:
-                              df.columns = df.columns.get_level_values(0)
-
-                      rows = []
-                      for dt, row in df.iterrows():
-                          rows.append({
-                              "HistoricalDate": dt.strftime("%Y-%m-%d"),
-                              "OPEN": row["Open"], "HIGH": row["High"],
-                              "LOW": row["Low"], "CLOSE": row["Close"]
-                          })
-                      count = save_candles(item, rows)
+                      rows = fetch_index_in_chunks(nse, request_name, FROM_DATE, TODAY)
+                      count = save_candles(item, candles_from_rows(rows))
                       print(f"SUCCESS: {symbol} -> {count} candles" if count else f"NO DATA: {symbol}")
                   except Exception as e:
+                      # Keep going: one unsupported/new index must not block all others.
                       print(f"ERROR: {symbol} -> {e}")
-                  continue
 
-              # NIFTY 50 was already fetched for the connectivity test.
-              rows = test_rows if symbol == "NIFTY50" else fetch_nifty(name)
-              count = save_candles(item, rows)
-              if count:
-                  print(f"SUCCESS: {symbol} -> {count} candles")
-              else:
-                  print(f"NO DATA: {symbol}")
-              time.sleep(0.5)
-
-          print("\nFinished downloading index data from NSE Indices.")
+          print("\nFinished downloading index data from NSE.")
           PY
 
       - name: Show data structure
