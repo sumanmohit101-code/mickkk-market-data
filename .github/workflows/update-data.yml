@@ -62,7 +62,8 @@ jobs:
       - name: Create index catalogue
         run: |
           mkdir -p data/indices
-          cp data/indices.json data/indices.json
+          test -f data/indices.json
+          echo "Index catalogue found: data/indices.json"
 
       - name: Download stock market data
         run: |
