@@ -1,0 +1,253 @@
+name: Update Indices Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 13 * * 1-5" # Daily at 13:30 UTC (Mon-Fri)
+
+permissions:
+  contents: write
+
+jobs:
+  update-indices:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install yfinance pandas 'nse[server]==3.2.1'
+
+      - name: Create index catalogue folder
+        run: |
+          mkdir -p data/indices
+          test -f data/indices.json
+          echo "Index catalogue found: data/indices.json"
+
+      - name: Download Indices Data (Yahoo First -> NSE Fallback)
+        run: |
+          python - <<'PY'
+          import json
+          import re
+          import time
+          from datetime import date, timedelta
+          from pathlib import Path
+          import pandas as pd
+          import yfinance as yf
+          from nse import NSE
+
+          DATA_DIR = Path("data/indices")
+          DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+          with open("data/indices.json", "r", encoding="utf-8") as f:
+              indices = json.load(f)
+
+          TODAY = date.today()
+          FROM_DATE = TODAY - timedelta(days=5 * 365)
+          MIN_REQUIRED_CANDLES = 1000
+
+          def norm(value):
+              return re.sub(r"[^a-z0-9]+", "", str(value).lower())
+
+          def num(row, *names):
+              for name in names:
+                  if name in row:
+                      try:
+                          value = float(str(row[name]).replace(",", ""))
+                          if pd.notna(value):
+                              return value
+                      except Exception:
+                          pass
+              return None
+
+          def date_value(row):
+              for key in ("EOD_TIMESTAMP", "TIMESTAMP", "DATE", "Date", "date"):
+                  if key in row and row[key]:
+                      value = str(row[key]).strip()
+                      try:
+                          return pd.to_datetime(value, dayfirst=True).strftime("%Y-%m-%d")
+                      except Exception:
+                          pass
+              return None
+
+          def candles_from_rows(rows):
+              candles = {}
+              for row in rows or []:
+                  t = date_value(row)
+                  op = num(row, "EOD_OPEN_INDEX_VAL", "OPEN_INDEX_VAL", "OPEN")
+                  hi = num(row, "EOD_HIGH_INDEX_VAL", "HIGH_INDEX_VAL", "HIGH")
+                  lo = num(row, "EOD_LOW_INDEX_VAL", "LOW_INDEX_VAL", "LOW")
+                  cl = num(row, "EOD_CLOSE_INDEX_VAL", "CLOSE_INDEX_VAL", "CLOSE")
+                  if not t or any(v is None for v in (op, hi, lo, cl)) or cl <= 0:
+                      continue
+                  candles[t] = {
+                      "time": t,
+                      "open": round(op, 2),
+                      "high": round(hi, 2),
+                      "low": round(lo, 2),
+                      "close": round(cl, 2),
+                      "volume": 0
+                  }
+              return [candles[k] for k in sorted(candles)]
+
+          def save_candles(item, candles):
+              if not candles:
+                  return 0
+              with open(DATA_DIR / f"{item['symbol']}.json", "w", encoding="utf-8") as f:
+                  json.dump(candles, f, separators=(",", ":"))
+              return len(candles)
+
+          def fetch_yahoo(yahoo_ticker):
+              if not yahoo_ticker: return []
+              try:
+                  df = yf.download(yahoo_ticker, period="5y", interval="1d", auto_adjust=False, progress=False, threads=False)
+                  if df is None or df.empty: return []
+                  
+                  if isinstance(df.columns, pd.MultiIndex):
+                      if yahoo_ticker in df.columns.get_level_values(1):
+                          df = df.xs(yahoo_ticker, axis=1, level=1)
+                      elif yahoo_ticker in df.columns.get_level_values(0):
+                          df = df[yahoo_ticker]
+                      else:
+                          df.columns = df.columns.get_level_values(0)
+                          
+                  rows = []
+                  for dt, row in df.iterrows():
+                      rows.append({
+                          "EOD_TIMESTAMP": dt.strftime("%Y-%m-%d"),
+                          "OPEN": row["Open"], "HIGH": row["High"],
+                          "LOW": row["Low"], "CLOSE": row["Close"],
+                      })
+                  return candles_from_rows(rows)
+              except Exception as e:
+                  print(f"      [Yahoo Error] {e}")
+                  return []
+
+          def fetch_index_in_chunks(nse, request_name, start_date, end_date):
+              all_rows = []
+              chunk_end = end_date
+              while chunk_end >= start_date:
+                  chunk_start = max(start_date, chunk_end - timedelta(days=299))
+                  print(f"      NSE Chunk: {chunk_start} to {chunk_end}")
+                  rows = nse.fetch_historical_index_data(request_name, from_date=chunk_start, to_date=chunk_end)
+                  all_rows.extend(rows or [])
+                  chunk_end = chunk_start - timedelta(days=1)
+                  time.sleep(1)
+              return all_rows
+
+          def fetch_vix_in_chunks(nse, start_date, end_date):
+              all_rows = []
+              chunk_end = end_date
+              while chunk_end >= start_date:
+                  chunk_start = max(start_date, chunk_end - timedelta(days=299))
+                  print(f"      NSE VIX Chunk: {chunk_start} to {chunk_end}")
+                  rows = nse.fetch_historical_vix_data(from_date=chunk_start, to_date=chunk_end)
+                  all_rows.extend(rows or [])
+                  chunk_end = chunk_start - timedelta(days=1)
+                  time.sleep(1)
+              return all_rows
+
+          aliases = {
+              "NIFTY Healthcare": "NIFTY HEALTHCARE INDEX",
+              "NIFTY MidSmallcap 400": "NIFTY MIDSMALLCAP400",
+              "NIFTY MidSmallcap400": "NIFTY MIDSMALLCAP400",
+              "NIFTY MidSmallcap 400 50:50": "NIFTY MIDSMALLCAP400 50:50",
+              "NIFTY LargeMidcap 250": "NIFTY LARGEMIDCAP 250",
+              "NIFTY Microcap 250": "NIFTY MICROCAP 250",
+              "NIFTY India Consumption": "NIFTY INDIA CONSUMPTION",
+              "NIFTY Financial Services Ex-Bank": "NIFTY FINANCIAL SERVICES EX-BANK",
+              "NIFTY Reits & Realty": "NIFTY REITS & REALTY",
+          }
+
+          with NSE(download_folder=".", server=True, timeout=30) as nse:
+              print("Loading current NSE index catalogue...")
+              available = []
+              try:
+                  names = nse.fetch_index_names()
+                  for group, values in names.items():
+                      for value in values:
+                          if isinstance(value, (list, tuple)):
+                              for v in value[:2]:
+                                  available.append(str(v))
+              except Exception as e:
+                  print(f"WARNING: could not load NSE index catalogue: {e}")
+
+              available_map = {norm(x): x for x in available}
+
+              for item in indices:
+                  symbol = item["symbol"]
+                  name = item["name"]
+                  yahoo_ticker = item.get("yahoo")
+                  
+                  print(f"\nProcessing {name} [{symbol}]")
+                  
+                  if symbol == "SENSEX":
+                      print(f"  -> Fetching BSE Sensex via Yahoo Finance ONLY")
+                      y_candles = fetch_yahoo(yahoo_ticker)
+                      if y_candles:
+                          count = save_candles(item, y_candles)
+                          print(f"  -> SUCCESS: {count} candles saved.")
+                      else:
+                          print("  -> FAILED: Sensex data unavailable on Yahoo.")
+                      continue
+
+                  candles_yahoo = []
+                  if yahoo_ticker:
+                      print(f"  -> Fetching from Yahoo ({yahoo_ticker})...")
+                      candles_yahoo = fetch_yahoo(yahoo_ticker)
+                  
+                  if len(candles_yahoo) >= MIN_REQUIRED_CANDLES:
+                      count = save_candles(item, candles_yahoo)
+                      print(f"  -> SUCCESS (Yahoo): Perfect dataset ({count} candles).")
+                      continue
+                      
+                  if candles_yahoo:
+                      print(f"  -> Yahoo data incomplete ({len(candles_yahoo)} candles). Initiating NSE Fallback...")
+                  else:
+                      print(f"  -> Yahoo data missing. Initiating NSE Fallback...")
+
+                  candles_nse = []
+                  try:
+                      if symbol == "INDIAVIX":
+                          rows = fetch_vix_in_chunks(nse, FROM_DATE, TODAY)
+                          candles_nse = candles_from_rows(rows)
+                      else:
+                          request_name = aliases.get(name, available_map.get(norm(name), name))
+                          rows = fetch_index_in_chunks(nse, request_name, FROM_DATE, TODAY)
+                          candles_nse = candles_from_rows(rows)
+                  except Exception as e:
+                      print(f"  -> NSE Fallback Failed: {e}")
+
+                  best_candles = candles_yahoo if len(candles_yahoo) > len(candles_nse) else candles_nse
+                  
+                  if best_candles:
+                      count = save_candles(item, best_candles)
+                      source = "Yahoo" if best_candles == candles_yahoo else "NSE"
+                      print(f"  -> SUCCESS: Saved {count} candles (Best Source: {source})")
+                  else:
+                      print(f"  -> NO VALID DATA for {symbol} from either source.")
+
+          print("\nFinished downloading index data.")
+          PY
+
+      - name: Commit updated indices data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/indices/
+          if git diff --cached --quiet; then
+            echo "No changes to commit for indices."
+          else
+            git commit -m "Update indices market data"
+            git pull --rebase origin main
+            git push origin main
+          fi
