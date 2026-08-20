@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install yfinance pandas 'nse[server]==3.2.1'
+          pip install yfinance pandas requests
 
       - name: Organize existing stock data into A-Z folders
         run: |
@@ -205,18 +205,17 @@ jobs:
           print("\nFinished downloading stock market data.")
           PY
 
-      - name: Download Nifty, Sensex and India VIX index data
+      - name: Download Nifty and India VIX index data from NSE Indices
         run: |
           python - <<'PY'
           import json
-          import re
           import time
           from datetime import date, timedelta
           from pathlib import Path
 
+          import requests
           import pandas as pd
           import yfinance as yf
-          from nse import NSE
 
           DATA_DIR = Path("data/indices")
           DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -224,177 +223,156 @@ jobs:
           with open("data/indices.json", "r", encoding="utf-8") as f:
               indices = json.load(f)
 
-          TODAY = date.today()
-          FROM_DATE = TODAY - timedelta(days=5 * 365)
+          session = requests.Session()
+          session.headers.update({
+              "Content-Type": "application/json; charset=UTF-8",
+              "X-Requested-With": "XMLHttpRequest",
+              "Referer": "https://www.niftyindices.com/reports/historical-data",
+              "User-Agent": (
+                  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36"
+              ),
+          })
 
-          def norm(value):
-              return re.sub(r"[^a-z0-9]+", "", str(value).lower())
+          END_DATE = date.today()
+          START_DATE = END_DATE - timedelta(days=5 * 365)
+          ENDPOINT = "https://www.niftyindices.com/Backpage.aspx/getHistoricaldatatabletoString"
 
-          def num(row, *names):
-              for name in names:
-                  if name in row:
-                      try:
-                          value = float(row[name])
-                          if pd.notna(value):
-                              return value
-                      except Exception:
-                          pass
-              return None
+          def save_candles(item, rows):
+              candles = {}
 
-          def date_value(row):
-              for key in ("EOD_TIMESTAMP", "TIMESTAMP", "DATE", "Date", "date"):
-                  if key in row and row[key]:
-                      value = str(row[key]).strip()
-                      for fmt in ("%d-%b-%Y", "%d-%m-%Y", "%Y-%m-%d", "%d/%m/%Y"):
-                          try:
-                              return pd.to_datetime(value, format=fmt).strftime("%Y-%m-%d")
-                          except Exception:
-                              pass
-                      try:
-                          return pd.to_datetime(value, dayfirst=True).strftime("%Y-%m-%d")
-                      except Exception:
-                          return None
-              return None
-
-          def save_rows(item, rows):
-              candles = []
               for row in rows or []:
-                  t = date_value(row)
-                  op = num(row, "EOD_OPEN_INDEX_VAL", "OPEN_INDEX_VAL", "OPEN")
-                  hi = num(row, "EOD_HIGH_INDEX_VAL", "HIGH_INDEX_VAL", "HIGH")
-                  lo = num(row, "EOD_LOW_INDEX_VAL", "LOW_INDEX_VAL", "LOW")
-                  cl = num(row, "EOD_CLOSE_INDEX_VAL", "CLOSE_INDEX_VAL", "CLOSE")
+                  try:
+                      dt = row.get("HistoricalDate") or row.get("Date")
+                      if not dt:
+                          continue
 
-                  if not t or any(v is None for v in (op, hi, lo, cl)):
+                      dt = pd.to_datetime(dt, dayfirst=True).strftime("%Y-%m-%d")
+
+                      op = float(str(row.get("OPEN", "")).replace(",", ""))
+                      hi = float(str(row.get("HIGH", "")).replace(",", ""))
+                      lo = float(str(row.get("LOW", "")).replace(",", ""))
+                      cl = float(str(row.get("CLOSE", "")).replace(",", ""))
+
+                      if cl <= 0 or any(pd.isna(v) for v in (op, hi, lo, cl)):
+                          continue
+
+                      candles[dt] = {
+                          "time": dt,
+                          "open": round(op, 2),
+                          "high": round(hi, 2),
+                          "low": round(lo, 2),
+                          "close": round(cl, 2),
+                          "volume": 0
+                      }
+                  except Exception:
                       continue
-                  if cl <= 0:
-                      continue
 
-                  candles.append({
-                      "time": t,
-                      "open": round(op, 2),
-                      "high": round(hi, 2),
-                      "low": round(lo, 2),
-                      "close": round(cl, 2),
-                      "volume": 0
-                  })
-
-              # Remove duplicate dates and keep chronological order.
-              candles = {c["time"]: c for c in candles}
-              candles = [candles[k] for k in sorted(candles)]
-
-              if not candles:
+              ordered = [candles[k] for k in sorted(candles)]
+              if not ordered:
                   return 0
 
               with open(DATA_DIR / f"{item['symbol']}.json", "w", encoding="utf-8") as f:
-                  json.dump(candles, f, separators=(",", ":"))
+                  json.dump(ordered, f, separators=(",", ":"))
 
-              return len(candles)
+              return len(ordered)
 
-          # These names are occasionally presented differently by NSE's catalogue.
-          aliases = {
-              "NIFTY Healthcare": "NIFTY HEALTHCARE INDEX",
-              "NIFTY MidSmallcap400 50:50": "NIFTY MIDSMALLCAP400 50:50",
-              "NIFTY500 Multicap 50:25:25": "NIFTY500 MULTICAP 50:25:25",
-              "NIFTY LargeMidcap 250": "NIFTY LARGEMIDCAP 250",
-              "NIFTY Microcap 250": "NIFTY MICROCAP 250",
-          }
+          def fetch_nifty_chunk(index_name, start_dt, end_dt):
+              payload = {
+                  "cinfo": (
+                      "{"
+                      f"'name':'{index_name}',"
+                      f"'startDate':'{start_dt.strftime('%d-%b-%Y')}',"
+                      f"'endDate':'{end_dt.strftime('%d-%b-%Y')}',"
+                      f"'indexName':'{index_name}'"
+                      "}"
+                  )
+              }
 
-          with NSE(download_folder=".", server=True, timeout=30) as nse:
-              print("Loading current NSE index catalogue...")
-              available = []
-              try:
-                  names = nse.fetch_index_names()
-                  for group, values in names.items():
-                      for value in values:
-                          if isinstance(value, (list, tuple)) and len(value) >= 2:
-                              available.append(str(value[0]))
-                              available.append(str(value[1]))
-              except Exception as e:
-                  print(f"WARNING: could not load NSE index catalogue: {e}")
-
-              available_map = {norm(x): x for x in available}
-
-              for item in indices:
-                  symbol = item["symbol"]
-                  name = item["name"]
-
-                  # Sensex is a BSE index; keep its working Yahoo source.
-                  if symbol == "SENSEX":
-                      print(f"\nFetching BSE Sensex [{symbol}] via Yahoo Finance")
-                      try:
-                          df = yf.download(
-                              "^BSESN",
-                              period="5y",
-                              interval="1d",
-                              auto_adjust=False,
-                              progress=False,
-                              threads=False
-                          )
-                          if isinstance(df.columns, pd.MultiIndex):
-                              try:
-                                  df = df.xs("^BSESN", axis=1, level=1)
-                              except Exception:
-                                  df.columns = df.columns.get_level_values(0)
-
-                          rows = []
-                          for dt, row in df.iterrows():
-                              try:
-                                  rows.append({
-                                      "EOD_TIMESTAMP": dt.strftime("%Y-%m-%d"),
-                                      "OPEN": row["Open"],
-                                      "HIGH": row["High"],
-                                      "LOW": row["Low"],
-                                      "CLOSE": row["Close"],
-                                  })
-                              except Exception:
-                                  pass
-
-                          count = save_rows(item, rows)
-                          print(f"SUCCESS: {symbol} -> {count} candles" if count else f"NO DATA: {symbol}")
-                      except Exception as e:
-                          print(f"ERROR: {symbol} -> {e}")
-                      time.sleep(1)
-                      continue
-
-                  # India VIX has its own NSE historical endpoint.
-                  if symbol == "INDIAVIX":
-                      print(f"\nFetching India VIX [{symbol}] from NSE")
-                      try:
-                          rows = nse.fetch_historical_vix_data(
-                              from_date=FROM_DATE,
-                              to_date=TODAY
-                          )
-                          count = save_rows(item, rows)
-                          print(f"SUCCESS: {symbol} -> {count} candles" if count else f"NO DATA: {symbol}")
-                      except Exception as e:
-                          print(f"ERROR: {symbol} -> {e}")
-                      time.sleep(1)
-                      continue
-
-                  # All NIFTY-family indices come directly from NSE.
-                  request_name = aliases.get(name, available_map.get(norm(name), name))
-                  print(f"\nFetching index: {name} [{symbol}] from NSE as '{request_name}'")
-
+              for attempt in range(1, 4):
                   try:
-                      rows = nse.fetch_historical_index_data(
-                          request_name,
-                          from_date=FROM_DATE,
-                          to_date=TODAY
-                      )
-                      count = save_rows(item, rows)
+                      r = session.post(ENDPOINT, json=payload, timeout=90)
+                      r.raise_for_status()
+                      body = r.json()
 
-                      if count:
-                          print(f"SUCCESS: {symbol} -> {count} candles")
-                      else:
-                          print(f"NO DATA: {symbol} -> NSE returned no usable rows")
+                      raw = body.get("d", "[]")
+                      if isinstance(raw, str):
+                          return json.loads(raw)
+                      return raw or []
+                  except Exception as e:
+                      print(f"  attempt {attempt}/3 failed for {index_name}: {e}")
+                      if attempt < 3:
+                          time.sleep(5 * attempt)
+
+              return []
+
+          for item in indices:
+              symbol = item["symbol"]
+              name = item["name"]
+
+              # Sensex is not a Nifty index, so keep its working Yahoo source.
+              if symbol == "SENSEX":
+                  print(f"\nFetching BSE Sensex [{symbol}] via Yahoo Finance")
+                  try:
+                      df = yf.download(
+                          "^BSESN",
+                          period="5y",
+                          interval="1d",
+                          auto_adjust=False,
+                          progress=False,
+                          threads=False
+                      )
+
+                      if isinstance(df.columns, pd.MultiIndex):
+                          try:
+                              df = df.xs("^BSESN", axis=1, level=1)
+                          except Exception:
+                              df.columns = df.columns.get_level_values(0)
+
+                      rows = []
+                      for dt, row in df.iterrows():
+                          try:
+                              rows.append({
+                                  "HistoricalDate": dt.strftime("%Y-%m-%d"),
+                                  "OPEN": row["Open"],
+                                  "HIGH": row["High"],
+                                  "LOW": row["Low"],
+                                  "CLOSE": row["Close"],
+                              })
+                          except Exception:
+                              pass
+
+                      count = save_candles(item, rows)
+                      print(f"SUCCESS: {symbol} -> {count} candles" if count else f"NO DATA: {symbol}")
                   except Exception as e:
                       print(f"ERROR: {symbol} -> {e}")
-
-                  # NSE recommends throttling requests; keep a safe delay.
                   time.sleep(1)
+                  continue
 
-          print("\nFinished downloading index data from NSE.")
+              print(f"\nFetching index: {name} [{symbol}] from NSE Indices")
+
+              all_rows = []
+              chunk_start = START_DATE
+
+              while chunk_start <= END_DATE:
+                  chunk_end = min(chunk_start + timedelta(days=180), END_DATE)
+                  rows = fetch_nifty_chunk(name, chunk_start, chunk_end)
+                  print(
+                      f"  {chunk_start} to {chunk_end}: "
+                      f"{len(rows)} rows"
+                  )
+                  all_rows.extend(rows)
+                  chunk_start = chunk_end + timedelta(days=1)
+                  time.sleep(1.2)
+
+              count = save_candles(item, all_rows)
+
+              if count:
+                  print(f"SUCCESS: {symbol} -> {count} candles")
+              else:
+                  print(f"NO DATA: {symbol} -> NSE returned no OHLC rows")
+
+          print("\nFinished downloading index data from NSE Indices.")
           PY
 
       - name: Show data structure
