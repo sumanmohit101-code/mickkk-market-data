@@ -27,7 +27,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install yfinance pandas
 
-      - name: Organize existing data into A-Z folders
+      - name: Organize existing stock data into A-Z folders
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -44,7 +44,7 @@ jobs:
           moved = 0
 
           for src in data_dir.glob("*.json"):
-              if src.name == "symbols.json":
+              if src.name in {"symbols.json", "indices.json"}:
                   continue
 
               symbol = src.stem.upper()
@@ -56,10 +56,15 @@ jobs:
                   shutil.move(str(src), str(dest))
                   moved += 1
 
-          print(f"Moved existing root JSON files: {moved}")
+          print(f"Moved existing root stock JSON files: {moved}")
           PY
 
-      - name: Download and update market data
+      - name: Create index catalogue
+        run: |
+          mkdir -p data/indices
+          cp indices.json data/indices.json
+
+      - name: Download stock market data
         run: |
           python - <<'PY'
           import json
@@ -81,13 +86,13 @@ jobs:
                   if line.strip()
               ))
 
-          print(f"Found {len(symbols)} unique symbols")
+          print(f"Found {len(symbols)} unique stock symbols")
 
           def bucket(symbol):
               first = symbol[:1].upper()
               return first if re.fullmatch(r"[A-Z]", first) else "0-9"
 
-          def save_candles(symbol, stock_df):
+          def save_candles(symbol, stock_df, dest_dir):
               if stock_df is None or stock_df.empty:
                   return 0
 
@@ -121,10 +126,9 @@ jobs:
               if not candles:
                   return 0
 
-              dest_dir = DATA_DIR / bucket(symbol)
               dest_dir.mkdir(parents=True, exist_ok=True)
-
               filename = dest_dir / f"{symbol}.json"
+
               with open(filename, "w", encoding="utf-8") as f:
                   json.dump(candles, f, separators=(",", ":"))
 
@@ -137,10 +141,7 @@ jobs:
               tickers = [f"{symbol}.NS" for symbol in batch]
 
               print("\n" + "=" * 70)
-              print(
-                  f"Batch {start // BATCH_SIZE + 1}: "
-                  f"{start + 1}-{start + len(batch)} / {len(symbols)}"
-              )
+              print(f"Batch {start // BATCH_SIZE + 1}: {start + 1}-{start + len(batch)} / {len(symbols)}")
               print("=" * 70)
 
               downloaded = None
@@ -168,8 +169,6 @@ jobs:
 
               if downloaded is None or downloaded.empty:
                   print("BATCH FAILED: no data returned")
-                  for symbol in batch:
-                      print(f"NO DATA: {symbol}")
                   continue
 
               for symbol in batch:
@@ -188,10 +187,9 @@ jobs:
                               print(f"NO DATA: {symbol}")
                               continue
                       else:
-                          # Single-ticker fallback
                           stock_df = downloaded.copy()
 
-                      count = save_candles(symbol, stock_df)
+                      count = save_candles(symbol, stock_df, DATA_DIR / bucket(symbol))
 
                       if count:
                           print(f"SUCCESS: {symbol} -> {count} candles")
@@ -203,7 +201,98 @@ jobs:
 
               time.sleep(2)
 
-          print("\nFinished downloading market data.")
+          print("\nFinished downloading stock market data.")
+          PY
+
+      - name: Download Nifty, Sensex and India VIX index data
+        run: |
+          python - <<'PY'
+          import json
+          import time
+          from pathlib import Path
+
+          import pandas as pd
+          import yfinance as yf
+
+          DATA_DIR = Path("data/indices")
+          DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+          with open("indices.json", "r", encoding="utf-8") as f:
+              indices = json.load(f)
+
+          def save_index(item, df):
+              if df is None or df.empty:
+                  return 0
+
+              candles = []
+
+              for date, row in df.iterrows():
+                  try:
+                      close = float(row["Close"])
+                      if pd.isna(close) or close <= 0:
+                          continue
+
+                      op = float(row["Open"])
+                      hi = float(row["High"])
+                      lo = float(row["Low"])
+
+                      if any(pd.isna(x) for x in [op, hi, lo]):
+                          continue
+
+                      candles.append({
+                          "time": date.strftime("%Y-%m-%d"),
+                          "open": round(op, 2),
+                          "high": round(hi, 2),
+                          "low": round(lo, 2),
+                          "close": round(close, 2),
+                          "volume": 0
+                      })
+                  except Exception:
+                      continue
+
+              if not candles:
+                  return 0
+
+              with open(DATA_DIR / f"{item['symbol']}.json", "w", encoding="utf-8") as f:
+                  json.dump(candles, f, separators=(",", ":"))
+
+              return len(candles)
+
+          for item in indices:
+              symbol = item["symbol"]
+              yahoo = item["yahoo"]
+
+              print(f"\nFetching index: {item['name']} [{symbol}] via {yahoo}")
+
+              try:
+                  df = yf.download(
+                      yahoo,
+                      period="5y",
+                      interval="1d",
+                      auto_adjust=False,
+                      progress=False,
+                      threads=False
+                  )
+
+                  if isinstance(df.columns, pd.MultiIndex):
+                      try:
+                          df = df.xs(yahoo, axis=1, level=1)
+                      except Exception:
+                          df.columns = df.columns.get_level_values(0)
+
+                  count = save_index(item, df)
+
+                  if count:
+                      print(f"SUCCESS: {symbol} -> {count} candles")
+                  else:
+                      print(f"NO DATA: {symbol} (Yahoo mapping may be unavailable)")
+
+              except Exception as e:
+                  print(f"ERROR: {symbol} -> {e}")
+
+              time.sleep(1)
+
+          print("\nFinished downloading index data.")
           PY
 
       - name: Show data structure
@@ -211,8 +300,11 @@ jobs:
           echo "Root JSON files:"
           find data -maxdepth 1 -type f -name "*.json" | wc -l
 
-          echo "Stock JSON files inside folders:"
-          find data -mindepth 2 -maxdepth 2 -type f -name "*.json" | wc -l
+          echo "Stock JSON files inside A-Z folders:"
+          find data -mindepth 2 -maxdepth 2 -type f -name "*.json" ! -path "data/indices/*" | wc -l
+
+          echo "Index JSON files:"
+          find data/indices -type f -name "*.json" | wc -l
 
           echo "Total JSON files:"
           find data -type f -name "*.json" | wc -l
@@ -227,6 +319,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Update market data"
+            git commit -m "Update stocks and index market data"
             git push
           fi
