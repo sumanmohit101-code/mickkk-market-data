@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install yfinance pandas requests
+          pip install yfinance pandas requests cloudscraper
 
       - name: Organize existing stock data into A-Z folders
         run: |
@@ -213,9 +213,9 @@ jobs:
           from datetime import date, timedelta
           from pathlib import Path
 
-          import requests
           import pandas as pd
           import yfinance as yf
+          import cloudscraper
 
           DATA_DIR = Path("data/indices")
           DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -223,37 +223,36 @@ jobs:
           with open("data/indices.json", "r", encoding="utf-8") as f:
               indices = json.load(f)
 
-          session = requests.Session()
-          session.headers.update({
-              "Content-Type": "application/json; charset=UTF-8",
-              "X-Requested-With": "XMLHttpRequest",
-              "Referer": "https://www.niftyindices.com/reports/historical-data",
-              "User-Agent": (
-                  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36"
-              ),
-          })
-
           END_DATE = date.today()
           START_DATE = END_DATE - timedelta(days=5 * 365)
           ENDPOINT = "https://www.niftyindices.com/Backpage.aspx/getHistoricaldatatabletoString"
+          PAGE = "https://www.niftyindices.com/reports/historical-data"
+
+          scraper = cloudscraper.create_scraper(
+              browser={"browser": "chrome", "platform": "linux", "mobile": False}
+          )
+          scraper.headers.update({
+              "Accept": "application/json, text/javascript, */*; q=0.01",
+              "Content-Type": "application/json; charset=UTF-8",
+              "X-Requested-With": "XMLHttpRequest",
+              "Origin": "https://www.niftyindices.com",
+              "Referer": PAGE,
+              "Accept-Language": "en-US,en;q=0.9,hi;q=0.8",
+          })
 
           def save_candles(item, rows):
               candles = {}
-
               for row in rows or []:
                   try:
                       dt = row.get("HistoricalDate") or row.get("Date")
                       if not dt:
                           continue
-
                       dt = pd.to_datetime(dt, dayfirst=True).strftime("%Y-%m-%d")
 
                       op = float(str(row.get("OPEN", "")).replace(",", ""))
                       hi = float(str(row.get("HIGH", "")).replace(",", ""))
                       lo = float(str(row.get("LOW", "")).replace(",", ""))
                       cl = float(str(row.get("CLOSE", "")).replace(",", ""))
-
                       if cl <= 0 or any(pd.isna(v) for v in (op, hi, lo, cl)):
                           continue
 
@@ -274,55 +273,93 @@ jobs:
 
               with open(DATA_DIR / f"{item['symbol']}.json", "w", encoding="utf-8") as f:
                   json.dump(ordered, f, separators=(",", ":"))
-
               return len(ordered)
 
-          def fetch_nifty_chunk(index_name, start_dt, end_dt):
+          def bootstrap():
+              try:
+                  r = scraper.get(PAGE, timeout=15)
+                  print(f"Nifty Indices page bootstrap: HTTP {r.status_code}, {len(r.text)} bytes")
+                  return r.status_code == 200
+              except Exception as e:
+                  print(f"Nifty page bootstrap warning: {e}")
+                  return False
+
+          def fetch_nifty(index_name):
               payload = {
                   "cinfo": (
                       "{"
                       f"'name':'{index_name}',"
-                      f"'startDate':'{start_dt.strftime('%d-%b-%Y')}',"
-                      f"'endDate':'{end_dt.strftime('%d-%b-%Y')}',"
+                      f"'startDate':'{START_DATE.strftime('%d-%b-%Y')}',"
+                      f"'endDate':'{END_DATE.strftime('%d-%b-%Y')}',"
                       f"'indexName':'{index_name}'"
                       "}"
                   )
               }
 
-              for attempt in range(1, 4):
+              for attempt in range(1, 3):
                   try:
-                      r = session.post(ENDPOINT, json=payload, timeout=90)
+                      # Refresh the page before the first request and after a blocked response.
+                      if attempt == 1:
+                          bootstrap()
+
+                      r = scraper.post(ENDPOINT, json=payload, timeout=45)
+                      print(f"  HTTP {r.status_code}, {len(r.text)} bytes")
                       r.raise_for_status()
-                      body = r.json()
+
+                      try:
+                          body = r.json()
+                      except ValueError:
+                          print(f"  NON-JSON response: {r.text[:180]!r}")
+                          if attempt == 1:
+                              time.sleep(2)
+                              bootstrap()
+                          continue
 
                       raw = body.get("d", "[]")
                       if isinstance(raw, str):
-                          return json.loads(raw)
-                      return raw or []
+                          try:
+                              rows = json.loads(raw)
+                          except ValueError:
+                              print(f"  Invalid 'd' JSON: {raw[:180]!r}")
+                              rows = []
+                      else:
+                          rows = raw or []
+
+                      if rows:
+                          return rows
+
+                      print(f"  No rows returned for {index_name}")
+                      return []
+
                   except Exception as e:
-                      print(f"  attempt {attempt}/3 failed for {index_name}: {e}")
-                      if attempt < 3:
-                          time.sleep(5 * attempt)
+                      print(f"  attempt {attempt}/2 failed for {index_name}: {e}")
+                      if attempt == 1:
+                          time.sleep(2)
+                          bootstrap()
 
               return []
+
+          # Quick connectivity test BEFORE processing all 57 indices.
+          print("Testing NSE Indices endpoint with NIFTY 50...")
+          test_rows = fetch_nifty("NIFTY 50")
+          if not test_rows:
+              raise SystemExit(
+                  "NSE Indices historical API is not returning JSON/rows from this GitHub Actions runner. "
+                  "Stopping index step instead of looping for an hour."
+              )
+          print(f"NIFTY 50 test OK -> {len(test_rows)} rows")
 
           for item in indices:
               symbol = item["symbol"]
               name = item["name"]
 
-              # Sensex is not a Nifty index, so keep its working Yahoo source.
               if symbol == "SENSEX":
                   print(f"\nFetching BSE Sensex [{symbol}] via Yahoo Finance")
                   try:
                       df = yf.download(
-                          "^BSESN",
-                          period="5y",
-                          interval="1d",
-                          auto_adjust=False,
-                          progress=False,
-                          threads=False
+                          "^BSESN", period="5y", interval="1d", auto_adjust=False,
+                          progress=False, threads=False
                       )
-
                       if isinstance(df.columns, pd.MultiIndex):
                           try:
                               df = df.xs("^BSESN", axis=1, level=1)
@@ -331,46 +368,25 @@ jobs:
 
                       rows = []
                       for dt, row in df.iterrows():
-                          try:
-                              rows.append({
-                                  "HistoricalDate": dt.strftime("%Y-%m-%d"),
-                                  "OPEN": row["Open"],
-                                  "HIGH": row["High"],
-                                  "LOW": row["Low"],
-                                  "CLOSE": row["Close"],
-                              })
-                          except Exception:
-                              pass
-
+                          rows.append({
+                              "HistoricalDate": dt.strftime("%Y-%m-%d"),
+                              "OPEN": row["Open"], "HIGH": row["High"],
+                              "LOW": row["Low"], "CLOSE": row["Close"]
+                          })
                       count = save_candles(item, rows)
                       print(f"SUCCESS: {symbol} -> {count} candles" if count else f"NO DATA: {symbol}")
                   except Exception as e:
                       print(f"ERROR: {symbol} -> {e}")
-                  time.sleep(1)
                   continue
 
-              print(f"\nFetching index: {name} [{symbol}] from NSE Indices")
-
-              all_rows = []
-              chunk_start = START_DATE
-
-              while chunk_start <= END_DATE:
-                  chunk_end = min(chunk_start + timedelta(days=180), END_DATE)
-                  rows = fetch_nifty_chunk(name, chunk_start, chunk_end)
-                  print(
-                      f"  {chunk_start} to {chunk_end}: "
-                      f"{len(rows)} rows"
-                  )
-                  all_rows.extend(rows)
-                  chunk_start = chunk_end + timedelta(days=1)
-                  time.sleep(1.2)
-
-              count = save_candles(item, all_rows)
-
+              # NIFTY 50 was already fetched for the connectivity test.
+              rows = test_rows if symbol == "NIFTY50" else fetch_nifty(name)
+              count = save_candles(item, rows)
               if count:
                   print(f"SUCCESS: {symbol} -> {count} candles")
               else:
-                  print(f"NO DATA: {symbol} -> NSE returned no OHLC rows")
+                  print(f"NO DATA: {symbol}")
+              time.sleep(0.5)
 
           print("\nFinished downloading index data from NSE Indices.")
           PY
