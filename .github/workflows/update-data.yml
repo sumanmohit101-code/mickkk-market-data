@@ -218,7 +218,7 @@ jobs:
           DATA_DIR = Path("data/indices")
           DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-          with open("indices.json", "r", encoding="utf-8") as f:
+          with open("data/indices.json", "r", encoding="utf-8") as f:
               indices = json.load(f)
 
           def save_index(item, df):
