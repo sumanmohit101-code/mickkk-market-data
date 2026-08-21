@@ -31,26 +31,25 @@ jobs:
         run: |
           test -f data/indices.json
           mkdir -p data/indices
-          echo "Index catalogue found."
           python - <<'PY'
           import json
           with open("data/indices.json", "r", encoding="utf-8") as f:
               items = json.load(f)
           print(f"Found {len(items)} indices in catalogue")
+          yahoo_count = sum(1 for x in items if x.get("yahoo"))
+          print(f"Yahoo mappings in JSON: {yahoo_count}")
           PY
 
       - name: Download indices - Yahoo first, NSE fallback
         run: |
           python - <<'PY'
           import json
-          import re
           import time
           from datetime import date, timedelta
           from pathlib import Path
 
           import pandas as pd
           import yfinance as yf
-          from nse import NSE
 
           DATA_DIR = Path("data/indices")
           DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -61,31 +60,10 @@ jobs:
           TODAY = date.today()
           FROM_DATE = TODAY - timedelta(days=5 * 365)
 
-          # Verified Yahoo mappings for the common NSE/BSE indices.
-          # Indices without a mapping use NSE fallback.
-          YAHOO_MAP = {
-              "NIFTY 50": "^NSEI",
-              "NIFTY BANK": "^NSEBANK",
-              "NIFTY AUTO": "^CNXAUTO",
-              "NIFTY FMCG": "^CNXFMCG",
-              "NIFTY IT": "^CNXIT",
-              "NIFTY MEDIA": "^CNXMEDIA",
-              "NIFTY METAL": "^CNXMETAL",
-              "NIFTY PHARMA": "^CNXPHARMA",
-              "NIFTY PSU BANK": "^CNXPSUBANK",
-              "NIFTY REALTY": "^CNXREALTY",
-              "INDIA VIX": "^INDIAVIX",
-              "SENSEX": "^BSESN",
-          }
-
-          NSE_ALIASES = {
-              "NIFTY HEALTHCARE INDEX": "NIFTY HEALTHCARE INDEX",
-              "NIFTY REITS & REALTY": "NIFTY REITS & REALTY",
-              "NIFTY FINANCIAL SERVICES EX-BANK": "NIFTY FINANCIAL SERVICES EX-BANK",
-              "NIFTY LARGE MIDCAP 250": "NIFTY LARGEMIDCAP 250",
-              "NIFTY MIDSMALLCAP 400": "NIFTY MIDSMALLCAP 400",
-              "NIFTY MICROCAP 250": "NIFTY MICROCAP 250",
-          }
+          # NSE is intentionally NOT initialized at startup.
+          # GitHub Actions sometimes cannot reach NSE's option-chain endpoint.
+          # We only import/initialize NSE if an index actually needs fallback.
+          nse_client = None
 
           def clean_number(x):
               try:
@@ -120,11 +98,39 @@ jobs:
                       "high": round(hi, 2),
                       "low": round(lo, 2),
                       "close": round(cl, 2),
-                      "volume": 0,
+                      "volume": 0
                   })
 
               unique = {x["time"]: x for x in out}
               return [unique[k] for k in sorted(unique)]
+
+          def is_recent(candles):
+              if not candles:
+                  return False
+              latest = date.fromisoformat(candles[-1]["time"])
+              return (TODAY - latest).days <= 10
+
+          def yahoo_is_good(candles):
+              # Keep the original full-history quality rule.
+              return len(candles) >= 900 and is_recent(candles)
+
+          def save(symbol, candles):
+              with open(DATA_DIR / f"{symbol}.json", "w", encoding="utf-8") as f:
+                  json.dump(candles, f, separators=(",", ":"))
+
+          def get_nse_client():
+              global nse_client
+              if nse_client is not None:
+                  return nse_client
+
+              try:
+                  from nse import NSE
+                  print("Initializing NSE fallback connection...")
+                  nse_client = NSE(download_folder=".", server=True, timeout=60)
+                  return nse_client
+              except Exception as e:
+                  print(f"NSE initialization failed: {e}")
+                  return None
 
           def nse_number(row, *keys):
               for key in keys:
@@ -163,19 +169,10 @@ jobs:
                       "high": round(hi, 2),
                       "low": round(lo, 2),
                       "close": round(cl, 2),
-                      "volume": 0,
+                      "volume": 0
                   }
 
               return [candles[k] for k in sorted(candles)]
-
-          def is_recent(candles):
-              if not candles:
-                  return False
-              latest = date.fromisoformat(candles[-1]["time"])
-              return (TODAY - latest).days <= 10
-
-          def yahoo_is_good(candles):
-              return len(candles) >= 900 and is_recent(candles)
 
           def fetch_nse_chunks(nse, request_name):
               all_rows = []
@@ -188,116 +185,115 @@ jobs:
                   rows = nse.fetch_historical_index_data(
                       request_name,
                       from_date=chunk_start,
-                      to_date=chunk_end,
+                      to_date=chunk_end
                   )
                   all_rows.extend(rows or [])
 
                   chunk_end = chunk_start - timedelta(days=1)
-                  time.sleep(1.0)
+                  time.sleep(1)
 
               return nse_candles(all_rows)
 
-          def save(symbol, candles):
-              if not candles:
-                  return
-              with open(DATA_DIR / f"{symbol}.json", "w", encoding="utf-8") as f:
-                  json.dump(candles, f, separators=(",", ":"))
-
           print(f"Processing {len(indices)} indices...")
           print("Yahoo Finance = PRIMARY")
-          print("NSE = FALLBACK")
-          print("Incomplete fallback histories will NOT be saved.")
+          print("NSE = LAZY FALLBACK (only if Yahoo fails/incomplete)")
+          print("Incomplete histories will NOT replace existing files.")
 
-          with NSE(download_folder=".", server=True, timeout=30) as nse:
-              available = []
-              try:
-                  names = nse.fetch_index_names()
-                  for group, values in names.items():
-                      for value in values:
-                          if isinstance(value, (list, tuple)):
-                              for v in value[:2]:
-                                  available.append(str(v))
-              except Exception as e:
-                  print(f"WARNING: NSE catalogue could not be loaded: {e}")
+          yahoo_success = 0
+          yahoo_failed = 0
+          nse_success = 0
+          nse_failed = 0
 
-              def norm(x):
-                  return re.sub(r"[^a-z0-9]+", "", str(x).lower())
+          for item in indices:
+              name = str(item.get("name", "")).strip()
+              symbol = str(item.get("symbol", "")).strip().upper()
+              yahoo_symbol = item.get("yahoo")
 
-              available_map = {norm(x): x for x in available}
+              print(f"\n========== {name} [{symbol}] ==========")
 
-              for item in indices:
-                  name = str(item["name"]).strip()
-                  symbol = str(item["symbol"]).strip().upper()
-
-                  print(f"\n========== {name} [{symbol}] ==========")
-
-                  yahoo_symbol = YAHOO_MAP.get(name)
-
-                  if yahoo_symbol:
-                      try:
-                          print(f"Yahoo: {yahoo_symbol}")
-
-                          df = yf.download(
-                              yahoo_symbol,
-                              start=FROM_DATE.isoformat(),
-                              end=(TODAY + timedelta(days=1)).isoformat(),
-                              interval="1d",
-                              auto_adjust=False,
-                              progress=False,
-                              threads=False,
-                          )
-
-                          candles = yahoo_candles(df)
-
-                          print(
-                              f"Yahoo returned {len(candles)} candles; "
-                              f"latest={candles[-1]['time'] if candles else 'NONE'}"
-                          )
-
-                          if yahoo_is_good(candles):
-                              save(symbol, candles)
-                              print(f"SUCCESS YAHOO: {symbol} -> {len(candles)} candles")
-                              time.sleep(1)
-                              continue
-
-                          print("Yahoo history incomplete/stale -> NSE fallback.")
-
-                      except Exception as e:
-                          print(f"Yahoo error: {e}")
-                          print("NSE fallback.")
-
-                  else:
-                      print("No Yahoo mapping -> NSE fallback.")
-
+              # 1) Yahoo primary, directly from data/indices.json
+              if yahoo_symbol:
                   try:
-                      request_name = NSE_ALIASES.get(
-                          name,
-                          available_map.get(norm(name), name)
+                      print(f"Yahoo ticker from JSON: {yahoo_symbol}")
+
+                      df = yf.download(
+                          str(yahoo_symbol),
+                          start=FROM_DATE.isoformat(),
+                          end=(TODAY + timedelta(days=1)).isoformat(),
+                          interval="1d",
+                          auto_adjust=False,
+                          progress=False,
+                          threads=False
                       )
 
-                      print(f"NSE request: {request_name}")
-                      candles = fetch_nse_chunks(nse, request_name)
+                      candles = yahoo_candles(df)
+                      latest = candles[-1]["time"] if candles else "NONE"
 
                       print(
-                          f"NSE returned {len(candles)} candles; "
-                          f"latest={candles[-1]['time'] if candles else 'NONE'}"
+                          f"Yahoo returned {len(candles)} candles; latest={latest}"
                       )
 
-                      if len(candles) >= 900 and is_recent(candles):
+                      if yahoo_is_good(candles):
                           save(symbol, candles)
-                          print(f"SUCCESS NSE: {symbol} -> {len(candles)} candles")
-                      else:
-                          print(
-                              f"NO VALID DATA: {symbol} "
-                              f"(incomplete/stale; existing file not replaced)"
-                          )
+                          yahoo_success += 1
+                          print(f"SUCCESS YAHOO: {symbol} -> {len(candles)} candles")
+                          time.sleep(1)
+                          continue
+
+                      print("Yahoo data incomplete/stale -> NSE fallback.")
 
                   except Exception as e:
-                      print(f"NSE ERROR: {symbol} -> {e}")
+                      print(f"Yahoo error: {e}")
+                      print("NSE fallback.")
 
-                  time.sleep(2)
+              else:
+                  print("No Yahoo ticker in JSON -> NSE fallback.")
 
-          print("\nFinished updating index market data.")
+              # 2) NSE fallback only when actually needed
+              nse = get_nse_client()
+              if nse is None:
+                  nse_failed += 1
+                  print(f"NO NSE FALLBACK: {symbol}")
+                  continue
+
+              try:
+                  # Direct request using the catalogue name. The NSE package
+                  # accepts the official index name for historical index data.
+                  print(f"NSE request: {name}")
+
+                  candles = fetch_nse_chunks(nse, name)
+                  latest = candles[-1]["time"] if candles else "NONE"
+
+                  print(
+                      f"NSE returned {len(candles)} candles; latest={latest}"
+                  )
+
+                  if len(candles) >= 900 and is_recent(candles):
+                      save(symbol, candles)
+                      nse_success += 1
+                      print(f"SUCCESS NSE: {symbol} -> {len(candles)} candles")
+                  else:
+                      nse_failed += 1
+                      print(
+                          f"NO VALID DATA: {symbol} "
+                          f"(incomplete/stale; existing file not replaced)"
+                      )
+
+              except Exception as e:
+                  nse_failed += 1
+                  print(f"NSE ERROR: {symbol} -> {e}")
+
+              time.sleep(2)
+
+          print("\n========== FINAL SUMMARY ==========")
+          print(f"Yahoo success : {yahoo_success}")
+          print(f"Yahoo failed  : {yahoo_failed}")
+          print(f"NSE success   : {nse_success}")
+          print(f"NSE failed    : {nse_failed}")
+          print("Finished updating index market data.")
+
+          # Do not fail the whole workflow merely because NSE is unreachable.
+          # Successful Yahoo files can still be committed.
           PY
 
       - name: Show index data summary
