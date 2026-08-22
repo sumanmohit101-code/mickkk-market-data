@@ -1,15 +1,15 @@
-name: Update Market Data
+name: Update Stocks Market Data
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 12 * * 1-5"
+    - cron: "30 11 * * 1-5" # 17:00 IST, Monday-Friday
 
 permissions:
   contents: write
 
 jobs:
-  update:
+  update-stocks:
     runs-on: ubuntu-latest
     timeout-minutes: 120
 
@@ -27,7 +27,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install yfinance pandas
 
-      - name: Organize existing data into A-Z folders
+      - name: Organize existing stock data into A-Z folders
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -42,32 +42,26 @@ jobs:
               return first if re.fullmatch(r"[A-Z]", first) else "0-9"
 
           moved = 0
-
           for src in data_dir.glob("*.json"):
-              if src.name == "symbols.json":
+              if src.name in {"symbols.json", "indices.json"}:
                   continue
-
               symbol = src.stem.upper()
               dest_dir = data_dir / bucket(symbol)
               dest_dir.mkdir(exist_ok=True)
               dest = dest_dir / src.name
-
               if src.resolve() != dest.resolve():
                   shutil.move(str(src), str(dest))
                   moved += 1
-
-          print(f"Moved existing root JSON files: {moved}")
+          print(f"Moved existing root stock JSON files: {moved}")
           PY
 
-      - name: Download and update market data
+      - name: Download stock market data
         run: |
           python - <<'PY'
           import json
-          import os
           import re
           import time
           from pathlib import Path
-
           import pandas as pd
           import yfinance as yf
 
@@ -75,40 +69,31 @@ jobs:
           DATA_DIR.mkdir(exist_ok=True)
 
           with open("symbols.txt", "r", encoding="utf-8") as f:
-              symbols = list(dict.fromkeys(
-                  line.strip().upper()
-                  for line in f
-                  if line.strip()
-              ))
+              symbols = list(dict.fromkeys(line.strip().upper() for line in f if line.strip()))
 
-          print(f"Found {len(symbols)} unique symbols")
+          print(f"Found {len(symbols)} unique stock symbols")
 
           def bucket(symbol):
               first = symbol[:1].upper()
               return first if re.fullmatch(r"[A-Z]", first) else "0-9"
 
-          def save_candles(symbol, stock_df):
+          def save_candles(symbol, stock_df, dest_dir):
               if stock_df is None or stock_df.empty:
                   return 0
-
               candles = []
-
-              for date, row in stock_df.iterrows():
+              for dt, row in stock_df.iterrows():
                   try:
                       close = float(row["Close"])
                       if pd.isna(close) or close <= 0:
                           continue
-
                       open_price = float(row["Open"])
                       high = float(row["High"])
                       low = float(row["Low"])
                       volume = int(float(row["Volume"]))
-
                       if any(pd.isna(x) for x in [open_price, high, low]):
                           continue
-
                       candles.append({
-                          "time": date.strftime("%Y-%m-%d"),
+                          "time": dt.strftime("%Y-%m-%d"),
                           "open": round(open_price, 2),
                           "high": round(high, 2),
                           "low": round(low, 2),
@@ -117,69 +102,46 @@ jobs:
                       })
                   except Exception:
                       continue
-
               if not candles:
                   return 0
-
-              dest_dir = DATA_DIR / bucket(symbol)
               dest_dir.mkdir(parents=True, exist_ok=True)
-
-              filename = dest_dir / f"{symbol}.json"
-              with open(filename, "w", encoding="utf-8") as f:
+              with open(dest_dir / f"{symbol}.json", "w", encoding="utf-8") as f:
                   json.dump(candles, f, separators=(",", ":"))
-
               return len(candles)
 
           BATCH_SIZE = 50
-
           for start in range(0, len(symbols), BATCH_SIZE):
               batch = symbols[start:start + BATCH_SIZE]
               tickers = [f"{symbol}.NS" for symbol in batch]
-
               print("\n" + "=" * 70)
-              print(
-                  f"Batch {start // BATCH_SIZE + 1}: "
-                  f"{start + 1}-{start + len(batch)} / {len(symbols)}"
-              )
+              print(f"Batch {start // BATCH_SIZE + 1}: {start + 1}-{start + len(batch)} / {len(symbols)}")
               print("=" * 70)
 
               downloaded = None
-
               for attempt in range(1, 4):
                   try:
                       downloaded = yf.download(
-                          tickers=tickers,
-                          period="5y",
-                          interval="1d",
-                          auto_adjust=False,
-                          group_by="ticker",
-                          threads=True,
-                          progress=False
+                          tickers=tickers, period="5y", interval="1d",
+                          auto_adjust=False, group_by="ticker",
+                          threads=True, progress=False
                       )
-
                       if downloaded is not None and not downloaded.empty:
                           break
-
                       print(f"Batch returned no data, attempt {attempt}/3")
                   except Exception as e:
                       print(f"Batch error on attempt {attempt}/3: {e}")
-
                   time.sleep(5 * attempt)
 
               if downloaded is None or downloaded.empty:
                   print("BATCH FAILED: no data returned")
-                  for symbol in batch:
-                      print(f"NO DATA: {symbol}")
                   continue
 
               for symbol in batch:
                   ticker = f"{symbol}.NS"
-
                   try:
                       if isinstance(downloaded.columns, pd.MultiIndex):
                           level0 = downloaded.columns.get_level_values(0)
                           level1 = downloaded.columns.get_level_values(1)
-
                           if ticker in level0:
                               stock_df = downloaded[ticker].copy()
                           elif ticker in level1:
@@ -188,45 +150,30 @@ jobs:
                               print(f"NO DATA: {symbol}")
                               continue
                       else:
-                          # Single-ticker fallback
                           stock_df = downloaded.copy()
 
-                      count = save_candles(symbol, stock_df)
-
-                      if count:
-                          print(f"SUCCESS: {symbol} -> {count} candles")
-                      else:
-                          print(f"NO VALID DATA: {symbol}")
-
+                      count = save_candles(symbol, stock_df, DATA_DIR / bucket(symbol))
+                      print(f"SUCCESS: {symbol} -> {count} candles" if count else f"NO VALID DATA: {symbol}")
                   except Exception as e:
                       print(f"ERROR: {symbol} -> {e}")
-
               time.sleep(2)
 
-          print("\nFinished downloading market data.")
+          print("\nFinished downloading stock market data.")
           PY
 
-      - name: Show data structure
+      - name: Show stock data summary
         run: |
-          echo "Root JSON files:"
-          find data -maxdepth 1 -type f -name "*.json" | wc -l
+          echo "Stock JSON files:"
+          find data -mindepth 2 -maxdepth 2 -type f -name "*.json" ! -path "data/indices/*" | wc -l
 
-          echo "Stock JSON files inside folders:"
-          find data -mindepth 2 -maxdepth 2 -type f -name "*.json" | wc -l
-
-          echo "Total JSON files:"
-          find data -type f -name "*.json" | wc -l
-
-      - name: Commit updated data
+      - name: Commit updated stock data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
           git add data/
-
           if git diff --cached --quiet; then
-            echo "No changes to commit."
+            echo "No stock data changes."
           else
-            git commit -m "Update market data"
+            git commit -m "Update stock market data"
             git push
           fi
