@@ -177,3 +177,176 @@ jobs:
             git commit -m "Update stock market data"
             git push
           fi
+
+                - name: Fetch NSE Daily Price Band data
+        run: |
+          python - <<'PY'
+          import csv
+          import io
+          import json
+          import zipfile
+          from datetime import datetime, timedelta
+          from pathlib import Path
+
+          import requests
+
+          OUT_DIR = Path("data/price_band")
+          OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+          session = requests.Session()
+          session.headers.update({
+              "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131 Safari/537.36",
+              "Accept": "text/csv,application/csv,application/zip,*/*",
+              "Accept-Language": "en-US,en;q=0.9",
+              "Referer": "https://www.nseindia.com/",
+          })
+
+          # First establish NSE session
+          try:
+              r = session.get("https://www.nseindia.com/", timeout=30)
+              r.raise_for_status()
+          except Exception as e:
+              print(f"NSE session initialization failed: {e}")
+              raise
+
+          today = datetime.now().date()
+
+          # Try latest trading dates, newest first.
+          dates = [
+              today - timedelta(days=i)
+              for i in range(0, 7)
+          ]
+
+          def download_file(url):
+              try:
+                  r = session.get(url, timeout=45)
+                  if r.status_code == 200 and len(r.content) > 100:
+                      return r.content
+              except Exception as e:
+                  print(f"Download error: {e}")
+              return None
+
+          price_band_saved = False
+          band_changes_saved = False
+
+          for d in dates:
+              ddmmyyyy = d.strftime("%d%m%Y")
+              yyyymmdd = d.strftime("%Y%m%d")
+
+              # NSE Price Band complete list
+              urls = [
+                  f"https://nsearchives.nseindia.com/content/equities/sec_list_{ddmmyyyy}.csv",
+                  f"https://nsearchives.nseindia.com/content/equities/sec_list_{yyyymmdd}.csv",
+              ]
+
+              for url in urls:
+                  print(f"Trying price-band file: {url}")
+                  content = download_file(url)
+
+                  if content:
+                      try:
+                          text = content.decode("utf-8-sig")
+                          rows = list(csv.DictReader(io.StringIO(text)))
+
+                          if rows:
+                              output = {
+                                  "date": d.isoformat(),
+                                  "source": "NSE India",
+                                  "type": "price_band_complete",
+                                  "data": rows
+                              }
+
+                              with open(
+                                  OUT_DIR / "price_band_latest.json",
+                                  "w",
+                                  encoding="utf-8"
+                              ) as f:
+                                  json.dump(
+                                      output,
+                                      f,
+                                      ensure_ascii=False,
+                                      separators=(",", ":")
+                                  )
+
+                              with open(
+                                  OUT_DIR / f"price_band_{d.strftime('%Y-%m-%d')}.csv",
+                                  "wb"
+                              ) as f:
+                                  f.write(content)
+
+                              print(
+                                  f"SUCCESS price band: {d} -> {len(rows)} securities"
+                              )
+
+                              price_band_saved = True
+                              break
+                      except Exception as e:
+                          print(f"Could not parse price-band file: {e}")
+
+              if price_band_saved:
+                  break
+
+          for d in dates:
+              ddmmyyyy = d.strftime("%d%m%Y")
+
+              url = (
+                  "https://nsearchives.nseindia.com/"
+                  f"content/equities/eq_band_changes_{ddmmyyyy}.csv"
+              )
+
+              print(f"Trying band-change file: {url}")
+
+              content = download_file(url)
+
+              if content:
+                  try:
+                      text = content.decode("utf-8-sig")
+                      rows = list(csv.DictReader(io.StringIO(text)))
+
+                      if rows:
+                          output = {
+                              "date": d.isoformat(),
+                              "source": "NSE India",
+                              "type": "price_band_changes_next_trade_date",
+                              "data": rows
+                          }
+
+                          with open(
+                              OUT_DIR / "price_band_changes_latest.json",
+                              "w",
+                              encoding="utf-8"
+                          ) as f:
+                              json.dump(
+                                  output,
+                                  f,
+                                  ensure_ascii=False,
+                                  separators=(",", ":")
+                              )
+
+                          with open(
+                              OUT_DIR / f"price_band_changes_{d.strftime('%Y-%m-%d')}.csv",
+                              "wb"
+                          ) as f:
+                              f.write(content)
+
+                          print(
+                              f"SUCCESS band changes: {d} -> {len(rows)} records"
+                          )
+
+                          band_changes_saved = True
+                          break
+
+                  except Exception as e:
+                      print(f"Could not parse band-change file: {e}")
+
+          if not price_band_saved:
+              print("WARNING: Price Band complete list was not downloaded.")
+
+          if not band_changes_saved:
+              print("WARNING: Price Band changes file was not downloaded.")
+
+          if not price_band_saved and not band_changes_saved:
+              raise RuntimeError("NSE Price Band files could not be downloaded.")
+
+          print("NSE Price Band update finished.")
+          PY
