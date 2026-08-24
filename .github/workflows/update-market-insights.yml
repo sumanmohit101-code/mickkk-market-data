@@ -1,0 +1,141 @@
+name: Update Market Insights (FII-DII, Sentiment & Ban List)
+
+on:
+  schedule:
+    # Mon-Fri shaam ko 6:30 PM IST (13:00 UTC) par chalega
+    - cron: '0 13 * * 1-5'
+  workflow_dispatch: # Manual run button ke liye
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-market-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pandas
+
+      - name: Fetch and Process Market Data
+        run: |
+          python - << 'EOF'
+          import json
+          import os
+          import requests
+          from datetime import datetime
+
+          os.makedirs('data', exist_ok=True)
+
+          # NSE Session setup with browser headers
+          session = requests.Session()
+          headers = {
+              "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+              "Accept": "*/*",
+              "Accept-Language": "en-US,en;q=0.9",
+              "Referer": "https://www.nseindia.com/"
+          }
+          session.headers.update(headers)
+
+          # Cookie warm-up
+          try:
+              session.get("https://www.nseindia.com", timeout=15)
+          except Exception as e:
+              print(f"Warning warming up session: {e}")
+
+          # -------------------------------------------------------------
+          # 1. Fetch FII / DII Data
+          # -------------------------------------------------------------
+          try:
+              fii_dii_url = "https://www.nseindia.com/api/fiidiiTradeReact"
+              res = session.get(fii_dii_url, timeout=15)
+              if res.status_code == 200:
+                  fii_dii_data = res.json()
+                  with open('data/fii_dii.json', 'w', encoding='utf-8') as f:
+                      json.dump({
+                          "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                          "data": fii_dii_data
+                      }, f, indent=2)
+                  print("✅ FII/DII data saved successfully.")
+              else:
+                  print(f"Failed FII/DII: Status {res.status_code}")
+          except Exception as e:
+              print(f"Error fetching FII/DII: {e}")
+
+          # -------------------------------------------------------------
+          # 2. Fetch F&O Ban List
+          # -------------------------------------------------------------
+          try:
+              ban_url = "https://www.nseindia.com/api/fo-sec-ban"
+              res = session.get(ban_url, timeout=15)
+              if res.status_code == 200:
+                  ban_data = res.json()
+                  with open('data/fno_ban.json', 'w', encoding='utf-8') as f:
+                      json.dump({
+                          "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                          "ban_list": ban_data
+                      }, f, indent=2)
+                  print("✅ F&O Ban list saved successfully.")
+              else:
+                  # Fallback empty list if no stocks in ban
+                  with open('data/fno_ban.json', 'w', encoding='utf-8') as f:
+                      json.dump({"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "ban_list": []}, f, indent=2)
+                  print("No stocks in F&O ban or failed.")
+          except Exception as e:
+              print(f"Error fetching F&O Ban list: {e}")
+
+          # -------------------------------------------------------------
+          # 3. Market Sentiment (Advance/Decline & India VIX)
+          # -------------------------------------------------------------
+          try:
+              sentiment_url = "https://www.nseindia.com/api/allIndices"
+              res = session.get(sentiment_url, timeout=15)
+              if res.status_code == 200:
+                  indices_data = res.json().get('data', [])
+                  
+                  # Extract Nifty 50, Bank Nifty, and India VIX
+                  sentiment_summary = {}
+                  for item in indices_data:
+                      index_name = item.get('index')
+                      if index_name in ['NIFTY 50', 'NIFTY BANK', 'INDIA VIX']:
+                          sentiment_summary[index_name] = {
+                              "lastPrice": item.get('last'),
+                              "change": item.get('change'),
+                              "pChange": item.get('pChange'),
+                              "advances": item.get('advances', 0),
+                              "declines": item.get('declines', 0),
+                              "unchanged": item.get('unchanged', 0)
+                          }
+
+                  with open('data/market_sentiment.json', 'w', encoding='utf-8') as f:
+                      json.dump({
+                          "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                          "sentiment": sentiment_summary
+                      }, f, indent=2)
+                  print("✅ Market sentiment data saved successfully.")
+          except Exception as e:
+              print(f"Error fetching Sentiment: {e}")
+
+          EOF
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Auto-update Market Insights (FII/DII, F&O Ban, Sentiment)"
+            git push
+          fi
