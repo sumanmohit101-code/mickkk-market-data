@@ -1,0 +1,216 @@
+name: Update Corporate Events and FII DII History
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "45 4 * * 1-5"
+    - cron: "0 14 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-data-main
+  cancel-in-progress: false
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install curl_cffi
+
+      - name: Fetch corporate events and FII DII history
+        shell: bash
+        run: |
+          python <<'PY'
+          import json, os
+          from datetime import datetime, timedelta
+          from zoneinfo import ZoneInfo
+          from curl_cffi import requests
+
+          IST = ZoneInfo("Asia/Kolkata")
+          now = datetime.now(IST)
+          today = now.date()
+          os.makedirs("data", exist_ok=True)
+
+          session = requests.Session(impersonate="chrome")
+          session.headers.update({
+              "accept": "application/json, text/plain, */*",
+              "accept-language": "en-US,en;q=0.9",
+              "referer": "https://www.nseindia.com/",
+              "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/151.0.0.0 Safari/537.36",
+          })
+          home = session.get("https://www.nseindia.com/", timeout=30)
+          print("NSE home:", home.status_code)
+
+          def parse_date(v):
+              if not v: return None
+              s = str(v).strip()
+              for fmt in ("%d-%b-%Y","%d-%B-%Y","%d/%m/%Y","%Y-%m-%d"):
+                  try: return datetime.strptime(s, fmt).date()
+                  except ValueError: pass
+              try: return datetime.fromisoformat(s.replace("Z","+00:00")).date()
+              except Exception: return None
+
+          def rows(payload):
+              if isinstance(payload, list): return payload
+              if not isinstance(payload, dict): return []
+              for k in ("data","results","records","rows"):
+                  if isinstance(payload.get(k), list): return payload[k]
+              for v in payload.values():
+                  if isinstance(v, list): return v
+              return []
+
+          def get_rows(url, label):
+              r = session.get(url, timeout=30)
+              print(label, r.status_code)
+              if r.status_code != 200: return []
+              try: return rows(r.json())
+              except Exception as e: print(label, "JSON error", e); return []
+
+          try:
+              symbols = json.load(open("data/symbols.json", encoding="utf-8"))
+          except Exception: symbols = []
+          symbol_map = {str(x.get("symbol","")).upper(): str(x.get("name","")).strip() for x in symbols if x.get("symbol")}
+
+          result_rows = []
+          for period in ("Quarterly","Annual","Half-Yearly","Others"):
+              result_rows += get_rows("https://www.nseindia.com/api/corporates-financial-results" f"?index=equities&period={period}", period)
+
+          def result_dt(x):
+              for k in ("broadCastDate","broadcastDate","filingDate","exchdisstime","date"):
+                  d = parse_date(x.get(k))
+                  if d: return d
+              return None
+
+          old=[]
+          try: old=json.load(open("data/results_history.json", encoding="utf-8"))
+          except Exception: pass
+          if not isinstance(old,list): old=[]
+          cutoff=today-timedelta(days=730)
+          latest={}
+          for x in old+result_rows:
+              if not isinstance(x,dict): continue
+              sym=str(x.get("symbol","")).strip().upper(); d=result_dt(x)
+              if not sym or not d or d<cutoff or d>today: continue
+              item={"symbol":sym,"company":str(x.get("companyName") or x.get("company") or symbol_map.get(sym,"")).strip(),"resultDate":d.isoformat(),"period":str(x.get("period") or "").strip(),"relatingTo":str(x.get("relatingTo") or "").strip(),"periodFrom":str(x.get("fromDate") or "").strip(),"periodTo":str(x.get("toDate") or "").strip(),"consolidated":str(x.get("consolidated") or "").strip(),"audited":str(x.get("audited") or "").strip()}
+              latest[(sym,item["resultDate"])] = item
+          history=sorted(latest.values(), key=lambda x:(x["resultDate"],x["symbol"]))[-20000:]
+          json.dump(history, open("data/results_history.json","w",encoding="utf-8"), ensure_ascii=False, indent=2)
+
+          upcoming=[]
+          for x in get_rows("https://www.nseindia.com/api/event-calendar", "event-calendar"):
+              if not isinstance(x,dict): continue
+              if "financial result" not in (str(x.get("purpose", ""))+" "+str(x.get("bm_desc", ""))).lower(): continue
+              d=parse_date(x.get("date")); sym=str(x.get("symbol","")).strip().upper()
+              if not d or d<today or not sym: continue
+              upcoming.append({"symbol":sym,"company":str(x.get("company","")).strip(),"date":d.isoformat(),"purpose":str(x.get("purpose","")).strip(),"description":str(x.get("bm_desc","")).strip()})
+          def dedupe(items, fields):
+              out={}
+              for x in items: out[tuple(x.get(f) for f in fields)] = x
+              return list(out.values())
+          upcoming=dedupe(upcoming,["symbol","date","description"])
+          upcoming.sort(key=lambda x:(x["date"],x["symbol"]))
+
+          actions=get_rows("https://www.nseindia.com/api/corporates-corporateActions?index=equities", "corporateActions")
+          board=get_rows("https://www.nseindia.com/api/corporates-boardMeetings?index=equities", "boardMeetings")
+          bulk=get_rows("https://www.nseindia.com/api/historical/bulk-deals", "bulkDeals")
+          block=get_rows("https://www.nseindia.com/api/historical/block-deals", "blockDeals")
+
+          def normalize(items, kind):
+              out=[]
+              for x in items:
+                  if not isinstance(x,dict): continue
+                  sym=str(x.get("symbol") or x.get("Symbol") or x.get("ticker") or "").strip().upper()
+                  d=parse_date(x.get("date") or x.get("exDate") or x.get("meetingDate") or x.get("broadcastDate") or x.get("tradeDate"))
+                  if not sym or not d: continue
+                  out.append({"symbol":sym,"date":d.isoformat(),"type":kind,"company":str(x.get("companyName") or x.get("company") or symbol_map.get(sym,"")).strip(),"purpose":str(x.get("purpose") or x.get("subject") or x.get("action") or "").strip(),"description":str(x.get("description") or x.get("bm_desc") or x.get("remarks") or "").strip()})
+              return dedupe(out,["symbol","date","type","purpose","description"])
+
+          cutoff_evt=today-timedelta(days=365)
+          actions_n=[x for x in normalize(actions,"CORPORATE ACTION") if parse_date(x["date"])>=cutoff_evt]
+          board_n=[x for x in normalize(board,"BOARD MEETING") if parse_date(x["date"])>=cutoff_evt]
+          bulk_n=[x for x in normalize(bulk,"BULK DEAL") if parse_date(x["date"])>=cutoff_evt]
+          block_n=[x for x in normalize(block,"BLOCK DEAL") if parse_date(x["date"])>=cutoff_evt]
+
+          all_syms=set(symbol_map)
+          all_syms.update(x["symbol"] for x in upcoming+history+actions_n+board_n+bulk_n+block_n)
+          latest_by_symbol={}
+          for x in history: latest_by_symbol[x["symbol"]]=x
+          symbol_wise=[]
+          for sym in sorted(all_syms):
+              symbol_wise.append({"symbol":sym,"name":symbol_map.get(sym,""),"lastResult":latest_by_symbol.get(sym),"upcomingResults":sorted([x for x in upcoming if x["symbol"]==sym],key=lambda x:x["date"]),"corporateActions":[x for x in actions_n if x["symbol"]==sym],"boardMeetings":[x for x in board_n if x["symbol"]==sym],"bulkDeals":[x for x in bulk_n if x["symbol"]==sym],"blockDeals":[x for x in block_n if x["symbol"]==sym]})
+          if len(symbol_wise)<1000: raise RuntimeError(f"Only {len(symbol_wise)} symbols built; refusing partial update")
+
+          corporate={"source":"NSE","updatedAt":now.isoformat(),"timezone":"Asia/Kolkata","symbolWise":symbol_wise}
+          results={"source":"NSE","updatedAt":now.isoformat(),"timezone":"Asia/Kolkata","today":[x for x in upcoming if x["date"]==today.isoformat()],"tomorrow":[x for x in upcoming if x["date"]==(today+timedelta(days=1)).isoformat()],"allUpcoming":upcoming,"lastResults":history,"symbolWise":symbol_wise}
+          json.dump(results, open("data/results.json","w",encoding="utf-8"), ensure_ascii=False, indent=2)
+          json.dump(corporate, open("data/corporate_events.json","w",encoding="utf-8"), ensure_ascii=False, indent=2)
+
+          fii=get_rows("https://www.nseindia.com/api/fiidiiTradeReact", "FII/DII")
+          if not fii: raise RuntimeError("NSE FII/DII returned no rows; refusing blank overwrite")
+          old_fii=[]
+          try: old_fii=json.load(open("data/fii_dii_history.json",encoding="utf-8"))
+          except Exception: pass
+          if not isinstance(old_fii,list): old_fii=[]
+          combined=old_fii+fii; clean=[]; seen=set()
+          for x in combined:
+              if not isinstance(x,dict): continue
+              date=x.get("date") or x.get("tradeDate") or x.get("timestamp") or x.get("Date")
+              cat=x.get("category") or x.get("clientType") or x.get("type") or x.get("Category")
+              buy=x.get("buyValue") or x.get("buy") or x.get("buyAmount") or x.get("Buy Value")
+              sell=x.get("sellValue") or x.get("sell") or x.get("sellAmount") or x.get("Sell Value")
+              net=x.get("netValue") or x.get("net") or x.get("netAmount") or x.get("Net Value")
+              key=(str(date),str(cat),str(buy),str(sell),str(net))
+              if key in seen: continue
+              seen.add(key); clean.append(x)
+          clean=clean[-5000:]
+          json.dump(clean, open("data/fii_dii_history.json","w",encoding="utf-8"), ensure_ascii=False, indent=2)
+          json.dump({"source":"NSE","updated":now.isoformat(),"timezone":"Asia/Kolkata","data":fii,"history":clean}, open("data/fii_dii.json","w",encoding="utf-8"), ensure_ascii=False, indent=2)
+
+          print("SYMBOLS:",len(symbol_wise),"UPCOMING:",len(upcoming),"RESULT HISTORY:",len(history),"ACTIONS:",len(actions_n),"BOARD:",len(board_n),"BULK:",len(bulk_n),"BLOCK:",len(block_n),"FII/DII HISTORY:",len(clean))
+          PY
+
+      - name: Validate generated data
+        run: |
+          python - <<'PY'
+          import json
+          results=json.load(open('data/results.json',encoding='utf-8'))
+          corp=json.load(open('data/corporate_events.json',encoding='utf-8'))
+          fii=json.load(open('data/fii_dii.json',encoding='utf-8'))
+          assert len(results.get('symbolWise',[])) >= 1000
+          assert len(corp.get('symbolWise',[])) >= 1000
+          assert fii.get('data')
+          print('Validation passed:',len(results['symbolWise']),'symbols')
+          PY
+
+      - name: Commit and push
+        shell: bash
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/results.json data/results_history.json data/corporate_events.json data/fii_dii.json data/fii_dii_history.json
+          if git diff --cached --quiet; then echo "No changes."; exit 0; fi
+          git commit -m "Update corporate events and FII DII history"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort || true
+            sleep 5
+          done
+          exit 1
