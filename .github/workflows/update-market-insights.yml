@@ -2,72 +2,318 @@ name: Update Market Insights
 
 on:
   schedule:
-    - cron: '30 13 * * 1-5'
+    # 19:00 IST, Monday-Friday
+    - cron: "30 13 * * 1-5"
+
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: market-insights-update
+  cancel-in-progress: false
+
 jobs:
   update-insights:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
-        uses: setup-python@v5
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.12"
 
       - name: Install Dependencies
         run: |
-          pip install requests yfinance
+          python -m pip install --upgrade pip
+          pip install requests curl_cffi yfinance pandas
 
       - name: Fetch and Save Market Insights
+        shell: bash
         run: |
-          python -c "
-          import json, os, requests, yfinance as yf
+          python <<'PY'
+          import json
+          import os
           from datetime import datetime
+          from zoneinfo import ZoneInfo
 
-          os.makedirs('data', exist_ok=True)
-          headers = {'User-Agent': 'Mozilla/5.0'}
+          import yfinance as yf
+          from curl_cffi import requests
 
-          # 1. FII / DII Data
+          DATA_DIR = "data"
+          os.makedirs(DATA_DIR, exist_ok=True)
+
+          IST = ZoneInfo("Asia/Kolkata")
+          now = datetime.now(IST)
+
+          print("======================================")
+          print("MARKET INSIGHTS UPDATE")
+          print("======================================")
+          print("IST time:", now.isoformat())
+
+          # -------------------------------------------------
+          # NSE/Groww-style HTTP session
+          # -------------------------------------------------
+
+          headers = {
+              "accept": "application/json, text/plain, */*",
+              "accept-language": "en-US,en;q=0.9",
+              "user-agent": (
+                  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/151.0.0.0 Safari/537.36"
+              ),
+          }
+
+          session = requests.Session(
+              impersonate="chrome"
+          )
+
+          session.headers.update(headers)
+
+          # -------------------------------------------------
+          # 1. FII / DII DATA
+          # -------------------------------------------------
+
           fii_dii = []
+
+          FII_URL = (
+              "https://groww.in/v1/api/stocks_data/v1/"
+              "fii_dii/daily"
+          )
+
           try:
-              r = requests.get('https://groww.in/v1/api/stocks_data/v1/fii_dii/daily', headers=headers, timeout=10)
-              if r.status_code == 200:
-                  fii_dii = r.json()
-          except Exception as e:
-              print('FII error:', e)
+              print("Fetching FII/DII data...")
 
-          with open('data/fii_dii.json', 'w') as f:
-              json.dump({'updated': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'data': fii_dii}, f, indent=2)
+              response = session.get(
+                  FII_URL,
+                  timeout=30
+              )
 
-          # 2. Market Sentiment (India VIX & Indices)
+              print(
+                  "FII/DII HTTP status:",
+                  response.status_code
+              )
+
+              if response.status_code == 200:
+                  fii_dii = response.json()
+
+                  print(
+                      "FII/DII data received successfully."
+                  )
+              else:
+                  print(
+                      "FII/DII request failed:",
+                      response.text[:500]
+                  )
+
+          except Exception as exc:
+              print(
+                  "FII/DII error:",
+                  repr(exc)
+              )
+
+          fii_output = {
+              "source": "Groww",
+              "updated": now.isoformat(),
+              "timezone": "Asia/Kolkata",
+              "data": fii_dii
+          }
+
+          with open(
+              f"{DATA_DIR}/fii_dii.json",
+              "w",
+              encoding="utf-8"
+          ) as file:
+              json.dump(
+                  fii_output,
+                  file,
+                  ensure_ascii=False,
+                  indent=2
+              )
+
+          # -------------------------------------------------
+          # 2. MARKET SENTIMENT
+          # INDIA VIX / NIFTY 50 / NIFTY BANK
+          # -------------------------------------------------
+
           sentiment = {}
-          for name, sym in [('INDIA VIX', '^INDIAVIX'), ('NIFTY 50', '^NSEI'), ('NIFTY BANK', '^NSEBANK')]:
-              try:
-                  h = yf.Ticker(sym).history(period='2d')
-                  if len(h) >= 2:
-                      p_close, l_close = h['Close'].iloc[-2], h['Close'].iloc[-1]
-                      chg = round(l_close - p_close, 2)
-                      sentiment[name] = {'lastPrice': round(l_close, 2), 'change': chg, 'pChange': round((chg/p_close)*100, 2)}
-                  elif len(h) == 1:
-                      sentiment[name] = {'lastPrice': round(h['Close'].iloc[-1], 2), 'change': 0, 'pChange': 0}
-              except Exception as e:
-                  print(f'Error {name}:', e)
 
-          with open('data/market_sentiment.json', 'w') as f:
-              json.dump({'updated': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'sentiment': sentiment}, f, indent=2)
-          print('✅ All data saved successfully!')
-          "
+          instruments = [
+              ("INDIA VIX", "^INDIAVIX"),
+              ("NIFTY 50", "^NSEI"),
+              ("NIFTY BANK", "^NSEBANK"),
+          ]
+
+          print()
+          print("Fetching market sentiment...")
+
+          for name, symbol in instruments:
+
+              try:
+                  history = yf.Ticker(symbol).history(
+                      period="5d",
+                      interval="1d",
+                      auto_adjust=False
+                  )
+
+                  if history is None or history.empty:
+                      print(
+                          f"{name}: no data returned"
+                      )
+                      continue
+
+                  closes = history["Close"].dropna()
+
+                  if len(closes) >= 2:
+
+                      previous_close = float(
+                          closes.iloc[-2]
+                      )
+
+                      latest_close = float(
+                          closes.iloc[-1]
+                      )
+
+                      change = (
+                          latest_close -
+                          previous_close
+                      )
+
+                      if previous_close != 0:
+                          percent_change = (
+                              change /
+                              previous_close
+                          ) * 100
+                      else:
+                          percent_change = 0
+
+                      sentiment[name] = {
+                          "lastPrice": round(
+                              latest_close,
+                              2
+                          ),
+                          "previousClose": round(
+                              previous_close,
+                              2
+                          ),
+                          "change": round(
+                              change,
+                              2
+                          ),
+                          "pChange": round(
+                              percent_change,
+                              2
+                          )
+                      }
+
+                  else:
+
+                      latest_close = float(
+                          closes.iloc[-1]
+                      )
+
+                      sentiment[name] = {
+                          "lastPrice": round(
+                              latest_close,
+                              2
+                          ),
+                          "previousClose": None,
+                          "change": 0,
+                          "pChange": 0
+                      }
+
+                  print(
+                      f"{name}:",
+                      sentiment[name]
+                  )
+
+              except Exception as exc:
+                  print(
+                      f"Error fetching {name}:",
+                      repr(exc)
+                  )
+
+          sentiment_output = {
+              "source": "Yahoo Finance",
+              "updated": now.isoformat(),
+              "timezone": "Asia/Kolkata",
+              "sentiment": sentiment
+          }
+
+          with open(
+              f"{DATA_DIR}/market_sentiment.json",
+              "w",
+              encoding="utf-8"
+          ) as file:
+              json.dump(
+                  sentiment_output,
+                  file,
+                  ensure_ascii=False,
+                  indent=2
+              )
+
+          print()
+          print("======================================")
+          print("MARKET INSIGHTS UPDATE COMPLETE")
+          print("======================================")
+          PY
+
+      - name: Show Generated Files
+        run: |
+          echo "Generated market insight files:"
+          ls -lh data/fii_dii.json
+          ls -lh data/market_sentiment.json
 
       - name: Commit and Push
+        shell: bash
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update Market Insights" && git push)
+          set -e
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/fii_dii.json
+          git add data/market_sentiment.json
+
+          if git diff --cached --quiet; then
+            echo "No Market Insights changes."
+            exit 0
+          fi
+
+          git commit -m "Auto-update Market Insights"
+
+          echo "Preparing to push..."
+
+          for attempt in 1 2 3 4 5; do
+
+            echo "Push attempt: $attempt"
+
+            git fetch origin main
+
+            if git rebase origin/main; then
+
+              if git push origin HEAD:main; then
+                echo "Push successful."
+                exit 0
+              fi
+
+            else
+              echo "Rebase failed."
+
+              git rebase --abort || true
+            fi
+
+            echo "Push failed. Retrying in 5 seconds..."
+            sleep 5
+          done
+
+          echo "ERROR: Could not push after 5 attempts."
+          exit 1
