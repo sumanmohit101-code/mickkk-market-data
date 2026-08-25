@@ -1,68 +1,33 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-08-24T16:30:17.721426+05:30",
+  "updatedAt": "2026-08-25T10:37:43.474653+05:30",
   "timezone": "Asia/Kolkata",
   "today": [],
   "tomorrow": [
     {
-      "symbol": "ARDEE",
-      "company": "Ardee Industries Limited",
-      "date": "2026-08-25",
+      "symbol": "JNPR",
+      "company": "Juniper Green Energy Limited",
+      "date": "2026-08-26",
       "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+      "description": "To consider and approve the unaudited standalone and consolidated financial results of the Company for the quarter ended June 30, 2026"
     },
     {
-      "symbol": "MVELECTRO",
-      "company": "MV Electrosystems Limited",
-      "date": "2026-08-25",
+      "symbol": "SIMBHALS",
+      "company": "Simbhaoli Sugars Limited",
+      "date": "2026-08-26",
       "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+      "description": "Simbhaoli Sugars Limited is hereby Informing the exchange about the IRP Convened Meeting Scheduled to be held on Wednesday, 26 August, 2026 to Consider, Review and Take note of the Consolidated Unaudited Financial results for the Quarter ended 30 June, 2026"
     },
     {
-      "symbol": "STCINDIA",
-      "company": "The State Trading Corporation of India Limited",
-      "date": "2026-08-25",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended March 31, 2026"
-    },
-    {
-      "symbol": "STCINDIA",
-      "company": "The State Trading Corporation of India Limited",
-      "date": "2026-08-25",
-      "purpose": "Financial Results",
-      "description": "The Company has informed the Exchange that a Board meeting to be held on August 25, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on August 25, 2026,  To consider and approve the financial results for the period ended Jun 30, 2026"
+      "symbol": "VIKASECO",
+      "company": "Vikas EcoTech Limited",
+      "date": "2026-08-26",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     }
   ],
   "thisWeek": [
     {
-      "symbol": "ARDEE",
-      "company": "Ardee Industries Limited",
-      "date": "2026-08-25",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "MVELECTRO",
-      "company": "MV Electrosystems Limited",
-      "date": "2026-08-25",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "STCINDIA",
-      "company": "The State Trading Corporation of India Limited",
-      "date": "2026-08-25",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended March 31, 2026"
-    },
-    {
-      "symbol": "STCINDIA",
-      "company": "The State Trading Corporation of India Limited",
-      "date": "2026-08-25",
-      "purpose": "Financial Results",
-      "description": "The Company has informed the Exchange that a Board meeting to be held on August 25, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on August 25, 2026,  To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
       "symbol": "JNPR",
       "company": "Juniper Green Energy Limited",
       "date": "2026-08-26",
@@ -82,38 +47,17 @@
       "date": "2026-08-26",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "SETCO",
+      "company": "Setco Automotive Limited",
+      "date": "2026-08-29",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended March 31, 2026"
     }
   ],
   "allUpcoming": [
     {
-      "symbol": "ARDEE",
-      "company": "Ardee Industries Limited",
-      "date": "2026-08-25",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "MVELECTRO",
-      "company": "MV Electrosystems Limited",
-      "date": "2026-08-25",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "STCINDIA",
-      "company": "The State Trading Corporation of India Limited",
-      "date": "2026-08-25",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended March 31, 2026"
-    },
-    {
-      "symbol": "STCINDIA",
-      "company": "The State Trading Corporation of India Limited",
-      "date": "2026-08-25",
-      "purpose": "Financial Results",
-      "description": "The Company has informed the Exchange that a Board meeting to be held on August 25, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on August 25, 2026,  To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
       "symbol": "JNPR",
       "company": "Juniper Green Energy Limited",
       "date": "2026-08-26",
@@ -133,6 +77,13 @@
       "date": "2026-08-26",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "SETCO",
+      "company": "Setco Automotive Limited",
+      "date": "2026-08-29",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended March 31, 2026"
     },
     {
       "symbol": "MILKYMIST",
