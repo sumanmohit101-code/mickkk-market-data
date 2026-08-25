@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-08-25T20:07:34.233447+05:30",
+  "updatedAt": "2026-08-25T20:48:43.621458+05:30",
   "timezone": "Asia/Kolkata",
   "today": [],
   "tomorrow": [
@@ -117,95 +117,7444 @@
   "lastResults": [],
   "symbolWise": [
     {
-      "symbol": "JNPR",
+      "symbol": "20MICRONS",
+      "name": "20 Microns Limited",
       "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "JNPR",
-          "company": "Juniper Green Energy Limited",
-          "date": "2026-08-26",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the unaudited standalone and consolidated financial results of the Company for the quarter ended June 30, 2026"
-        }
-      ]
+      "upcomingResults": []
     },
     {
-      "symbol": "LEAPIND",
+      "symbol": "360ONE",
+      "name": "360 ONE WAM Ltd",
       "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "LEAPIND",
-          "company": "LEAP India Limited",
-          "date": "2026-08-31",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ]
+      "upcomingResults": []
     },
     {
-      "symbol": "MILKYMIST",
+      "symbol": "3MINDIA",
+      "name": "3m India Limited",
       "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "MILKYMIST",
-          "company": "Milky Mist Dairy Food Limited",
-          "date": "2026-08-31",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the Unaudited financial results for the period ended June 30, 2026"
-        }
-      ]
+      "upcomingResults": []
     },
     {
-      "symbol": "SETCO",
+      "symbol": "63MOONS",
+      "name": "63 Moons Technologies Ltd",
       "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "SETCO",
-          "company": "Setco Automotive Limited",
-          "date": "2026-08-29",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended March 31, 2026"
-        }
-      ]
+      "upcomingResults": []
     },
     {
-      "symbol": "SIMBHALS",
+      "symbol": "AADHARHFC",
+      "name": "Aadhar Housing Finance Ltd",
       "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "SIMBHALS",
-          "company": "Simbhaoli Sugars Limited",
-          "date": "2026-08-26",
-          "purpose": "Financial Results",
-          "description": "Simbhaoli Sugars Limited is hereby Informing the exchange about the IRP Convened Meeting Scheduled to be held on Wednesday, 26 August, 2026 to Consider, Review and Take note of the Consolidated Unaudited Financial results for the Quarter ended 30 June, 2026"
-        }
-      ]
+      "upcomingResults": []
     },
     {
-      "symbol": "SUPREMEENG",
+      "symbol": "AARTIDRUGS",
+      "name": "Aarti Drugs Limited",
       "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "SUPREMEENG",
-          "company": "Supreme Engineering Limited",
-          "date": "2026-08-29",
-          "purpose": "Financial Results/Fund Raising",
-          "description": "To consider and approve the financial results for the Quarter ended Jun 30, 2026 and Fund Raising by issue of equity share on a preferential basis"
-        }
-      ]
+      "upcomingResults": []
     },
     {
-      "symbol": "VIKASECO",
+      "symbol": "AARTIIND",
+      "name": "Aarti Industries Limited",
       "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "VIKASECO",
-          "company": "Vikas EcoTech Limited",
-          "date": "2026-08-26",
-          "purpose": "Financial Results/Other business matters",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-        }
-      ]
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AARTIPHARM",
+      "name": "Aarti Pharmalabs Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AAVAS",
+      "name": "AAVAS Financiers Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ABB",
+      "name": "Abb India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ABBOTINDIA",
+      "name": "Abbott India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ABCAPITAL",
+      "name": "Aditya Birla Capital Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ABDL",
+      "name": "Allied Blenders & Distillers Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ABFRL",
+      "name": "Aditya Birla Fashion And Retail Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ABLBL",
+      "name": "Aditya Birla Lifestyle Brands Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ABREL",
+      "name": "Aditya Birla Real Estate Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ABSLAMC",
+      "name": "Aditya Birla Sun Life AMC Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ACC",
+      "name": "Acc Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ACE",
+      "name": "Action Construction Equipment Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ACI",
+      "name": "Archean Chemical Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ACMESOLAR",
+      "name": "ACME Solar Holdings Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ACUTAAS",
+      "name": "Acutaas Chemicals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ADANIENSOL",
+      "name": "Adani Energy Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ADANIENT",
+      "name": "Adani Enterprises Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ADANIGREEN",
+      "name": "Adani Green Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ADANIPORTS",
+      "name": "Adani Ports And Special Economic Zone Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ADANIPOWER",
+      "name": "Adani Power Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ADFFOODS",
+      "name": "Adf Foods Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ADOR",
+      "name": "Ador Welding Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ADVAIT",
+      "name": "Advait Energy Transitions Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ADVANCE",
+      "name": "Advance Agrolife Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ADVENTHTL",
+      "name": "Advent Hotels International Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ADVENZYMES",
+      "name": "Advanced Enzyme Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AEGISLOG",
+      "name": "Aegis Logistics Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AEGISVOPAK",
+      "name": "Aegis Vopak Terminals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AEQUS",
+      "name": "Aequs Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AEROENTER",
+      "name": "Aeroflex Enterprises Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AEROFLEX",
+      "name": "Aeroflex Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AETHER",
+      "name": "Aether Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AFCONS",
+      "name": "Afcons Infrastructure Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AFFLE",
+      "name": "Affle India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AGARIND",
+      "name": "Agarwal Industrial Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AGARWALEYE",
+      "name": "Dr Agarwals Health Care Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AGI",
+      "name": "AGI Greenpac Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AGIIL",
+      "name": "AGI Infra Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AHCL",
+      "name": "Anlon Healthcare Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AIAENG",
+      "name": "Aia Engineering Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AIIL",
+      "name": "Authum Investment & Infrastructure Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AJANTPHARM",
+      "name": "Ajanta Pharma Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AJMERA",
+      "name": "Ajmera Realty & Infra India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AKUMS",
+      "name": "Akums Drugs & Pharmaceuticals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ALGOQUANT",
+      "name": "Algoquant Fintech Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ALIVUS",
+      "name": "Alivus Life Sciences Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ALKEM",
+      "name": "Alkem Laboratories Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ALKYLAMINE",
+      "name": "Alkyl Amines Chemicals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ALLCARGO",
+      "name": "Allcargo Logistics Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ALOKINDS",
+      "name": "Alok Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AMAGI",
+      "name": "Amagi Media Labs Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AMBER",
+      "name": "Amber Enterprises India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AMBUJACEM",
+      "name": "Ambuja Cements Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AMIRCHAND",
+      "name": "Amir Chand Jagdish Kumar (Exports) Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ANANDRATHI",
+      "name": "Anand Rathi Wealth Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ANANTRAJ",
+      "name": "Anant Raj Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ANDHRSUGAR",
+      "name": "The Andhra Sugars Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ANGELONE",
+      "name": "Angel One Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ANTELOPUS",
+      "name": "Antelopus Selan Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ANTHEM",
+      "name": "Anthem Biosciences Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ANUP",
+      "name": "The Anup Engineering Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ANURAS",
+      "name": "Anupam Rasayan India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "APARINDS",
+      "name": "Apar Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "APCOTEXIND",
+      "name": "Apcotex Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "APEX",
+      "name": "Apex Frozen Foods Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "APLAPOLLO",
+      "name": "Apl Apollo Tubes Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "APLLTD",
+      "name": "Alembic Pharmaceuticals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "APOLLO",
+      "name": "Apollo Micro Systems Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "APOLLOHOSP",
+      "name": "Apollo Hospitals Enterprise Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "APOLLOPIPE",
+      "name": "Apollo Pipes Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "APOLLOTYRE",
+      "name": "Apollo Tyres Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "APTUS",
+      "name": "Aptus Value Housing Finance India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AQYLON",
+      "name": "Aqylon Nexus Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ARE&M",
+      "name": "Amara Raja Energy & Mobility Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ARFIN",
+      "name": "Arfin India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ARIS",
+      "name": "Arisinfra Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ARKADE",
+      "name": "Arkade Developers Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ARMANFIN",
+      "name": "Arman Financial Services Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ARROWGREEN",
+      "name": "Arrow Greentech Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ARSSBL",
+      "name": "Anand Rathi Share & Stock Brokers Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ARTEMISMED",
+      "name": "Artemis Medicare Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ARVIND",
+      "name": "Arvind Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ARVINDFASN",
+      "name": "Arvind Fashions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ARVSMART",
+      "name": "Arvind Smartspaces Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASAHIINDIA",
+      "name": "Asahi India Glass Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASHAPURMIN",
+      "name": "Ashapura Minechem Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASHIANA",
+      "name": "Ashiana Housing Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASHIKA",
+      "name": "Ashika Credit Capital Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASHOKA",
+      "name": "Ashoka Buildcon Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASHOKLEY",
+      "name": "Ashok Leyland Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASIANENE",
+      "name": "Asian Energy Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASIANPAINT",
+      "name": "Asian Paints Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASIANTILES",
+      "name": "Asian Granito India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASKAUTOLTD",
+      "name": "ASK Automotive Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASTERDM",
+      "name": "Aster DM Healthcare Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASTRAL",
+      "name": "Astral Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASTRAMICRO",
+      "name": "Astra Microwave Products Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ASTRAZEN",
+      "name": "Astrazeneca Pharma India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ATALREAL",
+      "name": "Atal Realtech Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ATGL",
+      "name": "Adani Total Gas Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ATHERENERG",
+      "name": "Ather Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ATLANTAELE",
+      "name": "Atlanta Electricals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ATUL",
+      "name": "Atul Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ATULAUTO",
+      "name": "Atul Auto Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AUBANK",
+      "name": "AU Small Finance Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AURIONPRO",
+      "name": "Aurionpro Solutions Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AUROPHARMA",
+      "name": "Aurobindo Pharma Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AURUM",
+      "name": "Aurum Proptech Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AVADHSUGAR",
+      "name": "Avadh Sugar & Energy",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AVALON",
+      "name": "Avalon Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AVANTEL",
+      "name": "Avantel Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AVANTIFEED",
+      "name": "Avanti Feeds Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AVL",
+      "name": "Aditya Vision Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AWFIS",
+      "name": "AWFIS Space Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AWL",
+      "name": "AWL Agri Business Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AXISBANK",
+      "name": "Axis Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AXISCADES",
+      "name": "AXISCADES Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AYE",
+      "name": "Aye Finance Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "AZAD",
+      "name": "Azad Engineering Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BAJAJ-AUTO",
+      "name": "Bajaj Auto Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BAJAJCON",
+      "name": "Bajaj Consumer Care Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BAJAJELEC",
+      "name": "Bajaj Electricals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BAJAJFINSV",
+      "name": "Bajaj Finserv Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BAJAJHCARE",
+      "name": "Bajaj Healthcare Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BAJAJHFL",
+      "name": "Bajaj Housing Finance Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BAJAJHIND",
+      "name": "Bajaj Hindusthan Sugar Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BAJAJHLDNG",
+      "name": "Bajaj Holdings & Investment Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BAJEL",
+      "name": "Bajel Projects Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BAJFINANCE",
+      "name": "Bajaj Finance Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BALAMINES",
+      "name": "Balaji Amines Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BALKRISIND",
+      "name": "Balkrishna Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BALRAMCHIN",
+      "name": "Balrampur Chini Mills Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BALUFORGE",
+      "name": "Balu Forge Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BANCOINDIA",
+      "name": "Banco Products (i) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BANDHANBNK",
+      "name": "Bandhan Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BANKBARODA",
+      "name": "Bank Of Baroda Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BANKINDIA",
+      "name": "Bank Of India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BANSALWIRE",
+      "name": "Bansal Wire Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BASF",
+      "name": "Basf India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BATAINDIA",
+      "name": "Bata India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BAYERCROP",
+      "name": "Bayer Cropscience Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BBL",
+      "name": "Bharat Bijlee Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BBOX",
+      "name": "Black Box Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BBTC",
+      "name": "Bombay Burmah Trading Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BCG",
+      "name": "Brightcom Group Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BCLIND",
+      "name": "BCL Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BDL",
+      "name": "Bharat Dynamics Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BECTORFOOD",
+      "name": "Mrs Bectors Food Specialities Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BEL",
+      "name": "Bharat Electronics Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BELRISE",
+      "name": "Belrise Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BEML",
+      "name": "Beml Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BEPL",
+      "name": "Bhansali Engineering Polymers Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BERGEPAINT",
+      "name": "Berger Paints (i) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BETA",
+      "name": "Beta Drugs Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BFINVEST",
+      "name": "Bf Investment Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BFUTILITIE",
+      "name": "Bf Utilities Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BHAGCHEM",
+      "name": "Bhagiradha Chemicals & Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BHARATCOAL",
+      "name": "Bharat Coking Coal Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BHARATFORG",
+      "name": "Bharat Forge Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BHARATSE",
+      "name": "Bharat Seats Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BHARTIARTL",
+      "name": "Bharti Airtel Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BHARTIHEXA",
+      "name": "Bharti Hexacom Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BHEL",
+      "name": "Bharat Heavy Electricals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BIKAJI",
+      "name": "Bikaji Foods International Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BIOCON",
+      "name": "Biocon Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BIRLACORPN",
+      "name": "Birla Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BLACKBUCK",
+      "name": "BlackBuck Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BLISSGVS",
+      "name": "Bliss Gvs Pharma Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BLS",
+      "name": "Bls International Services Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BLSE",
+      "name": "BLS E-Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BLUEDART",
+      "name": "Blue Dart Express Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BLUEJET",
+      "name": "Blue Jet Healthcare Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BLUESTARCO",
+      "name": "Blue Star Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BLUESTONE",
+      "name": "Bluestone Jewellery and Lifestyle Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BLUSPRING",
+      "name": "Bluspring Enterprises Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BOMDYEING",
+      "name": "Bombay Dyeing & Mfg Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BORORENEW",
+      "name": "Borosil Renewables Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BOSCH-HCIL",
+      "name": "Bosch Home Comfort India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BOSCHLTD",
+      "name": "Bosch Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BPCL",
+      "name": "Bharat Petroleum Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BRIGADE",
+      "name": "Brigade Enterprises Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BRITANNIA",
+      "name": "Britannia Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BSE",
+      "name": "BSE (Bombay stock exchange) Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BSOFT",
+      "name": "Birlasoft Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "BUILDPRO",
+      "name": "Shankara Buildpro Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CAMLINFINE",
+      "name": "Camlin Fine Sciences Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CAMPUS",
+      "name": "Campus Activewear Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CAMS",
+      "name": "Computer Age Management Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CANBK",
+      "name": "Canara Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CANFINHOME",
+      "name": "Can Fin Homes Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CANHLIFE",
+      "name": "Canara HSBC Life Insurance Company Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CANTABIL",
+      "name": "Cantabil Retail India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CAPACITE",
+      "name": "Capacite Infraprojects Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CAPILLARY",
+      "name": "Capillary Technologies India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CAPLIPOINT",
+      "name": "Caplin Point Laboratories Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CARBORUNIV",
+      "name": "Carborundum Universal Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CARERATING",
+      "name": "CARE Ratings Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CARRARO",
+      "name": "CARRARO",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CARTRADE",
+      "name": "Cartrade Tech Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CARYSIL",
+      "name": "Carysil Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CASTROLIND",
+      "name": "Castrol India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CCAVENUE",
+      "name": "AvenuesAI Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CCL",
+      "name": "Ccl Products (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CDSL",
+      "name": "Central Depository Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CEATLTD",
+      "name": "Ceat Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CEIGALL",
+      "name": "Ceigall India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CELLO",
+      "name": "Cello World Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CEMPRO",
+      "name": "Cemindia Projects Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CENTENKA",
+      "name": "Century Enka Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CENTRALBK",
+      "name": "Central Bank Of India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CENTUM",
+      "name": "Centum Electronics Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CENTURYPLY",
+      "name": "Century Plyboards (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CERA",
+      "name": "Cera Sanitaryware Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CESC",
+      "name": "Cesc Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CEWATER",
+      "name": "Concord Enviro Systems Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CGCL",
+      "name": "Capri Global Capital Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CGPOWER",
+      "name": "CG Power and Industrial Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CHALET",
+      "name": "Chalet Hotels Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CHAMBLFERT",
+      "name": "Chambal Fertilizers & Chemicals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CHEMPLASTS",
+      "name": "Chemplast Sanmar Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CHENNPETRO",
+      "name": "Chennai Petroleum Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CHOICEIN",
+      "name": "Choice International Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CHOLAFIN",
+      "name": "Cholamandalam Investment And Finance Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CHOLAHLDNG",
+      "name": "Cholamandalam Financial Holdings Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CIEINDIA",
+      "name": "CIE Automotive India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CIGNITITEC",
+      "name": "Cigniti Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CIPLA",
+      "name": "Cipla Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CLEAN",
+      "name": "Clean Science & Technology Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CLEANMAX",
+      "name": "Clean Max Enviro Energy Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CLSEL",
+      "name": "Chamanlal Setia Exports Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CMPDI",
+      "name": "Central Mine Planning & Design Institute Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CMSINFO",
+      "name": "CMS Info Systems Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CNL",
+      "name": "Creative Newtech Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "COALINDIA",
+      "name": "Coal India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "COCHINSHIP",
+      "name": "Cochin Shipyard Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "COCKERILL",
+      "name": "John Cockerill India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "COFORGE",
+      "name": "Coforge (Niit Tech) Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "COHANCE",
+      "name": "Cohance Lifesciences Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "COLPAL",
+      "name": "Colgate Palmolive (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "COMSYN",
+      "name": "Commercial Syn Bags Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CONCOR",
+      "name": "Container Corporation Of India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CONCORDBIO",
+      "name": "Concord Biotech Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CONFIPET",
+      "name": "Confidence Petroleum India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CONTROLPR",
+      "name": "Control Print Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "COROMANDEL",
+      "name": "Coromandel International Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CORONA",
+      "name": "Corona Remedies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "COSMOFIRST",
+      "name": "Cosmo First Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CPPLUS",
+      "name": "Aditya Infotech Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CRAFTSMAN",
+      "name": "Craftsman Automation Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CRAMC",
+      "name": "Canara Robeco Asset Management Company Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CREDITACC",
+      "name": "CreditAccess Grameen Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CRISIL",
+      "name": "Crisil Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CRIZAC",
+      "name": "Crizac Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CROMPTON",
+      "name": "Crompton Greaves Consumer Electricals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CSBBANK",
+      "name": "CSB Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CUB",
+      "name": "City Union Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CUMMINSIND",
+      "name": "Cummins India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CUPID",
+      "name": "Cupid Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CYIENT",
+      "name": "Cyient Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "CYIENTDLM",
+      "name": "Cyient DLM Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DABUR",
+      "name": "Dabur India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DALBHARAT",
+      "name": "Dalmia Bharat Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DALMIASUG",
+      "name": "Dalmia Bharat Sugar And Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DAMCAPITAL",
+      "name": "Dam Capital Advisors Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DATAMATICS",
+      "name": "Datamatics Global Services Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DATAPATTNS",
+      "name": "Data Patterns (India) Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DBCORP",
+      "name": "D.b.corp Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DBL",
+      "name": "Dilip Buildcon Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DBREALTY",
+      "name": "Valor Estate Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DCAL",
+      "name": "Dishman Carbogen Amcis Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DCBBANK",
+      "name": "Dcb Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DCMSHRIRAM",
+      "name": "Dcm Shriram Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DCW",
+      "name": "Dcw Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DCXINDIA",
+      "name": "DCX Systems Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DDEVPLSTIK",
+      "name": "DDev Plastiks Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DECNGOLD",
+      "name": "Deccan Gold Mines Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DEEDEV",
+      "name": "DEE Development Engineers Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DEEPAKFERT",
+      "name": "Deepak Fertilizers And Petrochemicals Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DEEPAKNTR",
+      "name": "Deepak Nitrite Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DEEPINDS",
+      "name": "Deep Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DELHIVERY",
+      "name": "Delhivery Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DELTACORP",
+      "name": "Delta Corp Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DENTA",
+      "name": "Denta Water & Infra Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DEVYANI",
+      "name": "Devyani International Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DHAMPURSUG",
+      "name": "Dhampur Sugar Mills Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DHANBANK",
+      "name": "Dhanlaxmi Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DIACABS",
+      "name": "Diamond Power Infrastructure Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DIAMONDYD",
+      "name": "Prataap Snacks Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DIFFNKG",
+      "name": "Diffusion Engineers Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DIGITIDE",
+      "name": "Digitide Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DIVGIITTS",
+      "name": "Divgi Torqtransfer Systems Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DIVISLAB",
+      "name": "Divi's Laboratories Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DIXON",
+      "name": "Dixon Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DLF",
+      "name": "Dlf Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DLINKINDIA",
+      "name": "D-link (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DMART",
+      "name": "Avenue Supermarts Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DOLLAR",
+      "name": "Dollar Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DOMS",
+      "name": "Doms Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DPABHUSHAN",
+      "name": "D.P. Abhushan Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DREDGECORP",
+      "name": "Dredging Corporation Of India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DRREDDY",
+      "name": "Dr. Reddy's Laboratories Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DSSL",
+      "name": "Dynacons Systems & Solutions Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DYCL",
+      "name": "Dynamic Cables Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "DYNAMATECH",
+      "name": "Dynamatic Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "E2E",
+      "name": "E2E Networks Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EASEMYTRIP",
+      "name": "Easy Trip Planners Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EBGNG",
+      "name": "GNG Electronics Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ECLERX",
+      "name": "Eclerx Services Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EDELWEISS",
+      "name": "Edelweiss Financial Services Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EFCIL",
+      "name": "EFC (I) Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EICHERMOT",
+      "name": "Eicher Motors Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EIDPARRY",
+      "name": "Eid Parry India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EIEL",
+      "name": "Enviro Infra Engineers Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EIHOTEL",
+      "name": "Eih Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EIMCOELECO",
+      "name": "Eimco Elecon (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ELECON",
+      "name": "Elecon Engineering Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ELECTCAST",
+      "name": "Electrosteel Castings Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ELECTHERM",
+      "name": "Electrotherm (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ELGIEQUIP",
+      "name": "Elgi Equipments Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ELITECON",
+      "name": "Elitecon International Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ELLEN",
+      "name": "ELLEN",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EMAMILTD",
+      "name": "Emami Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EMBDL",
+      "name": "Embassy Development Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EMCURE",
+      "name": "Emcure Pharmaceuticals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EMIL",
+      "name": "Electronics Mart India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EMMVEE",
+      "name": "Emmvee Photovoltaic Power Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EMSLIMITED",
+      "name": "EMS Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EMUDHRA",
+      "name": "eMudhra Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ENDURANCE",
+      "name": "Endurance Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ENGINERSIN",
+      "name": "Engineers India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ENRIN",
+      "name": "Siemens Energy India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ENTERO",
+      "name": "Entero Healthcare Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EPACK",
+      "name": "Epack Durable Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EPACKPEB",
+      "name": "EPack Prefab Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EPIGRAL",
+      "name": "Epigral Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EPL",
+      "name": "EPL Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EQUITASBNK",
+      "name": "Equitas Small Finance Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ERIS",
+      "name": "Eris Lifesciences Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ESAFSFB",
+      "name": "ESAF Small Finance Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ESCORTS",
+      "name": "Escorts Kubota Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ETERNAL",
+      "name": "Eternal Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ETHOSLTD",
+      "name": "Ethos Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EUREKAFORB",
+      "name": "Eureka Forbes Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EUROPRATIK",
+      "name": "Euro Pratik Sales Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EVEREADY",
+      "name": "Eveready Industries India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EXCELSOFT",
+      "name": "Excelsoft Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EXICOM",
+      "name": "Exicom Tele-Systems Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EXIDEIND",
+      "name": "Exide Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "EXPLEOSOL",
+      "name": "Expleo Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FACT",
+      "name": "Fertilizers And Chemicals Travancore Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FCL",
+      "name": "Fineotex Chemical Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FDC",
+      "name": "Fdc Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FEDDERSHOL",
+      "name": "Fedders Holding Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FEDERALBNK",
+      "name": "The Federal Bank  Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FEDFINA",
+      "name": "Fedbank Financial Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FERMENTA",
+      "name": "FERMENTA",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FIEMIND",
+      "name": "Fiem Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FILATEX",
+      "name": "Filatex India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FINCABLES",
+      "name": "Finolex Cables Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FINEORG",
+      "name": "Fine Organic Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FINOPB",
+      "name": "Fino Payments Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FINPIPE",
+      "name": "Finolex Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FIRSTCRY",
+      "name": "Brainbees Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FISCHER",
+      "name": "Fischer Medical Ventures Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FIVESTAR",
+      "name": "Five-Star Business Finance Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FLUOROCHEM",
+      "name": "Gujarat Fluorochemicals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FORCEMOT",
+      "name": "Force Motors Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FORTIS",
+      "name": "Fortis Healthcare Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FRACTAL",
+      "name": "Fractal Analytics Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FSL",
+      "name": "Firstsource Solutions Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "FUSION",
+      "name": "Fusion Micro Finance Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GABRIEL",
+      "name": "Gabriel India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GAEL",
+      "name": "Gujarat Ambuja Exports Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GAIL",
+      "name": "Gail (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GALAPREC",
+      "name": "Gala Precision Engineering Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GALLANTT",
+      "name": "Gallant Ispat Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GANDHAR",
+      "name": "Gandhar Oil Refinery (India) Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GANECOS",
+      "name": "Ganesha Ecosphere Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GANESHBE",
+      "name": "Ganesh Benzoplast Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GANESHHOU",
+      "name": "Ganesh Housing Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GARFIBRES",
+      "name": "Garware Technical Fibres Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GARUDA",
+      "name": "Garuda Construction and Engineering Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GATEWAY",
+      "name": "Gateway Distriparks Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GCSL",
+      "name": "Gretex Corporate Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GEMAROMA",
+      "name": "Gem Aromatics Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GENESYS",
+      "name": "Genesys International Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GENUSPOWER",
+      "name": "Genus Power Infrastructures Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GESHIP",
+      "name": "The Great Eastern Shipping Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GHCL",
+      "name": "Ghcl Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GHCLTEXTIL",
+      "name": "GHCL Textiles Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GICRE",
+      "name": "General Insurance Corporation of India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GILLETTE",
+      "name": "Gillette India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GIPCL",
+      "name": "Gujarat Industries Power Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GKENERGY",
+      "name": "GK Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GLAND",
+      "name": "Gland Pharma Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GLAXO",
+      "name": "Glaxosmithkline Pharmaceuticals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GLENMARK",
+      "name": "Glenmark Pharmaceuticals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GLOBUSSPR",
+      "name": "Globus Spirits Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GMBREW",
+      "name": "Gm Breweries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GMDCLTD",
+      "name": "Gujarat Mineral Development Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GMMPFAUDLR",
+      "name": "GMM Pfaudler Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GMRAIRPORT",
+      "name": "GMR Airports Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GMRP&UI",
+      "name": "GMR Power & Urban Infra Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GNA",
+      "name": "Gna Axles Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GNFC",
+      "name": "Gujarat Narmada Valley Fertilizers And Chemicals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GNRL",
+      "name": "Gujarat Natural Resources Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GOCLCORP",
+      "name": "Gocl Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GOCOLORS",
+      "name": "Go Fashion (India) Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GODAVARIB",
+      "name": "Godavari Biorefineries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GODFRYPHLP",
+      "name": "Godfrey Phillips India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GODIGIT",
+      "name": "Go Digit General Insurance Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GODREJAGRO",
+      "name": "Godrej Agrovet Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GODREJCP",
+      "name": "Godrej Consumer Products Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GODREJIND",
+      "name": "Godrej Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GODREJPROP",
+      "name": "Godrej Properties Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GOKEX",
+      "name": "Gokaldas Exports Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GOKULAGRO",
+      "name": "Gokul Agro Resources Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GOLDIAM",
+      "name": "Goldiam International Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GOODLUCK",
+      "name": "Goodluck India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GPIL",
+      "name": "Godawari Power And Ispat Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GPPL",
+      "name": "Gujarat Pipavav Port Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GRANULES",
+      "name": "Granules India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GRAPHITE",
+      "name": "Graphite India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GRASIM",
+      "name": "Grasim Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GRAVITA",
+      "name": "Gravita India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GREAVESCOT",
+      "name": "Greaves Cotton Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GREENLAM",
+      "name": "Greenlam Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GREENPLY",
+      "name": "Greenply Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GRINDWELL",
+      "name": "Grindwell Norton Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GRMOVER",
+      "name": "GRM Overseas Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GROWW",
+      "name": "Billionbrains Garage Ventures Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GRSE",
+      "name": "Garden Reach Shipbuilders & Engineers Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GRWRHITECH",
+      "name": "Garware Hi Tech Films Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GSFC",
+      "name": "Gujarat State Fertilizers & Chemicals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GSPCROP",
+      "name": "GSP Crop Science Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GSPL",
+      "name": "Gujarat State Petronet Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GTLINFRA",
+      "name": "Gtl Infrastructure Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GUFICBIO",
+      "name": "Gufic Biosciences Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GUJALKALI",
+      "name": "Gujarat Alkalies And Chemicals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GUJENERGY",
+      "name": "Gujarat Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GULFOILLUB",
+      "name": "Gulf Oil Lubricants India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GULPOLY",
+      "name": "Gulshan Polyols Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GVPIL",
+      "name": "GE Power India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "GVT&D",
+      "name": "GE Vernova T&D India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HAL",
+      "name": "Hindustan Aeronautics Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HAPPSTMNDS",
+      "name": "Happiest Minds Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HAPPYFORGE",
+      "name": "Happy Forgings Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HARDWYN",
+      "name": "Hardwyn India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HARIOMPIPE",
+      "name": "Hariom Pipe Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HARSHA",
+      "name": "Harsha Engineers International Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HAVELLS",
+      "name": "Havells India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HBLENGINE",
+      "name": "HBL Engineering Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HCC",
+      "name": "Hindustan Construction Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HCG",
+      "name": "Healthcare Global Enterprises Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HCLTECH",
+      "name": "Hcl Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HDBFS",
+      "name": "HDB Financial Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HDFCAMC",
+      "name": "HDFC Asset Management Company Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HDFCBANK",
+      "name": "Hdfc Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HDFCLIFE",
+      "name": "HDFC Life Insurance Company Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HEG",
+      "name": "Heg Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HEMIPROP",
+      "name": "Hemisphere Properties India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HERITGFOOD",
+      "name": "Heritage Foods Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HEROMOTOCO",
+      "name": "Hero Motocorp Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HESTERBIO",
+      "name": "Hester Biosciences Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HEXT",
+      "name": "Hexaware Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HFCL",
+      "name": "HFCL Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HGINFRA",
+      "name": "H.G. Infra Engineering Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HIKAL",
+      "name": "Hikal Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HIMATSEIDE",
+      "name": "Himatsingka Seide Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HINDALCO",
+      "name": "Hindalco Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HINDCOPPER",
+      "name": "Hindustan Copper Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HINDOILEXP",
+      "name": "Hindustan Oil Exploration Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HINDPETRO",
+      "name": "Hindustan Petroleum Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HINDUNILVR",
+      "name": "Hindustan Unilever Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HINDWAREAP",
+      "name": "Hindware Home Innovation Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HINDZINC",
+      "name": "Hindustan Zinc Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HIRECT",
+      "name": "Hind Rectifiers Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HITECH",
+      "name": "Hi-Tech Pipes Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HLEGLAS",
+      "name": "HLE Glascoat Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HNDFDS",
+      "name": "Hindustan Foods Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HOMEFIRST",
+      "name": "Home First Finance Company India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HONASA",
+      "name": "Honasa Consumer Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HONAUT",
+      "name": "Honeywell Automation India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HPL",
+      "name": "Hpl Electric & Power Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HSCL",
+      "name": "Himadri Speciality Chemical Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HUBTOWN",
+      "name": "Hubtown Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HUDCO",
+      "name": "Housing and Urban Development Corporation Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HUHTAMAKI",
+      "name": "Huhtamaki India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "HYUNDAI",
+      "name": "Hyundai Motor India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IBULLSLTD",
+      "name": "Indiabulls Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ICICIAMC",
+      "name": "ICICI Prudential Asset Management Co Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ICICIBANK",
+      "name": "Icici Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ICICIGI",
+      "name": "ICICI Lombard General Insurance Company Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ICICIPRULI",
+      "name": "Icici Prudential Life Insurance Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ICIL",
+      "name": "Indo Count Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ICRA",
+      "name": "Icra Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IDBI",
+      "name": "Idbi Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IDEA",
+      "name": "Vodafone Idea Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IDEAFORGE",
+      "name": "Ideaforge Technology Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IDFCFIRSTB",
+      "name": "IDFC First Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IEX",
+      "name": "Indian Energy Exchange Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IFBIND",
+      "name": "Ifb Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IFCI",
+      "name": "Ifci Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IGARASHI",
+      "name": "Igarashi Motors India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IGIL",
+      "name": "International Gemmological Institute (India) Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IGL",
+      "name": "Indraprastha Gas Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IIFL",
+      "name": "IIFL Finance Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IIFLCAPS",
+      "name": "IIFL Capital Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IKIO",
+      "name": "IKIO Lighting Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IKS",
+      "name": "Inventurus Knowledge Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IMAGICAA",
+      "name": "Imagicaaworld Entertainment Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IMFA",
+      "name": "Indian Metals & Ferro Alloys Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INA",
+      "name": "Insolation Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDGN",
+      "name": "Indegene Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDHOTEL",
+      "name": "The Indian Hotels Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDIACEM",
+      "name": "The India Cements Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDIAGLYCO",
+      "name": "India Glycols Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDIAMART",
+      "name": "Indiamart Intermesh Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDIANB",
+      "name": "Indian Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDIANHUME",
+      "name": "Indian Hume Pipe Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDIASHLTR",
+      "name": "India Shelter Finance Corporation Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDIGO",
+      "name": "Interglobe Aviation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDIGOPNTS",
+      "name": "Indigo Paints Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDNIPPON",
+      "name": "India Nippon Electricals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDOBORAX",
+      "name": "Indo Borax & Chemicals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDOCO",
+      "name": "Indoco Remedies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDOFARM",
+      "name": "Indo Farm Equipment Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDOTECH",
+      "name": "Indo Tech Transformers Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDOTHAI",
+      "name": "Indo Thai Securities Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDRAMEDCO",
+      "name": "Indraprastha Medical Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDSWFTLAB",
+      "name": "Ind-swift Laboratories Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDUSINDBK",
+      "name": "Indusind Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INDUSTOWER",
+      "name": "Indus Towers Ltd (Bharti Infratel)",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INFOBEAN",
+      "name": "InfoBeans Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INFY",
+      "name": "Infosys Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INGERRAND",
+      "name": "Ingersoll Rand (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INNOVACAP",
+      "name": "Innova Captab Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INOXGREEN",
+      "name": "Inox Green Energy Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INOXINDIA",
+      "name": "Inox India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INOXWIND",
+      "name": "Inox Wind Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INTELLECT",
+      "name": "Intellect Design Arena Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "INTERARCH",
+      "name": "Interarch Building Products Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IOB",
+      "name": "Indian Overseas Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IOC",
+      "name": "Indian Oil Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IOLCP",
+      "name": "Iol Chemicals And Pharmaceuticals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IONEXCHANG",
+      "name": "Ion Exchange (India) Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IPCALAB",
+      "name": "Ipca Laboratories Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IRB",
+      "name": "Irb Infrastructure Developers Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IRCON",
+      "name": "Ircon International Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IRCTC",
+      "name": "Indian Railway Catering & Tourism Corporation Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IREDA",
+      "name": "Indian Renewable Energy Development Agency Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IRFC",
+      "name": "Indian Railway Finance Corporation Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IRMENERGY",
+      "name": "IRM Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ITC",
+      "name": "Itc Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ITCHOTELS",
+      "name": "ITC Hotels Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ITDC",
+      "name": "India Tourism Development Corporation Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ITI",
+      "name": "Iti Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IVALUE",
+      "name": "Ivalue Infosolutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IXIGO",
+      "name": "Le Travenues Technology Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "IZMO",
+      "name": "Izmo Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "J&KBANK",
+      "name": "The Jammu & Kashmir Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JAGSNPHARM",
+      "name": "Jagsonpal Pharmaceuticals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JAINREC",
+      "name": "Jain Resource Recycling Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JAMNAAUTO",
+      "name": "Jamna Auto Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JARO",
+      "name": "Jaro Institute of Technol. Mgt. and Research Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JASH",
+      "name": "Jash Engineering Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JAYBARMARU",
+      "name": "Jay Bharat Maruti Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JAYNECOIND",
+      "name": "Jayaswal Neco Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JBCHEPHARM",
+      "name": "Jb Chemicals & Pharmaceuticals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JBMA",
+      "name": "Jbm Auto Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JGCHEM",
+      "name": "J.G.Chemicals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JINDALSAW",
+      "name": "Jindal Saw Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JINDALSTEL",
+      "name": "Jindal Steel Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JINDRILL",
+      "name": "Jindal Drilling And Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JINDWORLD",
+      "name": "Jindal Worldwide Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JIOFIN",
+      "name": "Jio Financial Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JISLJALEQS",
+      "name": "Jain Irrigation Systems Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JKCEMENT",
+      "name": "Jk Cement Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JKLAKSHMI",
+      "name": "Jk Lakshmi Cement Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JKPAPER",
+      "name": "Jk Paper Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JKTYRE",
+      "name": "Jk Tyre & Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JMFINANCIL",
+      "name": "Jm Financial Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JNKINDIA",
+      "name": "JNK India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JPPOWER",
+      "name": "Jaiprakash Power Ventures Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JSFB",
+      "name": "Jana Small Finance Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JSL",
+      "name": "Jindal Stainless Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JSLL",
+      "name": "Jeena Sikho Lifecare Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JSWCEMENT",
+      "name": "JSW Cement Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JSWDULUX",
+      "name": "JSW Dulux Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JSWENERGY",
+      "name": "Jsw Energy Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JSWINFRA",
+      "name": "JSW Infrastructure Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JSWSTEEL",
+      "name": "Jsw Steel Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JTEKTINDIA",
+      "name": "JTEKT India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JTLIND",
+      "name": "JTL Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JUBLFOOD",
+      "name": "Jubilant Foodworks Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JUBLINGREA",
+      "name": "Jubilant Ingrevia Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JUBLPHARMA",
+      "name": "Jubilant Pharmova Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JUSTDIAL",
+      "name": "Just Dial Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JWL",
+      "name": "Jupiter Wagons Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JYOTHYLAB",
+      "name": "Jyothy Laboratories Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JYOTICNC",
+      "name": "Jyoti CNC Automation Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "JYOTISTRUC",
+      "name": "Jyoti Structures Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KABRAEXTRU",
+      "name": "Kabra Extrusion Technik Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KAJARIACER",
+      "name": "Kajaria Ceramics Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KALAMANDIR",
+      "name": "Sai Silks (Kalamandir) Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KALYANKJIL",
+      "name": "Kalyan Jewellers India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KAMDHENU",
+      "name": "Kamdhenu Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KANSAINER",
+      "name": "Kansai Nerolac Paints Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KARURVYSYA",
+      "name": "Karur Vysya Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KAYNES",
+      "name": "Kaynes Technology India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KDDL",
+      "name": "Kddl Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KEC",
+      "name": "Kec International Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KEI",
+      "name": "Kei Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KENNAMET",
+      "name": "Kennametal India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KERNEX",
+      "name": "Kernex Microsystems (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KFINTECH",
+      "name": "KFin Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KIMS",
+      "name": "Krishna Institute of Medical Sciences Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KINGFA",
+      "name": "Kingfa Science & Technology (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KIOCL",
+      "name": "Kiocl Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KIRIINDUS",
+      "name": "Kiri Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KIRLFER",
+      "name": "Kirloskar Ferrous Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KIRLOSBROS",
+      "name": "Kirloskar Brothers Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KIRLOSENG",
+      "name": "Kirloskar Oil Engines Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KIRLOSIND",
+      "name": "Kirloskar Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KIRLPNU",
+      "name": "Kirloskar Pneumatic Company Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KISSHT",
+      "name": "Onemi Technology Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KITEX",
+      "name": "Kitex Garments Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KMEW",
+      "name": "Knowledge Marine & Engineering Works Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KNRCON",
+      "name": "Knr Constructions Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KOLTEPATIL",
+      "name": "Kolte - Patil Developers Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KOTAKBANK",
+      "name": "Kotak Mahindra Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KPEL",
+      "name": "K.P. Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KPIGREEN",
+      "name": "KPI Green Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KPIL",
+      "name": "Kalpataru Projects International Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KPITTECH",
+      "name": "KPIT Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KPL",
+      "name": "Kwality Pharmaceuticals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KPRMILL",
+      "name": "K.p.r. Mill Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KRBL",
+      "name": "Krbl Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KRISHANA",
+      "name": "Krishana Phoschem Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KRISHNADEF",
+      "name": "Krishna Defence & Allied Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KRN",
+      "name": "KRN Heat Exchanger and Refrigeration Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KROSS",
+      "name": "Kross Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KSB",
+      "name": "KSB Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KSCL",
+      "name": "Kaveri Seed Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KSHINTL",
+      "name": "KSH International Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KTKBANK",
+      "name": "The Karnataka Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "KWIL",
+      "name": "Kwality Walls India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LALPATHLAB",
+      "name": "Dr. Lal Path Labs Ltd.",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LANDMARK",
+      "name": "Landmark Cars Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LAOPALA",
+      "name": "La Opala Rg Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LATENTVIEW",
+      "name": "Latent View Analytics Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LAURUSLABS",
+      "name": "Laurus Labs Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LEMONTREE",
+      "name": "Lemon Tree Hotels Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LENSKART",
+      "name": "Lenskart Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LGEINDIA",
+      "name": "LG Electronics India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LICHSGFIN",
+      "name": "Lic Housing Finance Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LICI",
+      "name": "Life Insurance Corporation of India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LINDEINDIA",
+      "name": "Linde India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LLOYDSENGG",
+      "name": "Lloyds Engineering Works Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LLOYDSENT",
+      "name": "Lloyds Enterprises Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LLOYDSME",
+      "name": "Lloyds Metals & Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LMW",
+      "name": "LMW Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LODHA",
+      "name": "Lodha Developers Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LOTUSDEV",
+      "name": "Sri Lotus Developers & Realty Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LT",
+      "name": "Larsen & Toubro Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LTF",
+      "name": "L&T Finance Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LTFOODS",
+      "name": "L T Foods Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LTM",
+      "name": "LTIMindtree Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LTTS",
+      "name": "L&t Technology Services Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LUMAXIND",
+      "name": "Lumax Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LUMAXTECH",
+      "name": "Lumax Auto Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LUPIN",
+      "name": "Lupin Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "LXCHEM",
+      "name": "Laxmi Organic Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "M&M",
+      "name": "Mahindra & Mahindra Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "M&MFIN",
+      "name": "Mahindra & Mahindra Financial Services Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MACPOWER",
+      "name": "Macpower CNC Machines Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MAHABANK",
+      "name": "Bank Of Maharashtra Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MAHLIFE",
+      "name": "Mahindra Lifespace Developers Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MAHLOG",
+      "name": "Mahindra Logistics Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MAHSCOOTER",
+      "name": "Maharashtra Scooters Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MAHSEAMLES",
+      "name": "Maharashtra Seamless Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MAITHANALL",
+      "name": "Maithan Alloys Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MANAKCOAT",
+      "name": "Manaksia Coated Metals & Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MANAPPURAM",
+      "name": "Manappuram Finance Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MANCREDIT",
+      "name": "Mangal Credit & Fincorp Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MANGLMCEM",
+      "name": "Mangalam Cement Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MANINDS",
+      "name": "Man Industries (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MANINFRA",
+      "name": "Man Infraconstruction Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MANKIND",
+      "name": "Mankind Pharma Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MANORAMA",
+      "name": "Manorama Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MANYAVAR",
+      "name": "Vedant Fashions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MAPMYINDIA",
+      "name": "C.E. Info Systems Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MARICO",
+      "name": "Marico Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MARINE",
+      "name": "Marine Electricals (India) Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MARKOLINES",
+      "name": "Markolines Pavement Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MARKSANS",
+      "name": "Marksans Pharma Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MARSONS",
+      "name": "Marsons Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MARUTI",
+      "name": "Maruti Suzuki India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MASTEK",
+      "name": "Mastek Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MASTERTR",
+      "name": "Master Trust Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MAXHEALTH",
+      "name": "Max Healthcare Institute Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MAYURUNIQ",
+      "name": "Mayur Uniquoters Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MAZDOCK",
+      "name": "Mazagon Dock Shipbuilders Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MBAPL",
+      "name": "Madhya Bharat Agro Products Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MBEL",
+      "name": "M & B Engineering Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MCLOUD",
+      "name": "Magellanic Cloud Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MCX",
+      "name": "Multi Commodity Exchange Of India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MEDANTA",
+      "name": "Global Health Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MEDPLUS",
+      "name": "Medplus Health Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MEESHO",
+      "name": "Meesho Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MENONBE",
+      "name": "Menon Bearings Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "METROBRAND",
+      "name": "Metro Brands Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "METROPOLIS",
+      "name": "Metropolis Healthcare Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MFSL",
+      "name": "Max Financial Services Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MGL",
+      "name": "Mahanagar Gas Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MHRIL",
+      "name": "Mahindra Holidays & Resorts India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MIDHANI",
+      "name": "Mishra Dhatu Nigam Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MINDACORP",
+      "name": "Minda Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MMFL",
+      "name": "Mm Forgings Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MMTC",
+      "name": "Mmtc Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MOBIKWIK",
+      "name": "One Mobikwik Systems Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MOIL",
+      "name": "Moil Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MOL",
+      "name": "Meghmani Organics Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MOLDTKPAC",
+      "name": "Mold-tek Packaging Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MONARCH",
+      "name": "Monarch Networth Capital Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MOREPENLAB",
+      "name": "Morepen Laboratories Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MOSCHIP",
+      "name": "Moschip Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MOTHERSON",
+      "name": "Samvardhana Motherson International Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MOTILALOFS",
+      "name": "Motilal Oswal Financial Services Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MOTISONS",
+      "name": "Motisons Jewellers Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MPHASIS",
+      "name": "Mphasis Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MPSLTD",
+      "name": "Mps Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MRF",
+      "name": "Mrf Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MRPL",
+      "name": "Mangalore Refinery And Petrochemicals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MSPL",
+      "name": "Msp Steel & Power Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MSTCLTD",
+      "name": "MSTC Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MSUMI",
+      "name": "Motherson Sumi Wiring India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MTARTECH",
+      "name": "MTAR Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MUFIN",
+      "name": "Mufin Green Finance Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MUNJALAU",
+      "name": "Munjal Auto Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MUTHOOTFIN",
+      "name": "Muthoot Finance Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "MUTHOOTMF",
+      "name": "Muthoot Microfin Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NACLIND",
+      "name": "NACL Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NAM-INDIA",
+      "name": "Nippon Life India Asset Management Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NATCOPHARM",
+      "name": "Natco Pharma Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NATIONALUM",
+      "name": "National Aluminium Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NAUKRI",
+      "name": "Info Edge (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NAVA",
+      "name": "Nava Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NAVINFLUOR",
+      "name": "Navin Fluorine International Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NAVKARCORP",
+      "name": "Navkar Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NAZARA",
+      "name": "Nazara Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NBCC",
+      "name": "Nbcc (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NCC",
+      "name": "Ncc Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NELCO",
+      "name": "Nelco Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NEOGEN",
+      "name": "Neogen Chemicals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NEPHROPLUS",
+      "name": "Nephrocare Health Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NESCO",
+      "name": "Nesco Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NESTLEIND",
+      "name": "Nestle India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NETWEB",
+      "name": "Netweb Technologies India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NETWORK18",
+      "name": "Network18 Media & Investments Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NEULANDLAB",
+      "name": "Neuland Laboratories Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NEWGEN",
+      "name": "Newgen Software Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NFL",
+      "name": "National Fertilizers Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NGLFINE",
+      "name": "NGL Fine Chem Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NH",
+      "name": "Narayana Hrudayalaya Ltd.",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NHPC",
+      "name": "Nhpc Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NIACL",
+      "name": "New India Assurance Company Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NIBE",
+      "name": "NIBE Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NIITLTD",
+      "name": "Niit Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NIITMTS",
+      "name": "NIIT Learning Systems Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NILKAMAL",
+      "name": "Nilkamal Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NITCO",
+      "name": "Nitco Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NITINSPIN",
+      "name": "Nitin Spinners Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NIVABUPA",
+      "name": "Niva Bupa Health Insurance Company Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NLCINDIA",
+      "name": "Nlc India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NMDC",
+      "name": "Nmdc Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NOCIL",
+      "name": "Nocil Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NORTHARC",
+      "name": "Northern ARC Capital Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NOVARTIND",
+      "name": "Novartis India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NPST",
+      "name": "Network People Services Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NRBBEARING",
+      "name": "Nrb Bearing Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NSLNISP",
+      "name": "NMDC Steel Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NTPC",
+      "name": "Ntpc Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NTPCGREEN",
+      "name": "NTPC Green Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NUCLEUS",
+      "name": "Nucleus Software Exports Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NUVAMA",
+      "name": "Nuvama Wealth Management Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NUVOCO",
+      "name": "Nuvoco Vistas Corporation Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "NYKAA",
+      "name": "FSN E-Commerce Ventures Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "OBEROIRLTY",
+      "name": "Oberoi Realty Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "OFSS",
+      "name": "Oracle Financial Services Software Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "OIL",
+      "name": "Oil India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "OLAELEC",
+      "name": "Ola Electric Mobility Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "OLECTRA",
+      "name": "Olectra Greentech Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "OMAXE",
+      "name": "Omaxe Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "OMNI",
+      "name": "OMNI",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ONEPOINT",
+      "name": "One Point One Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ONESOURCE",
+      "name": "OneSource Specialty Pharma Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ONGC",
+      "name": "Oil & Natural Gas Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ONWARDTEC",
+      "name": "Onward Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "OPTIEMUS",
+      "name": "Optiemus Infracom Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ORCHPHARMA",
+      "name": "Orchid Pharma Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ORIENTELEC",
+      "name": "Orient Electric Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ORIENTHOT",
+      "name": "Oriental Hotels Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ORIENTTECH",
+      "name": "Orient Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ORISSAMINE",
+      "name": "The Orissa Minerals Development Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "OSWALPUMPS",
+      "name": "Oswal Pumps Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PACEDIGITK",
+      "name": "Pace Digitek Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PAGEIND",
+      "name": "Page Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PAISALO",
+      "name": "Paisalo Digital Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PANACEABIO",
+      "name": "Panacea Biotec Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PANAMAPET",
+      "name": "Panama Petrochem Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PARACABLES",
+      "name": "Paramount Communications Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PARADEEP",
+      "name": "Paradeep Phosphates Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PARAGMILK",
+      "name": "Parag Milk Foods Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PARAS",
+      "name": "Paras Defence and Space Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PARKHOSPS",
+      "name": "Park Medi World Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PATANJALI",
+      "name": "Patanjali Foods Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PATELENG",
+      "name": "Patel Engineering Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PATELRMART",
+      "name": "Patel Retail Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PAYTM",
+      "name": "One 97 Communications Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PCBL",
+      "name": "PCBL Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PCJEWELLER",
+      "name": "Pc Jeweller Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PDSL",
+      "name": "PDS Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PENIND",
+      "name": "Pennar Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PERSISTENT",
+      "name": "Persistent Systems Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PETRONET",
+      "name": "Petronet Lng Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PFC",
+      "name": "Power Finance Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PFIZER",
+      "name": "Pfizer Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PFOCUS",
+      "name": "Prime Focus Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PGEL",
+      "name": "Pg Electroplast Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PGHH",
+      "name": "Procter & Gamble Hygiene And Health Care Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PGHL",
+      "name": "Procter & Gamble Health Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PGIL",
+      "name": "Pearl Global Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PHOENIXLTD",
+      "name": "The Phoenix Mills Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PICCADIL",
+      "name": "Piccadily Agro Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PIDILITIND",
+      "name": "Pidilite Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PIIND",
+      "name": "Pi Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PINELABS",
+      "name": "Pine Labs Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PIRAMALFIN",
+      "name": "PIRAMALFIN",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PITTIENG",
+      "name": "Pitti Engineering Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PIXTRANS",
+      "name": "Pix Transmission Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PNB",
+      "name": "Punjab National Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PNBGILTS",
+      "name": "Pnb Gilts Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PNBHOUSING",
+      "name": "Pnb Housing Finance Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PNCINFRA",
+      "name": "Pnc Infratech Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PNGJL",
+      "name": "P N Gadgil Jewellers Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PNGSREVA",
+      "name": "PNGS Reva Diamond Jewellery Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "POCL",
+      "name": "Pondy Oxides & Chemicals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "POKARNA",
+      "name": "Pokarna Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "POLICYBZR",
+      "name": "PB Fintech Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "POLYCAB",
+      "name": "Polycab India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "POLYMED",
+      "name": "Poly Medicure Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "POLYPLEX",
+      "name": "Polyplex Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "POONAWALLA",
+      "name": "Poonawalla Fincorp Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "POWERGRID",
+      "name": "Power Grid Corporation Of India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "POWERICA",
+      "name": "Powerica Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "POWERINDIA",
+      "name": "Hitachi Energy India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "POWERMECH",
+      "name": "Power Mech Projects Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PPAP",
+      "name": "Ppap Automotive Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PPL",
+      "name": "Prakash Pipes Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PPLPHARMA",
+      "name": "Piramal Pharma Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PRAJIND",
+      "name": "Praj Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PRAKASH",
+      "name": "Prakash Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PRECWIRE",
+      "name": "Precision Wires India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PREMEXPLN",
+      "name": "Premier Explosives Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PREMIERENE",
+      "name": "Premier Energies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PRESTIGE",
+      "name": "Prestige Estates Projects Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PRICOLLTD",
+      "name": "Pricol Ltd.",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PRINCEPIPE",
+      "name": "Prince Pipes & Fittings Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PRIVISCL",
+      "name": "Privi Speciality Chemicals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PROTEAN",
+      "name": "Protean eGov Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PRSMJOHNSN",
+      "name": "Prism Johnson Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PRUDENT",
+      "name": "Prudent Corporate Advisory Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PSPPROJECT",
+      "name": "PSP Projects Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PTC",
+      "name": "Ptc India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PTCIL",
+      "name": "PTC Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PURVA",
+      "name": "Puravankara Projects Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PVRINOX",
+      "name": "PVR Inox Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "PWL",
+      "name": "Physicswallah Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "QPOWER",
+      "name": "Quality Power Electrical Equipments Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "QUADFUTURE",
+      "name": "Quadrant Future Tek Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "QUESS",
+      "name": "Quess Corp Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RADHIKAJWE",
+      "name": "Radhika Jeweltech Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RADICO",
+      "name": "Radico Khaitan Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RAILTEL",
+      "name": "Railtel Corporation of India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RAIN",
+      "name": "Rain Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RAINBOW",
+      "name": "Rainbow Childrens Medicare Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RAJRATAN",
+      "name": "Rajratan Global Wire Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RALLIS",
+      "name": "Rallis India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RAMCOCEM",
+      "name": "The Ramco Cements Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RAMCOIND",
+      "name": "Ramco Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RAMCOSYS",
+      "name": "Ramco Systems Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RAMRAT",
+      "name": "Ram Ratna Wires Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RATEGAIN",
+      "name": "Rategain Travel Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RATNAMANI",
+      "name": "Ratnamani Metals & Tubes Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RATNAVEER",
+      "name": "Ratnaveer Precision Engineering Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RAYMOND",
+      "name": "Raymond Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RAYMONDLSL",
+      "name": "Raymond Lifestyle Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RAYMONDREL",
+      "name": "Raymond Realty Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RBA",
+      "name": "Restaurant Brands Asia Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RBLBANK",
+      "name": "Rbl Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RCF",
+      "name": "Rashtriya Chemicals And Fertilizers Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RECLTD",
+      "name": "REC Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "REDINGTON",
+      "name": "Redington (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "REDTAPE",
+      "name": "Redtape Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "REFEX",
+      "name": "Refex Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RELAXO",
+      "name": "Relaxo Footwears Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RELIANCE",
+      "name": "Reliance Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RELIGARE",
+      "name": "Religare Enterprises Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RELINFRA",
+      "name": "Reliance Infrastructure Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RELTD",
+      "name": "Ravindra Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RENUKA",
+      "name": "Shree Renuka Sugars Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "REPCOHOME",
+      "name": "Repco Home Finance Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RESPONIND",
+      "name": "Responsive Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RGL",
+      "name": "Renaissance Global Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RHETAN",
+      "name": "Rhetan TMT Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RHIM",
+      "name": "RHI Magnesita India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RICOAUTO",
+      "name": "Rico Auto Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RIIL",
+      "name": "Reliance Industrial Infrastructure Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RISHABH",
+      "name": "Rishabh Instruments Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RITES",
+      "name": "Rites Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RKFORGE",
+      "name": "Ramkrishna Forgings Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RML",
+      "name": "Rane (madras) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ROLEXRINGS",
+      "name": "Rolex Rings Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ROSSARI",
+      "name": "Rossari Biotech Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ROSSTECH",
+      "name": "Rossell Techsys Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ROTO",
+      "name": "Roto Pumps Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ROUTE",
+      "name": "Route Mobile Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RPEL",
+      "name": "Raghav Productivity Enhancers Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RPGLIFE",
+      "name": "Rpg Life Sciences Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RPOWER",
+      "name": "Reliance Power Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RPTECH",
+      "name": "Rashi Peripherals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RRKABEL",
+      "name": "R R Kabel Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RSL",
+      "name": "Rajputana Stainless Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RSYSTEMS",
+      "name": "R Systems International Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RTNINDIA",
+      "name": "RattanIndia Enterprises Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RTNPOWER",
+      "name": "Rattanindia Power Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RUBICON",
+      "name": "Rubicon Research Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RUSTOMJEE",
+      "name": "Keystone Realtors Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "RVNL",
+      "name": "Rail Vikas Nigam Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SAATVIKGL",
+      "name": "Saatvik Green Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SAFARI",
+      "name": "Safari Industries (India) Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SAGILITY",
+      "name": "Sagility India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SAIL",
+      "name": "Steel Authority Of India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SAILIFE",
+      "name": "Sai Life Sciences Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SAIPARENT",
+      "name": "Sai Parenterals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SAKAR",
+      "name": "Sakar Healthcare Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SAKSOFT",
+      "name": "Saksoft Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SAMBHV",
+      "name": "Sambhv Steel Tubes Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SAMHI",
+      "name": "Samhi Hotels Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SAMMAANCAP",
+      "name": "Sammaan Capital Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SANDHAR",
+      "name": "Sandhar Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SANDUMA",
+      "name": "Sandur Manganese & Iron Ores Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SANGAMIND",
+      "name": "Sangam (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SANGHVIMOV",
+      "name": "Sanghvi Movers Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SANOFI",
+      "name": "Sanofi India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SANOFICONR",
+      "name": "Sanofi Consumer Healthcare India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SANSERA",
+      "name": "Sansera Engineering Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SANSTAR",
+      "name": "Sanstar Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SAPPHIRE",
+      "name": "Sapphire Foods India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SARDAEN",
+      "name": "Sarda Energy & Minerals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SAREGAMA",
+      "name": "Saregama India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SASKEN",
+      "name": "Sasken Communication Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SATIN",
+      "name": "Satin Creditcare Network Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SBC",
+      "name": "SBC Exports Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SBCL",
+      "name": "Shivalik Bimetal Controls Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SBFC",
+      "name": "SBFC Finance Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SBICARD",
+      "name": "SBI Cards & Payment Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SBILIFE",
+      "name": "SBI Life Insurance Company Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SBIN",
+      "name": "State Bank Of India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SCHAEFFLER",
+      "name": "Schaeffler India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SCHNEIDER",
+      "name": "Schneider Electric Infrastructure Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SCI",
+      "name": "Shipping Corporation Of India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SDBL",
+      "name": "Som Distilleries & Breweries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SEAMECLTD",
+      "name": "Seamec Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SEDEMAC",
+      "name": "Sedemac Mechatronics Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SEIL",
+      "name": "Shanti Educational Initiatives Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SENCO",
+      "name": "Senco Gold Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SENORES",
+      "name": "Senores Pharmaceuticals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SEPC",
+      "name": "SEPC Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SERVOTECH",
+      "name": "Servotech Power Systems Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SETL",
+      "name": "Standard Enginnering Technology Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SFL",
+      "name": "Sheela Foam Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SGFIN",
+      "name": "SG Finserve Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SGMART",
+      "name": "SG Mart Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHADOWFAX",
+      "name": "Shadowfax Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHAILY",
+      "name": "Shaily Engineering Plastics Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHAKTIPUMP",
+      "name": "Shakti Pumps (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHANTIGOLD",
+      "name": "Shanti Gold International Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHARDACROP",
+      "name": "Sharda Cropchem Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHARDAMOTR",
+      "name": "Sharda Motor Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHAREINDIA",
+      "name": "Share India Securities Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHILCTECH",
+      "name": "Shilchar Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHILPAMED",
+      "name": "Shilpa Medicare Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHK",
+      "name": "S H Kelkar And Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHOPERSTOP",
+      "name": "Shoppers Stop Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHREECEM",
+      "name": "Shree Cements Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHREEJISPG",
+      "name": "Shreeji Shipping Global Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHRINGARMS",
+      "name": "Shringar House of Mangalsutra Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHRIPISTON",
+      "name": "Shriram Pistons & Rings Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHRIRAMFIN",
+      "name": "Shriram Finance Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHRIRAMPPS",
+      "name": "Shriram Properties Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SHYAMMETL",
+      "name": "Shyam Metalics & Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SIEMENS",
+      "name": "Siemens Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SIGMAADV",
+      "name": "Sigma Advanced System Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SIGNATURE",
+      "name": "SignatureGlobal India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SIGNPOST",
+      "name": "Signpost India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SIKA",
+      "name": "Sika Interplant Systems Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SILVERTUC",
+      "name": "Silver Touch Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SIRCA",
+      "name": "Sirca Paints India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SIS",
+      "name": "Security & Intelligence Services India",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SJS",
+      "name": "S J S Enterprises Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SJVN",
+      "name": "Sjvn Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SKFINDIA",
+      "name": "Skf India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SKFINDUS",
+      "name": "SKF India (Industrial) Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SKIPPER",
+      "name": "Skipper Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SKMEGGPROD",
+      "name": "Skm Egg Products Export (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SKYGOLD",
+      "name": "Sky Gold Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SMARTWORKS",
+      "name": "Smartworks Coworking Spaces Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SMCGLOBAL",
+      "name": "SMC Global Securities Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SMLMAH",
+      "name": "SML Mahindra Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SMSPHARMA",
+      "name": "Sms Pharmaceuticals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SOBHA",
+      "name": "Sobha Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SOLARA",
+      "name": "Solara Active Pharma Sciences Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SOLARINDS",
+      "name": "Solar Industries India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SOLARWORLD",
+      "name": "Solarworld Energy Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SOMANYCERA",
+      "name": "Somany Ceramics Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SONACOMS",
+      "name": "Sona BLW Precision Forgings Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SONATSOFTW",
+      "name": "Sonata Software Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SOTL",
+      "name": "Savita Oil Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SOUTHBANK",
+      "name": "The South Indian Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SOUTHWEST",
+      "name": "South West Pinnacle Exploration Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SPAL",
+      "name": "S. P. Apparels Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SPANDANA",
+      "name": "Spandana Sphoorty Financial Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SPARC",
+      "name": "Sun Pharma Advanced Research Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SPECTRUM",
+      "name": "Spectrum Electrical Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SPLPETRO",
+      "name": "Supreme Petrochem Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SPMLINFRA",
+      "name": "Spml Infra Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SPORTKING",
+      "name": "Sportking India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SRF",
+      "name": "Srf Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SRM",
+      "name": "SRM Contractors Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SSWL",
+      "name": "Steel Strips Wheels Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "STALLION",
+      "name": "Stallion India Fluorochemicals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "STAR",
+      "name": "Strides Shasun Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "STARCEMENT",
+      "name": "Star Cement Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "STARHEALTH",
+      "name": "Star Health & Allied Insurance Company Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "STEELCAS",
+      "name": "Steelcast Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "STLTECH",
+      "name": "Sterlite Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "STOVEKRAFT",
+      "name": "Stove Kraft Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "STUDDS",
+      "name": "Studds Accessories Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "STYL",
+      "name": "Seshaasai Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "STYLAMIND",
+      "name": "Stylam Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "STYLEBAAZA",
+      "name": "Baazar Style Retail Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "STYRENIX",
+      "name": "Styrenix Performance Materials Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUBROS",
+      "name": "Subros Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUDARSCHEM",
+      "name": "Sudarshan Chemical Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUDEEPPHRM",
+      "name": "Sudeep Pharma Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SULA",
+      "name": "Sula Vineyards Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUMEETINDS",
+      "name": "Sumeet Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUMICHEM",
+      "name": "Sumitomo Chemical India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUNDARMFIN",
+      "name": "Sundaram Finance Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUNDRMFAST",
+      "name": "Sundram Fasteners Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUNFLAG",
+      "name": "Sunflag Iron And Steel Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUNPHARMA",
+      "name": "Sun Pharmaceuticals Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUNTECK",
+      "name": "Sunteck Realty Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUNTV",
+      "name": "Sun Tv Network Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUPRAJIT",
+      "name": "Suprajit Engineering Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUPREMEIND",
+      "name": "Supreme Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUPRIYA",
+      "name": "Supriya Lifescience Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SURYAROSNI",
+      "name": "Surya Roshni Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SURYODAY",
+      "name": "Suryoday Small Finance Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUVEN",
+      "name": "Suven Life Sciences Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SUZLON",
+      "name": "Suzlon Energy Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SWANCORP",
+      "name": "Swan Corp Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SWANDEF",
+      "name": "Swan Defence and Heavy Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SWARAJENG",
+      "name": "Swaraj Engines Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SWIGGY",
+      "name": "Swiggy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SWSOLAR",
+      "name": "Sterling & Wilson Renewable Energy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SYMPHONY",
+      "name": "Symphony Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SYNGENE",
+      "name": "Syngene International Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "SYRMA",
+      "name": "Syrma SGS Technology Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TALBROAUTO",
+      "name": "Talbros Automotive Components Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TANLA",
+      "name": "Tanla Solutions Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TARC",
+      "name": "Tarc Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TARIL",
+      "name": "Transformers & Rectifiers India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TARSONS",
+      "name": "Tarsons Products Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TATACAP",
+      "name": "Tata Capital Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TATACHEM",
+      "name": "Tata Chemicals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TATACOMM",
+      "name": "Tata Communications Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TATACONSUM",
+      "name": "TATA Consumer Products Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TATAELXSI",
+      "name": "Tata Elxsi Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TATAINVEST",
+      "name": "Tata Investment Corporation Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TATAPOWER",
+      "name": "Tata Power Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TATASTEEL",
+      "name": "Tata Steel Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TATATECH",
+      "name": "Tata Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TATVA",
+      "name": "Tatva Chintan Pharma Chem Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TBOTEK",
+      "name": "TBO Tek Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TBZ",
+      "name": "Tribhovandas Bhimji Zaveri Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TCIEXP",
+      "name": "Tci Express Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TCPLPACK",
+      "name": "TCPL Packaging Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TCS",
+      "name": "Tata Consultancy Services Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TDPOWERSYS",
+      "name": "Td Power Systems Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TECHM",
+      "name": "Tech Mahindra Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TECHNOE",
+      "name": "Techno Electric & Engineering Company Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TEGA",
+      "name": "Tega Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TEJASNET",
+      "name": "Tejas Networks Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TEMBO",
+      "name": "Tembo Global Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TENNIND",
+      "name": "Tenneco Clean Air India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TEXRAIL",
+      "name": "Texmaco Rail & Engineering Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TFCILTD",
+      "name": "Tourism Finance Corporation Of India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "THANGAMAYL",
+      "name": "Thangamayil Jewellery Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "THELEELA",
+      "name": "Leela Palaces Hotels & Resorts Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "THERMAX",
+      "name": "Thermax Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "THOMASCOOK",
+      "name": "Thomas Cook  (india)  Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "THYROCARE",
+      "name": "Thyrocare Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TI",
+      "name": "Tilaknagar Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TIINDIA",
+      "name": "Tube Investments of India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TIL",
+      "name": "Til Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TIMETECHNO",
+      "name": "Time Technoplast Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TIMEX",
+      "name": "Timex Group India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TIMKEN",
+      "name": "Timken India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TINNARUBR",
+      "name": "Tinna Rubber & Infrastructure Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TIPSMUSIC",
+      "name": "Tips Music Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TIRUMALCHM",
+      "name": "Thirumalai Chemicals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TIRUPATIFL",
+      "name": "Tirupati Forge Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TITAGARH",
+      "name": "Titagarh Rail Systems Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TITAN",
+      "name": "Titan Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TMB",
+      "name": "Tamilnad Mercantile Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TMCV",
+      "name": "Tata Motors Commercial Vehicles Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TMPV",
+      "name": "Tata Motors Passenger Vehicles Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TORNTPHARM",
+      "name": "Torrent Pharmaceuticals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TORNTPOWER",
+      "name": "Torrent Power Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TRANSRAILL",
+      "name": "Transrail Lighting Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TRAVELFOOD",
+      "name": "Travel Food Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TRENT",
+      "name": "Trent Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TRIDENT",
+      "name": "Trident Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TRITURBINE",
+      "name": "Triveni Turbine Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TRIVENI",
+      "name": "Triveni Engineering & Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TRUALT",
+      "name": "TruAlt Bioenergy Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TSFINV",
+      "name": "Tsf Investments Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TTKPRESTIG",
+      "name": "Ttk Prestige Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TTML",
+      "name": "Tata Teleservices (maharashtra) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TVSHLTD",
+      "name": "TVS Holdings Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TVSMOTOR",
+      "name": "Tvs Motor Company Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "TVSSCS",
+      "name": "TVS Supply Chain Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UBL",
+      "name": "United Breweries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UCOBANK",
+      "name": "Uco Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UDS",
+      "name": "Updater Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UFBL",
+      "name": "United Foodbrands Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UFLEX",
+      "name": "Uflex Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UJJIVANSFB",
+      "name": "Ujjivan Small Finance Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ULTRACEMCO",
+      "name": "Ultratech Cement Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UNICHEMLAB",
+      "name": "Unichem Laboratories Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UNIECOM",
+      "name": "Unicommerce eSolutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UNIMECH",
+      "name": "Unimech Aerospace and Manufacturing Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UNIONBANK",
+      "name": "Union Bank Of India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UNIPARTS",
+      "name": "Uniparts India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UNITDSPR",
+      "name": "United Spirits Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UNIVCABLES",
+      "name": "Universal Cables Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UNOMINDA",
+      "name": "Uno Minda Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UPL",
+      "name": "Upl Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "URBANCO",
+      "name": "Urban Company Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "USHAMART",
+      "name": "Usha Martin Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UTIAMC",
+      "name": "UTI Asset Management Company Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UTKARSHBNK",
+      "name": "Utkarsh Small Finance Bank Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "UTLSOLAR",
+      "name": "Fujiyama Power Systems Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "V2RETAIL",
+      "name": "V2 Retail Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VADILALIND",
+      "name": "Vadilal Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VAIBHAVGBL",
+      "name": "Vaibhav Global Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VARROC",
+      "name": "Varroc Engineering Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VBL",
+      "name": "Varun Beverages Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VEDL",
+      "name": "Vedanta Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VENKEYS",
+      "name": "Venky's (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VENUSPIPES",
+      "name": "Venus Pipes & Tubes Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VENUSREM",
+      "name": "Venus Remedies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VERANDA",
+      "name": "Veranda Learning Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VGUARD",
+      "name": "V-guard Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VIDYAWIRES",
+      "name": "Vidya Wires Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VIJAYA",
+      "name": "Vijaya Diagnostic Centre Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VIKRAMSOLR",
+      "name": "Vikram Solar Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VIKRAN",
+      "name": "Vikran Engineering Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VIMTALABS",
+      "name": "Vimta Labs Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VINATIORGA",
+      "name": "Vinati Organics Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VINCOFE",
+      "name": "Vintage Coffee & Beverages Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VINDHYATEL",
+      "name": "Vindhya Telelinks Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VIPIND",
+      "name": "Vip Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VISAKAIND",
+      "name": "Visaka Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VISHNU",
+      "name": "Vishnu Chemicals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VIYASH",
+      "name": "Viyash Scientific Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VMART",
+      "name": "V-mart Retail Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VMM",
+      "name": "Vishal Mega Mart Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VOLTAMP",
+      "name": "Voltamp Transformers Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VOLTAS",
+      "name": "Voltas Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VRLLOG",
+      "name": "Vrl Logistics Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VSSL",
+      "name": "Vardhman Special Steels Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VSTIND",
+      "name": "Vst Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "VTL",
+      "name": "Vardhman Textiles Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WAAREEENER",
+      "name": "Waaree Energies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WAAREERTL",
+      "name": "Waaree Renewables Technologies Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WABAG",
+      "name": "Va Tech Wabag Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WAKEFIT",
+      "name": "Wakefit Innovations Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WALCHANNAG",
+      "name": "Walchandnagar Industries Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WANBURY",
+      "name": "Wanbury Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WEBELSOLAR",
+      "name": "Websol Energy System Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WEL",
+      "name": "Wonder Electricals Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WELCORP",
+      "name": "Welspun Corp Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WELENT",
+      "name": "Welspun Enterprises Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WELSPLSOL",
+      "name": "Welspun Specialty Solutions Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WELSPUNLIV",
+      "name": "Welspun Living Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WENDT",
+      "name": "Wendt (india) Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WESTLIFE",
+      "name": "Westlife Foodworld Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WEWORK",
+      "name": "Wework India Management Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WHEELS",
+      "name": "Wheels India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WHIRLPOOL",
+      "name": "Whirlpool Of India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WINDLAS",
+      "name": "Windlas Biotech Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WINDMACHIN",
+      "name": "Windsor Machines Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WIPRO",
+      "name": "Wipro Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WOCKPHARMA",
+      "name": "Wockhardt Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "WSTCSTPAPR",
+      "name": "West Coast Paper Mills Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "XPROINDIA",
+      "name": "Xpro India Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "YASHO",
+      "name": "Yasho Industries Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "YATHARTH",
+      "name": "Yatharth Hospital & Trauma Care Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "YATRA",
+      "name": "Yatra Online Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "YESBANK",
+      "name": "Yes Bank Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ZAGGLE",
+      "name": "Zaggle Prepaid Ocean Services Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ZEEL",
+      "name": "Zee Entertainment Enterprises Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ZENSARTECH",
+      "name": "Zensar Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ZENTEC",
+      "name": "Zen Technologies Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ZFCVINDIA",
+      "name": "ZF Commercial Vehicle Control System India Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ZOTA",
+      "name": "Zota Health Care Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ZUARI",
+      "name": "Zuari Agro Chemicals Limited",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ZYDUSLIFE",
+      "name": "Zydus Lifesciences Ltd",
+      "lastResult": null,
+      "upcomingResults": []
+    },
+    {
+      "symbol": "ZYDUSWELL",
+      "name": "Zydus Wellness Limited",
+      "lastResult": null,
+      "upcomingResults": []
     }
   ]
 }
