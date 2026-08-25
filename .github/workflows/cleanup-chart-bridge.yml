@@ -1,0 +1,78 @@
+name: Cleanup Chart Bridge
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/cleanup-chart-bridge.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: chart-ui-cleanup
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Remove redundant bridge includes
+        run: |
+          python <<'PY'
+          from pathlib import Path
+
+          path = Path("index.html")
+          html = path.read_text(encoding="utf-8")
+
+          html = html.replace(
+              '<link rel="stylesheet" href="charts-github-features.css">\n',
+              '',
+          )
+          html = html.replace(
+              '<script src="charts-github-features.js"></script>\n',
+              '',
+          )
+
+          path.write_text(html, encoding="utf-8")
+          print("Removed redundant chart bridge includes")
+          PY
+
+      - name: Commit and push cleanup
+        run: |
+          set -e
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+
+          if git diff --cached --quiet; then
+            echo "Chart bridge already cleaned up."
+            exit 0
+          fi
+
+          git commit -m "Clean up redundant chart bridge scripts"
+
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                echo "Chart cleanup pushed."
+                exit 0
+              fi
+            else
+              git rebase --abort || true
+            fi
+
+            sleep 5
+          done
+
+          exit 1
