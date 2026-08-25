@@ -1,0 +1,484 @@
+name: Update Corporate Events
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 19:20 IST, Monday-Friday
+    - cron: "50 13 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-data-main
+  cancel-in-progress: false
+
+jobs:
+  update-events:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install curl_cffi
+
+      - name: Fetch NSE corporate events
+        shell: bash
+        run: |
+          python <<'PY'
+          import json
+          import os
+          import re
+          from datetime import date, datetime, timedelta
+          from zoneinfo import ZoneInfo
+
+          from curl_cffi import requests
+
+          IST = ZoneInfo("Asia/Kolkata")
+          now = datetime.now(IST)
+          today = now.date()
+
+          session = requests.Session(impersonate="chrome")
+          session.headers.update({
+              "accept": "application/json, text/plain, */*",
+              "accept-language": "en-US,en;q=0.9",
+              "referer": "https://www.nseindia.com/",
+              "user-agent": (
+                  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/151.0.0.0 Safari/537.36"
+              ),
+          })
+
+          print("======================================")
+          print("NSE CORPORATE EVENTS UPDATE")
+          print("======================================")
+
+          home = session.get("https://www.nseindia.com/", timeout=30)
+          print("NSE homepage:", home.status_code)
+
+          def json_get(url, label):
+              print(f"Fetching {label}...")
+              response = session.get(url, timeout=45)
+              print(f"{label} HTTP:", response.status_code)
+
+              if response.status_code != 200:
+                  print(response.text[:500])
+                  return []
+
+              try:
+                  payload = response.json()
+              except Exception as exc:
+                  print(f"{label} JSON error:", repr(exc))
+                  return []
+
+              if isinstance(payload, list):
+                  return payload
+
+              if isinstance(payload, dict):
+                  data = payload.get("data", [])
+                  if isinstance(data, list):
+                      return data
+                  for value in payload.values():
+                      if isinstance(value, list):
+                          return value
+
+              return []
+
+          def parse_date(value):
+              if not value:
+                  return None
+
+              text = str(value).strip()
+
+              for fmt in (
+                  "%d-%b-%Y",
+                  "%d-%B-%Y",
+                  "%d/%m/%Y",
+                  "%Y-%m-%d",
+                  "%d-%m-%Y",
+              ):
+                  try:
+                      return datetime.strptime(text, fmt).date()
+                  except ValueError:
+                      pass
+
+              try:
+                  return datetime.fromisoformat(
+                      text.replace("Z", "+00:00")
+                  ).date()
+              except Exception:
+                  return None
+
+          def upper_symbol(row):
+              return str(
+                  row.get("symbol", row.get("Symbol", ""))
+              ).strip().upper()
+
+          def clean_row(row):
+              cleaned = {}
+              for key, value in row.items():
+                  if value is None:
+                      cleaned[str(key)] = None
+                  elif isinstance(value, (str, int, float, bool)):
+                      cleaned[str(key)] = value
+                  else:
+                      cleaned[str(key)] = str(value)
+              return cleaned
+
+          def classify_action(text):
+              text = str(text or "").upper()
+
+              if "DIVIDEND" in text:
+                  return "DIVIDEND"
+              if "BONUS" in text:
+                  return "BONUS"
+              if "SPLIT" in text or "SUB-DIVISION" in text:
+                  return "SPLIT"
+              if "RIGHT" in text:
+                  return "RIGHTS"
+              if "BUYBACK" in text or "BUY-BACK" in text:
+                  return "BUYBACK"
+              if "MERGER" in text or "AMALGAMATION" in text:
+                  return "MERGER"
+              return "OTHER"
+
+          # -------------------------------------------------
+          # 1. CORPORATE ACTIONS
+          # -------------------------------------------------
+
+          actions_from = today - timedelta(days=730)
+          actions_to = today + timedelta(days=180)
+
+          actions_url = (
+              "https://www.nseindia.com/api/"
+              "corporates-corporateActions"
+              "?index=equities"
+              f"&from_date={actions_from.strftime('%d-%m-%Y')}"
+              f"&to_date={actions_to.strftime('%d-%m-%Y')}"
+          )
+
+          corporate_actions_raw = json_get(
+              actions_url,
+              "corporate actions"
+          )
+
+          corporate_actions = []
+
+          for row in corporate_actions_raw:
+              if not isinstance(row, dict):
+                  continue
+
+              symbol = upper_symbol(row)
+              if not symbol:
+                  continue
+
+              purpose = str(
+                  row.get("purpose", row.get("Purpose", ""))
+              ).strip()
+
+              action = classify_action(purpose)
+
+              if action not in {
+                  "DIVIDEND",
+                  "BONUS",
+                  "SPLIT",
+                  "RIGHTS",
+                  "BUYBACK",
+                  "MERGER",
+                  "OTHER",
+              }:
+                  continue
+
+              item = clean_row(row)
+              item["symbol"] = symbol
+              item["eventType"] = action
+              item["eventDate"] = (
+                  parse_date(
+                      row.get("exDate")
+                      or row.get("recordDate")
+                      or row.get("bcStartDate")
+                  ).isoformat()
+                  if parse_date(
+                      row.get("exDate")
+                      or row.get("recordDate")
+                      or row.get("bcStartDate")
+                  )
+                  else None
+              )
+
+              item["purpose"] = purpose
+              corporate_actions.append(item)
+
+          # -------------------------------------------------
+          # 2. BOARD MEETINGS
+          # -------------------------------------------------
+
+          board_url = (
+              "https://www.nseindia.com/api/"
+              "corporates-boardMeetings?index=equities"
+          )
+
+          board_raw = json_get(board_url, "board meetings")
+          board_meetings = []
+
+          for row in board_raw:
+              if not isinstance(row, dict):
+                  continue
+
+              symbol = upper_symbol(row)
+              if not symbol:
+                  continue
+
+              meeting_date = parse_date(
+                  row.get("meetingDate")
+                  or row.get("date")
+                  or row.get("bmDate")
+              )
+
+              if not meeting_date:
+                  continue
+
+              if (
+                  meeting_date < today - timedelta(days=730)
+                  or meeting_date > today + timedelta(days=180)
+              ):
+                  continue
+
+              item = clean_row(row)
+              item["symbol"] = symbol
+              item["eventType"] = "BOARD_MEETING"
+              item["eventDate"] = meeting_date.isoformat()
+              board_meetings.append(item)
+
+          # -------------------------------------------------
+          # 3. BULK + BLOCK DEALS
+          # -------------------------------------------------
+
+          deals_from = today - timedelta(days=365)
+          deals_to = today
+
+          def deal_rows(endpoint, label):
+              url = (
+                  f"https://www.nseindia.com/api/historical/{endpoint}"
+                  f"?from={deals_from.strftime('%d-%m-%Y')}"
+                  f"&to={deals_to.strftime('%d-%m-%Y')}"
+              )
+              return json_get(url, label)
+
+          bulk_raw = deal_rows("bulk-deals", "bulk deals")
+          block_raw = deal_rows("block-deals", "block deals")
+
+          def normalize_deal(row, deal_type):
+              if not isinstance(row, dict):
+                  return None
+
+              symbol = upper_symbol(row)
+              if not symbol:
+                  return None
+
+              date_value = parse_date(
+                  row.get("date")
+                  or row.get("Date")
+                  or row.get("tradeDate")
+              )
+
+              if not date_value:
+                  return None
+
+              item = clean_row(row)
+              item["symbol"] = symbol
+              item["eventType"] = deal_type
+              item["eventDate"] = date_value.isoformat()
+              return item
+
+          bulk_deals = []
+          for row in bulk_raw:
+              item = normalize_deal(row, "BULK_DEAL")
+              if item:
+                  bulk_deals.append(item)
+
+          block_deals = []
+          for row in block_raw:
+              item = normalize_deal(row, "BLOCK_DEAL")
+              if item:
+                  block_deals.append(item)
+
+          # -------------------------------------------------
+          # DEDUPE + SORT
+          # -------------------------------------------------
+
+          def dedupe(rows):
+              seen = {}
+
+              for row in rows:
+                  key = (
+                      row.get("symbol", ""),
+                      row.get("eventType", ""),
+                      row.get("eventDate", ""),
+                      row.get("purpose", ""),
+                      row.get("clientName", ""),
+                      row.get("quantity", row.get("qty", "")),
+                      row.get("price", ""),
+                  )
+                  seen[key] = row
+
+              output = list(seen.values())
+              output.sort(
+                  key=lambda x: (
+                      x.get("eventDate") or "",
+                      x.get("symbol") or "",
+                  ),
+                  reverse=True,
+              )
+              return output
+
+          corporate_actions = dedupe(corporate_actions)
+          board_meetings = dedupe(board_meetings)
+          bulk_deals = dedupe(bulk_deals)
+          block_deals = dedupe(block_deals)
+
+          # -------------------------------------------------
+          # SYMBOL-WISE INDEX
+          # -------------------------------------------------
+
+          by_symbol = {}
+
+          def add_symbol_rows(key, rows):
+              for row in rows:
+                  symbol = row.get("symbol")
+                  if not symbol:
+                      continue
+
+                  by_symbol.setdefault(symbol, {
+                      "corporateActions": [],
+                      "boardMeetings": [],
+                      "bulkDeals": [],
+                      "blockDeals": [],
+                  })
+
+                  by_symbol[symbol][key].append(row)
+
+          add_symbol_rows("corporateActions", corporate_actions)
+          add_symbol_rows("boardMeetings", board_meetings)
+          add_symbol_rows("bulkDeals", bulk_deals)
+          add_symbol_rows("blockDeals", block_deals)
+
+          for symbol, item in by_symbol.items():
+              for key in item:
+                  item[key].sort(
+                      key=lambda x: (
+                          x.get("eventDate") or ""
+                      ),
+                      reverse=True,
+                  )
+
+          output = {
+              "source": "NSE",
+              "updatedAt": now.isoformat(),
+              "timezone": "Asia/Kolkata",
+              "historyFrom": actions_from.isoformat(),
+              "futureTo": actions_to.isoformat(),
+              "corporateActions": corporate_actions,
+              "boardMeetings": board_meetings,
+              "bulkDeals": bulk_deals,
+              "blockDeals": block_deals,
+              "bySymbol": by_symbol,
+          }
+
+          if not (
+              corporate_actions
+              or board_meetings
+              or bulk_deals
+              or block_deals
+          ):
+              raise RuntimeError(
+                  "NSE returned no usable corporate/deal data. "
+                  "Refusing to overwrite events.json with an empty dataset."
+              )
+
+          os.makedirs("data", exist_ok=True)
+
+          with open(
+              "data/events.json",
+              "w",
+              encoding="utf-8",
+          ) as file:
+              json.dump(
+                  output,
+                  file,
+                  ensure_ascii=False,
+                  separators=(",", ":"),
+              )
+
+          print("======================================")
+          print("CORPORATE EVENTS UPDATE COMPLETE")
+          print("Corporate actions:", len(corporate_actions))
+          print("Board meetings   :", len(board_meetings))
+          print("Bulk deals       :", len(bulk_deals))
+          print("Block deals      :", len(block_deals))
+          print("Symbols indexed  :", len(by_symbol))
+          print("======================================")
+          PY
+
+      - name: Show events summary
+        run: |
+          ls -lh data/events.json
+          python - <<'PY'
+          import json
+          with open("data/events.json", "r", encoding="utf-8") as f:
+              d = json.load(f)
+          print("Corporate actions:", len(d.get("corporateActions", [])))
+          print("Board meetings   :", len(d.get("boardMeetings", [])))
+          print("Bulk deals       :", len(d.get("bulkDeals", [])))
+          print("Block deals      :", len(d.get("blockDeals", [])))
+          print("Symbols indexed  :", len(d.get("bySymbol", {})))
+          PY
+
+      - name: Commit and push event data
+        shell: bash
+        run: |
+          set -e
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/events.json
+
+          if git diff --cached --quiet; then
+            echo "No corporate event changes."
+            exit 0
+          fi
+
+          git commit -m "Auto-update NSE corporate events"
+
+          for attempt in 1 2 3 4 5; do
+            echo "Push attempt: $attempt"
+            git fetch origin main
+
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                echo "Push successful."
+                exit 0
+              fi
+            else
+              git rebase --abort || true
+            fi
+
+            sleep 5
+          done
+
+          echo "ERROR: Could not push corporate events."
+          exit 1
