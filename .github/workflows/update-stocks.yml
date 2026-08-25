@@ -43,8 +43,6 @@ jobs:
           data_dir = Path("data")
           data_dir.mkdir(exist_ok=True)
 
-          # These are NOT stock candle files.
-          # Never move them into A-Z stock folders.
           protected_files = {
               "symbols.json",
               "indices.json",
@@ -70,14 +68,12 @@ jobs:
 
               symbol = src.stem.upper()
 
-              # Only move files that look like stock symbols.
               if not re.fullmatch(r"[A-Z0-9._-]+", symbol):
                   print(f"SKIP INVALID STOCK NAME: {src}")
                   continue
 
               dest_dir = data_dir / bucket(symbol)
               dest_dir.mkdir(exist_ok=True)
-
               dest = dest_dir / src.name
 
               if src.resolve() != dest.resolve():
@@ -103,13 +99,11 @@ jobs:
           DATA_DIR.mkdir(exist_ok=True)
 
           with open("symbols.txt", "r", encoding="utf-8") as f:
-              symbols = list(
-                  dict.fromkeys(
-                      line.strip().upper()
-                      for line in f
-                      if line.strip()
-                  )
-              )
+              symbols = list(dict.fromkeys(
+                  line.strip().upper()
+                  for line in f
+                  if line.strip()
+              ))
 
           print(f"Found {len(symbols)} unique stock symbols")
 
@@ -126,7 +120,6 @@ jobs:
               for dt, row in stock_df.iterrows():
                   try:
                       close = float(row["Close"])
-
                       if pd.isna(close) or close <= 0:
                           continue
 
@@ -135,10 +128,7 @@ jobs:
                       low = float(row["Low"])
                       volume = int(float(row["Volume"]))
 
-                      if any(
-                          pd.isna(x)
-                          for x in [open_price, high, low]
-                      ):
+                      if any(pd.isna(x) for x in [open_price, high, low]):
                           continue
 
                       candles.append({
@@ -149,59 +139,28 @@ jobs:
                           "close": round(close, 2),
                           "volume": volume
                       })
-
                   except Exception:
                       continue
 
               if not candles:
                   return 0
 
-              # Remove duplicate dates.
-              unique = {
-                  item["time"]: item
-                  for item in candles
-              }
+              unique = {item["time"]: item for item in candles}
+              candles = [unique[key] for key in sorted(unique)]
 
-              candles = [
-                  unique[key]
-                  for key in sorted(unique)
-              ]
-
-              dest_dir.mkdir(
-                  parents=True,
-                  exist_ok=True
-              )
-
+              dest_dir.mkdir(parents=True, exist_ok=True)
               output = dest_dir / f"{symbol}.json"
 
-              with open(
-                  output,
-                  "w",
-                  encoding="utf-8"
-              ) as f:
-                  json.dump(
-                      candles,
-                      f,
-                      separators=(",", ":")
-                  )
+              with open(output, "w", encoding="utf-8") as f:
+                  json.dump(candles, f, separators=(",", ":"))
 
               return len(candles)
 
           BATCH_SIZE = 50
 
-          for start in range(
-              0,
-              len(symbols),
-              BATCH_SIZE
-          ):
-              batch = symbols[
-                  start:start + BATCH_SIZE
-              ]
-
-              tickers = [
-                  f"{symbol}.NS"
-                  for symbol in batch
-              ]
+          for start in range(0, len(symbols), BATCH_SIZE):
+              batch = symbols[start:start + BATCH_SIZE]
+              tickers = [f"{symbol}.NS" for symbol in batch]
 
               print("\n" + "=" * 70)
               print(
@@ -225,75 +184,36 @@ jobs:
                           timeout=60,
                       )
 
-                      if (
-                          downloaded is not None
-                          and not downloaded.empty
-                      ):
+                      if downloaded is not None and not downloaded.empty:
                           break
 
-                      print(
-                          f"Batch returned no data, "
-                          f"attempt {attempt}/3"
-                      )
-
+                      print(f"Batch returned no data, attempt {attempt}/3")
                   except Exception as e:
-                      print(
-                          f"Batch error on attempt "
-                          f"{attempt}/3: {e}"
-                      )
+                      print(f"Batch error on attempt {attempt}/3: {e}")
 
                   time.sleep(5 * attempt)
 
-              if (
-                  downloaded is None
-                  or downloaded.empty
-              ):
-                  print(
-                      "BATCH FAILED: no data returned"
-                  )
+              if downloaded is None or downloaded.empty:
+                  print("BATCH FAILED: no data returned")
                   continue
 
               for symbol in batch:
                   ticker = f"{symbol}.NS"
 
                   try:
-                      if isinstance(
-                          downloaded.columns,
-                          pd.MultiIndex
-                      ):
-                          level0 = (
-                              downloaded.columns
-                              .get_level_values(0)
-                          )
-
-                          level1 = (
-                              downloaded.columns
-                              .get_level_values(1)
-                          )
+                      if isinstance(downloaded.columns, pd.MultiIndex):
+                          level0 = downloaded.columns.get_level_values(0)
+                          level1 = downloaded.columns.get_level_values(1)
 
                           if ticker in level0:
-                              stock_df = (
-                                  downloaded[ticker]
-                                  .copy()
-                              )
-
+                              stock_df = downloaded[ticker].copy()
                           elif ticker in level1:
-                              stock_df = (
-                                  downloaded
-                                  .xs(
-                                      ticker,
-                                      axis=1,
-                                      level=1
-                                  )
-                                  .copy()
-                              )
-
+                              stock_df = downloaded.xs(
+                                  ticker, axis=1, level=1
+                              ).copy()
                           else:
-                              print(
-                                  f"NO DATA: {symbol}"
-                              )
+                              print(f"NO DATA: {symbol}")
                               continue
-
                       else:
                           stock_df = downloaded.copy()
 
@@ -304,25 +224,16 @@ jobs:
                       )
 
                       if count:
-                          print(
-                              f"SUCCESS: {symbol} "
-                              f"-> {count} candles"
-                          )
+                          print(f"SUCCESS: {symbol} -> {count} candles")
                       else:
-                          print(
-                              f"NO VALID DATA: {symbol}"
-                          )
+                          print(f"NO VALID DATA: {symbol}")
 
                   except Exception as e:
-                      print(
-                          f"ERROR: {symbol} -> {e}"
-                      )
+                      print(f"ERROR: {symbol} -> {e}")
 
               time.sleep(2)
 
-          print(
-              "\nFinished downloading stock market data."
-          )
+          print("\nFinished downloading stock market data.")
           PY
 
       - name: Show stock data summary
@@ -343,15 +254,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          echo "Fetching latest main..."
-          git fetch origin main
-
-          echo "Rebasing before commit..."
-          git rebase origin/main
-
+          # Stage generated files before any rebase. The previous workflow
+          # tried to rebase while thousands of generated JSON files were
+          # unstaged, which caused: "cannot rebase: You have unstaged changes."
           git add data/
 
-          # Explicitly unstage non-stock files if they exist.
           git reset -- \
             data/symbols.json \
             data/indices.json \
@@ -362,7 +269,6 @@ jobs:
             data/market_sentiment.json \
             2>/dev/null || true
 
-          # Also protect accidentally moved files.
           git reset -- \
             data/P/price-bands.json \
             data/P/price-band-changes.json \
@@ -376,21 +282,22 @@ jobs:
 
           git commit -m "Update stock market data"
 
-          for attempt in 1 2 3; do
-            echo "Push attempt $attempt/3..."
-
-            if git push origin main; then
-              echo "Stock data push successful."
-              exit 0
-            fi
-
-            echo "Push rejected. Syncing latest main..."
-
+          for attempt in 1 2 3 4 5; do
+            echo "Push attempt $attempt/5..."
             git fetch origin main
-            git rebase origin/main
+
+            if git rebase origin/main; then
+              if git push origin main; then
+                echo "Stock data push successful."
+                exit 0
+              fi
+            else
+              echo "Rebase failed. Aborting and retrying..."
+              git rebase --abort || true
+            fi
 
             sleep 5
           done
 
-          echo "ERROR: Could not push stock data after 3 attempts."
+          echo "ERROR: Could not push stock data after 5 attempts."
           exit 1
