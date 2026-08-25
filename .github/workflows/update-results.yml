@@ -3,7 +3,6 @@ name: Update NSE Results Calendar
 on:
   workflow_dispatch:
   schedule:
-    # 10:00 AM IST, Monday-Friday
     - cron: "30 4 * * 1-5"
 
 permissions:
@@ -19,30 +18,23 @@ jobs:
     timeout-minutes: 20
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install curl_cffi
+        run: pip install curl_cffi
 
-      - name: Fetch NSE Results
-        shell: bash
+      - name: Fetch results
         run: |
           python <<'PY'
           import json
-          import os
           from datetime import datetime, timedelta
           from zoneinfo import ZoneInfo
-
           from curl_cffi import requests
 
           IST = ZoneInfo("Asia/Kolkata")
@@ -54,315 +46,121 @@ jobs:
               "accept": "application/json, text/plain, */*",
               "accept-language": "en-US,en;q=0.9",
               "referer": "https://www.nseindia.com/",
-              "user-agent": (
-                  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                  "AppleWebKit/537.36 (KHTML, like Gecko) "
-                  "Chrome/151.0.0.0 Safari/537.36"
-              ),
+              "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
           })
+          home = session.get("https://www.nseindia.com/", timeout=30)
+          if home.status_code != 200:
+              raise RuntimeError(f"NSE homepage failed: {home.status_code}")
 
-          print("======================================")
-          print("NSE RESULTS DATA UPDATE")
-          print("======================================")
+          def rows(payload):
+              if isinstance(payload, list): return payload
+              if isinstance(payload, dict):
+                  for key in ("data", "records", "result"):
+                      if isinstance(payload.get(key), list): return payload[key]
+                  for value in payload.values():
+                      if isinstance(value, list): return value
+              return []
 
-          home = session.get(
-              "https://www.nseindia.com/",
-              timeout=30,
-          )
-          print("NSE homepage:", home.status_code)
-
-          # -------------------------------------------------
-          # UPCOMING: NSE EVENT CALENDAR
-          # -------------------------------------------------
-
-          event_response = session.get(
-              "https://www.nseindia.com/api/event-calendar",
-              timeout=30,
-          )
-
-          if event_response.status_code != 200:
-              raise RuntimeError(
-                  "NSE event calendar failed: "
-                  f"HTTP {event_response.status_code}"
-              )
-
-          event_payload = event_response.json()
-
-          if isinstance(event_payload, dict):
-              events = event_payload.get("data", [])
-              if not events:
-                  for value in event_payload.values():
-                      if isinstance(value, list):
-                          events = value
-                          break
-          elif isinstance(event_payload, list):
-              events = event_payload
-          else:
-              events = []
-
-          def parse_date(value):
-              if not value:
-                  return None
-
+          def date_of(value):
+              if not value: return None
               value = str(value).strip()
+              for fmt in ("%d-%b-%Y", "%d-%B-%Y", "%d/%m/%Y", "%Y-%m-%d", "%d-%m-%Y"):
+                  try: return datetime.strptime(value, fmt).date()
+                  except ValueError: pass
+              try: return datetime.fromisoformat(value.replace("Z", "+00:00")).date()
+              except Exception: return None
 
-              for fmt in (
-                  "%d-%b-%Y",
-                  "%d-%B-%Y",
-                  "%d/%m/%Y",
-                  "%Y-%m-%d",
-              ):
-                  try:
-                      return datetime.strptime(value, fmt).date()
-                  except ValueError:
-                      pass
-
-              try:
-                  return datetime.fromisoformat(
-                      value.replace("Z", "+00:00")
-                  ).date()
-              except Exception:
-                  return None
-
-          def is_financial_result(event):
-              purpose = str(
-                  event.get("purpose", "")
-              ).strip().lower()
-              description = str(
-                  event.get("bm_desc", "")
-              ).strip().lower()
-
-              combined = purpose + " " + description
-
-              return (
-                  "financial result" in combined
-                  or "financial results" in combined
-              )
+          def is_result(row):
+              text = f'{row.get("purpose", "")} {row.get("bm_desc", "")}'.lower()
+              return "financial result" in text or "financial results" in text
 
           upcoming = []
-
-          for event in events:
-              if not isinstance(event, dict):
-                  continue
-
-              if not is_financial_result(event):
-                  continue
-
-              event_date = parse_date(event.get("date"))
-
-              if not event_date or event_date < today:
-                  continue
-
-              symbol = str(
-                  event.get("symbol", "")
-              ).strip().upper()
-
-              if not symbol:
-                  continue
-
+          event_response = session.get("https://www.nseindia.com/api/event-calendar", timeout=30)
+          if event_response.status_code != 200:
+              raise RuntimeError(f"NSE event calendar failed: {event_response.status_code}")
+          for row in rows(event_response.json()):
+              if not isinstance(row, dict) or not is_result(row): continue
+              d = date_of(row.get("date"))
+              symbol = str(row.get("symbol", "")).strip().upper()
+              if not d or d < today or not symbol: continue
               upcoming.append({
                   "symbol": symbol,
-                  "company": str(
-                      event.get("company", "")
-                  ).strip(),
-                  "date": event_date.isoformat(),
-                  "purpose": str(
-                      event.get("purpose", "")
-                  ).strip(),
-                  "description": str(
-                      event.get("bm_desc", "")
-                  ).strip(),
+                  "company": str(row.get("company", "")).strip(),
+                  "date": d.isoformat(),
+                  "purpose": str(row.get("purpose", "")).strip(),
+                  "description": str(row.get("bm_desc", "")).strip(),
               })
 
-          # Remove duplicate event rows.
-          unique_upcoming = {}
-          for item in upcoming:
-              key = (
-                  item["symbol"],
-                  item["date"],
-                  item["description"],
-              )
-              unique_upcoming[key] = item
+          dedupe = {(x["symbol"], x["date"], x["description"]): x for x in upcoming}
+          upcoming = sorted(dedupe.values(), key=lambda x: (x["date"], x["symbol"]))
 
-          upcoming = list(unique_upcoming.values())
-          upcoming.sort(key=lambda x: (x["date"], x["symbol"]))
+          historical = []
+          for period in ("Quarterly", "Annual", "Half-Yearly", "Others"):
+              url = "https://www.nseindia.com/api/corporates-financial-results?index=equities&period=" + period
+              response = session.get(url, timeout=30)
+              if response.status_code != 200: continue
+              historical.extend(rows(response.json()))
 
-          # -------------------------------------------------
-          # LAST RESULTS: NSE FINANCIAL RESULTS API
-          # -------------------------------------------------
-
-          print("Fetching historical financial results...")
-
-          result_rows = []
-
-          for period in (
-              "Quarterly",
-              "Annual",
-              "Half-Yearly",
-              "Others",
-          ):
-              url = (
-                  "https://www.nseindia.com/api/"
-                  "corporates-financial-results"
-                  f"?index=equities&period={period}"
-              )
-
-              try:
-                  response = session.get(
-                      url,
-                      timeout=30,
-                  )
-
-                  print(
-                      period,
-                      "HTTP:",
-                      response.status_code,
-                  )
-
-                  if response.status_code != 200:
-                      continue
-
-                  payload = response.json()
-
-                  if isinstance(payload, dict):
-                      rows = payload.get("data", [])
-                      if not rows:
-                          for value in payload.values():
-                              if isinstance(value, list):
-                                  rows = value
-                                  break
-                  elif isinstance(payload, list):
-                      rows = payload
-                  else:
-                      rows = []
-
-                  if isinstance(rows, list):
-                      result_rows.extend(rows)
-
-              except Exception as exc:
-                  print(
-                      "Financial results error:",
-                      period,
-                      repr(exc),
-                  )
-
-          def result_date(row):
-              for key in (
-                  "broadCastDate",
-                  "broadcastDate",
-                  "filingDate",
-                  "exchdisstime",
-              ):
-                  parsed = parse_date(row.get(key))
-                  if parsed:
-                      return parsed
-              return None
-
-          # Latest filing/result per symbol.
           latest_by_symbol = {}
-
-          for row in result_rows:
-              if not isinstance(row, dict):
-                  continue
-
-              symbol = str(
-                  row.get("symbol", "")
-              ).strip().upper()
-
-              if not symbol:
-                  continue
-
-              broadcast_date = result_date(row)
-
-              if not broadcast_date or broadcast_date > today:
-                  continue
-
+          for row in historical:
+              if not isinstance(row, dict): continue
+              symbol = str(row.get("symbol", "")).strip().upper()
+              if not symbol: continue
+              d = None
+              for key in ("broadCastDate", "broadcastDate", "filingDate", "exchdisstime"):
+                  d = date_of(row.get(key))
+                  if d: break
+              if not d or d > today: continue
               item = {
                   "symbol": symbol,
-                  "company": str(
-                      row.get("companyName", "")
-                  ).strip(),
-                  "resultDate": broadcast_date.isoformat(),
-                  "period": str(
-                      row.get("period", "")
-                  ).strip(),
-                  "relatingTo": str(
-                      row.get("relatingTo", "")
-                  ).strip(),
-                  "periodFrom": str(
-                      row.get("fromDate", "")
-                  ).strip(),
-                  "periodTo": str(
-                      row.get("toDate", "")
-                  ).strip(),
-                  "consolidated": str(
-                      row.get("consolidated", "")
-                  ).strip(),
-                  "audited": str(
-                      row.get("audited", "")
-                  ).strip(),
+                  "company": str(row.get("companyName", "")).strip(),
+                  "resultDate": d.isoformat(),
+                  "period": str(row.get("period", "")).strip(),
+                  "relatingTo": str(row.get("relatingTo", "")).strip(),
+                  "periodFrom": str(row.get("fromDate", "")).strip(),
+                  "periodTo": str(row.get("toDate", "")).strip(),
+                  "consolidated": str(row.get("consolidated", "")).strip(),
+                  "audited": str(row.get("audited", "")).strip(),
               }
-
-              previous = latest_by_symbol.get(symbol)
-
-              if (
-                  previous is None
-                  or item["resultDate"] > previous["resultDate"]
-              ):
+              old = latest_by_symbol.get(symbol)
+              if old is None or item["resultDate"] > old["resultDate"]:
                   latest_by_symbol[symbol] = item
 
-          last_results = list(latest_by_symbol.values())
-          last_results.sort(
-              key=lambda x: (x["resultDate"], x["symbol"]),
-              reverse=True,
-          )
+          all_symbols = []
+          try:
+              with open("data/symbols.json", "r", encoding="utf-8") as f:
+                  all_symbols = json.load(f)
+          except Exception:
+              pass
 
-          # -------------------------------------------------
-          # SYMBOL-WISE COMBINED VIEW
-          # -------------------------------------------------
-
-          symbols = set(latest_by_symbol)
-          symbols.update(x["symbol"] for x in upcoming)
+          master = {}
+          for item in all_symbols if isinstance(all_symbols, list) else []:
+              symbol = str(item.get("symbol", "")).strip().upper()
+              if symbol:
+                  master[symbol] = str(item.get("name", symbol)).strip()
+          for x in upcoming:
+              master.setdefault(x["symbol"], x["company"] or x["symbol"])
+          for symbol, x in latest_by_symbol.items():
+              master.setdefault(symbol, x.get("company") or symbol)
 
           symbol_wise = []
-
-          for symbol in sorted(symbols):
-              past = latest_by_symbol.get(symbol)
-              future = [
-                  x for x in upcoming
-                  if x["symbol"] == symbol
-              ]
-              future.sort(key=lambda x: x["date"])
-
+          for symbol in sorted(master):
+              future = sorted([x for x in upcoming if x["symbol"] == symbol], key=lambda x: x["date"])
+              last = latest_by_symbol.get(symbol)
               symbol_wise.append({
                   "symbol": symbol,
-                  "lastResult": past,
+                  "company": master[symbol],
+                  "lastResultDate": last["resultDate"] if last else None,
+                  "nextResultDate": future[0]["date"] if future else None,
+                  "lastResult": last,
                   "upcomingResults": future,
               })
 
-          # -------------------------------------------------
-          # CONVENIENCE WINDOWS
-          # -------------------------------------------------
-
           tomorrow = today + timedelta(days=1)
           week_end = today + timedelta(days=(6 - today.weekday()))
-
-          today_results = [
-              x for x in upcoming
-              if x["date"] == today.isoformat()
-          ]
-
-          tomorrow_results = [
-              x for x in upcoming
-              if x["date"] == tomorrow.isoformat()
-          ]
-
-          this_week_results = [
-              x for x in upcoming
-              if today <= datetime.fromisoformat(
-                  x["date"]
-              ).date() <= week_end
-          ]
+          today_results = [x for x in upcoming if x["date"] == today.isoformat()]
+          tomorrow_results = [x for x in upcoming if x["date"] == tomorrow.isoformat()]
+          this_week = [x for x in upcoming if today <= date.fromisoformat(x["date"]) <= week_end]
 
           output = {
               "source": "NSE",
@@ -370,93 +168,39 @@ jobs:
               "timezone": "Asia/Kolkata",
               "today": today_results,
               "tomorrow": tomorrow_results,
-              "thisWeek": this_week_results,
+              "thisWeek": this_week,
               "allUpcoming": upcoming,
-              "lastResults": last_results,
+              "lastResults": sorted(latest_by_symbol.values(), key=lambda x: (x["resultDate"], x["symbol"]), reverse=True),
               "symbolWise": symbol_wise,
           }
 
-          if not upcoming and not last_results:
-              raise RuntimeError(
-                  "NSE returned no usable results data."
-              )
+          if not symbol_wise:
+              raise RuntimeError("No symbol list available for results output")
 
-          os.makedirs("data", exist_ok=True)
+          with open("data/results.json", "w", encoding="utf-8") as f:
+              json.dump(output, f, ensure_ascii=False, indent=2)
 
-          with open(
-              "data/results.json",
-              "w",
-              encoding="utf-8",
-          ) as file:
-              json.dump(
-                  output,
-                  file,
-                  ensure_ascii=False,
-                  indent=2,
-              )
-
-          print("======================================")
-          print("RESULTS FETCH COMPLETE")
-          print("Today:", len(today_results))
-          print("Tomorrow:", len(tomorrow_results))
-          print("This Week:", len(this_week_results))
-          print("All Upcoming:", len(upcoming))
-          print("Last Results:", len(last_results))
-          print("Symbol Wise:", len(symbol_wise))
-          print("======================================")
+          print("Symbols:", len(symbol_wise))
+          print("Upcoming result events:", len(upcoming))
+          print("Symbols with last result:", len(latest_by_symbol))
+          print("Symbols with next result:", sum(1 for x in symbol_wise if x["nextResultDate"]))
           PY
 
-      - name: Show Results File
-        run: |
-          ls -lh data/results.json
-          python - <<'PY'
-          import json
-
-          with open("data/results.json", "r", encoding="utf-8") as f:
-              data = json.load(f)
-
-          print("Upcoming:", len(data.get("allUpcoming", [])))
-          print("Last results:", len(data.get("lastResults", [])))
-          print("Symbol-wise:", len(data.get("symbolWise", [])))
-          print("First symbol-wise rows:")
-          for row in data.get("symbolWise", [])[:10]:
-              print(row)
-          PY
-
-      - name: Commit and Push Results Data
-        shell: bash
+      - name: Commit and push
         run: |
           set -e
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
           git add data/results.json
-
-          if git diff --cached --quiet; then
-            echo "No changes in results data."
-            exit 0
-          fi
-
+          if git diff --cached --quiet; then exit 0; fi
           git commit -m "Auto-update NSE results calendar"
-
           for attempt in 1 2 3 4 5; do
-            echo "Push attempt: $attempt"
-
             git fetch origin main
-
             if git rebase origin/main; then
-              if git push origin HEAD:main; then
-                echo "Push successful."
-                exit 0
-              fi
+              if git push origin HEAD:main; then exit 0; fi
             else
-              echo "Rebase failed."
               git rebase --abort || true
             fi
-
             sleep 5
           done
-
-          echo "ERROR: Could not push after 5 attempts."
           exit 1
