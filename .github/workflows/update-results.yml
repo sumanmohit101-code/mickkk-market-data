@@ -2,53 +2,97 @@ name: Update NSE Results Calendar
 
 on:
   workflow_dispatch:
+
   schedule:
-    # Every day at 10:00 AM IST
-    - cron: "30 4 * * *"
+    # 10:00 AM IST, Monday-Friday
+    - cron: "30 4 * * 1-5"
 
 permissions:
   contents: write
 
+concurrency:
+  group: nse-results-update
+  cancel-in-progress: false
+
 jobs:
   update-results:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
+
+      # -------------------------------------------------
+      # CHECKOUT
+      # -------------------------------------------------
+
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # -------------------------------------------------
+      # PYTHON
+      # -------------------------------------------------
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
+      # -------------------------------------------------
+      # DEPENDENCIES
+      # -------------------------------------------------
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install curl_cffi
 
+      # -------------------------------------------------
+      # FETCH NSE RESULTS
+      # -------------------------------------------------
+
       - name: Fetch NSE Results Calendar
+        shell: bash
         run: |
           python <<'PY'
           from curl_cffi import requests
+
           from datetime import datetime, timedelta
           from zoneinfo import ZoneInfo
+
           import json
           import os
 
-          NSE_HOME = "https://www.nseindia.com/"
-          EVENTS_URL = "https://www.nseindia.com/api/event-calendar"
 
-          print("Starting NSE results fetch...")
+          NSE_HOME = "https://www.nseindia.com/"
+          EVENTS_URL = (
+              "https://www.nseindia.com/api/event-calendar"
+          )
+
+          print("======================================")
+          print("NSE RESULTS CALENDAR UPDATE")
+          print("======================================")
+
+
+          # -------------------------------------------------
+          # NSE SESSION
+          # -------------------------------------------------
 
           session = requests.Session(
               impersonate="chrome"
           )
 
           headers = {
-              "accept": "application/json, text/plain, */*",
-              "accept-language": "en-US,en;q=0.9",
-              "referer": "https://www.nseindia.com/",
+              "accept": (
+                  "application/json, text/plain, */*"
+              ),
+              "accept-language": (
+                  "en-US,en;q=0.9"
+              ),
+              "referer": (
+                  "https://www.nseindia.com/"
+              ),
               "user-agent": (
                   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                   "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -58,80 +102,159 @@ jobs:
 
           session.headers.update(headers)
 
-          # First visit NSE homepage to obtain cookies
+
+          # -------------------------------------------------
+          # STEP 1
+          # NSE HOME PAGE
+          # -------------------------------------------------
+
+          print("Opening NSE homepage...")
+
           home = session.get(
               NSE_HOME,
               timeout=30
           )
 
-          print("NSE homepage:", home.status_code)
+          print(
+              "NSE homepage status:",
+              home.status_code
+          )
 
           if home.status_code != 200:
-              raise Exception(
-                  f"NSE homepage failed: {home.status_code}"
+              raise RuntimeError(
+                  f"NSE homepage failed: "
+                  f"{home.status_code}"
               )
 
-          # Fetch event calendar
+
+          # -------------------------------------------------
+          # STEP 2
+          # EVENT CALENDAR
+          # -------------------------------------------------
+
+          print("Fetching NSE event calendar...")
+
           response = session.get(
               EVENTS_URL,
               timeout=30
           )
 
-          print("NSE event calendar:", response.status_code)
+          print(
+              "NSE event calendar status:",
+              response.status_code
+          )
 
           if response.status_code != 200:
-              print(response.text[:1000])
-              raise Exception(
-                  f"NSE event calendar failed: {response.status_code}"
+
+              print(
+                  response.text[:1000]
               )
+
+              raise RuntimeError(
+                  "NSE event calendar request failed: "
+                  f"{response.status_code}"
+              )
+
 
           data = response.json()
 
-          # NSE normally returns a list directly
+
+          # -------------------------------------------------
+          # NORMALIZE NSE RESPONSE
+          # -------------------------------------------------
+
           if isinstance(data, dict):
-              events = data.get("data", [])
+
+              events = data.get(
+                  "data",
+                  []
+              )
 
               if not events:
-                  # Fallback if API returns another structure
+
                   for value in data.values():
-                      if isinstance(value, list):
+
+                      if isinstance(
+                          value,
+                          list
+                      ):
                           events = value
                           break
-          else:
+
+          elif isinstance(data, list):
+
               events = data
 
+          else:
+
+              raise RuntimeError(
+                  "Unexpected NSE API response format"
+              )
+
+
           if not isinstance(events, list):
-              raise Exception("Unexpected NSE API response format")
 
-          print("Total NSE events received:", len(events))
+              raise RuntimeError(
+                  "NSE events is not a list"
+              )
+
+
+          print(
+              "Total NSE events received:",
+              len(events)
+          )
+
 
           # -------------------------------------------------
-          # IST dates
+          # IST DATE CALCULATIONS
           # -------------------------------------------------
 
-          ist = ZoneInfo("Asia/Kolkata")
+          ist = ZoneInfo(
+              "Asia/Kolkata"
+          )
+
           now = datetime.now(ist)
 
           today = now.date()
-          tomorrow = today + timedelta(days=1)
 
-          # Monday = 0 ... Sunday = 6
-          week_start = today - timedelta(days=today.weekday())
-          week_end = week_start + timedelta(days=6)
+          tomorrow = (
+              today +
+              timedelta(days=1)
+          )
+
+          week_start = (
+              today -
+              timedelta(days=today.weekday())
+          )
+
+          week_end = (
+              week_start +
+              timedelta(days=6)
+          )
+
 
           print("Today:", today)
           print("Tomorrow:", tomorrow)
-          print("Week:", week_start, "to", week_end)
+          print(
+              "Week:",
+              week_start,
+              "to",
+              week_end
+          )
+
 
           # -------------------------------------------------
-          # Helpers
+          # DATE PARSER
           # -------------------------------------------------
 
           def parse_date(value):
+
               if not value:
                   return None
 
-              value = str(value).strip()
+              value = str(
+                  value
+              ).strip()
 
               formats = [
                   "%d-%b-%Y",
@@ -143,35 +266,59 @@ jobs:
               ]
 
               for fmt in formats:
+
                   try:
                       return datetime.strptime(
                           value,
                           fmt
                       ).date()
+
                   except ValueError:
                       pass
 
-              # Handle ISO datetime with timezone
+
+              # ISO datetime fallback
+
               try:
+
                   return datetime.fromisoformat(
-                      value.replace("Z", "+00:00")
+                      value.replace(
+                          "Z",
+                          "+00:00"
+                      )
                   ).date()
+
               except Exception:
+
                   return None
 
 
+          # -------------------------------------------------
+          # CHECK FINANCIAL RESULTS
+          # -------------------------------------------------
+
           def is_financial_result(event):
+
               purpose = str(
-                  event.get("purpose", "")
+                  event.get(
+                      "purpose",
+                      ""
+                  )
               ).strip().lower()
 
               description = str(
-                  event.get("bm_desc", "")
+                  event.get(
+                      "bm_desc",
+                      ""
+                  )
               ).strip().lower()
 
-              combined = purpose + " " + description
+              combined = (
+                  purpose +
+                  " " +
+                  description
+              )
 
-              # We want result-related board meetings.
               keywords = [
                   "financial result",
                   "financial results",
@@ -184,17 +331,22 @@ jobs:
 
 
           # -------------------------------------------------
-          # Filter Financial Results
+          # FILTER RESULTS
           # -------------------------------------------------
 
           results = []
 
           for event in events:
 
-              if not isinstance(event, dict):
+              if not isinstance(
+                  event,
+                  dict
+              ):
                   continue
 
-              if not is_financial_result(event):
+              if not is_financial_result(
+                  event
+              ):
                   continue
 
               event_date = parse_date(
@@ -204,42 +356,61 @@ jobs:
               if not event_date:
                   continue
 
-              # Only keep current week + future
-              # This keeps the JSON small and useful.
+              # Keep today and future results
+
               if event_date < today:
                   continue
 
-              results.append({
+
+              item = {
                   "symbol": str(
-                      event.get("symbol", "")
+                      event.get(
+                          "symbol",
+                          ""
+                      )
                   ).strip(),
 
                   "company": str(
-                      event.get("company", "")
+                      event.get(
+                          "company",
+                          ""
+                      )
                   ).strip(),
 
                   "date": event_date.isoformat(),
 
                   "purpose": str(
-                      event.get("purpose", "")
+                      event.get(
+                          "purpose",
+                          ""
+                      )
                   ).strip(),
 
                   "description": str(
-                      event.get("bm_desc", "")
+                      event.get(
+                          "bm_desc",
+                          ""
+                      )
                   ).strip()
-              })
+              }
 
 
-          # Remove invalid symbols
-          results = [
-              x for x in results
-              if x["symbol"]
-          ]
+              if not item["symbol"]:
+                  continue
 
-          # Remove duplicates
+              results.append(
+                  item
+              )
+
+
+          # -------------------------------------------------
+          # REMOVE DUPLICATES
+          # -------------------------------------------------
+
           unique = {}
 
           for item in results:
+
               key = (
                   item["symbol"],
                   item["date"],
@@ -248,9 +419,16 @@ jobs:
 
               unique[key] = item
 
-          results = list(unique.values())
 
-          # Sort by date, then symbol
+          results = list(
+              unique.values()
+          )
+
+
+          # -------------------------------------------------
+          # SORT
+          # -------------------------------------------------
+
           results.sort(
               key=lambda x: (
                   x["date"],
@@ -258,35 +436,64 @@ jobs:
               )
           )
 
+
           # -------------------------------------------------
-          # Create Today / Tomorrow / This Week
+          # TODAY
           # -------------------------------------------------
 
           today_results = [
-              x for x in results
-              if x["date"] == today.isoformat()
+              item
+              for item in results
+              if item["date"] ==
+              today.isoformat()
           ]
 
-          tomorrow_results = [
-              x for x in results
-              if x["date"] == tomorrow.isoformat()
-          ]
-
-          this_week_results = [
-              x for x in results
-              if week_start <= datetime.strptime(
-                  x["date"],
-                  "%Y-%m-%d"
-              ).date() <= week_end
-          ]
 
           # -------------------------------------------------
-          # Final JSON
+          # TOMORROW
+          # -------------------------------------------------
+
+          tomorrow_results = [
+              item
+              for item in results
+              if item["date"] ==
+              tomorrow.isoformat()
+          ]
+
+
+          # -------------------------------------------------
+          # THIS WEEK
+          # -------------------------------------------------
+
+          this_week_results = []
+
+          for item in results:
+
+              item_date = datetime.strptime(
+                  item["date"],
+                  "%Y-%m-%d"
+              ).date()
+
+              if (
+                  week_start <=
+                  item_date <=
+                  week_end
+              ):
+                  this_week_results.append(
+                      item
+                  )
+
+
+          # -------------------------------------------------
+          # FINAL OUTPUT
           # -------------------------------------------------
 
           output = {
+
               "source": "NSE",
+
               "updatedAt": now.isoformat(),
+
               "timezone": "Asia/Kolkata",
 
               "today": today_results,
@@ -298,37 +505,85 @@ jobs:
               "allUpcoming": results
           }
 
-          os.makedirs("data", exist_ok=True)
 
-          output_file = "data/results.json"
+          # -------------------------------------------------
+          # SAVE
+          # -------------------------------------------------
+
+          os.makedirs(
+              "data",
+              exist_ok=True
+          )
+
+          output_file = (
+              "data/results.json"
+          )
+
 
           with open(
               output_file,
               "w",
               encoding="utf-8"
-          ) as f:
+          ) as file:
+
               json.dump(
                   output,
-                  f,
+                  file,
                   ensure_ascii=False,
                   indent=2
               )
 
+
+          # -------------------------------------------------
+          # SUMMARY
+          # -------------------------------------------------
+
           print()
-          print("======================================")
-          print("RESULTS FETCH COMPLETE")
-          print("======================================")
-          print("Today:", len(today_results))
-          print("Tomorrow:", len(tomorrow_results))
-          print("This Week:", len(this_week_results))
-          print("All Upcoming:", len(results))
-          print("File:", output_file)
-          print("======================================")
+          print(
+              "======================================"
+          )
+          print(
+              "RESULTS FETCH COMPLETE"
+          )
+          print(
+              "======================================"
+          )
+
+          print(
+              "Today:",
+              len(today_results)
+          )
+
+          print(
+              "Tomorrow:",
+              len(tomorrow_results)
+          )
+
+          print(
+              "This Week:",
+              len(this_week_results)
+          )
+
+          print(
+              "All Upcoming:",
+              len(results)
+          )
+
+          print(
+              "File:",
+              output_file
+          )
+
+          print(
+              "======================================"
+          )
+
 
           print()
           print("Tomorrow's results:")
 
           for item in tomorrow_results:
+
               print(
                   item["symbol"],
                   "|",
@@ -339,8 +594,28 @@ jobs:
 
           PY
 
-      - name: Commit and push results data
+      # -------------------------------------------------
+      # SHOW RESULT
+      # -------------------------------------------------
+
+      - name: Show Results File
         run: |
+          echo "Generated results file:"
+          ls -lh data/results.json
+
+          echo
+          echo "First lines:"
+          head -40 data/results.json
+
+      # -------------------------------------------------
+      # COMMIT + SAFE PUSH
+      # -------------------------------------------------
+
+      - name: Commit and Push Results Data
+        shell: bash
+        run: |
+          set -e
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
@@ -348,7 +623,36 @@ jobs:
 
           if git diff --cached --quiet; then
             echo "No changes in results data."
-          else
-            git commit -m "Auto-update NSE results calendar"
-            git push
+            exit 0
           fi
+
+          git commit -m "Auto-update NSE results calendar"
+
+          echo "Preparing to push..."
+
+          for attempt in 1 2 3 4 5; do
+
+            echo "Push attempt: $attempt"
+
+            git fetch origin main
+
+            if git rebase origin/main; then
+
+              if git push origin HEAD:main; then
+                echo "Push successful."
+                exit 0
+              fi
+
+            else
+              echo "Rebase failed."
+
+              git rebase --abort || true
+            fi
+
+            echo "Push failed. Retrying in 5 seconds..."
+            sleep 5
+
+          done
+
+          echo "ERROR: Could not push after 5 attempts."
+          exit 1
