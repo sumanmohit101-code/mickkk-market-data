@@ -1,6 +1,10 @@
 name: Update FII DII History
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/update-fii-dii-history.yml
   workflow_dispatch:
   schedule:
     - cron: "30 15 * * 1-5"
