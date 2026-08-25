@@ -1,0 +1,25 @@
+{
+  "source": "Yahoo Finance",
+  "updated": "2026-08-25T19:02:39.042754+05:30",
+  "timezone": "Asia/Kolkata",
+  "sentiment": {
+    "INDIA VIX": {
+      "lastPrice": 11.07,
+      "previousClose": 11.53,
+      "change": -0.45,
+      "pChange": -3.95
+    },
+    "NIFTY 50": {
+      "lastPrice": 24334.55,
+      "previousClose": 24219.05,
+      "change": 115.5,
+      "pChange": 0.48
+    },
+    "NIFTY BANK": {
+      "lastPrice": 57514.2,
+      "previousClose": 57525.95,
+      "change": -11.75,
+      "pChange": -0.02
+    }
+  }
+}
