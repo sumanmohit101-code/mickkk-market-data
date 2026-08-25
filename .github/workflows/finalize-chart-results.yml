@@ -1,0 +1,116 @@
+name: Finalize Chart Result Dates
+
+on:
+  workflow_run:
+    workflows: ["Sync Chart Market Data"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-data-main
+  cancel-in-progress: false
+
+jobs:
+  finalize:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Add chart-friendly result date fields
+        run: |
+          python <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("data/results.json")
+          data = json.loads(path.read_text(encoding="utf-8"))
+
+          rows = data.get("symbolWise", [])
+          for row in rows:
+              last = row.get("lastResult") or {}
+              upcoming = row.get("upcomingResults") or []
+
+              row["lastResultDate"] = last.get("resultDate")
+              row["nextResultDate"] = (
+                  upcoming[0].get("date")
+                  if upcoming
+                  else None
+              )
+
+          data["symbolWise"] = rows
+          data["symbolCount"] = len(rows)
+
+          path.write_text(
+              json.dumps(data, ensure_ascii=False, indent=2),
+              encoding="utf-8",
+          )
+
+          print("Chart-ready symbols:", len(rows))
+          print(
+              "Symbols with last result:",
+              sum(1 for row in rows if row.get("lastResultDate")),
+          )
+          print(
+              "Symbols with upcoming result:",
+              sum(1 for row in rows if row.get("nextResultDate")),
+          )
+          PY
+
+      - name: Validate chart result map
+        run: |
+          python - <<'PY'
+          import json
+
+          with open("data/results.json", encoding="utf-8") as f:
+              data = json.load(f)
+
+          rows = data.get("symbolWise", [])
+
+          if len(rows) < 1000:
+              raise SystemExit(
+                  f"Incomplete result map: {len(rows)} symbols"
+              )
+
+          print("Validated result map:", len(rows), "symbols")
+          PY
+
+      - name: Commit and push chart result fields
+        run: |
+          set -e
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/results.json
+
+          if git diff --cached --quiet; then
+            echo "No chart result-field changes."
+            exit 0
+          fi
+
+          git commit -m "Add chart-friendly result dates"
+
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                echo "Chart result fields pushed successfully."
+                exit 0
+              fi
+            else
+              git rebase --abort || true
+            fi
+
+            sleep 5
+          done
+
+          exit 1
