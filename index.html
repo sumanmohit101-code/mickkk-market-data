@@ -23,7 +23,6 @@ button,input,select{font:inherit}button{cursor:pointer}.top{height:48px;display:
 @media(max-width:900px){.side{width:250px;min-width:250px}.grid{grid-template-columns:1fr}.toolbar{height:42px}}
 body.light{--bg:#fff;--surface:#f7f9fc;--card:#fff;--card2:#eef2f7;--border:#dde3ea;--text:#131722;--muted:#6d7785}
 </style>
-<link rel="stylesheet" href="charts-github-features.css">
 </head>
 <body>
 <div class="top"><div class="brand">MICKKK<span>.com</span></div><div class="topRight"><button class="btn" onclick="toggleTheme()">☀️ Theme</button><button class="btn" onclick="openEvents()">📅 Events</button><button class="btn" onclick="openAlerts()">🔔 Alerts</button></div></div>
@@ -95,6 +94,5 @@ function closeEvents(){$('eventsModal').classList.remove('open')}
 async function init(){alerts=JSON.parse(localStorage.getItem('MICKKK_GITHUB_ALERTS_V1')||'[]')||[];$('search').value='';[symbols,marketData.results,marketData.events,marketData.fiiDii]=await Promise.all([file('symbols.json'),file('results.json').catch(()=>({symbolWise:[]})),file('market_events.json').catch(()=>({bySymbol:{}})),file('fii_dii.json').catch(()=>({history:[]}))]);eventsBySymbol=marketData.events?.bySymbol||{};renderSearch();renderWatch();chart=LightweightCharts.createChart($('chart'),{layout:{background:{color:'transparent'},textColor:'#8a9ab0'},grid:{vertLines:{color:'#18212c'},horzLines:{color:'#18212c'}},rightPriceScale:{borderColor:'#1e2d3d'},timeScale:{borderColor:'#1e2d3d',timeVisible:false},crosshair:{mode:LightweightCharts.CrosshairMode.Normal},autoSize:true});series=chart.addCandlestickSeries({upColor:'#00e676',downColor:'#ff3d5a',borderUpColor:'#00e676',borderDownColor:'#ff3d5a',wickUpColor:'#00e676',wickDownColor:'#ff3d5a'});volumeSeries=chart.addHistogramSeries({priceFormat:{type:'volume'},priceScaleId:'vol'});chart.priceScale('vol').applyOptions({scaleMargins:{top:.75,bottom:.02}});[20,50,200].forEach(n=>emaLines[n]=chart.addLineSeries({lineWidth:1,color:n===20?'#00d4ff':n===50?'#ffab00':'#a78bfa',priceLineVisible:false,lastValueVisible:false}));const first=watchlist[0]?.symbol||symbols[0]?.symbol;const name=(symbols.find(x=>x.symbol===first)||{}).name||first;await loadSymbol(first,name)}
 init().catch(e=>{console.error(e);alert('MICKKK Charts could not initialize: '+e.message)});
 </script>
-<script src="charts-github-features.js"></script>
 </body>
 </html>
