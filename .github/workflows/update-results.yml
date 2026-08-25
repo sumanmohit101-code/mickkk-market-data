@@ -48,41 +48,108 @@ jobs:
               "referer": "https://www.nseindia.com/",
               "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
           })
+
           home = session.get("https://www.nseindia.com/", timeout=30)
           if home.status_code != 200:
               raise RuntimeError(f"NSE homepage failed: {home.status_code}")
 
           def rows(payload):
-              if isinstance(payload, list): return payload
+              if isinstance(payload, list):
+                  return payload
               if isinstance(payload, dict):
                   for key in ("data", "records", "result"):
-                      if isinstance(payload.get(key), list): return payload[key]
+                      if isinstance(payload.get(key), list):
+                          return payload[key]
                   for value in payload.values():
-                      if isinstance(value, list): return value
+                      if isinstance(value, list):
+                          return value
               return []
 
           def date_of(value):
-              if not value: return None
+              if not value:
+                  return None
               value = str(value).strip()
-              for fmt in ("%d-%b-%Y", "%d-%B-%Y", "%d/%m/%Y", "%Y-%m-%d", "%d-%m-%Y"):
-                  try: return datetime.strptime(value, fmt).date()
-                  except ValueError: pass
-              try: return datetime.fromisoformat(value.replace("Z", "+00:00")).date()
-              except Exception: return None
+              for fmt in (
+                  "%d-%b-%Y",
+                  "%d-%B-%Y",
+                  "%d/%m/%Y",
+                  "%Y-%m-%d",
+                  "%d-%m-%Y",
+              ):
+                  try:
+                      return datetime.strptime(value, fmt).date()
+                  except ValueError:
+                      pass
+              try:
+                  return datetime.fromisoformat(
+                      value.replace("Z", "+00:00")
+                  ).date()
+              except Exception:
+                  return None
 
           def is_result(row):
-              text = f'{row.get("purpose", "")} {row.get("bm_desc", "")}'.lower()
-              return "financial result" in text or "financial results" in text
+              text = (
+                  f'{row.get("purpose", "")} '
+                  f'{row.get("bm_desc", "")}'
+              ).lower()
+              return (
+                  "financial result" in text
+                  or "financial results" in text
+              )
+
+          # -------------------------------------------------
+          # MASTER SYMBOL LIST: symbols.txt is authoritative.
+          # This guarantees one result row for every tracked
+          # chart symbol, even when no result date is available.
+          # -------------------------------------------------
+
+          tracked_symbols = []
+          with open("symbols.txt", "r", encoding="utf-8") as f:
+              for line in f:
+                  symbol = line.strip().upper()
+                  if symbol and symbol not in tracked_symbols:
+                      tracked_symbols.append(symbol)
+
+          # Names come from symbols.json when available.
+          symbol_names = {}
+          try:
+              with open("data/symbols.json", "r", encoding="utf-8") as f:
+                  catalog = json.load(f)
+              if isinstance(catalog, list):
+                  for item in catalog:
+                      if isinstance(item, dict):
+                          symbol = str(item.get("symbol", "")).strip().upper()
+                          name = str(item.get("name", "")).strip()
+                          if symbol:
+                              symbol_names[symbol] = name or symbol
+          except Exception as exc:
+              print("Could not read data/symbols.json:", repr(exc))
+
+          # -------------------------------------------------
+          # UPCOMING RESULTS
+          # -------------------------------------------------
 
           upcoming = []
-          event_response = session.get("https://www.nseindia.com/api/event-calendar", timeout=30)
+          event_response = session.get(
+              "https://www.nseindia.com/api/event-calendar",
+              timeout=30,
+          )
+
           if event_response.status_code != 200:
-              raise RuntimeError(f"NSE event calendar failed: {event_response.status_code}")
+              raise RuntimeError(
+                  f"NSE event calendar failed: {event_response.status_code}"
+              )
+
           for row in rows(event_response.json()):
-              if not isinstance(row, dict) or not is_result(row): continue
+              if not isinstance(row, dict) or not is_result(row):
+                  continue
+
               d = date_of(row.get("date"))
               symbol = str(row.get("symbol", "")).strip().upper()
-              if not d or d < today or not symbol: continue
+
+              if not d or d < today or not symbol:
+                  continue
+
               upcoming.append({
                   "symbol": symbol,
                   "company": str(row.get("company", "")).strip(),
@@ -91,99 +158,282 @@ jobs:
                   "description": str(row.get("bm_desc", "")).strip(),
               })
 
-          dedupe = {(x["symbol"], x["date"], x["description"]): x for x in upcoming}
-          upcoming = sorted(dedupe.values(), key=lambda x: (x["date"], x["symbol"]))
+          dedupe = {
+              (
+                  x["symbol"],
+                  x["date"],
+                  x["description"],
+              ): x
+              for x in upcoming
+          }
+
+          upcoming = sorted(
+              dedupe.values(),
+              key=lambda x: (x["date"], x["symbol"]),
+          )
+
+          # -------------------------------------------------
+          # HISTORICAL / LAST RESULT
+          # -------------------------------------------------
 
           historical = []
-          for period in ("Quarterly", "Annual", "Half-Yearly", "Others"):
-              url = "https://www.nseindia.com/api/corporates-financial-results?index=equities&period=" + period
-              response = session.get(url, timeout=30)
-              if response.status_code != 200: continue
-              historical.extend(rows(response.json()))
+
+          for period in (
+              "Quarterly",
+              "Annual",
+              "Half-Yearly",
+              "Others",
+          ):
+              url = (
+                  "https://www.nseindia.com/api/"
+                  "corporates-financial-results"
+                  "?index=equities&period="
+                  + period
+              )
+
+              try:
+                  response = session.get(url, timeout=30)
+
+                  if response.status_code != 200:
+                      print(
+                          "Financial results HTTP",
+                          period,
+                          response.status_code,
+                      )
+                      continue
+
+                  historical.extend(rows(response.json()))
+
+              except Exception as exc:
+                  print(
+                      "Financial results error",
+                      period,
+                      repr(exc),
+                  )
 
           latest_by_symbol = {}
+
           for row in historical:
-              if not isinstance(row, dict): continue
-              symbol = str(row.get("symbol", "")).strip().upper()
-              if not symbol: continue
+              if not isinstance(row, dict):
+                  continue
+
+              symbol = str(
+                  row.get("symbol", "")
+              ).strip().upper()
+
+              if not symbol:
+                  continue
+
               d = None
-              for key in ("broadCastDate", "broadcastDate", "filingDate", "exchdisstime"):
+              for key in (
+                  "broadCastDate",
+                  "broadcastDate",
+                  "filingDate",
+                  "exchdisstime",
+              ):
                   d = date_of(row.get(key))
-                  if d: break
-              if not d or d > today: continue
+                  if d:
+                      break
+
+              if not d or d > today:
+                  continue
+
               item = {
                   "symbol": symbol,
-                  "company": str(row.get("companyName", "")).strip(),
+                  "company": str(
+                      row.get("companyName", "")
+                  ).strip(),
                   "resultDate": d.isoformat(),
-                  "period": str(row.get("period", "")).strip(),
-                  "relatingTo": str(row.get("relatingTo", "")).strip(),
-                  "periodFrom": str(row.get("fromDate", "")).strip(),
-                  "periodTo": str(row.get("toDate", "")).strip(),
-                  "consolidated": str(row.get("consolidated", "")).strip(),
-                  "audited": str(row.get("audited", "")).strip(),
+                  "period": str(
+                      row.get("period", "")
+                  ).strip(),
+                  "relatingTo": str(
+                      row.get("relatingTo", "")
+                  ).strip(),
+                  "periodFrom": str(
+                      row.get("fromDate", "")
+                  ).strip(),
+                  "periodTo": str(
+                      row.get("toDate", "")
+                  ).strip(),
+                  "consolidated": str(
+                      row.get("consolidated", "")
+                  ).strip(),
+                  "audited": str(
+                      row.get("audited", "")
+                  ).strip(),
               }
+
               old = latest_by_symbol.get(symbol)
-              if old is None or item["resultDate"] > old["resultDate"]:
+              if (
+                  old is None
+                  or item["resultDate"] > old["resultDate"]
+              ):
                   latest_by_symbol[symbol] = item
 
-          all_symbols = []
-          try:
-              with open("data/symbols.json", "r", encoding="utf-8") as f:
-                  all_symbols = json.load(f)
-          except Exception:
-              pass
+          # -------------------------------------------------
+          # ALL 1240+ TRACKED SYMBOLS
+          # -------------------------------------------------
 
-          master = {}
-          for item in all_symbols if isinstance(all_symbols, list) else []:
-              symbol = str(item.get("symbol", "")).strip().upper()
-              if symbol:
-                  master[symbol] = str(item.get("name", symbol)).strip()
-          for x in upcoming:
-              master.setdefault(x["symbol"], x["company"] or x["symbol"])
-          for symbol, x in latest_by_symbol.items():
-              master.setdefault(symbol, x.get("company") or symbol)
+          # Include any valid symbols that appear in NSE responses
+          # but are not currently in symbols.txt, without replacing
+          # the tracked master list.
+          for item in upcoming:
+              if item["symbol"] not in tracked_symbols:
+                  tracked_symbols.append(item["symbol"])
+
+          for symbol in latest_by_symbol:
+              if symbol not in tracked_symbols:
+                  tracked_symbols.append(symbol)
+
+          tracked_symbols = sorted(set(tracked_symbols))
 
           symbol_wise = []
-          for symbol in sorted(master):
-              future = sorted([x for x in upcoming if x["symbol"] == symbol], key=lambda x: x["date"])
+
+          for symbol in tracked_symbols:
+              future = sorted(
+                  [
+                      x for x in upcoming
+                      if x["symbol"] == symbol
+                  ],
+                  key=lambda x: x["date"],
+              )
+
               last = latest_by_symbol.get(symbol)
+
               symbol_wise.append({
                   "symbol": symbol,
-                  "company": master[symbol],
-                  "lastResultDate": last["resultDate"] if last else None,
-                  "nextResultDate": future[0]["date"] if future else None,
+                  "company": (
+                      symbol_names.get(symbol)
+                      or (last or {}).get("company")
+                      or next(
+                          (
+                              x["company"]
+                              for x in future
+                              if x.get("company")
+                          ),
+                          symbol,
+                      )
+                  ),
+                  "lastResultDate": (
+                      last["resultDate"]
+                      if last
+                      else None
+                  ),
+                  "nextResultDate": (
+                      future[0]["date"]
+                      if future
+                      else None
+                  ),
                   "lastResult": last,
                   "upcomingResults": future,
               })
 
+          # -------------------------------------------------
+          # DATE WINDOWS
+          # -------------------------------------------------
+
           tomorrow = today + timedelta(days=1)
-          week_end = today + timedelta(days=(6 - today.weekday()))
-          today_results = [x for x in upcoming if x["date"] == today.isoformat()]
-          tomorrow_results = [x for x in upcoming if x["date"] == tomorrow.isoformat()]
-          this_week = [x for x in upcoming if today <= date.fromisoformat(x["date"]) <= week_end]
+          week_end = today + timedelta(
+              days=(6 - today.weekday())
+          )
+
+          today_results = [
+              x for x in upcoming
+              if x["date"] == today.isoformat()
+          ]
+
+          tomorrow_results = [
+              x for x in upcoming
+              if x["date"] == tomorrow.isoformat()
+          ]
+
+          this_week = [
+              x for x in upcoming
+              if today
+              <= datetime.strptime(
+                  x["date"],
+                  "%Y-%m-%d",
+              ).date()
+              <= week_end
+          ]
 
           output = {
               "source": "NSE",
               "updatedAt": now.isoformat(),
               "timezone": "Asia/Kolkata",
+              "symbolCount": len(symbol_wise),
               "today": today_results,
               "tomorrow": tomorrow_results,
               "thisWeek": this_week,
               "allUpcoming": upcoming,
-              "lastResults": sorted(latest_by_symbol.values(), key=lambda x: (x["resultDate"], x["symbol"]), reverse=True),
+              "lastResults": sorted(
+                  latest_by_symbol.values(),
+                  key=lambda x: (
+                      x["resultDate"],
+                      x["symbol"],
+                  ),
+                  reverse=True,
+              ),
               "symbolWise": symbol_wise,
           }
 
           if not symbol_wise:
-              raise RuntimeError("No symbol list available for results output")
+              raise RuntimeError(
+                  "No tracked symbols available for results output"
+              )
 
-          with open("data/results.json", "w", encoding="utf-8") as f:
-              json.dump(output, f, ensure_ascii=False, indent=2)
+          with open(
+              "data/results.json",
+              "w",
+              encoding="utf-8",
+          ) as f:
+              json.dump(
+                  output,
+                  f,
+                  ensure_ascii=False,
+                  indent=2,
+              )
 
-          print("Symbols:", len(symbol_wise))
+          print("======================================")
+          print("RESULTS UPDATE COMPLETE")
+          print("Tracked symbols:", len(symbol_wise))
           print("Upcoming result events:", len(upcoming))
-          print("Symbols with last result:", len(latest_by_symbol))
-          print("Symbols with next result:", sum(1 for x in symbol_wise if x["nextResultDate"]))
+          print(
+              "Symbols with last result:",
+              sum(
+                  1
+                  for x in symbol_wise
+                  if x["lastResultDate"]
+              ),
+          )
+          print(
+              "Symbols with next result:",
+              sum(
+                  1
+                  for x in symbol_wise
+                  if x["nextResultDate"]
+              ),
+          )
+          print("======================================")
+          PY
+
+      - name: Validate results file
+        run: |
+          python - <<'PY'
+          import json
+
+          with open("data/results.json", "r", encoding="utf-8") as f:
+              data = json.load(f)
+
+          rows = data.get("symbolWise", [])
+          if not rows:
+              raise SystemExit("symbolWise is empty")
+
+          print("Validated symbolWise rows:", len(rows))
+          print("First 5 rows:")
+          for row in rows[:5]:
+              print(row)
           PY
 
       - name: Commit and push
@@ -192,12 +442,16 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/results.json
-          if git diff --cached --quiet; then exit 0; fi
+          if git diff --cached --quiet; then
+            exit 0
+          fi
           git commit -m "Auto-update NSE results calendar"
           for attempt in 1 2 3 4 5; do
             git fetch origin main
             if git rebase origin/main; then
-              if git push origin HEAD:main; then exit 0; fi
+              if git push origin HEAD:main; then
+                exit 0
+              fi
             else
               git rebase --abort || true
             fi
