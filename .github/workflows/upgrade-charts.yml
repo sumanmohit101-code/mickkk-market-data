@@ -1,0 +1,98 @@
+name: Upgrade GitHub Charts
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "charts-github-features.js"
+      - "charts-github-features.css"
+      - ".github/workflows/upgrade-charts.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: upgrade-charts
+  cancel-in-progress: false
+
+jobs:
+  wire-features:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Wire direct GitHub feature layer into index.html
+        run: |
+          python <<'PY'
+          from pathlib import Path
+
+          path = Path("index.html")
+          html = path.read_text(encoding="utf-8")
+
+          css_tag = '<link rel="stylesheet" href="charts-github-features.css">'
+          js_tag = '<script src="charts-github-features.js"></script>'
+
+          if css_tag not in html:
+              html = html.replace(
+                  "</head>",
+                  f"{css_tag}\n</head>",
+                  1,
+              )
+
+          if js_tag not in html:
+              html = html.replace(
+                  "</body>",
+                  f"{js_tag}\n</body>",
+                  1,
+              )
+
+          html = html.replace(
+              "Powered by Google Finance",
+              "Powered by GitHub Market Data",
+          )
+
+          path.write_text(html, encoding="utf-8")
+          print("Charts feature layer wired into index.html")
+          PY
+
+      - name: Commit and push index update
+        run: |
+          set -e
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add index.html
+
+          if git diff --cached --quiet; then
+            echo "index.html already contains the GitHub feature layer."
+            exit 0
+          fi
+
+          git commit -m "Enable GitHub-native chart features"
+
+          for attempt in 1 2 3 4 5; do
+            echo "Push attempt: $attempt"
+            git fetch origin main
+
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                echo "Charts upgrade pushed successfully."
+                exit 0
+              fi
+            else
+              git rebase --abort || true
+            fi
+
+            sleep 5
+          done
+
+          echo "ERROR: Could not push charts upgrade."
+          exit 1
