@@ -1,0 +1,373 @@
+name: Update Market Events
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "45 11 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-data-main
+  cancel-in-progress: false
+
+jobs:
+  update-events:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install curl_cffi pandas
+
+      - name: Fetch NSE corporate events, deals and FII DII
+        shell: bash
+        run: |
+          python <<'PY'
+          import csv
+          import io
+          import json
+          from datetime import datetime, timedelta
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          from curl_cffi import requests
+
+          DATA_DIR = Path("data")
+          DATA_DIR.mkdir(exist_ok=True)
+          IST = ZoneInfo("Asia/Kolkata")
+          now = datetime.now(IST)
+          today = now.date()
+          start = today - timedelta(days=120)
+          end = today + timedelta(days=90)
+
+          session = requests.Session(impersonate="chrome")
+          session.headers.update({
+              "accept": "application/json, text/plain, */*",
+              "accept-language": "en-US,en;q=0.9",
+              "referer": "https://www.nseindia.com/",
+              "user-agent": (
+                  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/151.0.0.0 Safari/537.36"
+              ),
+          })
+
+          home = session.get("https://www.nseindia.com/", timeout=30)
+          print("NSE homepage:", home.status_code)
+
+          def extract_rows(payload):
+              if isinstance(payload, list):
+                  return payload
+              if isinstance(payload, dict):
+                  for key in ("data", "records", "result"):
+                      value = payload.get(key)
+                      if isinstance(value, list):
+                          return value
+                  for value in payload.values():
+                      if isinstance(value, list):
+                          return value
+              return []
+
+          def parse_any_date(value):
+              if value is None or value == "":
+                  return None
+              s = str(value).strip()
+              for fmt in (
+                  "%d-%b-%Y", "%d-%B-%Y", "%d/%m/%Y", "%Y-%m-%d",
+                  "%d-%m-%Y", "%d/%m/%y", "%Y/%m/%d",
+              ):
+                  try:
+                      return datetime.strptime(s, fmt).date()
+                  except ValueError:
+                      pass
+              try:
+                  return datetime.fromisoformat(
+                      s.replace("Z", "+00:00")
+                  ).date()
+              except Exception:
+                  return None
+
+          def first_value(row, keys):
+              for key in keys:
+                  if key in row and row[key] not in (None, ""):
+                      return row[key]
+              return None
+
+          def get_symbol(row):
+              return str(first_value(row, (
+                  "symbol", "Symbol", "SYMBOL", "symbolCode"
+              )) or "").strip().upper()
+
+          def save_json(path, obj):
+              with open(path, "w", encoding="utf-8") as f:
+                  json.dump(obj, f, ensure_ascii=False, indent=2)
+
+          # FII / DII history
+          fii_response = session.get(
+              "https://www.nseindia.com/api/fiidiiTradeReact",
+              timeout=30,
+          )
+          if fii_response.status_code != 200:
+              raise RuntimeError(f"FII/DII HTTP {fii_response.status_code}")
+          fii_rows = extract_rows(fii_response.json())
+          if not fii_rows:
+              raise RuntimeError("FII/DII response was empty")
+
+          fii_path = DATA_DIR / "fii_dii.json"
+          old_fii = {}
+          if fii_path.exists():
+              try:
+                  old_fii = json.loads(fii_path.read_text(encoding="utf-8"))
+              except Exception:
+                  old_fii = {}
+
+          history = []
+          if isinstance(old_fii, dict):
+              history.extend(old_fii.get("history", []))
+          history.extend(fii_rows)
+          unique = {}
+          for row in history:
+              if not isinstance(row, dict):
+                  continue
+              d = first_value(row, ("date", "Date", "dateTime", "tradeDate"))
+              parsed = parse_any_date(d)
+              key = json.dumps([parsed.isoformat() if parsed else d, row], sort_keys=True, default=str)
+              unique[key] = row
+          trimmed = []
+          for row in unique.values():
+              d = parse_any_date(first_value(row, ("date", "Date", "dateTime", "tradeDate")))
+              if d is None or d >= today - timedelta(days=180):
+                  trimmed.append(row)
+
+          save_json(fii_path, {
+              "source": "NSE",
+              "updated": now.isoformat(),
+              "timezone": "Asia/Kolkata",
+              "latest": fii_rows,
+              "history": trimmed,
+              "data": fii_rows,
+          })
+
+          # Corporate actions
+          actions_url = (
+              "https://www.nseindia.com/api/corporates-corporateActions"
+              f"?index=equities&from_date={start.strftime('%d-%m-%Y')}"
+              f"&to_date={end.strftime('%d-%m-%Y')}"
+          )
+          actions_response = session.get(actions_url, timeout=30)
+          actions_rows = extract_rows(actions_response.json()) if actions_response.status_code == 200 else []
+          if not actions_rows:
+              raise RuntimeError("Corporate actions response was empty")
+
+          corporate_actions = []
+          for row in actions_rows:
+              if not isinstance(row, dict):
+                  continue
+              symbol = get_symbol(row)
+              if not symbol:
+                  continue
+              d = parse_any_date(first_value(row, ("exDate", "exDt", "recordDate", "recDate", "date", "purposeDate")))
+              corporate_actions.append({
+                  "symbol": symbol,
+                  "date": d.isoformat() if d else None,
+                  "subject": str(first_value(row, ("subject", "purpose", "description", "series")) or "").strip(),
+                  "recordDate": str(first_value(row, ("recordDate", "recDate")) or "").strip(),
+                  "exDate": str(first_value(row, ("exDate", "exDt")) or "").strip(),
+                  "raw": row,
+              })
+
+          save_json(DATA_DIR / "corporate-actions.json", {
+              "source": "NSE",
+              "updatedAt": now.isoformat(),
+              "from": start.isoformat(),
+              "to": end.isoformat(),
+              "records": corporate_actions,
+          })
+
+          # Board meetings
+          board_url = (
+              "https://www.nseindia.com/api/corporate-board-meetings"
+              f"?index=equities&from_date={start.strftime('%d-%m-%Y')}"
+              f"&to_date={end.strftime('%d-%m-%Y')}&csv=true"
+          )
+          board_response = session.get(board_url, timeout=30)
+          board_rows = []
+          if board_response.status_code == 200:
+              try:
+                  board_rows = extract_rows(board_response.json())
+              except Exception:
+                  raw = board_response.text.lstrip("\ufeff").strip()
+                  if raw:
+                      board_rows = list(csv.DictReader(io.StringIO(raw)))
+          if not board_rows:
+              raise RuntimeError("Board meetings response was empty")
+
+          board_meetings = []
+          for row in board_rows:
+              if not isinstance(row, dict):
+                  continue
+              symbol = get_symbol(row)
+              if not symbol:
+                  continue
+              d = parse_any_date(first_value(row, ("bm_date", "bmDate", "meetingDate", "date", "dateOfMeeting")))
+              board_meetings.append({
+                  "symbol": symbol,
+                  "date": d.isoformat() if d else None,
+                  "purpose": str(first_value(row, ("bm_desc", "purpose", "purposeDescription", "description")) or "").strip(),
+                  "raw": row,
+              })
+
+          save_json(DATA_DIR / "board-meetings.json", {
+              "source": "NSE",
+              "updatedAt": now.isoformat(),
+              "from": start.isoformat(),
+              "to": end.isoformat(),
+              "records": board_meetings,
+          })
+
+          # Bulk / block deals
+          deals_response = session.get(
+              "https://www.nseindia.com/api/snapshot-capital-market-largedeal",
+              timeout=30,
+          )
+          if deals_response.status_code != 200:
+              raise RuntimeError(f"Large-deal HTTP {deals_response.status_code}")
+          deal_payload = deals_response.json()
+          bulk_rows = deal_payload.get("BULK_DEALS_DATA", []) if isinstance(deal_payload, dict) else []
+          block_rows = deal_payload.get("BLOCK_DEALS_DATA", []) if isinstance(deal_payload, dict) else []
+
+          deal_path = DATA_DIR / "deals.json"
+          old_deals = {}
+          if deal_path.exists():
+              try:
+                  old_deals = json.loads(deal_path.read_text(encoding="utf-8"))
+              except Exception:
+                  old_deals = {}
+          deals = old_deals.get("records", []) if isinstance(old_deals, dict) else []
+
+          def normalize_deal(row, deal_type):
+              symbol = get_symbol(row)
+              d = parse_any_date(first_value(row, ("date", "Date", "as_on_date", "AS_ON_DATE"))) or today
+              return {
+                  "symbol": symbol,
+                  "date": d.isoformat(),
+                  "type": deal_type,
+                  "clientName": str(first_value(row, ("client_name", "clientName", "CLIENT_NAME", "name")) or "").strip(),
+                  "buySell": str(first_value(row, ("buy_sell", "buySell", "BUY_SELL", "buySellFlag")) or "").strip(),
+                  "quantity": first_value(row, ("quantity", "Quantity", "QUANTITY", "qty")),
+                  "tradePrice": first_value(row, ("trade_price", "tradePrice", "TRADE_PRICE", "price")),
+                  "tradeValue": first_value(row, ("trade_value", "tradeValue", "TRADE_VALUE", "value")),
+                  "raw": row,
+              }
+
+          deals.extend(normalize_deal(r, "BULK") for r in bulk_rows if isinstance(r, dict))
+          deals.extend(normalize_deal(r, "BLOCK") for r in block_rows if isinstance(r, dict))
+
+          dedupe = {}
+          for row in deals:
+              key = json.dumps({
+                  "symbol": row.get("symbol"),
+                  "date": row.get("date"),
+                  "type": row.get("type"),
+                  "clientName": row.get("clientName"),
+                  "buySell": row.get("buySell"),
+                  "quantity": row.get("quantity"),
+                  "tradePrice": row.get("tradePrice"),
+              }, sort_keys=True, default=str)
+              dedupe[key] = row
+
+          deals = [
+              row for row in dedupe.values()
+              if parse_any_date(row.get("date")) is None
+              or parse_any_date(row.get("date")) >= today - timedelta(days=120)
+          ]
+          deals.sort(key=lambda x: (x.get("date", ""), x.get("symbol", "")), reverse=True)
+
+          save_json(deal_path, {
+              "source": "NSE",
+              "updatedAt": now.isoformat(),
+              "records": deals,
+          })
+
+          # Compact symbol index for the chart.
+          empty_bucket = lambda: {"corporateActions": [], "boardMeetings": [], "bulkDeals": [], "blockDeals": []}
+          by_symbol = {}
+          for row in corporate_actions:
+              by_symbol.setdefault(row["symbol"], empty_bucket())["corporateActions"].append(row)
+          for row in board_meetings:
+              by_symbol.setdefault(row["symbol"], empty_bucket())["boardMeetings"].append(row)
+          for row in deals:
+              symbol = row.get("symbol")
+              if not symbol:
+                  continue
+              bucket = "bulkDeals" if row.get("type") == "BULK" else "blockDeals"
+              by_symbol.setdefault(symbol, empty_bucket())[bucket].append(row)
+
+          symbols_path = DATA_DIR / "symbols.json"
+          if symbols_path.exists():
+              try:
+                  symbols = json.loads(symbols_path.read_text(encoding="utf-8"))
+                  for item in symbols if isinstance(symbols, list) else []:
+                      symbol = get_symbol(item)
+                      if symbol:
+                          by_symbol.setdefault(symbol, empty_bucket())
+              except Exception:
+                  pass
+
+          save_json(DATA_DIR / "market_events.json", {
+              "source": "NSE",
+              "updatedAt": now.isoformat(),
+              "bySymbol": by_symbol,
+          })
+
+          print("FII/DII:", len(fii_rows), "history:", len(trimmed))
+          print("Corporate actions:", len(corporate_actions))
+          print("Board meetings:", len(board_meetings))
+          print("Bulk today:", len(bulk_rows), "Block today:", len(block_rows), "Deal history:", len(deals))
+          print("Event symbols:", len(by_symbol))
+          PY
+
+      - name: Show generated market event files
+        run: |
+          ls -lh data/fii_dii.json data/corporate-actions.json data/board-meetings.json data/deals.json data/market_events.json
+
+      - name: Commit and push market event data
+        shell: bash
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/fii_dii.json data/corporate-actions.json data/board-meetings.json data/deals.json data/market_events.json
+          if git diff --cached --quiet; then
+            echo "No market event changes."
+            exit 0
+          fi
+          git commit -m "Auto-update market events and FII DII"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                echo "Market event push successful."
+                exit 0
+              fi
+            else
+              git rebase --abort || true
+            fi
+            sleep 5
+          done
+          echo "ERROR: Could not push market event data."
+          exit 1
