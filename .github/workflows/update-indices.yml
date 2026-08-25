@@ -36,17 +36,12 @@ jobs:
       - name: Check final Yahoo index catalogue
         run: |
           test -f data/indices.json
-
           mkdir -p data/indices
 
           python - <<'PY'
           import json
 
-          with open(
-              "data/indices.json",
-              "r",
-              encoding="utf-8"
-          ) as f:
+          with open("data/indices.json", "r", encoding="utf-8") as f:
               items = json.load(f)
 
           print(f"Found {len(items)} indices")
@@ -60,19 +55,14 @@ jobs:
           missing = [
               x.get("name", "?")
               for x in items
-              if not x.get("symbol")
-              or not x.get("yahoo")
+              if not x.get("symbol") or not x.get("yahoo")
           ]
 
           if missing:
-              raise SystemExit(
-                  f"ERROR: Missing symbol/Yahoo ticker: {missing}"
-              )
+              raise SystemExit(f"ERROR: Missing symbol/Yahoo ticker: {missing}")
 
           for x in items:
-              print(
-                  f'{x["name"]} -> {x["yahoo"]}'
-              )
+              print(f'{x["name"]} -> {x["yahoo"]}')
 
           print("Index catalogue check passed.")
           PY
@@ -89,16 +79,9 @@ jobs:
           import yfinance as yf
 
           DATA_DIR = Path("data/indices")
-          DATA_DIR.mkdir(
-              parents=True,
-              exist_ok=True
-          )
+          DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-          with open(
-              "data/indices.json",
-              "r",
-              encoding="utf-8"
-          ) as f:
+          with open("data/indices.json", "r", encoding="utf-8") as f:
               indices = json.load(f)
 
           TODAY = date.today()
@@ -107,12 +90,9 @@ jobs:
           def clean_number(value):
               try:
                   value = float(value)
-
                   if pd.isna(value):
                       return None
-
                   return value
-
               except Exception:
                   return None
 
@@ -120,44 +100,22 @@ jobs:
               if df is None or df.empty:
                   return []
 
-              if isinstance(
-                  df.columns,
-                  pd.MultiIndex
-              ):
-                  df.columns = (
-                      df.columns
-                      .get_level_values(0)
-                  )
+              if isinstance(df.columns, pd.MultiIndex):
+                  df.columns = df.columns.get_level_values(0)
 
               candles = []
 
               for dt, row in df.iterrows():
-                  op = clean_number(
-                      row.get("Open")
-                  )
-                  hi = clean_number(
-                      row.get("High")
-                  )
-                  lo = clean_number(
-                      row.get("Low")
-                  )
-                  cl = clean_number(
-                      row.get("Close")
-                  )
+                  op = clean_number(row.get("Open"))
+                  hi = clean_number(row.get("High"))
+                  lo = clean_number(row.get("Low"))
+                  cl = clean_number(row.get("Close"))
 
-                  if (
-                      any(
-                          v is None
-                          for v in [op, hi, lo, cl]
-                      )
-                      or cl <= 0
-                  ):
+                  if any(v is None for v in [op, hi, lo, cl]) or cl <= 0:
                       continue
 
                   candles.append({
-                      "time": pd.Timestamp(dt).strftime(
-                          "%Y-%m-%d"
-                      ),
+                      "time": pd.Timestamp(dt).strftime("%Y-%m-%d"),
                       "open": round(op, 2),
                       "high": round(hi, 2),
                       "low": round(lo, 2),
@@ -165,70 +123,38 @@ jobs:
                       "volume": 0
                   })
 
-              unique = {
-                  x["time"]: x
-                  for x in candles
-              }
-
-              return [
-                  unique[k]
-                  for k in sorted(unique)
-              ]
+              unique = {x["time"]: x for x in candles}
+              return [unique[k] for k in sorted(unique)]
 
           def is_valid(candles):
               if len(candles) < 900:
                   return False
-
-              latest = date.fromisoformat(
-                  candles[-1]["time"]
-              )
-
-              return (
-                  TODAY - latest
-              ).days <= 10
+              latest = date.fromisoformat(candles[-1]["time"])
+              return (TODAY - latest).days <= 10
 
           success = 0
           failed = 0
 
           print("========================================")
-          print(
-              f"Processing {len(indices)} indices"
-          )
+          print(f"Processing {len(indices)} indices")
           print("Yahoo Finance ONLY")
           print("NSE fallback: DISABLED")
-          print(
-              f"History: {FROM_DATE} -> {TODAY}"
-          )
+          print(f"History: {FROM_DATE} -> {TODAY}")
           print("========================================")
 
           for item in indices:
-              name = str(
-                  item["name"]
-              ).strip()
+              name = str(item["name"]).strip()
+              symbol = str(item["symbol"]).strip().upper()
+              ticker = str(item["yahoo"]).strip()
 
-              symbol = str(
-                  item["symbol"]
-              ).strip().upper()
-
-              ticker = str(
-                  item["yahoo"]
-              ).strip()
-
-              print(
-                  f"\n========== {name} [{symbol}] =========="
-              )
-              print(
-                  f"Yahoo ticker: {ticker}"
-              )
+              print(f"\n========== {name} [{symbol}] ==========")
+              print(f"Yahoo ticker: {ticker}")
 
               try:
                   df = yf.download(
                       ticker,
                       start=FROM_DATE.isoformat(),
-                      end=(
-                          TODAY
-                          + timedelta(days=1)
-                      ).isoformat(),
+                      end=(TODAY + timedelta(days=1)).isoformat(),
                       interval="1d",
                       auto_adjust=False,
                       progress=False,
@@ -237,52 +163,21 @@ jobs:
                   )
 
                   candles = make_candles(df)
-
-                  latest = (
-                      candles[-1]["time"]
-                      if candles
-                      else "NONE"
-                  )
-
-                  print(
-                      f"Yahoo returned {len(candles)} "
-                      f"candles; latest={latest}"
-                  )
+                  latest = candles[-1]["time"] if candles else "NONE"
+                  print(f"Yahoo returned {len(candles)} candles; latest={latest}")
 
                   if is_valid(candles):
-                      with open(
-                          DATA_DIR / f"{symbol}.json",
-                          "w",
-                          encoding="utf-8"
-                      ) as f:
-                          json.dump(
-                              candles,
-                              f,
-                              separators=(",", ":")
-                          )
-
+                      with open(DATA_DIR / f"{symbol}.json", "w", encoding="utf-8") as f:
+                          json.dump(candles, f, separators=(",", ":"))
                       success += 1
-
-                      print(
-                          f"SUCCESS: {symbol} "
-                          f"-> {len(candles)} candles"
-                      )
-
+                      print(f"SUCCESS: {symbol} -> {len(candles)} candles")
                   else:
                       failed += 1
-
-                      print(
-                          f"NOT SAVED: {symbol} "
-                          "-> incomplete/stale history"
-                      )
+                      print(f"NOT SAVED: {symbol} -> incomplete/stale history")
 
               except Exception as e:
                   failed += 1
-
-                  print(
-                      f"YAHOO ERROR: {symbol} "
-                      f"-> {repr(e)}"
-                  )
+                  print(f"YAHOO ERROR: {symbol} -> {repr(e)}")
 
               time.sleep(1)
 
@@ -293,28 +188,16 @@ jobs:
           print("========================================")
 
           if failed:
-              print(
-                  "WARNING: Some indices failed. "
-                  "Existing valid index JSON files "
-                  "were not deleted."
-              )
+              print("WARNING: Some indices failed. Existing valid index JSON files were not deleted.")
           PY
 
       - name: Show index data summary
         run: |
           echo "Index JSON files:"
-          find data/indices \
-            -type f \
-            -name "*.json" \
-            -print \
-            | sort
-
+          find data/indices -type f -name "*.json" -print | sort
           echo ""
           echo "Count:"
-          find data/indices \
-            -type f \
-            -name "*.json" \
-            | wc -l
+          find data/indices -type f -name "*.json" | wc -l
 
       - name: Commit and push index data
         run: |
@@ -323,9 +206,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git fetch origin main
-          git rebase origin/main
-
+          # Stage generated files before any rebase. The previous workflow
+          # rebased while generated files were unstaged.
           git add data/indices/
 
           if git diff --cached --quiet; then
@@ -335,21 +217,22 @@ jobs:
 
           git commit -m "Update index market data"
 
-          for attempt in 1 2 3; do
-            echo "Push attempt $attempt/3..."
-
-            if git push origin main; then
-              echo "Index data push successful."
-              exit 0
-            fi
-
-            echo "Push rejected. Syncing latest main..."
-
+          for attempt in 1 2 3 4 5; do
+            echo "Push attempt $attempt/5..."
             git fetch origin main
-            git rebase origin/main
+
+            if git rebase origin/main; then
+              if git push origin main; then
+                echo "Index data push successful."
+                exit 0
+              fi
+            else
+              echo "Rebase failed. Aborting and retrying..."
+              git rebase --abort || true
+            fi
 
             sleep 5
           done
 
-          echo "ERROR: Could not push index data."
+          echo "ERROR: Could not push index data after 5 attempts."
           exit 1
