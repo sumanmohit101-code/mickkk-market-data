@@ -1,6 +1,10 @@
 name: Backfill Last Results
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/backfill-last-results.yml
   workflow_dispatch:
   schedule:
     - cron: "0 15 * * 1-5"
@@ -38,7 +42,6 @@ jobs:
         run: |
           python <<'PY'
           import json
-          import os
           import time
           from concurrent.futures import ThreadPoolExecutor, as_completed
           from datetime import datetime
