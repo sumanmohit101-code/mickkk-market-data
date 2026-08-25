@@ -2,8 +2,12 @@ name: Update NSE Price Bands
 
 on:
   schedule:
-    - cron: "30 11 * * 1-5"
+    - cron: "40 11 * * 1-5" # 17:10 IST, Monday-Friday
   workflow_dispatch:
+
+concurrency:
+  group: market-data-main
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -11,10 +15,13 @@ permissions:
 jobs:
   update-price-bands:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -29,12 +36,13 @@ jobs:
       - name: Fetch NSE Price Band Data
         run: |
           python <<'PY'
-          import requests
-          import pandas as pd
-          import json
           import io
+          import json
           import os
           from datetime import datetime, timedelta
+
+          import pandas as pd
+          import requests
 
           print("=" * 60)
           print("NSE PRICE BAND UPDATE")
@@ -45,13 +53,14 @@ jobs:
           headers = {
               "User-Agent": (
                   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) "
                   "Chrome/131.0.0.0 Safari/537.36"
               ),
               "Accept": "*/*",
               "Accept-Language": "en-US,en;q=0.9",
               "Referer": "https://www.nseindia.com/",
-              "Connection": "keep-alive"
+              "Connection": "keep-alive",
           }
 
           session.headers.update(headers)
@@ -77,10 +86,6 @@ jobs:
                   io.BytesIO(r.content)
               )
 
-          # --------------------------------------------------
-          # Find latest available NSE trading report
-          # --------------------------------------------------
-
           today = datetime.now()
 
           selected_date = None
@@ -88,40 +93,54 @@ jobs:
           changes_df = None
 
           for offset in range(0, 10):
+              check_date = (
+                  today
+                  - timedelta(days=offset)
+              )
 
-              check_date = today - timedelta(days=offset)
-
-              ddmmyyyy = check_date.strftime("%d%m%Y")
+              ddmmyyyy = check_date.strftime(
+                  "%d%m%Y"
+              )
 
               band_url = (
                   "https://nsearchives.nseindia.com/"
-                  f"content/equities/sec_list_{ddmmyyyy}.csv"
+                  f"content/equities/"
+                  f"sec_list_{ddmmyyyy}.csv"
               )
 
               change_url = (
                   "https://nsearchives.nseindia.com/"
-                  f"content/equities/eq_band_changes_{ddmmyyyy}.csv"
+                  f"content/equities/"
+                  f"eq_band_changes_{ddmmyyyy}.csv"
               )
 
               try:
+                  test_bands = fetch_csv(
+                      band_url
+                  )
 
-                  test_bands = fetch_csv(band_url)
-
-                  if test_bands is not None and len(test_bands) > 0:
-
+                  if (
+                      test_bands is not None
+                      and len(test_bands) > 0
+                  ):
                       selected_date = check_date
                       bands_df = test_bands
 
                       print(
                           "Found price-band report:",
-                          check_date.strftime("%d-%m-%Y")
+                          check_date.strftime(
+                              "%d-%m-%Y"
+                          )
                       )
 
                       try:
-                          changes_df = fetch_csv(change_url)
+                          changes_df = fetch_csv(
+                              change_url
+                          )
                       except Exception as e:
                           print(
-                              "Price-band-change file unavailable:",
+                              "Price-band-change "
+                              "file unavailable:",
                               e
                           )
                           changes_df = None
@@ -131,67 +150,75 @@ jobs:
               except Exception as e:
                   print(
                       "Attempt failed for",
-                      check_date.strftime("%d-%m-%Y"),
+                      check_date.strftime(
+                          "%d-%m-%Y"
+                      ),
                       ":",
                       e
                   )
 
           if selected_date is None:
               raise Exception(
-                  "Could not find latest NSE price-band report."
+                  "Could not find latest NSE "
+                  "price-band report."
               )
 
-          # --------------------------------------------------
-          # Convert dataframe safely
-          # --------------------------------------------------
-
           def clean_value(value):
-
               if pd.isna(value):
                   return None
 
               if hasattr(value, "item"):
                   try:
                       return value.item()
-                  except:
+                  except Exception:
                       pass
 
               return value
 
           def dataframe_to_records(df):
-
               if df is None:
                   return []
 
               records = []
 
-              for row in df.to_dict(orient="records"):
-
+              for row in df.to_dict(
+                  orient="records"
+              ):
                   clean_row = {}
 
                   for key, value in row.items():
-
-                      clean_row[str(key).strip()] = clean_value(value)
+                      clean_row[
+                          str(key).strip()
+                      ] = clean_value(value)
 
                   records.append(clean_row)
 
               return records
 
-          # --------------------------------------------------
-          # Save output
-          # --------------------------------------------------
+          os.makedirs(
+              "data",
+              exist_ok=True
+          )
 
-          os.makedirs("data", exist_ok=True)
+          source_date = (
+              selected_date.strftime(
+                  "%Y-%m-%d"
+              )
+          )
 
-          source_date = selected_date.strftime("%Y-%m-%d")
-          updated_at = datetime.utcnow().isoformat() + "Z"
+          updated_at = (
+              datetime.utcnow().isoformat()
+              + "Z"
+          )
 
           price_band_output = {
               "updatedAt": updated_at,
               "source": "NSE",
               "sourceDate": source_date,
               "recordCount": len(bands_df),
-              "records": dataframe_to_records(bands_df)
+              "records": dataframe_to_records(
+                  bands_df
+              ),
           }
 
           with open(
@@ -199,7 +226,6 @@ jobs:
               "w",
               encoding="utf-8"
           ) as f:
-
               json.dump(
                   price_band_output,
                   f,
@@ -207,28 +233,23 @@ jobs:
                   separators=(",", ":")
               )
 
-          # --------------------------------------------------
-          # Price band changes
-          # --------------------------------------------------
-
           if changes_df is not None:
-
               change_output = {
                   "updatedAt": updated_at,
                   "source": "NSE",
                   "sourceDate": source_date,
                   "recordCount": len(changes_df),
-                  "records": dataframe_to_records(changes_df)
+                  "records": dataframe_to_records(
+                      changes_df
+                  ),
               }
-
           else:
-
               change_output = {
                   "updatedAt": updated_at,
                   "source": "NSE",
                   "sourceDate": source_date,
                   "recordCount": 0,
-                  "records": []
+                  "records": [],
               }
 
           with open(
@@ -236,7 +257,6 @@ jobs:
               "w",
               encoding="utf-8"
           ) as f:
-
               json.dump(
                   change_output,
                   f,
@@ -252,25 +272,55 @@ jobs:
           print("Price bands:", len(bands_df))
           print(
               "Band changes:",
-              0 if changes_df is None else len(changes_df)
+              (
+                  0
+                  if changes_df is None
+                  else len(changes_df)
+              )
           )
-          print("Saved:")
-          print("  data/price-bands.json")
-          print("  data/price-band-changes.json")
-
+          print(
+              "Saved: data/price-bands.json"
+          )
+          print(
+              "Saved: data/price-band-changes.json"
+          )
           PY
 
-      - name: Commit Price Band Data
+      - name: Commit and push price-band data
         run: |
+          set -e
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin main
+          git rebase origin/main
 
           git add data/price-bands.json
           git add data/price-band-changes.json
 
           if git diff --cached --quiet; then
             echo "No price-band data changes."
-          else
-            git commit -m "Auto-update NSE price band data"
-            git push
+            exit 0
           fi
+
+          git commit -m "Auto-update NSE price band data"
+
+          for attempt in 1 2 3; do
+            echo "Push attempt $attempt/3..."
+
+            if git push origin main; then
+              echo "Price-band push successful."
+              exit 0
+            fi
+
+            echo "Push rejected. Syncing latest main..."
+
+            git fetch origin main
+            git rebase origin/main
+
+            sleep 5
+          done
+
+          echo "ERROR: Could not push price-band data."
+          exit 1
