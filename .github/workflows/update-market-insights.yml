@@ -4,14 +4,13 @@ on:
   schedule:
     # 19:00 IST, Monday-Friday
     - cron: "30 13 * * 1-5"
-
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: market-insights-update
+  group: market-data-main
   cancel-in-progress: false
 
 jobs:
@@ -33,7 +32,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests curl_cffi yfinance pandas
+          pip install curl_cffi yfinance pandas
 
       - name: Fetch and Save Market Insights
         shell: bash
@@ -53,18 +52,10 @@ jobs:
           IST = ZoneInfo("Asia/Kolkata")
           now = datetime.now(IST)
 
-          print("======================================")
-          print("MARKET INSIGHTS UPDATE")
-          print("======================================")
-          print("IST time:", now.isoformat())
-
-          # -------------------------------------------------
-          # NSE/Groww-style HTTP session
-          # -------------------------------------------------
-
           headers = {
               "accept": "application/json, text/plain, */*",
               "accept-language": "en-US,en;q=0.9",
+              "referer": "https://www.nseindia.com/",
               "user-agent": (
                   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                   "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -72,71 +63,74 @@ jobs:
               ),
           }
 
-          session = requests.Session(
-              impersonate="chrome"
-          )
-
+          session = requests.Session(impersonate="chrome")
           session.headers.update(headers)
 
+          print("======================================")
+          print("MARKET INSIGHTS UPDATE")
+          print("======================================")
+          print("IST time:", now.isoformat())
+
           # -------------------------------------------------
-          # 1. FII / DII DATA
+          # 1. FII / DII DATA - NSE
           # -------------------------------------------------
 
-          fii_dii = []
+          print("\nFetching FII/DII data from NSE...")
 
-          FII_URL = (
-              "https://groww.in/v1/api/stocks_data/v1/"
-              "fii_dii/daily"
+          nse_home = session.get(
+              "https://www.nseindia.com/",
+              timeout=30,
+          )
+          print("NSE homepage:", nse_home.status_code)
+
+          fii_url = "https://www.nseindia.com/api/fiidiiTradeReact"
+          fii_response = session.get(
+              fii_url,
+              timeout=30,
           )
 
-          try:
-              print("Fetching FII/DII data...")
+          print("FII/DII HTTP:", fii_response.status_code)
 
-              response = session.get(
-                  FII_URL,
-                  timeout=30
+          if fii_response.status_code != 200:
+              raise RuntimeError(
+                  "NSE FII/DII request failed: "
+                  f"HTTP {fii_response.status_code}"
               )
 
-              print(
-                  "FII/DII HTTP status:",
-                  response.status_code
+          fii_payload = fii_response.json()
+
+          if isinstance(fii_payload, list):
+              fii_dii = fii_payload
+          elif isinstance(fii_payload, dict):
+              fii_dii = fii_payload.get("data", [])
+          else:
+              fii_dii = []
+
+          if not isinstance(fii_dii, list) or not fii_dii:
+              raise RuntimeError(
+                  "NSE FII/DII response was empty. "
+                  "Refusing to overwrite valid data with []."
               )
 
-              if response.status_code == 200:
-                  fii_dii = response.json()
-
-                  print(
-                      "FII/DII data received successfully."
-                  )
-              else:
-                  print(
-                      "FII/DII request failed:",
-                      response.text[:500]
-                  )
-
-          except Exception as exc:
-              print(
-                  "FII/DII error:",
-                  repr(exc)
-              )
+          print("FII/DII rows:", len(fii_dii))
 
           fii_output = {
-              "source": "Groww",
+              "source": "NSE",
               "updated": now.isoformat(),
               "timezone": "Asia/Kolkata",
-              "data": fii_dii
+              "data": fii_dii,
           }
 
           with open(
               f"{DATA_DIR}/fii_dii.json",
               "w",
-              encoding="utf-8"
+              encoding="utf-8",
           ) as file:
               json.dump(
                   fii_output,
                   file,
                   ensure_ascii=False,
-                  indent=2
+                  indent=2,
               )
 
           # -------------------------------------------------
@@ -152,116 +146,80 @@ jobs:
               ("NIFTY BANK", "^NSEBANK"),
           ]
 
-          print()
-          print("Fetching market sentiment...")
+          print("\nFetching market sentiment...")
 
           for name, symbol in instruments:
-
               try:
                   history = yf.Ticker(symbol).history(
                       period="5d",
                       interval="1d",
-                      auto_adjust=False
+                      auto_adjust=False,
                   )
 
                   if history is None or history.empty:
-                      print(
-                          f"{name}: no data returned"
-                      )
+                      print(f"{name}: no data returned")
                       continue
 
                   closes = history["Close"].dropna()
 
                   if len(closes) >= 2:
-
-                      previous_close = float(
-                          closes.iloc[-2]
+                      previous_close = float(closes.iloc[-2])
+                      latest_close = float(closes.iloc[-1])
+                      change = latest_close - previous_close
+                      percent_change = (
+                          (change / previous_close) * 100
+                          if previous_close != 0
+                          else 0
                       )
-
-                      latest_close = float(
-                          closes.iloc[-1]
-                      )
-
-                      change = (
-                          latest_close -
-                          previous_close
-                      )
-
-                      if previous_close != 0:
-                          percent_change = (
-                              change /
-                              previous_close
-                          ) * 100
-                      else:
-                          percent_change = 0
-
-                      sentiment[name] = {
-                          "lastPrice": round(
-                              latest_close,
-                              2
-                          ),
-                          "previousClose": round(
-                              previous_close,
-                              2
-                          ),
-                          "change": round(
-                              change,
-                              2
-                          ),
-                          "pChange": round(
-                              percent_change,
-                              2
-                          )
-                      }
-
+                  elif len(closes) == 1:
+                      latest_close = float(closes.iloc[-1])
+                      previous_close = None
+                      change = 0
+                      percent_change = 0
                   else:
+                      continue
 
-                      latest_close = float(
-                          closes.iloc[-1]
-                      )
+                  sentiment[name] = {
+                      "lastPrice": round(latest_close, 2),
+                      "previousClose": (
+                          None
+                          if previous_close is None
+                          else round(previous_close, 2)
+                      ),
+                      "change": round(change, 2),
+                      "pChange": round(percent_change, 2),
+                  }
 
-                      sentiment[name] = {
-                          "lastPrice": round(
-                              latest_close,
-                              2
-                          ),
-                          "previousClose": None,
-                          "change": 0,
-                          "pChange": 0
-                      }
-
-                  print(
-                      f"{name}:",
-                      sentiment[name]
-                  )
+                  print(f"{name}:", sentiment[name])
 
               except Exception as exc:
-                  print(
-                      f"Error fetching {name}:",
-                      repr(exc)
-                  )
+                  print(f"Error fetching {name}:", repr(exc))
+
+          if not sentiment:
+              raise RuntimeError(
+                  "Market sentiment returned no valid data."
+              )
 
           sentiment_output = {
               "source": "Yahoo Finance",
               "updated": now.isoformat(),
               "timezone": "Asia/Kolkata",
-              "sentiment": sentiment
+              "sentiment": sentiment,
           }
 
           with open(
               f"{DATA_DIR}/market_sentiment.json",
               "w",
-              encoding="utf-8"
+              encoding="utf-8",
           ) as file:
               json.dump(
                   sentiment_output,
                   file,
                   ensure_ascii=False,
-                  indent=2
+                  indent=2,
               )
 
-          print()
-          print("======================================")
+          print("\n======================================")
           print("MARKET INSIGHTS UPDATE COMPLETE")
           print("======================================")
           PY
@@ -271,6 +229,9 @@ jobs:
           echo "Generated market insight files:"
           ls -lh data/fii_dii.json
           ls -lh data/market_sentiment.json
+          echo
+          echo "FII/DII preview:"
+          head -30 data/fii_dii.json
 
       - name: Commit and Push
         shell: bash
@@ -290,28 +251,21 @@ jobs:
 
           git commit -m "Auto-update Market Insights"
 
-          echo "Preparing to push..."
-
           for attempt in 1 2 3 4 5; do
-
             echo "Push attempt: $attempt"
 
             git fetch origin main
 
             if git rebase origin/main; then
-
               if git push origin HEAD:main; then
                 echo "Push successful."
                 exit 0
               fi
-
             else
               echo "Rebase failed."
-
               git rebase --abort || true
             fi
 
-            echo "Push failed. Retrying in 5 seconds..."
             sleep 5
           done
 
