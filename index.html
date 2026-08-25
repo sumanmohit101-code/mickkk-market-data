@@ -273,6 +273,7 @@ body.light-theme .gh-watch-panel{background:rgba(255,255,255,.98)}
 @media(max-width:860px){.gh-watch-panel{width:min(320px,86vw)}.gh-watch-toggle{top:54px;right:8px}}
 </style>
 </style>
+<link rel="stylesheet" href="charts-github-features.css">
 </head>
 <body>
 <nav>
@@ -282,7 +283,7 @@ body.light-theme .gh-watch-panel{background:rgba(255,255,255,.98)}
     <div class="header-tagline">Trade Smarter. Track Everything.</div>
     <div class="header-charts-badge">
       <span class="badge-title">Charts</span>
-      <span class="badge-sub">Powered by Google Finance</span>
+      <span class="badge-sub">Powered by GitHub Market Data</span>
     </div>
   </div>
   <div class="nav-links">
@@ -3012,5 +3013,6 @@ setInterval(ghCheckAlerts,60000);
 setTimeout(()=>{ghRenderEvents();ghRenderFii();ghRenderLists();},600);
 </script>
 
+<script src="charts-github-features.js"></script>
 </body>
 </html>
