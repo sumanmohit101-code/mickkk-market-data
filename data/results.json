@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-08-25T10:37:43.474653+05:30",
+  "updatedAt": "2026-08-25T18:39:36.566322+05:30",
   "timezone": "Asia/Kolkata",
   "today": [],
   "tomorrow": [
@@ -54,6 +54,13 @@
       "date": "2026-08-29",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended March 31, 2026"
+    },
+    {
+      "symbol": "SUPREMEENG",
+      "company": "Supreme Engineering Limited",
+      "date": "2026-08-29",
+      "purpose": "Financial Results/Fund Raising",
+      "description": "To consider and approve the financial results for the Quarter ended Jun 30, 2026 and Fund Raising by issue of equity share on a preferential basis"
     }
   ],
   "allUpcoming": [
@@ -84,6 +91,20 @@
       "date": "2026-08-29",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended March 31, 2026"
+    },
+    {
+      "symbol": "SUPREMEENG",
+      "company": "Supreme Engineering Limited",
+      "date": "2026-08-29",
+      "purpose": "Financial Results/Fund Raising",
+      "description": "To consider and approve the financial results for the Quarter ended Jun 30, 2026 and Fund Raising by issue of equity share on a preferential basis"
+    },
+    {
+      "symbol": "LEAPIND",
+      "company": "LEAP India Limited",
+      "date": "2026-08-31",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
     {
       "symbol": "MILKYMIST",
