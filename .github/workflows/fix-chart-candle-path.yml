@@ -1,0 +1,84 @@
+name: Fix Chart Candle Data Path
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-data-main
+  cancel-in-progress: false
+
+jobs:
+  fix-path:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Patch GitHub candle path
+        run: |
+          python <<'PY'
+          from pathlib import Path
+
+          path = Path("index.html")
+          html = path.read_text(encoding="utf-8")
+
+          old = '''    const safeSymbol = String(symbol).toUpperCase().replace(/[^A-Z0-9_-]/g, '');
+    const res = await fetch(`${GITHUB_DATA_BASE}${safeSymbol}.json?v=${Date.now()}`);
+    if (!res.ok) throw new Error(`Data HTTP ${res.status}`);'''
+
+          new = '''    const safeSymbol = String(symbol).toUpperCase().replace(/[^A-Z0-9_-]/g, '');
+    const first = safeSymbol.slice(0, 1);
+    const bucket = /^[A-Z]$/.test(first) ? first : '0-9';
+    const primaryUrl = `${GITHUB_DATA_BASE}${bucket}/${safeSymbol}.json?v=${Date.now()}`;
+    const fallbackUrl = `${GITHUB_DATA_BASE}${safeSymbol}.json?v=${Date.now()}`;
+
+    let res = await fetch(primaryUrl, { cache: 'no-store' });
+    if (!res.ok) {
+      res = await fetch(fallbackUrl, { cache: 'no-store' });
+    }
+    if (!res.ok) throw new Error(`Data HTTP ${res.status}`);'''
+
+          if old not in html:
+              raise SystemExit("Expected candle-loading block not found")
+
+          html = html.replace(old, new, 1)
+          path.write_text(html, encoding="utf-8")
+          print("Chart candle path patched to use data/<A-Z>/<SYMBOL>.json")
+          PY
+
+      - name: Commit and push
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add index.html
+
+          if git diff --cached --quiet; then
+            echo "Candle path already fixed."
+            exit 0
+          fi
+
+          git commit -m "Fix direct GitHub candle data path"
+
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                echo "Candle path fix pushed."
+                exit 0
+              fi
+            else
+              git rebase --abort || true
+            fi
+            sleep 5
+          done
+
+          exit 1
