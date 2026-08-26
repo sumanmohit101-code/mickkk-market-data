@@ -57,7 +57,7 @@ let marketData={results:null,events:null,fiiDii:null}, eventsBySymbol={};
 let alerts=[];let watchlist=JSON.parse(localStorage.getItem('MICKKK_GITHUB_WATCHLIST_V1')||'null')||[];
 const $=id=>document.getElementById(id);
 const file=async p=>{const r=await fetch(`${DATA_BASE}/${p}?v=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw Error(`${p} ${r.status}`);return r.json()};
-const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const esc=s=>String(s??'').replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));
 const bucket=s=>/^[A-Z]$/.test(String(s)[0]?.toUpperCase()||'')?String(s)[0].toUpperCase():'0-9';
 const candleFile=s=>`${bucket(s)}/${encodeURIComponent(s)}.json`;
 function saveWatch(){localStorage.setItem('MICKKK_GITHUB_WATCHLIST_V1',JSON.stringify(watchlist))}
@@ -94,5 +94,6 @@ function closeEvents(){$('eventsModal').classList.remove('open')}
 async function init(){alerts=JSON.parse(localStorage.getItem('MICKKK_GITHUB_ALERTS_V1')||'[]')||[];$('search').value='';[symbols,marketData.results,marketData.events,marketData.fiiDii]=await Promise.all([file('symbols.json'),file('results.json').catch(()=>({symbolWise:[]})),file('market_events.json').catch(()=>({bySymbol:{}})),file('fii_dii.json').catch(()=>({history:[]}))]);eventsBySymbol=marketData.events?.bySymbol||{};renderSearch();renderWatch();chart=LightweightCharts.createChart($('chart'),{layout:{background:{color:'transparent'},textColor:'#8a9ab0'},grid:{vertLines:{color:'#18212c'},horzLines:{color:'#18212c'}},rightPriceScale:{borderColor:'#1e2d3d'},timeScale:{borderColor:'#1e2d3d',timeVisible:false},crosshair:{mode:LightweightCharts.CrosshairMode.Normal},autoSize:true});series=chart.addCandlestickSeries({upColor:'#00e676',downColor:'#ff3d5a',borderUpColor:'#00e676',borderDownColor:'#ff3d5a',wickUpColor:'#00e676',wickDownColor:'#ff3d5a'});volumeSeries=chart.addHistogramSeries({priceFormat:{type:'volume'},priceScaleId:'vol'});chart.priceScale('vol').applyOptions({scaleMargins:{top:.75,bottom:.02}});[20,50,200].forEach(n=>emaLines[n]=chart.addLineSeries({lineWidth:1,color:n===20?'#00d4ff':n===50?'#ffab00':'#a78bfa',priceLineVisible:false,lastValueVisible:false}));const first=watchlist[0]?.symbol||symbols[0]?.symbol;const name=(symbols.find(x=>x.symbol===first)||{}).name||first;await loadSymbol(first,name)}
 init().catch(e=>{console.error(e);alert('MICKKK Charts could not initialize: '+e.message)});
 </script>
+<script src="./charts-results-view.js"></script>
 </body>
 </html>
