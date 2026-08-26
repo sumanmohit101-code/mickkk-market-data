@@ -15,7 +15,7 @@ concurrency:
 jobs:
   update-results:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
@@ -31,19 +31,30 @@ jobs:
       - name: Install dependencies
         run: pip install curl_cffi
 
-      - name: Fetch results and maintain rolling 1-year history
+      - name: Fetch NSE results calendar and history
         shell: bash
         run: |
           python <<'PY'
           import json
+          import re
+          from collections import defaultdict
           from datetime import datetime, timedelta
+          from pathlib import Path
           from zoneinfo import ZoneInfo
+
           from curl_cffi import requests
 
           IST = ZoneInfo("Asia/Kolkata")
           now = datetime.now(IST)
           today = now.date()
+          tomorrow = today + timedelta(days=1)
+          week_end = today + timedelta(days=(6 - today.weekday()))
           history_cutoff = today - timedelta(days=365)
+
+          DATA_DIR = Path("data")
+          RESULTS_FILE = DATA_DIR / "results.json"
+          HISTORY_DIR = DATA_DIR / "results-history"
+          HISTORY_DIR.mkdir(parents=True, exist_ok=True)
 
           session = requests.Session(impersonate="chrome")
           session.headers.update({
@@ -74,10 +85,13 @@ jobs:
                           return value
               return []
 
+          def clean_text(value):
+              return str(value or "").strip()
+
           def date_of(value):
               if not value:
                   return None
-              value = str(value).strip()
+              value = clean_text(value)
               for fmt in (
                   "%d-%b-%Y",
                   "%d-%B-%Y",
@@ -90,31 +104,35 @@ jobs:
                   except ValueError:
                       pass
               try:
-                  return datetime.fromisoformat(
-                      value.replace("Z", "+00:00")
-                  ).date()
+                  parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+                  return parsed.date()
               except Exception:
                   return None
 
-          def result_date(row):
-              for key in (
-                  "broadCastDate",
-                  "broadcastDate",
-                  "filingDate",
-                  "exchdisstime",
-              ):
-                  d = date_of(row.get(key))
-                  if d:
-                      return d
-              return None
-
-          def is_result(row):
-              text = (
-                  f'{row.get("purpose", "")} '
-                  f'{row.get("bm_desc", "")}'
-              ).lower()
+          def is_result_event(row):
+              text = " ".join([
+                  clean_text(row.get("purpose")),
+                  clean_text(row.get("bm_desc")),
+                  clean_text(row.get("description")),
+              ]).lower()
               return "financial result" in text or "financial results" in text
 
+          def event_to_item(row):
+              symbol = clean_text(row.get("symbol")).upper()
+              d = date_of(row.get("date"))
+              if not symbol or not d or not is_result_event(row):
+                  return None
+              return {
+                  "symbol": symbol,
+                  "company": clean_text(row.get("company")),
+                  "date": d.isoformat(),
+                  "purpose": clean_text(row.get("purpose")),
+                  "description": clean_text(
+                      row.get("bm_desc") or row.get("description")
+                  ),
+              }
+
+          # Master symbol list. This remains the canonical list for symbolWise.
           tracked_symbols = []
           with open("symbols.txt", "r", encoding="utf-8") as f:
               for line in f:
@@ -124,20 +142,21 @@ jobs:
 
           symbol_names = {}
           try:
-              with open("data/symbols.json", "r", encoding="utf-8") as f:
+              with open(DATA_DIR / "symbols.json", "r", encoding="utf-8") as f:
                   catalog = json.load(f)
               if isinstance(catalog, list):
                   for item in catalog:
                       if isinstance(item, dict):
-                          symbol = str(item.get("symbol", "")).strip().upper()
-                          name = str(item.get("name", "")).strip()
+                          symbol = clean_text(item.get("symbol")).upper()
+                          name = clean_text(item.get("name"))
                           if symbol:
                               symbol_names[symbol] = name or symbol
-          except Exception:
-              pass
+          except Exception as exc:
+              print("Could not read symbols.json:", repr(exc))
 
-          # Upcoming results: today, tomorrow, week and longer upcoming list.
-          upcoming = []
+          # ------------------------------------------------------------
+          # 1) UPCOMING RESULTS: today / tomorrow / this week / allUpcoming
+          # ------------------------------------------------------------
           event_response = session.get(
               "https://www.nseindia.com/api/event-calendar",
               timeout=30,
@@ -147,28 +166,30 @@ jobs:
                   f"NSE event calendar failed: {event_response.status_code}"
               )
 
+          upcoming_map = {}
           for row in rows(event_response.json()):
-              if not isinstance(row, dict) or not is_result(row):
+              if not isinstance(row, dict):
                   continue
-              d = date_of(row.get("date"))
-              symbol = str(row.get("symbol", "")).strip().upper()
-              if not d or d < today or not symbol:
+              item = event_to_item(row)
+              if not item or date_of(item["date"]) < today:
                   continue
-              upcoming.append({
-                  "symbol": symbol,
-                  "company": str(row.get("company", "")).strip(),
-                  "date": d.isoformat(),
-                  "purpose": str(row.get("purpose", "")).strip(),
-                  "description": str(row.get("bm_desc", "")).strip(),
-              })
+              key = (
+                  item["symbol"],
+                  item["date"],
+                  item["description"],
+                  item["purpose"],
+              )
+              upcoming_map[key] = item
 
-          upcoming = list({
-              (x["symbol"], x["date"], x["description"]): x
-              for x in upcoming
-          }.values())
-          upcoming.sort(key=lambda x: (x["date"], x["symbol"]))
+          upcoming = sorted(
+              upcoming_map.values(),
+              key=lambda x: (x["date"], x["symbol"]),
+          )
 
-          # Historical results: merge with prior file, then keep a rolling 365-day window.
+          # ------------------------------------------------------------
+          # 2) RESULT HISTORY: fetch NSE financial-result records.
+          #    Result date is the actual filing/broadcast date exposed by NSE.
+          # ------------------------------------------------------------
           fetched_history = []
           for period in ("Quarterly", "Annual", "Half-Yearly", "Others"):
               url = (
@@ -184,74 +205,132 @@ jobs:
               except Exception as exc:
                   print("Financial results error", period, repr(exc))
 
-          existing = {}
-          try:
-              with open("data/results.json", "r", encoding="utf-8") as f:
-                  previous = json.load(f)
-              for item in previous.get("history", []):
-                  if isinstance(item, dict) and item.get("symbol") and item.get("resultDate"):
-                      key = json.dumps({
-                          "symbol": item.get("symbol"),
-                          "resultDate": item.get("resultDate"),
-                          "period": item.get("period", ""),
-                          "periodFrom": item.get("periodFrom", ""),
-                          "periodTo": item.get("periodTo", ""),
-                          "relatingTo": item.get("relatingTo", ""),
-                      }, sort_keys=True)
-                      existing[key] = item
-          except Exception:
-              pass
+          def history_item(row):
+              if not isinstance(row, dict):
+                  return None
+              symbol = clean_text(row.get("symbol")).upper()
+              if not symbol:
+                  return None
+
+              result_date = None
+              for key in (
+                  "broadCastDate",
+                  "broadcastDate",
+                  "filingDate",
+                  "exchdisstime",
+              ):
+                  result_date = date_of(row.get(key))
+                  if result_date:
+                      break
+
+              if not result_date:
+                  return None
+
+              return {
+                  "symbol": symbol,
+                  "company": clean_text(row.get("companyName")),
+                  "resultDate": result_date.isoformat(),
+                  "period": clean_text(row.get("period")),
+                  "relatingTo": clean_text(row.get("relatingTo")),
+                  "periodFrom": clean_text(row.get("fromDate")),
+                  "periodTo": clean_text(row.get("toDate")),
+                  "consolidated": clean_text(row.get("consolidated")),
+                  "audited": clean_text(row.get("audited")),
+              }
+
+          # Keep the previous history as the durable source, then merge fresh data.
+          existing_history = []
+          if RESULTS_FILE.exists():
+              try:
+                  with open(RESULTS_FILE, "r", encoding="utf-8") as f:
+                      previous = json.load(f)
+                  if isinstance(previous, dict):
+                      existing_history = previous.get("history", []) or []
+              except Exception as exc:
+                  print("Could not read previous results.json:", repr(exc))
+
+          history_map = {}
+
+          def history_key(item):
+              return json.dumps({
+                  "symbol": item.get("symbol"),
+                  "resultDate": item.get("resultDate"),
+                  "period": item.get("period", ""),
+                  "periodFrom": item.get("periodFrom", ""),
+                  "periodTo": item.get("periodTo", ""),
+                  "relatingTo": item.get("relatingTo", ""),
+              }, sort_keys=True)
+
+          for item in existing_history:
+              if not isinstance(item, dict):
+                  continue
+              d = date_of(item.get("resultDate"))
+              if d and d >= history_cutoff and d <= today and item.get("symbol"):
+                  history_map[history_key(item)] = item
 
           for row in fetched_history:
-              if not isinstance(row, dict):
+              item = history_item(row)
+              if not item:
                   continue
-              symbol = str(row.get("symbol", "")).strip().upper()
-              d = result_date(row)
-              if not symbol or not d or d > today or d < history_cutoff:
+              d = date_of(item["resultDate"])
+              if d < history_cutoff or d > today:
                   continue
+              history_map[history_key(item)] = item
 
-              item = {
-                  "symbol": symbol,
-                  "company": str(row.get("companyName", "")).strip(),
-                  "resultDate": d.isoformat(),
-                  "period": str(row.get("period", "")).strip(),
-                  "relatingTo": str(row.get("relatingTo", "")).strip(),
-                  "periodFrom": str(row.get("fromDate", "")).strip(),
-                  "periodTo": str(row.get("toDate", "")).strip(),
-                  "consolidated": str(row.get("consolidated", "")).strip(),
-                  "audited": str(row.get("audited", "")).strip(),
-              }
-              key = json.dumps({
-                  "symbol": item["symbol"],
-                  "resultDate": item["resultDate"],
-                  "period": item["period"],
-                  "periodFrom": item["periodFrom"],
-                  "periodTo": item["periodTo"],
-                  "relatingTo": item["relatingTo"],
-              }, sort_keys=True)
-              existing[key] = item
-
-          history = list(existing.values())
-          history = [
-              x for x in history
-              if date_of(x.get("resultDate")) and date_of(x["resultDate"]) >= history_cutoff
-          ]
+          history = list(history_map.values())
           history.sort(key=lambda x: (x["resultDate"], x["symbol"]), reverse=True)
 
-          # Include symbols discovered from NSE without replacing the master list.
+          # ------------------------------------------------------------
+          # 3) DATE FILES: one durable JSON file per result date.
+          #    These are rewritten from the rolling 1-year history on each run.
+          # ------------------------------------------------------------
+          by_date = defaultdict(list)
+          for item in history:
+              by_date[item["resultDate"]].append(item)
+
+          for date_str, items in by_date.items():
+              items.sort(key=lambda x: x["symbol"])
+              date_payload = {
+                  "source": "NSE",
+                  "date": date_str,
+                  "updatedAt": now.isoformat(),
+                  "timezone": "Asia/Kolkata",
+                  "count": len(items),
+                  "results": items,
+              }
+              with open(HISTORY_DIR / f"{date_str}.json", "w", encoding="utf-8") as f:
+                  json.dump(date_payload, f, ensure_ascii=False, indent=2)
+
+          # Remove date files that have fallen outside the rolling 365-day window.
+          for path in HISTORY_DIR.glob("*.json"):
+              if not re.fullmatch(r"\d{4}-\d{2}-\d{2}\.json", path.name):
+                  continue
+              file_date = date_of(path.stem)
+              if file_date and file_date < history_cutoff:
+                  path.unlink()
+
+          # ------------------------------------------------------------
+          # 4) SHIFT LOGIC:
+          #    - upcoming result date is always the nearest future date.
+          #    - once that date becomes <= today, it is no longer upcoming.
+          #    - lastResultDate comes from durable history.
+          # ------------------------------------------------------------
+          latest_by_symbol = {}
+          for item in history:
+              symbol = item["symbol"]
+              old = latest_by_symbol.get(symbol)
+              if old is None or item["resultDate"] > old["resultDate"]:
+                  latest_by_symbol[symbol] = item
+
           for item in upcoming:
               if item["symbol"] not in tracked_symbols:
                   tracked_symbols.append(item["symbol"])
+
           for item in history:
               if item["symbol"] not in tracked_symbols:
                   tracked_symbols.append(item["symbol"])
-          tracked_symbols = sorted(set(tracked_symbols))
 
-          latest_by_symbol = {}
-          for item in history:
-              old = latest_by_symbol.get(item["symbol"])
-              if old is None or item["resultDate"] > old["resultDate"]:
-                  latest_by_symbol[item["symbol"]] = item
+          tracked_symbols = sorted(set(tracked_symbols))
 
           symbol_wise = []
           for symbol in tracked_symbols:
@@ -260,13 +339,16 @@ jobs:
                   key=lambda x: x["date"],
               )
               last = latest_by_symbol.get(symbol)
+
+              company = (
+                  symbol_names.get(symbol)
+                  or (last or {}).get("company")
+                  or next((x["company"] for x in future if x.get("company")), symbol)
+              )
+
               symbol_wise.append({
                   "symbol": symbol,
-                  "company": (
-                      symbol_names.get(symbol)
-                      or (last or {}).get("company")
-                      or next((x["company"] for x in future if x.get("company")), symbol)
-                  ),
+                  "company": company,
                   "lastResultDate": last["resultDate"] if last else None,
                   "nextResultDate": future[0]["date"] if future else None,
                   "lastResult": last,
@@ -274,8 +356,6 @@ jobs:
                   "historyCount": sum(1 for x in history if x["symbol"] == symbol),
               })
 
-          tomorrow = today + timedelta(days=1)
-          week_end = today + timedelta(days=(6 - today.weekday()))
           today_results = [x for x in upcoming if x["date"] == today.isoformat()]
           tomorrow_results = [x for x in upcoming if x["date"] == tomorrow.isoformat()]
           this_week = [
@@ -290,6 +370,7 @@ jobs:
               "historyPolicy": {
                   "windowDays": 365,
                   "autoDeleteOlderThanDays": 365,
+                  "dateFiles": "data/results-history/YYYY-MM-DD.json",
               },
               "symbolCount": len(symbol_wise),
               "historyCount": len(history),
@@ -303,9 +384,9 @@ jobs:
           }
 
           if not symbol_wise:
-              raise RuntimeError("No tracked symbols available for results output")
+              raise RuntimeError("No symbols available for results output")
 
-          with open("data/results.json", "w", encoding="utf-8") as f:
+          with open(RESULTS_FILE, "w", encoding="utf-8") as f:
               json.dump(output, f, ensure_ascii=False, indent=2)
 
           print("======================================")
@@ -317,14 +398,18 @@ jobs:
           print("Today:", len(today_results))
           print("Tomorrow:", len(tomorrow_results))
           print("This week:", len(this_week))
+          print("Date history files:", len(by_date))
           print("======================================")
           PY
 
-      - name: Validate results file
+      - name: Validate results data
+        shell: bash
         run: |
           python - <<'PY'
           import json
+          import re
           from datetime import date, timedelta
+          from pathlib import Path
 
           with open("data/results.json", "r", encoding="utf-8") as f:
               data = json.load(f)
@@ -335,14 +420,41 @@ jobs:
               raise SystemExit("symbolWise is empty")
 
           cutoff = date.today() - timedelta(days=365)
-          for row in history:
-              d = date.fromisoformat(row["resultDate"])
-              if d < cutoff:
-                  raise SystemExit(f"History contains row older than 365 days: {row}")
+          history_keys = set()
+
+          for item in history:
+              if not isinstance(item, dict):
+                  raise SystemExit("Invalid history row")
+              d = date.fromisoformat(item["resultDate"])
+              if d < cutoff or d > date.today():
+                  raise SystemExit(
+                      f"History row outside rolling window: {item}"
+                  )
+              history_keys.add((
+                  item.get("symbol"),
+                  item.get("resultDate"),
+                  item.get("period", ""),
+                  item.get("periodFrom", ""),
+                  item.get("periodTo", ""),
+                  item.get("relatingTo", ""),
+              ))
+
+          by_date = Path("data/results-history")
+          for path in by_date.glob("*.json"):
+              if not re.fullmatch(r"\d{4}-\d{2}-\d{2}\.json", path.name):
+                  raise SystemExit(f"Invalid results-history filename: {path.name}")
+              payload = json.loads(path.read_text(encoding="utf-8"))
+              expected_date = path.stem
+              for item in payload.get("results", []):
+                  if item.get("resultDate") != expected_date:
+                      raise SystemExit(
+                          f"Date file mismatch: {path} contains {item.get('resultDate')}"
+                      )
 
           print("Validated symbolWise rows:", len(symbol_rows))
-          print("Validated 1-year history rows:", len(history))
+          print("Validated history rows:", len(history))
           print("History cutoff:", cutoff.isoformat())
+          print("Validated date history directory:", by_date)
           PY
 
       - name: Commit and push
@@ -351,17 +463,21 @@ jobs:
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/results.json
+
+          git add data/results.json data/results-history/
           if git diff --cached --quiet; then
             echo "No results changes."
             exit 0
           fi
-          git commit -m "Auto-update NSE results history"
+
+          git commit -m "Auto-update NSE results calendar and history"
+
           for attempt in 1 2 3 4 5; do
+            echo "Push attempt $attempt/5..."
             git fetch origin main
             if git rebase origin/main; then
               if git push origin HEAD:main; then
-                echo "Results history push successful."
+                echo "Results update push successful."
                 exit 0
               fi
             else
@@ -369,5 +485,6 @@ jobs:
             fi
             sleep 5
           done
-          echo "ERROR: Could not push results history after 5 attempts."
+
+          echo "ERROR: Could not push results update after 5 attempts."
           exit 1
