@@ -1,0 +1,3646 @@
+{
+  "source": "NSE",
+  "updatedAt": "2026-08-26T17:34:51.616219+05:30",
+  "records": [
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "GOLDMINE STOCKS PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "197899",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "GOLDMINE STOCKS PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "197899",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "378.46"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "465998",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "465998",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "379.73"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "BLITZQUANT RESEARCH LLP",
+      "buySell": "BUY",
+      "quantity": "158309",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "BLITZQUANT RESEARCH LLP",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "158309",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "379.23"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "GRT STRATEGIC VENTURES LLP",
+      "buySell": "BUY",
+      "quantity": "560667",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "GRT STRATEGIC VENTURES LLP",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "560667",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "379.67"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "IRAGE BROKING SERVICES LLP",
+      "buySell": "BUY",
+      "quantity": "366636",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "IRAGE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "366636",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "379.5"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUMP TRADING FINANCIAL INDIA PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "263306",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "JUMP TRADING FINANCIAL INDIA PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "263306",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "376.13"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "243715",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "243715",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "377.03"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "174815",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "174815",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "373.89"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ARIHANT CAPITAL MARKETS LIMITED",
+      "buySell": "BUY",
+      "quantity": "2380636",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "ARIHANT CAPITAL MARKETS LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "2380636",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "382.52"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "AMRAPALI CAPITAL AND FINANCE SERVICES LTD",
+      "buySell": "BUY",
+      "quantity": "1500000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "AMRAPALI CAPITAL AND FINANCE SERVICES LTD",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "1500000",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "370"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "PURE BROKING PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "165071",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "PURE BROKING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "165071",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "379.94"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ARIHANT CAPITAL MARKETS LIMITED",
+      "buySell": "SELL",
+      "quantity": "1920836",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "ARIHANT CAPITAL MARKETS LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "1920836",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "370.72"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "GOLDMINE STOCKS PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "197899",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "GOLDMINE STOCKS PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "197899",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "378.49"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "228209",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "228209",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "377.69"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "PURE BROKING PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "151560",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "PURE BROKING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "151560",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "381.21"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "GRT STRATEGIC VENTURES LLP",
+      "buySell": "SELL",
+      "quantity": "560667",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "GRT STRATEGIC VENTURES LLP",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "560667",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "379.88"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "IRAGE BROKING SERVICES LLP",
+      "buySell": "SELL",
+      "quantity": "413380",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "IRAGE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "413380",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "378"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUMP TRADING FINANCIAL INDIA PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "263306",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "JUMP TRADING FINANCIAL INDIA PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "263306",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "375.87"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "BLITZQUANT RESEARCH LLP",
+      "buySell": "SELL",
+      "quantity": "158309",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "BLITZQUANT RESEARCH LLP",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "158309",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "379.34"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "174815",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "174815",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "374.15"
+      }
+    },
+    {
+      "symbol": "SUNSHINE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "465998",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Sunshine Pictures Limited",
+        "qty": "465998",
+        "remarks": "-",
+        "symbol": "SUNSHINE",
+        "watp": "379.97"
+      }
+    },
+    {
+      "symbol": "SUN-RE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MAHESH PRAKASH MHAPANKAR",
+      "buySell": "BUY",
+      "quantity": "33600",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "MAHESH PRAKASH MHAPANKAR",
+        "date": "25-Aug-2026",
+        "name": "Sunrest Life Ltd",
+        "qty": "33600",
+        "remarks": "-",
+        "symbol": "SUN-RE",
+        "watp": "1.5"
+      }
+    },
+    {
+      "symbol": "SUN-RE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "SHARDABEN DALSUKHRAM THAKKAR",
+      "buySell": "SELL",
+      "quantity": "49600",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "SHARDABEN DALSUKHRAM THAKKAR",
+        "date": "25-Aug-2026",
+        "name": "Sunrest Life Ltd",
+        "qty": "49600",
+        "remarks": "-",
+        "symbol": "SUN-RE",
+        "watp": "1.5"
+      }
+    },
+    {
+      "symbol": "SUN-RE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "PARESHKUMAR JAMANALAL JIVARANI",
+      "buySell": "SELL",
+      "quantity": "25600",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "PARESHKUMAR JAMANALAL JIVARANI",
+        "date": "25-Aug-2026",
+        "name": "Sunrest Life Ltd",
+        "qty": "25600",
+        "remarks": "-",
+        "symbol": "SUN-RE",
+        "watp": "1.36"
+      }
+    },
+    {
+      "symbol": "SILLYMONKS",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "PRASAD A.RAJENDRA",
+      "buySell": "BUY",
+      "quantity": "73229",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "PRASAD A.RAJENDRA",
+        "date": "25-Aug-2026",
+        "name": "Silly Monks Entertain Ltd",
+        "qty": "73229",
+        "remarks": "-",
+        "symbol": "SILLYMONKS",
+        "watp": "16.05"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "GOLDMINE STOCKS PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "1562217",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "GOLDMINE STOCKS PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1562217",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "102.62"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NIRAJ RAJNIKANT SHAH",
+      "buySell": "BUY",
+      "quantity": "2300000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NIRAJ RAJNIKANT SHAH",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "2300000",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "99.86"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "KABRA KAILASH",
+      "buySell": "BUY",
+      "quantity": "916784",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "KABRA KAILASH",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "916784",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "100.81"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "DIPAN MEHTA COMMODITIES PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "1868213",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "DIPAN MEHTA COMMODITIES PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1868213",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "100.72"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ELIXIR WEALTH MANAGEMENT PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "1046426",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "ELIXIR WEALTH MANAGEMENT PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1046426",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.76"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "PEER GLOBAL TRADE PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "881726",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "PEER GLOBAL TRADE PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "881726",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.25"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "RAJASTHAN GLOBAL SECURITIES PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "743000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "RAJASTHAN GLOBAL SECURITIES PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "743000",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "100.03"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "SHARE INDIA SECURITIES LIMITED",
+      "buySell": "BUY",
+      "quantity": "979121",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "SHARE INDIA SECURITIES LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "979121",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "102.19"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "YUGA STOCKS AND COMMODITIES PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "954935",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "YUGA STOCKS AND COMMODITIES PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "954935",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "99.54"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "GADGIL RENU GOVIND",
+      "buySell": "BUY",
+      "quantity": "945000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "GADGIL RENU GOVIND",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "945000",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.05"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "P.N. GADGIL & SONS LIMITED",
+      "buySell": "BUY",
+      "quantity": "1375000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "P.N. GADGIL & SONS LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1375000",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.05"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "3514114",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "3514114",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.55"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "PURE BROKING PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "1373999",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "PURE BROKING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1373999",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "103.01"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "PRARAMBH SECURITIES PVT. LTD.",
+      "buySell": "BUY",
+      "quantity": "1100000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "PRARAMBH SECURITIES PVT. LTD.",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1100000",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "99.9"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "GRT STRATEGIC VENTURES LLP",
+      "buySell": "BUY",
+      "quantity": "2287147",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "GRT STRATEGIC VENTURES LLP",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "2287147",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "102.33"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "IRAGE BROKING SERVICES LLP",
+      "buySell": "BUY",
+      "quantity": "2372921",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "IRAGE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "2372921",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "102.06"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "VORA FINANCIAL SERVICES PVT LTD",
+      "buySell": "BUY",
+      "quantity": "794000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "VORA FINANCIAL SERVICES PVT LTD",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "794000",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "102.81"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MARWADI CHANDARANA INTERMEDIARIES BROKERS PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "1177258",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "MARWADI CHANDARANA INTERMEDIARIES BROKERS PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1177258",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "102.7"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUMP TRADING FINANCIAL INDIA PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "1519833",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "JUMP TRADING FINANCIAL INDIA PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1519833",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "100.99"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "2311517",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "2311517",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.09"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "1698100",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1698100",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.78"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "1698100",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1698100",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.81"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "GOLDMINE STOCKS PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "1561917",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "GOLDMINE STOCKS PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1561917",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "102.72"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "KABRA KAILASH",
+      "buySell": "SELL",
+      "quantity": "916784",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "KABRA KAILASH",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "916784",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "99.34"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "DIPAN MEHTA COMMODITIES PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "1863213",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "DIPAN MEHTA COMMODITIES PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1863213",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "100.64"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ELIXIR WEALTH MANAGEMENT PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "1046426",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "ELIXIR WEALTH MANAGEMENT PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1046426",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.58"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "PEER GLOBAL TRADE PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "881726",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "PEER GLOBAL TRADE PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "881726",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "100.25"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "RAJASTHAN GLOBAL SECURITIES PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "13000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "RAJASTHAN GLOBAL SECURITIES PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "13000",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "103"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "SHARE INDIA SECURITIES LIMITED",
+      "buySell": "SELL",
+      "quantity": "969121",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "SHARE INDIA SECURITIES LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "969121",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.26"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "YUGA STOCKS AND COMMODITIES PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "954935",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "YUGA STOCKS AND COMMODITIES PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "954935",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "99.67"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NOMURA SINGAPORE LIMITED",
+      "buySell": "SELL",
+      "quantity": "1617535",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "NOMURA SINGAPORE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1617535",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "96.66"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "3514114",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "3514114",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.6"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "PURE BROKING PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "1358519",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "PURE BROKING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1358519",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "102.99"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "GRT STRATEGIC VENTURES LLP",
+      "buySell": "SELL",
+      "quantity": "2287147",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "GRT STRATEGIC VENTURES LLP",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "2287147",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "102.37"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "IRAGE BROKING SERVICES LLP",
+      "buySell": "SELL",
+      "quantity": "2450588",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "IRAGE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "2450588",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.92"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "VORA FINANCIAL SERVICES PVT LTD",
+      "buySell": "SELL",
+      "quantity": "794000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "VORA FINANCIAL SERVICES PVT LTD",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "794000",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.32"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MARWADI CHANDARANA INTERMEDIARIES BROKERS PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "1172258",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "MARWADI CHANDARANA INTERMEDIARIES BROKERS PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1172258",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "103.16"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUMP TRADING FINANCIAL INDIA PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "1519833",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "JUMP TRADING FINANCIAL INDIA PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "1519833",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.13"
+      }
+    },
+    {
+      "symbol": "SHANKESH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "2136101",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Shankesh Jewellers Ltd",
+        "qty": "2136101",
+        "remarks": "-",
+        "symbol": "SHANKESH",
+        "watp": "101.32"
+      }
+    },
+    {
+      "symbol": "SHAH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "DHANJIT REAL TRADE LLP",
+      "buySell": "BUY",
+      "quantity": "14523951",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "DHANJIT REAL TRADE LLP",
+        "date": "25-Aug-2026",
+        "name": "Shah Metacorp Limited",
+        "qty": "14523951",
+        "remarks": "-",
+        "symbol": "SHAH",
+        "watp": "3.48"
+      }
+    },
+    {
+      "symbol": "SHAH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "DHANJIT REAL TRADE LLP",
+      "buySell": "SELL",
+      "quantity": "15861388",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "DHANJIT REAL TRADE LLP",
+        "date": "25-Aug-2026",
+        "name": "Shah Metacorp Limited",
+        "qty": "15861388",
+        "remarks": "-",
+        "symbol": "SHAH",
+        "watp": "3.44"
+      }
+    },
+    {
+      "symbol": "RATNAVEER",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ARIHANT CAPITAL MARKETS LIMITED",
+      "buySell": "BUY",
+      "quantity": "260890",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "ARIHANT CAPITAL MARKETS LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Ratnaveer Precision Eng L",
+        "qty": "260890",
+        "remarks": "-",
+        "symbol": "RATNAVEER",
+        "watp": "267.06"
+      }
+    },
+    {
+      "symbol": "RATNAVEER",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "HRTI PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "226584",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "HRTI PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Ratnaveer Precision Eng L",
+        "qty": "226584",
+        "remarks": "-",
+        "symbol": "RATNAVEER",
+        "watp": "269.01"
+      }
+    },
+    {
+      "symbol": "RATNAVEER",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "HRTI PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "400820",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "HRTI PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Ratnaveer Precision Eng L",
+        "qty": "400820",
+        "remarks": "-",
+        "symbol": "RATNAVEER",
+        "watp": "270.83"
+      }
+    },
+    {
+      "symbol": "RATNAVEER",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ARIHANT CAPITAL MARKETS LIMITED",
+      "buySell": "SELL",
+      "quantity": "391039",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "ARIHANT CAPITAL MARKETS LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Ratnaveer Precision Eng L",
+        "qty": "391039",
+        "remarks": "-",
+        "symbol": "RATNAVEER",
+        "watp": "265.34"
+      }
+    },
+    {
+      "symbol": "RAMBHAJO",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "456397",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Advit Jewels Limited",
+        "qty": "456397",
+        "remarks": "-",
+        "symbol": "RAMBHAJO",
+        "watp": "225.2"
+      }
+    },
+    {
+      "symbol": "RAMBHAJO",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "267034",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Advit Jewels Limited",
+        "qty": "267034",
+        "remarks": "-",
+        "symbol": "RAMBHAJO",
+        "watp": "226.05"
+      }
+    },
+    {
+      "symbol": "RAMBHAJO",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "HRTI PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "324507",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "HRTI PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Advit Jewels Limited",
+        "qty": "324507",
+        "remarks": "-",
+        "symbol": "RAMBHAJO",
+        "watp": "223.62"
+      }
+    },
+    {
+      "symbol": "RAMBHAJO",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "QE SECURITIES LLP",
+      "buySell": "BUY",
+      "quantity": "459706",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "QE SECURITIES LLP",
+        "date": "25-Aug-2026",
+        "name": "Advit Jewels Limited",
+        "qty": "459706",
+        "remarks": "-",
+        "symbol": "RAMBHAJO",
+        "watp": "225.47"
+      }
+    },
+    {
+      "symbol": "RAMBHAJO",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "YUGA STOCKS AND COMMODITIES PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "181525",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "YUGA STOCKS AND COMMODITIES PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Advit Jewels Limited",
+        "qty": "181525",
+        "remarks": "-",
+        "symbol": "RAMBHAJO",
+        "watp": "237.46"
+      }
+    },
+    {
+      "symbol": "RAMBHAJO",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "268316",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Advit Jewels Limited",
+        "qty": "268316",
+        "remarks": "-",
+        "symbol": "RAMBHAJO",
+        "watp": "228.81"
+      }
+    },
+    {
+      "symbol": "RAMBHAJO",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "267034",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Advit Jewels Limited",
+        "qty": "267034",
+        "remarks": "-",
+        "symbol": "RAMBHAJO",
+        "watp": "226.15"
+      }
+    },
+    {
+      "symbol": "RAMBHAJO",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "268316",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Advit Jewels Limited",
+        "qty": "268316",
+        "remarks": "-",
+        "symbol": "RAMBHAJO",
+        "watp": "228.95"
+      }
+    },
+    {
+      "symbol": "RAMBHAJO",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "QE SECURITIES LLP",
+      "buySell": "SELL",
+      "quantity": "458235",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "QE SECURITIES LLP",
+        "date": "25-Aug-2026",
+        "name": "Advit Jewels Limited",
+        "qty": "458235",
+        "remarks": "-",
+        "symbol": "RAMBHAJO",
+        "watp": "224.51"
+      }
+    },
+    {
+      "symbol": "RAMBHAJO",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "HRTI PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "313687",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "HRTI PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Advit Jewels Limited",
+        "qty": "313687",
+        "remarks": "-",
+        "symbol": "RAMBHAJO",
+        "watp": "224.8"
+      }
+    },
+    {
+      "symbol": "RAMBHAJO",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "YUGA STOCKS AND COMMODITIES PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "231525",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "YUGA STOCKS AND COMMODITIES PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Advit Jewels Limited",
+        "qty": "231525",
+        "remarks": "-",
+        "symbol": "RAMBHAJO",
+        "watp": "234.76"
+      }
+    },
+    {
+      "symbol": "RAMBHAJO",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "442225",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Advit Jewels Limited",
+        "qty": "442225",
+        "remarks": "-",
+        "symbol": "RAMBHAJO",
+        "watp": "225.37"
+      }
+    },
+    {
+      "symbol": "QUADFUTURE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "QE SECURITIES LLP",
+      "buySell": "BUY",
+      "quantity": "320359",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "QE SECURITIES LLP",
+        "date": "25-Aug-2026",
+        "name": "Quadrant Future Tek Ltd",
+        "qty": "320359",
+        "remarks": "-",
+        "symbol": "QUADFUTURE",
+        "watp": "424.75"
+      }
+    },
+    {
+      "symbol": "QUADFUTURE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "299306",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Quadrant Future Tek Ltd",
+        "qty": "299306",
+        "remarks": "-",
+        "symbol": "QUADFUTURE",
+        "watp": "425.82"
+      }
+    },
+    {
+      "symbol": "QUADFUTURE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "QE SECURITIES LLP",
+      "buySell": "SELL",
+      "quantity": "316488",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "QE SECURITIES LLP",
+        "date": "25-Aug-2026",
+        "name": "Quadrant Future Tek Ltd",
+        "qty": "316488",
+        "remarks": "-",
+        "symbol": "QUADFUTURE",
+        "watp": "425.88"
+      }
+    },
+    {
+      "symbol": "QUADFUTURE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "297623",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Quadrant Future Tek Ltd",
+        "qty": "297623",
+        "remarks": "-",
+        "symbol": "QUADFUTURE",
+        "watp": "426.05"
+      }
+    },
+    {
+      "symbol": "PCJEWELLER",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUMP TRADING FINANCIAL INDIA PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "53487454",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "JUMP TRADING FINANCIAL INDIA PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "PC Jeweller Ltd",
+        "qty": "53487454",
+        "remarks": "-",
+        "symbol": "PCJEWELLER",
+        "watp": "11.14"
+      }
+    },
+    {
+      "symbol": "PCJEWELLER",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUMP TRADING FINANCIAL INDIA PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "53487454",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "JUMP TRADING FINANCIAL INDIA PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "PC Jeweller Ltd",
+        "qty": "53487454",
+        "remarks": "-",
+        "symbol": "PCJEWELLER",
+        "watp": "11.13"
+      }
+    },
+    {
+      "symbol": "PARSVNATH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+      "buySell": "BUY",
+      "quantity": "5955399",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Parsvnath Developers Limi",
+        "qty": "5955399",
+        "remarks": "-",
+        "symbol": "PARSVNATH",
+        "watp": "1.35"
+      }
+    },
+    {
+      "symbol": "PARSVNATH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "KINGSMAN WEALTH FUND PCC - KIF II",
+      "buySell": "SELL",
+      "quantity": "4301272",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "KINGSMAN WEALTH FUND PCC - KIF II",
+        "date": "25-Aug-2026",
+        "name": "Parsvnath Developers Limi",
+        "qty": "4301272",
+        "remarks": "-",
+        "symbol": "PARSVNATH",
+        "watp": "1.35"
+      }
+    },
+    {
+      "symbol": "ORIENTHOT",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "SUPREMUS PROJECTS LLP",
+      "buySell": "SELL",
+      "quantity": "1105010",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "SUPREMUS PROJECTS LLP",
+        "date": "25-Aug-2026",
+        "name": "Oriental Hotels Ltd",
+        "qty": "1105010",
+        "remarks": "-",
+        "symbol": "ORIENTHOT",
+        "watp": "142.21"
+      }
+    },
+    {
+      "symbol": "ONIXSOLAR",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ONIX RENEWABLE LIMITED",
+      "buySell": "BUY",
+      "quantity": "640000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "ONIX RENEWABLE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Onix Solar Energy Ltd.",
+        "qty": "640000",
+        "remarks": "-",
+        "symbol": "ONIXSOLAR",
+        "watp": "276.15"
+      }
+    },
+    {
+      "symbol": "ONIXSOLAR",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "YAVA CORP GLOBAL LIMITED",
+      "buySell": "SELL",
+      "quantity": "190000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "YAVA CORP GLOBAL LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Onix Solar Energy Ltd.",
+        "qty": "190000",
+        "remarks": "-",
+        "symbol": "ONIXSOLAR",
+        "watp": "276.15"
+      }
+    },
+    {
+      "symbol": "NIMBSPROJ",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NIVL LEARNING EDUCATION PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "70000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NIVL LEARNING EDUCATION PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Nimbus Projects Limited",
+        "qty": "70000",
+        "remarks": "-",
+        "symbol": "NIMBSPROJ",
+        "watp": "173.07"
+      }
+    },
+    {
+      "symbol": "NIMBSPROJ",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "URJA  INVESTMENT PTE LTD",
+      "buySell": "BUY",
+      "quantity": "149255",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "URJA  INVESTMENT PTE LTD",
+        "date": "25-Aug-2026",
+        "name": "Nimbus Projects Limited",
+        "qty": "149255",
+        "remarks": "-",
+        "symbol": "NIMBSPROJ",
+        "watp": "174.09"
+      }
+    },
+    {
+      "symbol": "NIMBSPROJ",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NIVL IT SERVICES PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "72209",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NIVL IT SERVICES PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Nimbus Projects Limited",
+        "qty": "72209",
+        "remarks": "-",
+        "symbol": "NIMBSPROJ",
+        "watp": "172.84"
+      }
+    },
+    {
+      "symbol": "NIMBSPROJ",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NIVL LEARNING EDUCATION PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "161265",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "NIVL LEARNING EDUCATION PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Nimbus Projects Limited",
+        "qty": "161265",
+        "remarks": "-",
+        "symbol": "NIMBSPROJ",
+        "watp": "174.18"
+      }
+    },
+    {
+      "symbol": "NIMBSPROJ",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NIVL IT SERVICES PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "97809",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "NIVL IT SERVICES PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Nimbus Projects Limited",
+        "qty": "97809",
+        "remarks": "-",
+        "symbol": "NIMBSPROJ",
+        "watp": "172.57"
+      }
+    },
+    {
+      "symbol": "NARMADA",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MSB E TRADE SECURITIES LIMITED",
+      "buySell": "BUY",
+      "quantity": "518763",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "MSB E TRADE SECURITIES LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Narmada Agrobase Limited",
+        "qty": "518763",
+        "remarks": "-",
+        "symbol": "NARMADA",
+        "watp": "14.6"
+      }
+    },
+    {
+      "symbol": "NARMADA",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MSB E TRADE SECURITIES LIMITED",
+      "buySell": "SELL",
+      "quantity": "518751",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "MSB E TRADE SECURITIES LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Narmada Agrobase Limited",
+        "qty": "518751",
+        "remarks": "-",
+        "symbol": "NARMADA",
+        "watp": "14.19"
+      }
+    },
+    {
+      "symbol": "MEDIASSIST",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NTASIAN DISCOVERY MASTER FUND",
+      "buySell": "BUY",
+      "quantity": "400000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NTASIAN DISCOVERY MASTER FUND",
+        "date": "25-Aug-2026",
+        "name": "Medi Assist Health Ser L",
+        "qty": "400000",
+        "remarks": "-",
+        "symbol": "MEDIASSIST",
+        "watp": "356.76"
+      }
+    },
+    {
+      "symbol": "MANYAVAR",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "SBI MUTUAL FUND",
+      "buySell": "BUY",
+      "quantity": "3630820",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "SBI MUTUAL FUND",
+        "date": "25-Aug-2026",
+        "name": "Vedant Fashions Limited",
+        "qty": "3630820",
+        "remarks": "-",
+        "symbol": "MANYAVAR",
+        "watp": "536.5"
+      }
+    },
+    {
+      "symbol": "MANYAVAR",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "SBI MUTUAL FUND",
+      "buySell": "SELL",
+      "quantity": "3631027",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "SBI MUTUAL FUND",
+        "date": "25-Aug-2026",
+        "name": "Vedant Fashions Limited",
+        "qty": "3631027",
+        "remarks": "-",
+        "symbol": "MANYAVAR",
+        "watp": "536.5"
+      }
+    },
+    {
+      "symbol": "LAMBODHARA",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "INDUR THANWERDAS DADLANI",
+      "buySell": "BUY",
+      "quantity": "83266",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "INDUR THANWERDAS DADLANI",
+        "date": "25-Aug-2026",
+        "name": "Lambodhara Textiles Ltd.",
+        "qty": "83266",
+        "remarks": "-",
+        "symbol": "LAMBODHARA",
+        "watp": "140.19"
+      }
+    },
+    {
+      "symbol": "GENESYS",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+      "buySell": "BUY",
+      "quantity": "184051",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Genesys International Cor",
+        "qty": "184051",
+        "remarks": "-",
+        "symbol": "GENESYS",
+        "watp": "214.22"
+      }
+    },
+    {
+      "symbol": "GENESYS",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+      "buySell": "SELL",
+      "quantity": "228034",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Genesys International Cor",
+        "qty": "228034",
+        "remarks": "-",
+        "symbol": "GENESYS",
+        "watp": "214.18"
+      }
+    },
+    {
+      "symbol": "GATECH",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "EBISU GLOBAL OPPORTUNITIES FUND LIMITED",
+      "buySell": "SELL",
+      "quantity": "57147652",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "EBISU GLOBAL OPPORTUNITIES FUND LIMITED",
+        "date": "25-Aug-2026",
+        "name": "GACM Technologies Limited",
+        "qty": "57147652",
+        "remarks": "-",
+        "symbol": "GATECH",
+        "watp": "0.97"
+      }
+    },
+    {
+      "symbol": "GANGAFORGE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+      "buySell": "BUY",
+      "quantity": "10448169",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Ganga Forging Limited",
+        "qty": "10448169",
+        "remarks": "-",
+        "symbol": "GANGAFORGE",
+        "watp": "1.86"
+      }
+    },
+    {
+      "symbol": "GANGAFORGE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+      "buySell": "SELL",
+      "quantity": "2110950",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Ganga Forging Limited",
+        "qty": "2110950",
+        "remarks": "-",
+        "symbol": "GANGAFORGE",
+        "watp": "1.87"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "584257",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "584257",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "541.11"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "CLT RESEARCH TECH PRIVATE LTD",
+      "buySell": "BUY",
+      "quantity": "340075",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "CLT RESEARCH TECH PRIVATE LTD",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "340075",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "542.85"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "SILVERLEAF CAPITAL SERVICES PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "290873",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "SILVERLEAF CAPITAL SERVICES PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "290873",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "539.05"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "QE SECURITIES LLP",
+      "buySell": "BUY",
+      "quantity": "294437",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "QE SECURITIES LLP",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "294437",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "538.11"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "BLITZQUANT RESEARCH LLP",
+      "buySell": "BUY",
+      "quantity": "326658",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "BLITZQUANT RESEARCH LLP",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "326658",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "539.85"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "IRAGE BROKING SERVICES LLP",
+      "buySell": "BUY",
+      "quantity": "405490",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "IRAGE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "405490",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "541.91"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "988649",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "988649",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "541.17"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "1022846",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "1022846",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "540.96"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "SILVERLEAF CAPITAL SERVICES PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "290873",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "SILVERLEAF CAPITAL SERVICES PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "290873",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "539.43"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "CLT RESEARCH TECH PRIVATE LTD",
+      "buySell": "SELL",
+      "quantity": "340075",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "CLT RESEARCH TECH PRIVATE LTD",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "340075",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "543.15"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "QE SECURITIES LLP",
+      "buySell": "SELL",
+      "quantity": "294219",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "QE SECURITIES LLP",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "294219",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "538.33"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "988649",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "988649",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "541.62"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "IRAGE BROKING SERVICES LLP",
+      "buySell": "SELL",
+      "quantity": "351664",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "IRAGE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "351664",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "542.07"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "583974",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "JUNOMONETA FINSOL PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "583974",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "541.47"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "1022846",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "1022846",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "541.23"
+      }
+    },
+    {
+      "symbol": "FMGOETZE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "BLITZQUANT RESEARCH LLP",
+      "buySell": "SELL",
+      "quantity": "326658",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "BLITZQUANT RESEARCH LLP",
+        "date": "25-Aug-2026",
+        "name": "Federal-Mogul Goetze (I)",
+        "qty": "326658",
+        "remarks": "-",
+        "symbol": "FMGOETZE",
+        "watp": "540.07"
+      }
+    },
+    {
+      "symbol": "FASCINATE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ZAMAIRA DEVELOPERS LLP",
+      "buySell": "BUY",
+      "quantity": "137600",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "ZAMAIRA DEVELOPERS LLP",
+        "date": "25-Aug-2026",
+        "name": "Fascinate Textiles Ltd",
+        "qty": "137600",
+        "remarks": "-",
+        "symbol": "FASCINATE",
+        "watp": "109.1"
+      }
+    },
+    {
+      "symbol": "DURLAX",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ARYAMAN CAPITAL MARKETS LIMITED",
+      "buySell": "BUY",
+      "quantity": "146000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "ARYAMAN CAPITAL MARKETS LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Durlax Top Surface Ltd",
+        "qty": "146000",
+        "remarks": "-",
+        "symbol": "DURLAX",
+        "watp": "67.45"
+      }
+    },
+    {
+      "symbol": "DJML",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+      "buySell": "BUY",
+      "quantity": "200000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "DJ Mediaprint & Log Ltd",
+        "qty": "200000",
+        "remarks": "-",
+        "symbol": "DJML",
+        "watp": "72.99"
+      }
+    },
+    {
+      "symbol": "DJML",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+      "buySell": "SELL",
+      "quantity": "200007",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "NEO APEX SHARE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "DJ Mediaprint & Log Ltd",
+        "qty": "200007",
+        "remarks": "-",
+        "symbol": "DJML",
+        "watp": "74.61"
+      }
+    },
+    {
+      "symbol": "CREDENT",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "PRIJAL TRADEFIN LLP",
+      "buySell": "BUY",
+      "quantity": "92400",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "PRIJAL TRADEFIN LLP",
+        "date": "25-Aug-2026",
+        "name": "Credent Connect N Care L",
+        "qty": "92400",
+        "remarks": "-",
+        "symbol": "CREDENT",
+        "watp": "338.46"
+      }
+    },
+    {
+      "symbol": "CREDENT",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "PRIJAL TRADEFIN LLP",
+      "buySell": "SELL",
+      "quantity": "27600",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "PRIJAL TRADEFIN LLP",
+        "date": "25-Aug-2026",
+        "name": "Credent Connect N Care L",
+        "qty": "27600",
+        "remarks": "-",
+        "symbol": "CREDENT",
+        "watp": "351.58"
+      }
+    },
+    {
+      "symbol": "BURNPUR",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "PRITHVI  FINMART  PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "97099",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "PRITHVI  FINMART  PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Burnpur Cement Limited",
+        "qty": "97099",
+        "remarks": "-",
+        "symbol": "BURNPUR",
+        "watp": "12.67"
+      }
+    },
+    {
+      "symbol": "BURNPUR",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "PRITHVI  FINMART  PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "49285",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "PRITHVI  FINMART  PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Burnpur Cement Limited",
+        "qty": "49285",
+        "remarks": "-",
+        "symbol": "BURNPUR",
+        "watp": "12.87"
+      }
+    },
+    {
+      "symbol": "BOROLTD",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "826313",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Borosil Limited",
+        "qty": "826313",
+        "remarks": "-",
+        "symbol": "BOROLTD",
+        "watp": "273.45"
+      }
+    },
+    {
+      "symbol": "BOROLTD",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "1069036",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Borosil Limited",
+        "qty": "1069036",
+        "remarks": "-",
+        "symbol": "BOROLTD",
+        "watp": "273.23"
+      }
+    },
+    {
+      "symbol": "BOROLTD",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "826313",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "MICROCURVES TRADING PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Borosil Limited",
+        "qty": "826313",
+        "remarks": "-",
+        "symbol": "BOROLTD",
+        "watp": "273.59"
+      }
+    },
+    {
+      "symbol": "BOROLTD",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "buySell": "SELL",
+      "quantity": "1069036",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Borosil Limited",
+        "qty": "1069036",
+        "remarks": "-",
+        "symbol": "BOROLTD",
+        "watp": "273.37"
+      }
+    },
+    {
+      "symbol": "BLBLIMITED",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ACN FINANCIAL SERVICES LTD",
+      "buySell": "SELL",
+      "quantity": "332000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "ACN FINANCIAL SERVICES LTD",
+        "date": "25-Aug-2026",
+        "name": "BLB Limited",
+        "qty": "332000",
+        "remarks": "-",
+        "symbol": "BLBLIMITED",
+        "watp": "16.02"
+      }
+    },
+    {
+      "symbol": "BIOFILCHEM",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ORION STOCKS LTD",
+      "buySell": "BUY",
+      "quantity": "59108",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "ORION STOCKS LTD",
+        "date": "25-Aug-2026",
+        "name": "Biofil Chemicals & Pharm",
+        "qty": "59108",
+        "remarks": "-",
+        "symbol": "BIOFILCHEM",
+        "watp": "32.69"
+      }
+    },
+    {
+      "symbol": "BIOFILCHEM",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "IRAGE BROKING SERVICES LLP",
+      "buySell": "BUY",
+      "quantity": "247278",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "IRAGE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Biofil Chemicals & Pharm",
+        "qty": "247278",
+        "remarks": "-",
+        "symbol": "BIOFILCHEM",
+        "watp": "32.97"
+      }
+    },
+    {
+      "symbol": "BIOFILCHEM",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "IRAGE BROKING SERVICES LLP",
+      "buySell": "SELL",
+      "quantity": "45356",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "IRAGE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Biofil Chemicals & Pharm",
+        "qty": "45356",
+        "remarks": "-",
+        "symbol": "BIOFILCHEM",
+        "watp": "32.88"
+      }
+    },
+    {
+      "symbol": "BIOFILCHEM",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ORION STOCKS LTD",
+      "buySell": "SELL",
+      "quantity": "283492",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "ORION STOCKS LTD",
+        "date": "25-Aug-2026",
+        "name": "Biofil Chemicals & Pharm",
+        "qty": "283492",
+        "remarks": "-",
+        "symbol": "BIOFILCHEM",
+        "watp": "33"
+      }
+    },
+    {
+      "symbol": "BANG",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ORION STOCKS LTD",
+      "buySell": "BUY",
+      "quantity": "96167",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "ORION STOCKS LTD",
+        "date": "25-Aug-2026",
+        "name": "Bang Overseas Limited",
+        "qty": "96167",
+        "remarks": "-",
+        "symbol": "BANG",
+        "watp": "35.07"
+      }
+    },
+    {
+      "symbol": "BANG",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "IRAGE BROKING SERVICES LLP",
+      "buySell": "BUY",
+      "quantity": "302235",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "IRAGE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Bang Overseas Limited",
+        "qty": "302235",
+        "remarks": "-",
+        "symbol": "BANG",
+        "watp": "35.23"
+      }
+    },
+    {
+      "symbol": "BANG",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "IRAGE BROKING SERVICES LLP",
+      "buySell": "SELL",
+      "quantity": "74570",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "IRAGE BROKING SERVICES LLP",
+        "date": "25-Aug-2026",
+        "name": "Bang Overseas Limited",
+        "qty": "74570",
+        "remarks": "-",
+        "symbol": "BANG",
+        "watp": "35.11"
+      }
+    },
+    {
+      "symbol": "BANG",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ORION STOCKS LTD",
+      "buySell": "SELL",
+      "quantity": "328654",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "ORION STOCKS LTD",
+        "date": "25-Aug-2026",
+        "name": "Bang Overseas Limited",
+        "qty": "328654",
+        "remarks": "-",
+        "symbol": "BANG",
+        "watp": "35.25"
+      }
+    },
+    {
+      "symbol": "ATALREAL",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "VISHAL MAHESH WAGHELA",
+      "buySell": "BUY",
+      "quantity": "1153000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "VISHAL MAHESH WAGHELA",
+        "date": "25-Aug-2026",
+        "name": "Atal Realtech Limited",
+        "qty": "1153000",
+        "remarks": "-",
+        "symbol": "ATALREAL",
+        "watp": "34.07"
+      }
+    },
+    {
+      "symbol": "ATALREAL",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ALTIZEN VENTURES LLP",
+      "buySell": "BUY",
+      "quantity": "637220",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "ALTIZEN VENTURES LLP",
+        "date": "25-Aug-2026",
+        "name": "Atal Realtech Limited",
+        "qty": "637220",
+        "remarks": "-",
+        "symbol": "ATALREAL",
+        "watp": "33.86"
+      }
+    },
+    {
+      "symbol": "ATALREAL",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "VIMLA DEVI PRATAPMAL JAIN",
+      "buySell": "BUY",
+      "quantity": "730000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "VIMLA DEVI PRATAPMAL JAIN",
+        "date": "25-Aug-2026",
+        "name": "Atal Realtech Limited",
+        "qty": "730000",
+        "remarks": "-",
+        "symbol": "ATALREAL",
+        "watp": "33.58"
+      }
+    },
+    {
+      "symbol": "ATALREAL",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "VISHAL MAHESH WAGHELA",
+      "buySell": "BUY",
+      "quantity": "630004",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "VISHAL MAHESH WAGHELA",
+        "date": "25-Aug-2026",
+        "name": "Atal Realtech Limited",
+        "qty": "630004",
+        "remarks": "-",
+        "symbol": "ATALREAL",
+        "watp": "34.04"
+      }
+    },
+    {
+      "symbol": "ATALREAL",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "VISHAL MAHESH WAGHELA",
+      "buySell": "SELL",
+      "quantity": "20004",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "VISHAL MAHESH WAGHELA",
+        "date": "25-Aug-2026",
+        "name": "Atal Realtech Limited",
+        "qty": "20004",
+        "remarks": "-",
+        "symbol": "ATALREAL",
+        "watp": "33.94"
+      }
+    },
+    {
+      "symbol": "ATALREAL",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "VISHAL MAHESH WAGHELA",
+      "buySell": "SELL",
+      "quantity": "300000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "VISHAL MAHESH WAGHELA",
+        "date": "25-Aug-2026",
+        "name": "Atal Realtech Limited",
+        "qty": "300000",
+        "remarks": "-",
+        "symbol": "ATALREAL",
+        "watp": "34.12"
+      }
+    },
+    {
+      "symbol": "ATALREAL",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "SHARBHANG COMMERCIAL COMPANY PRIVATE LIMITED .",
+      "buySell": "SELL",
+      "quantity": "650000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "SHARBHANG COMMERCIAL COMPANY PRIVATE LIMITED .",
+        "date": "25-Aug-2026",
+        "name": "Atal Realtech Limited",
+        "qty": "650000",
+        "remarks": "-",
+        "symbol": "ATALREAL",
+        "watp": "33.62"
+      }
+    },
+    {
+      "symbol": "ATALREAL",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ALTIZEN VENTURES LLP",
+      "buySell": "SELL",
+      "quantity": "1065014",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "ALTIZEN VENTURES LLP",
+        "date": "25-Aug-2026",
+        "name": "Atal Realtech Limited",
+        "qty": "1065014",
+        "remarks": "-",
+        "symbol": "ATALREAL",
+        "watp": "34"
+      }
+    },
+    {
+      "symbol": "ASPIRE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "EXMARK DISTRIBUTORS PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "98000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "EXMARK DISTRIBUTORS PRIVATE LIMITED",
+        "date": "25-Aug-2026",
+        "name": "Aspire & Innovative Adv L",
+        "qty": "98000",
+        "remarks": "-",
+        "symbol": "ASPIRE",
+        "watp": "13.55"
+      }
+    },
+    {
+      "symbol": "ASPIRE",
+      "date": "2026-08-25",
+      "type": "BULK",
+      "clientName": "ARUNA AGARWAL",
+      "buySell": "SELL",
+      "quantity": "108000",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "ARUNA AGARWAL",
+        "date": "25-Aug-2026",
+        "name": "Aspire & Innovative Adv L",
+        "qty": "108000",
+        "remarks": "-",
+        "symbol": "ASPIRE",
+        "watp": "13.55"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "AAGAM INVESTMENTS",
+      "buySell": "BUY",
+      "quantity": "1250001",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "AAGAM INVESTMENTS",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1250001",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "BAJAJ LIFE INSURANCE LIMITED",
+      "buySell": "BUY",
+      "quantity": "1250001",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "BAJAJ LIFE INSURANCE LIMITED",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1250001",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "VIRIDIAN ASIA OPPORTUNITIES MASTER FUND",
+      "buySell": "BUY",
+      "quantity": "1250002",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "VIRIDIAN ASIA OPPORTUNITIES MASTER FUND",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1250002",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "SOCIETE GENERALE",
+      "buySell": "BUY",
+      "quantity": "2375002",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "SOCIETE GENERALE",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "2375002",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "BNP PARIBAS FINANCIAL MARKETS",
+      "buySell": "BUY",
+      "quantity": "1500002",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "BNP PARIBAS FINANCIAL MARKETS",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1500002",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "BOFA SECURITIES EUROPE SA",
+      "buySell": "BUY",
+      "quantity": "1250002",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "BOFA SECURITIES EUROPE SA",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1250002",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "CANARA ROBECO MUTUAL FUND",
+      "buySell": "BUY",
+      "quantity": "1500002",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "CANARA ROBECO MUTUAL FUND",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1500002",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "CITIGROUP GLOBAL MARKETS MAURITIUS PRIVATE LIMITED",
+      "buySell": "BUY",
+      "quantity": "1500002",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "CITIGROUP GLOBAL MARKETS MAURITIUS PRIVATE LIMITED",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1500002",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "EDELWEISS MUTUAL FUND",
+      "buySell": "BUY",
+      "quantity": "3470553",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "EDELWEISS MUTUAL FUND",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "3470553",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "FRANKLIN TEMPLETON INVESTMENT FUNDS - FRANKLIN INDIA FUND",
+      "buySell": "BUY",
+      "quantity": "1500002",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "FRANKLIN TEMPLETON INVESTMENT FUNDS - FRANKLIN INDIA FUND",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1500002",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "FRANKLIN TEMPLETON MUTUAL FUND",
+      "buySell": "BUY",
+      "quantity": "2500001",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "FRANKLIN TEMPLETON MUTUAL FUND",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "2500001",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "GHISALLO MASTER FUND LP",
+      "buySell": "BUY",
+      "quantity": "1250002",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "GHISALLO MASTER FUND LP",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1250002",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "GOLDMAN SACHS BANK EUROPE SE",
+      "buySell": "BUY",
+      "quantity": "1425002",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "GOLDMAN SACHS BANK EUROPE SE",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1425002",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "GOLDMAN SACHS INVESTMENTS MAURITIUS I LIMITED",
+      "buySell": "BUY",
+      "quantity": "1250002",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "GOLDMAN SACHS INVESTMENTS MAURITIUS I LIMITED",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1250002",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "HDFC STANDARD LIFE INSURANCE COMPANY LTD",
+      "buySell": "BUY",
+      "quantity": "7500003",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "HDFC STANDARD LIFE INSURANCE COMPANY LTD",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "7500003",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "HSBC MUTUAL FUND",
+      "buySell": "BUY",
+      "quantity": "1500001",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "HSBC MUTUAL FUND",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1500001",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "INTEGRATED CORE STRATEGIES (ASIA) PTE.LTD.",
+      "buySell": "BUY",
+      "quantity": "1750002",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "INTEGRATED CORE STRATEGIES (ASIA) PTE.LTD.",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1750002",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "KOTAK SECURITIES LIMITED",
+      "buySell": "BUY",
+      "quantity": "1",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "KOTAK SECURITIES LIMITED",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "KUWAIT INVESTMENT AUTHORITY",
+      "buySell": "BUY",
+      "quantity": "976998",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "KUWAIT INVESTMENT AUTHORITY",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "976998",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "MORGAN STANLEY ASIA SINGAPORE PTE",
+      "buySell": "BUY",
+      "quantity": "1258752",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "MORGAN STANLEY ASIA SINGAPORE PTE",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1258752",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "MORGAN STANLEY ASIA SINGAPORE PTE",
+      "buySell": "BUY",
+      "quantity": "1700002",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "MORGAN STANLEY ASIA SINGAPORE PTE",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "1700002",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "NIPPON INDIA MUTUAL FUND",
+      "buySell": "BUY",
+      "quantity": "10000002",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "NIPPON INDIA MUTUAL FUND",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "10000002",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "ROBECO CAPITAL GROWTH FUNDS",
+      "buySell": "BUY",
+      "quantity": "523004",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "BUY",
+        "clientName": "ROBECO CAPITAL GROWTH FUNDS",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "523004",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "Y COMBINATOR CONTINUITY HOLDINGS I LLC",
+      "buySell": "SELL",
+      "quantity": "23027687",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "Y COMBINATOR CONTINUITY HOLDINGS I LLC",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "23027687",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "YCS16 HOLDINGS LLC",
+      "buySell": "SELL",
+      "quantity": "20603720",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "YCS16 HOLDINGS LLC",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "20603720",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    },
+    {
+      "symbol": "MEESHO",
+      "date": "2026-08-24",
+      "type": "BLOCK",
+      "clientName": "YCVC FUND I L.P.",
+      "buySell": "SELL",
+      "quantity": "4847934",
+      "tradePrice": null,
+      "tradeValue": null,
+      "raw": {
+        "buySell": "SELL",
+        "clientName": "YCVC FUND I L.P.",
+        "date": "24-Aug-2026",
+        "name": "Meesho Limited",
+        "qty": "4847934",
+        "remarks": null,
+        "symbol": "MEESHO",
+        "watp": "200.01"
+      }
+    }
+  ]
+}
