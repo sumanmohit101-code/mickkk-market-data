@@ -1,53 +1,10 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-08-25T21:14:29.126540+05:30",
+  "updatedAt": "2026-08-26T08:35:18.373520+05:30",
   "timezone": "Asia/Kolkata",
   "today": [],
-  "tomorrow": [
-    {
-      "symbol": "JNPR",
-      "company": "Juniper Green Energy Limited",
-      "date": "2026-08-26",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the unaudited standalone and consolidated financial results of the Company for the quarter ended June 30, 2026"
-    },
-    {
-      "symbol": "SIMBHALS",
-      "company": "Simbhaoli Sugars Limited",
-      "date": "2026-08-26",
-      "purpose": "Financial Results",
-      "description": "Simbhaoli Sugars Limited is hereby Informing the exchange about the IRP Convened Meeting Scheduled to be held on Wednesday, 26 August, 2026 to Consider, Review and Take note of the Consolidated Unaudited Financial results for the Quarter ended 30 June, 2026"
-    },
-    {
-      "symbol": "VIKASECO",
-      "company": "Vikas EcoTech Limited",
-      "date": "2026-08-26",
-      "purpose": "Financial Results/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-    }
-  ],
+  "tomorrow": [],
   "allUpcoming": [
-    {
-      "symbol": "JNPR",
-      "company": "Juniper Green Energy Limited",
-      "date": "2026-08-26",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the unaudited standalone and consolidated financial results of the Company for the quarter ended June 30, 2026"
-    },
-    {
-      "symbol": "SIMBHALS",
-      "company": "Simbhaoli Sugars Limited",
-      "date": "2026-08-26",
-      "purpose": "Financial Results",
-      "description": "Simbhaoli Sugars Limited is hereby Informing the exchange about the IRP Convened Meeting Scheduled to be held on Wednesday, 26 August, 2026 to Consider, Review and Take note of the Consolidated Unaudited Financial results for the Quarter ended 30 June, 2026"
-    },
-    {
-      "symbol": "VIKASECO",
-      "company": "Vikas EcoTech Limited",
-      "date": "2026-08-26",
-      "purpose": "Financial Results/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-    },
     {
       "symbol": "SETCO",
       "company": "Setco Automotive Limited",
@@ -1274,16 +1231,7 @@
       "name": "Aditya Vision Ltd",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [
-        {
-          "symbol": "AVL",
-          "date": "2026-08-25",
-          "type": "CORPORATE ACTION",
-          "company": "Aditya Vision Ltd",
-          "purpose": "Dividend - Rs 1.25 Per Share",
-          "description": ""
-        }
-      ],
+      "corporateActions": [],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -2073,7 +2021,16 @@
       "name": "Cantabil Retail India Limited",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [],
+      "corporateActions": [
+        {
+          "symbol": "CANTABIL",
+          "date": "2026-08-28",
+          "type": "CORPORATE ACTION",
+          "company": "Cantabil Retail India Limited",
+          "purpose": "Dividend - Re 0.75 Per Share",
+          "description": ""
+        }
+      ],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -2618,25 +2575,6 @@
       "blockDeals": []
     },
     {
-      "symbol": "CORDELIA",
-      "name": "",
-      "lastResult": null,
-      "upcomingResults": [],
-      "corporateActions": [
-        {
-          "symbol": "CORDELIA",
-          "date": "2026-08-25",
-          "type": "CORPORATE ACTION",
-          "company": "",
-          "purpose": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Re 1/- Per Share",
-          "description": ""
-        }
-      ],
-      "boardMeetings": [],
-      "bulkDeals": [],
-      "blockDeals": []
-    },
-    {
       "symbol": "COROMANDEL",
       "name": "Coromandel International Limited",
       "lastResult": null,
@@ -2971,16 +2909,7 @@
       "name": "Deepak Fertilizers And Petrochemicals Corporation Limited",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [
-        {
-          "symbol": "DEEPAKFERT",
-          "date": "2026-08-25",
-          "type": "CORPORATE ACTION",
-          "company": "Deepak Fertilizers And Petrochemicals Corporation Limited",
-          "purpose": "Dividend - Rs 10 Per Share",
-          "description": ""
-        }
-      ],
+      "corporateActions": [],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -3090,16 +3019,7 @@
       "name": "Diffusion Engineers Ltd",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [
-        {
-          "symbol": "DIFFNKG",
-          "date": "2026-08-25",
-          "type": "CORPORATE ACTION",
-          "company": "Diffusion Engineers Ltd",
-          "purpose": "Dividend - Rs 1.50 Per Share",
-          "description": ""
-        }
-      ],
+      "corporateActions": [],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -3244,25 +3164,6 @@
       "blockDeals": []
     },
     {
-      "symbol": "DUCON",
-      "name": "",
-      "lastResult": null,
-      "upcomingResults": [],
-      "corporateActions": [
-        {
-          "symbol": "DUCON",
-          "date": "2026-08-25",
-          "type": "CORPORATE ACTION",
-          "company": "",
-          "purpose": "Rights 10:13 @ Premium Rs 0/-",
-          "description": ""
-        }
-      ],
-      "boardMeetings": [],
-      "bulkDeals": [],
-      "blockDeals": []
-    },
-    {
       "symbol": "DYCL",
       "name": "Dynamic Cables Ltd",
       "lastResult": null,
@@ -3277,7 +3178,16 @@
       "name": "Dynamatic Technologies Limited",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [],
+      "corporateActions": [
+        {
+          "symbol": "DYNAMATECH",
+          "date": "2026-08-28",
+          "type": "CORPORATE ACTION",
+          "company": "Dynamatic Technologies Limited",
+          "purpose": "Dividend - Rs 5 Per Share",
+          "description": ""
+        }
+      ],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -3967,7 +3877,16 @@
       "name": "Gujarat Ambuja Exports Limited",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [],
+      "corporateActions": [
+        {
+          "symbol": "GAEL",
+          "date": "2026-08-28",
+          "type": "CORPORATE ACTION",
+          "company": "Gujarat Ambuja Exports Limited",
+          "purpose": "Dividend - Re 0.30 Per Share",
+          "description": ""
+        }
+      ],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -4617,7 +4536,16 @@
       "name": "Gufic Biosciences Limited",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [],
+      "corporateActions": [
+        {
+          "symbol": "GUFICBIO",
+          "date": "2026-08-28",
+          "type": "CORPORATE ACTION",
+          "company": "Gufic Biosciences Limited",
+          "purpose": "Dividend - Re 0.10 Per Share",
+          "description": ""
+        }
+      ],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -4657,7 +4585,16 @@
       "name": "Gulshan Polyols Limited",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [],
+      "corporateActions": [
+        {
+          "symbol": "GULPOLY",
+          "date": "2026-08-28",
+          "type": "CORPORATE ACTION",
+          "company": "Gulshan Polyols Limited",
+          "purpose": "Dividend - Rs 1.50 Per Share",
+          "description": ""
+        }
+      ],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -6073,24 +6010,6 @@
       "blockDeals": []
     },
     {
-      "symbol": "JNPR",
-      "name": "",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "JNPR",
-          "company": "Juniper Green Energy Limited",
-          "date": "2026-08-26",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the unaudited standalone and consolidated financial results of the Company for the quarter ended June 30, 2026"
-        }
-      ],
-      "corporateActions": [],
-      "boardMeetings": [],
-      "bulkDeals": [],
-      "blockDeals": []
-    },
-    {
       "symbol": "JPPOWER",
       "name": "Jaiprakash Power Ventures Limited",
       "lastResult": null,
@@ -7268,25 +7187,6 @@
       "blockDeals": []
     },
     {
-      "symbol": "MASFIN",
-      "name": "",
-      "lastResult": null,
-      "upcomingResults": [],
-      "corporateActions": [
-        {
-          "symbol": "MASFIN",
-          "date": "2026-08-25",
-          "type": "CORPORATE ACTION",
-          "company": "",
-          "purpose": "Dividend - Re 0.75 Per Share",
-          "description": ""
-        }
-      ],
-      "boardMeetings": [],
-      "bulkDeals": [],
-      "blockDeals": []
-    },
-    {
       "symbol": "MASTEK",
       "name": "Mastek Limited",
       "lastResult": null,
@@ -7371,7 +7271,16 @@
       "name": "Multi Commodity Exchange Of India Limited",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [],
+      "corporateActions": [
+        {
+          "symbol": "MCX",
+          "date": "2026-08-28",
+          "type": "CORPORATE ACTION",
+          "company": "Multi Commodity Exchange Of India Limited",
+          "purpose": "Dividend - Rs 8 Per Share",
+          "description": ""
+        }
+      ],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -7839,7 +7748,16 @@
       "name": "Nbcc (india) Limited",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [],
+      "corporateActions": [
+        {
+          "symbol": "NBCC",
+          "date": "2026-08-28",
+          "type": "CORPORATE ACTION",
+          "company": "Nbcc (india) Limited",
+          "purpose": "Dividend - Re 0.46 Per Share",
+          "description": ""
+        }
+      ],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -8120,25 +8038,6 @@
       "lastResult": null,
       "upcomingResults": [],
       "corporateActions": [],
-      "boardMeetings": [],
-      "bulkDeals": [],
-      "blockDeals": []
-    },
-    {
-      "symbol": "NRAIL",
-      "name": "",
-      "lastResult": null,
-      "upcomingResults": [],
-      "corporateActions": [
-        {
-          "symbol": "NRAIL",
-          "date": "2026-08-25",
-          "type": "CORPORATE ACTION",
-          "company": "",
-          "purpose": "Dividend - Rs 2 Per Share",
-          "description": ""
-        }
-      ],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -8876,7 +8775,16 @@
       "name": "Poly Medicure Limited",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [],
+      "corporateActions": [
+        {
+          "symbol": "POLYMED",
+          "date": "2026-08-28",
+          "type": "CORPORATE ACTION",
+          "company": "Poly Medicure Limited",
+          "purpose": "Dividend - Rs 3.50 Per Share",
+          "description": ""
+        }
+      ],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -8997,25 +8905,6 @@
       "lastResult": null,
       "upcomingResults": [],
       "corporateActions": [],
-      "boardMeetings": [],
-      "bulkDeals": [],
-      "blockDeals": []
-    },
-    {
-      "symbol": "PREMCO",
-      "name": "",
-      "lastResult": null,
-      "upcomingResults": [],
-      "corporateActions": [
-        {
-          "symbol": "PREMCO",
-          "date": "2026-08-25",
-          "type": "CORPORATE ACTION",
-          "company": "",
-          "purpose": "Dividend - Rs 2 Per Share",
-          "description": ""
-        }
-      ],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -9201,25 +9090,6 @@
       "blockDeals": []
     },
     {
-      "symbol": "QUINT",
-      "name": "",
-      "lastResult": null,
-      "upcomingResults": [],
-      "corporateActions": [
-        {
-          "symbol": "QUINT",
-          "date": "2026-08-25",
-          "type": "CORPORATE ACTION",
-          "company": "",
-          "purpose": "Rights - 7 Ccps And 7 Warrants:40",
-          "description": ""
-        }
-      ],
-      "boardMeetings": [],
-      "bulkDeals": [],
-      "blockDeals": []
-    },
-    {
       "symbol": "RADHIKAJWE",
       "name": "Radhika Jeweltech Ltd",
       "lastResult": null,
@@ -9354,16 +9224,7 @@
       "name": "Ratnaveer Precision Engineering Ltd",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [
-        {
-          "symbol": "RATNAVEER",
-          "date": "2026-08-25",
-          "type": "CORPORATE ACTION",
-          "company": "Ratnaveer Precision Engineering Ltd",
-          "purpose": "Rights 7:40 @ Premium Rs 254/-",
-          "description": ""
-        }
-      ],
+      "corporateActions": [],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -10082,16 +9943,7 @@
       "name": "Shivalik Bimetal Controls Ltd",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [
-        {
-          "symbol": "SBCL",
-          "date": "2026-08-25",
-          "type": "CORPORATE ACTION",
-          "company": "Shivalik Bimetal Controls Ltd",
-          "purpose": "Dividend - Rs 2 Per Share",
-          "description": ""
-        }
-      ],
+      "corporateActions": [],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -10539,24 +10391,6 @@
       "name": "Silver Touch Technologies Ltd",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [],
-      "boardMeetings": [],
-      "bulkDeals": [],
-      "blockDeals": []
-    },
-    {
-      "symbol": "SIMBHALS",
-      "name": "",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "SIMBHALS",
-          "company": "Simbhaoli Sugars Limited",
-          "date": "2026-08-26",
-          "purpose": "Financial Results",
-          "description": "Simbhaoli Sugars Limited is hereby Informing the exchange about the IRP Convened Meeting Scheduled to be held on Wednesday, 26 August, 2026 to Consider, Review and Take note of the Consolidated Unaudited Financial results for the Quarter ended 30 June, 2026"
-        }
-      ],
       "corporateActions": [],
       "boardMeetings": [],
       "bulkDeals": [],
@@ -12289,6 +12123,25 @@
       "blockDeals": []
     },
     {
+      "symbol": "VHL",
+      "name": "",
+      "lastResult": null,
+      "upcomingResults": [],
+      "corporateActions": [
+        {
+          "symbol": "VHL",
+          "date": "2026-08-28",
+          "type": "CORPORATE ACTION",
+          "company": "",
+          "purpose": "Dividend - Rs 5 Per Share",
+          "description": ""
+        }
+      ],
+      "boardMeetings": [],
+      "bulkDeals": [],
+      "blockDeals": []
+    },
+    {
       "symbol": "VIDYAWIRES",
       "name": "Vidya Wires Ltd",
       "lastResult": null,
@@ -12303,24 +12156,6 @@
       "name": "Vijaya Diagnostic Centre Ltd",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [],
-      "boardMeetings": [],
-      "bulkDeals": [],
-      "blockDeals": []
-    },
-    {
-      "symbol": "VIKASECO",
-      "name": "",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "VIKASECO",
-          "company": "Vikas EcoTech Limited",
-          "date": "2026-08-26",
-          "purpose": "Financial Results/Other business matters",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-        }
-      ],
       "corporateActions": [],
       "boardMeetings": [],
       "bulkDeals": [],
@@ -12481,7 +12316,16 @@
       "name": "Vardhman Special Steels Limited",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [],
+      "corporateActions": [
+        {
+          "symbol": "VSSL",
+          "date": "2026-08-28",
+          "type": "CORPORATE ACTION",
+          "company": "Vardhman Special Steels Limited",
+          "purpose": "Dividend - Rs 3.50 Per Share",
+          "description": ""
+        }
+      ],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
@@ -12501,7 +12345,16 @@
       "name": "Vardhman Textiles Limited",
       "lastResult": null,
       "upcomingResults": [],
-      "corporateActions": [],
+      "corporateActions": [
+        {
+          "symbol": "VTL",
+          "date": "2026-08-28",
+          "type": "CORPORATE ACTION",
+          "company": "Vardhman Textiles Limited",
+          "purpose": "Dividend - Rs 5 Per Share",
+          "description": ""
+        }
+      ],
       "boardMeetings": [],
       "bulkDeals": [],
       "blockDeals": []
