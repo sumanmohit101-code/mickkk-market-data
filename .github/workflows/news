@@ -1,0 +1,37 @@
+name: Fetch Stock News
+
+on:
+  schedule:
+    # Har 3 ghante mein chalega (UTC time — IST se 5:30 peeche)
+    # 4:00,7:00,10:00 UTC = 9:30AM,12:30PM,3:30PM IST (market hours cover)
+    - cron: '0 4,7,10 * * 1-5'   # sirf weekdays (Mon-Fri)
+  workflow_dispatch: {}          # manual "Run workflow" button bhi milega
+
+permissions:
+  contents: write   # taaki workflow repo mein commit/push kar sake
+
+jobs:
+  fetch-news:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests feedparser
+
+      - name: Fetch news for all symbols
+        run: python scripts/fetch_news.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add news/
+          git diff --staged --quiet || git commit -m "Auto-update stock news $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          git push
