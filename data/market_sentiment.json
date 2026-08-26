@@ -1,25 +1,25 @@
 {
   "source": "Yahoo Finance",
-  "updated": "2026-08-25T20:11:57.954693+05:30",
+  "updated": "2026-08-26T19:39:59.538870+05:30",
   "timezone": "Asia/Kolkata",
   "sentiment": {
     "INDIA VIX": {
-      "lastPrice": 11.07,
-      "previousClose": 11.53,
-      "change": -0.45,
-      "pChange": -3.95
+      "lastPrice": 10.56,
+      "previousClose": 11.08,
+      "change": -0.52,
+      "pChange": -4.65
     },
     "NIFTY 50": {
-      "lastPrice": 24334.55,
-      "previousClose": 24219.05,
-      "change": 115.5,
-      "pChange": 0.48
+      "lastPrice": 24207.75,
+      "previousClose": 24334.55,
+      "change": -126.8,
+      "pChange": -0.52
     },
     "NIFTY BANK": {
-      "lastPrice": 57514.2,
-      "previousClose": 57525.95,
-      "change": -11.75,
-      "pChange": -0.02
+      "lastPrice": 57783.75,
+      "previousClose": 57514.2,
+      "change": 269.55,
+      "pChange": 0.47
     }
   }
 }
