@@ -1,10 +1,11 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-08-27T01:04:38.165920+05:30",
+  "updatedAt": "2026-08-27T01:22:28.023563+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
-    "autoDeleteOlderThanDays": 365
+    "autoDeleteOlderThanDays": 365,
+    "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
   "symbolCount": 1245,
   "historyCount": 0,
