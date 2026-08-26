@@ -1,0 +1,98 @@
+name: Restore MICKKK Chart Features
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - charts/restore-features.js
+      - .github/workflows/restore-chart-features.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-data-main
+  cancel-in-progress: false
+
+jobs:
+  restore:
+    if: github.event.head_commit.message != 'Apply MICKKK chart feature restore [skip ci]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Inject restored chart feature layer
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          index = Path('index.html')
+          addon = Path('charts/restore-features.js')
+          html = index.read_text(encoding='utf-8')
+          js = addon.read_text(encoding='utf-8')
+
+          marker = '/* MICKKK_CHART_RESTORE_V1 */'
+          if marker not in js:
+              raise SystemExit('Restore JS marker missing')
+
+          # Remove a previous copy if a re-run is ever needed.
+          start_marker = '<script id="mickkk-chart-restore-v1">'
+          end_marker = '</script>'
+          while start_marker in html:
+              start = html.index(start_marker)
+              end = html.index(end_marker, start) + len(end_marker)
+              html = html[:start] + html[end:]
+
+          block = f'<script id="mickkk-chart-restore-v1">\n{js}\n</script>\n'
+          if '</body>' not in html:
+              raise SystemExit('index.html has no closing body tag')
+
+          html = html.replace('</body>', block + '</body>')
+          index.write_text(html, encoding='utf-8')
+          print('Restored full chart feature layer into index.html')
+          PY
+
+      - name: Validate index
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          html = Path('index.html').read_text(encoding='utf-8')
+          checks = [
+              'mickkk-chart-restore-v1',
+              'mcr-prev',
+              'mcr-next',
+              'mcr-watch-hide',
+              'mcr-ind-panel',
+              'mcr-direct-input',
+              "addBarSeries",
+              'EMA200',
+              'SMA200',
+              'BB20',
+              'VWAP',
+              'RSI',
+              'MACD',
+          ]
+          missing = [x for x in checks if x not in html]
+          if missing:
+              raise SystemExit('Missing restored feature markers: ' + ', '.join(missing))
+          print('Chart feature validation passed')
+          PY
+
+      - name: Commit restored chart
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No chart file changes."
+            exit 0
+          fi
+          git commit -m "Apply MICKKK chart feature restore [skip ci]"
+          git push origin HEAD:main
