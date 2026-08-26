@@ -1,0 +1,215 @@
+name: Update FII DII History
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 19:30 IST, Monday-Friday
+    - cron: "0 14 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-data-main
+  cancel-in-progress: false
+
+jobs:
+  update-fii-dii:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install curl_cffi
+
+      - name: Fetch and merge FII DII history
+        shell: bash
+        run: |
+          python <<'PY'
+          import json
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          from curl_cffi import requests
+
+          DATA_FILE = Path("data/fii_dii.json")
+          DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+          IST = ZoneInfo("Asia/Kolkata")
+          now = datetime.now(IST)
+
+          session = requests.Session(impersonate="chrome")
+          session.headers.update({
+              "accept": "application/json, text/plain, */*",
+              "accept-language": "en-US,en;q=0.9",
+              "referer": "https://www.nseindia.com/reports/fii-dii",
+              "user-agent": (
+                  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/151.0.0.0 Safari/537.36"
+              ),
+          })
+
+          home = session.get(
+              "https://www.nseindia.com/",
+              timeout=30,
+          )
+          if home.status_code != 200:
+              raise RuntimeError(
+                  f"NSE homepage failed: {home.status_code}"
+              )
+
+          response = session.get(
+              "https://www.nseindia.com/api/fiidiiTradeReact",
+              timeout=30,
+          )
+
+          print("NSE FII/DII HTTP:", response.status_code)
+
+          if response.status_code != 200:
+              raise RuntimeError(
+                  f"NSE FII/DII request failed: HTTP {response.status_code}"
+              )
+
+          payload = response.json()
+
+          if isinstance(payload, list):
+              fresh_rows = payload
+          elif isinstance(payload, dict):
+              fresh_rows = payload.get("data", [])
+              if not fresh_rows:
+                  for value in payload.values():
+                      if isinstance(value, list):
+                          fresh_rows = value
+                          break
+          else:
+              fresh_rows = []
+
+          if not isinstance(fresh_rows, list) or not fresh_rows:
+              raise RuntimeError(
+                  "NSE returned empty FII/DII data; existing history was not overwritten."
+              )
+
+          # Read existing history so every daily workflow run grows the archive.
+          existing_rows = []
+          existing_payload = {}
+
+          if DATA_FILE.exists():
+              try:
+                  existing_payload = json.loads(
+                      DATA_FILE.read_text(encoding="utf-8")
+                  )
+                  old_data = existing_payload.get("data", [])
+                  if isinstance(old_data, list):
+                      existing_rows = old_data
+              except Exception as exc:
+                  print("Existing fii_dii.json could not be parsed:", repr(exc))
+
+          # Normalize dates just enough for stable deduplication.
+          def row_key(row):
+              category = str(row.get("category", "")).strip()
+              date = str(row.get("date", "")).strip()
+              return (date, category)
+
+          merged = {}
+
+          for row in existing_rows + fresh_rows:
+              if not isinstance(row, dict):
+                  continue
+              cleaned = {
+                  str(k).strip(): v
+                  for k, v in row.items()
+              }
+              if not cleaned.get("date") or not cleaned.get("category"):
+                  continue
+              merged[row_key(cleaned)] = cleaned
+
+          history = list(merged.values())
+          history.sort(
+              key=lambda x: (
+                  str(x.get("date", "")),
+                  str(x.get("category", "")),
+              ),
+              reverse=True,
+          )
+
+          # Keep a practical rolling archive in GitHub JSON.
+          # Both FII/FPI and DII rows are normally present for each trading day.
+          MAX_ROWS = 500
+          history = history[:MAX_ROWS]
+
+          # Latest rows by category for quick chart-card access.
+          latest_by_category = {}
+          for row in history:
+              category = str(row.get("category", "")).strip()
+              if category and category not in latest_by_category:
+                  latest_by_category[category] = row
+
+          output = {
+              "source": "NSE",
+              "updated": now.isoformat(),
+              "timezone": "Asia/Kolkata",
+              "history": history,
+              "latest": latest_by_category,
+              "data": fresh_rows,
+          }
+
+          DATA_FILE.write_text(
+              json.dumps(output, ensure_ascii=False, indent=2),
+              encoding="utf-8",
+          )
+
+          print("Fresh rows:", len(fresh_rows))
+          print("History rows:", len(history))
+          print("Latest categories:", list(latest_by_category))
+          print("Saved:", DATA_FILE)
+          PY
+
+      - name: Commit and push FII DII data
+        shell: bash
+        run: |
+          set -e
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/fii_dii.json
+
+          if git diff --cached --quiet; then
+            echo "No FII/DII changes."
+            exit 0
+          fi
+
+          git commit -m "Auto-update FII DII history"
+
+          for attempt in 1 2 3 4 5; do
+            echo "Push attempt: $attempt"
+
+            git fetch origin main
+
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                echo "Push successful."
+                exit 0
+              fi
+            else
+              echo "Rebase failed."
+              git rebase --abort || true
+            fi
+
+            sleep 5
+          done
+
+          echo "ERROR: Could not push FII/DII data after 5 attempts."
+          exit 1
