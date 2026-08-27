@@ -1,13 +1,13 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-08-27T01:22:28.023563+05:30",
+  "updatedAt": "2026-08-27T20:52:10.713571+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1245,
+  "symbolCount": 1246,
   "historyCount": 0,
   "today": [],
   "tomorrow": [],
@@ -25,6 +25,13 @@
       "date": "2026-08-29",
       "purpose": "Financial Results/Fund Raising",
       "description": "To consider and approve the financial results for the Quarter ended Jun 30, 2026 and Fund Raising by issue of equity share on a preferential basis"
+    },
+    {
+      "symbol": "NAGAFERT",
+      "company": "Nagarjuna Fertilizers and Chemicals Limited",
+      "date": "2026-08-30",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     }
   ],
   "allUpcoming": [
@@ -43,6 +50,13 @@
       "description": "To consider and approve the financial results for the Quarter ended Jun 30, 2026 and Fund Raising by issue of equity share on a preferential basis"
     },
     {
+      "symbol": "NAGAFERT",
+      "company": "Nagarjuna Fertilizers and Chemicals Limited",
+      "date": "2026-08-30",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
       "symbol": "LEAPIND",
       "company": "LEAP India Limited",
       "date": "2026-08-31",
@@ -55,6 +69,13 @@
       "date": "2026-08-31",
       "purpose": "Financial Results",
       "description": "To consider and approve the Unaudited financial results for the period ended June 30, 2026"
+    },
+    {
+      "symbol": "SETCO",
+      "company": "Setco Automotive Limited",
+      "date": "2026-08-31",
+      "purpose": "Financial Results/Other business matters",
+      "description": "SETCO : 31-Aug-2026 :  The Company has informed the Exchange that a Board meeting to be held on August 29, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on August 31, 2026, , To consider and approve the financial results for the period ended March 31, 2026 and other business matters"
     },
     {
       "symbol": "TECHNOCRAF",
@@ -6852,6 +6873,23 @@
       "historyCount": 0
     },
     {
+      "symbol": "NAGAFERT",
+      "company": "Nagarjuna Fertilizers and Chemicals Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-08-30",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "NAGAFERT",
+          "company": "Nagarjuna Fertilizers and Chemicals Limited",
+          "date": "2026-08-30",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
+      "historyCount": 0
+    },
+    {
       "symbol": "NAM-INDIA",
       "company": "Nippon Life India Asset Management Ltd",
       "lastResultDate": null,
@@ -9006,6 +9044,13 @@
           "date": "2026-08-29",
           "purpose": "Financial Results",
           "description": "To consider and approve the financial results for the period ended March 31, 2026"
+        },
+        {
+          "symbol": "SETCO",
+          "company": "Setco Automotive Limited",
+          "date": "2026-08-31",
+          "purpose": "Financial Results/Other business matters",
+          "description": "SETCO : 31-Aug-2026 :  The Company has informed the Exchange that a Board meeting to be held on August 29, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on August 31, 2026, , To consider and approve the financial results for the period ended March 31, 2026 and other business matters"
         }
       ],
       "historyCount": 0
