@@ -3,7 +3,7 @@ name: Update Stocks Market Data
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 11 * * 1-5" # 17:00 IST, Monday-Friday
+    - cron: "0 13 * * 1-5" # 18:30 IST, Monday-Friday (pushed later than 17:00 IST for EOD data safety margin)
 
 concurrency:
   group: market-data-main
@@ -343,11 +343,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          echo "Fetching latest main..."
-          git fetch origin main
-
-          echo "Rebasing before commit..."
-          git rebase origin/main
+          # IMPORTANT: commit BEFORE rebasing. The Python step above already
+          # wrote files into data/ — if we rebase first, git sees those as
+          # unstaged changes and refuses with "cannot rebase: You have
+          # unstaged changes." (this was the bug). Staging + committing first
+          # gives us a clean working tree, so the rebase can never fail this way.
 
           git add data/
 
@@ -375,6 +375,12 @@ jobs:
           fi
 
           git commit -m "Update stock market data"
+
+          echo "Fetching latest main..."
+          git fetch origin main
+
+          echo "Rebasing on top of latest main (working tree is clean now)..."
+          git rebase origin/main
 
           for attempt in 1 2 3; do
             echo "Push attempt $attempt/3..."
