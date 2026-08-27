@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-08-27T20:52:10.713571+05:30",
+  "updatedAt": "2026-08-28T01:35:57.899502+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -10,7 +10,22 @@
   "symbolCount": 1246,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [],
+  "tomorrow": [
+    {
+      "symbol": "SETCO",
+      "company": "Setco Automotive Limited",
+      "date": "2026-08-29",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended March 31, 2026"
+    },
+    {
+      "symbol": "SUPREMEENG",
+      "company": "Supreme Engineering Limited",
+      "date": "2026-08-29",
+      "purpose": "Financial Results/Fund Raising",
+      "description": "To consider and approve the financial results for the Quarter ended Jun 30, 2026 and Fund Raising by issue of equity share on a preferential basis"
+    }
+  ],
   "thisWeek": [
     {
       "symbol": "SETCO",
