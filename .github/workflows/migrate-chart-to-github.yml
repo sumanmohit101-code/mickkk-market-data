@@ -1,0 +1,97 @@
+name: Migrate Charts to GitHub Data
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    if: github.event.head_commit.message == 'Prepare GitHub chart data migration'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update chart data source
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('charts/index.html')
+          s = path.read_text(encoding='utf-8')
+
+          # Define the GitHub data root next to the existing API constant.
+          if "const GITHUB_DATA_BASE = '../data';" not in s:
+              s = s.replace(
+                  "const CHARTS_API_URL = 'https://script.google.com/macros/s/AKfycbx65jssEWWjfjj53X6x8twwZ83kGoEwVOVA6ms_OHS7u9FDRn56U2sYbfW1SvisibwI/exec';",
+                  "const CHARTS_API_URL = 'https://script.google.com/macros/s/AKfycbx65jssEWWjfjj53X6x8twwZ83kGoEwVOVA6ms_OHS7u9FDRn56U2sYbfW1SvisibwI/exec';\nconst GITHUB_DATA_BASE = '../data';"
+              )
+
+          # Stock picker fallback must use GitHub, never Google.
+          old = """  if (!allSymbols || !allSymbols.length) {\n    try {\n      const res = await fetch(`${CHARTS_API_URL}?action=getSymbols`);\n      const data = await res.json();\n      if (data && Array.isArray(data.symbols) && data.symbols.length) allSymbols = data.symbols;\n    } catch(e) {}\n  }\n  if (!allSymbols || !allSymbols.length) {\n    alert('Stock list could not be loaded from Google Sheet.');\n    return;\n  }"""
+          new = """  if (!allSymbols || !allSymbols.length) {\n    try {\n      const res = await fetch(`${GITHUB_DATA_BASE}/symbols.json`, { cache: 'no-store' });\n      if (res.ok) {\n        const payload = await res.json();\n        const source = Array.isArray(payload) ? payload : (payload.symbols || payload.data || []);\n        const seen = new Set();\n        allSymbols = source.map(x => ({\n          symbol: String(x.symbol || '').trim().toUpperCase(),\n          name: String(x.name || x.symbol || '').trim()\n        })).filter(x => x.symbol && !seen.has(x.symbol) && seen.add(x.symbol))\n          .sort((a,b) => a.symbol.localeCompare(b.symbol, undefined, {numeric:true, sensitivity:'base'}));\n      }\n    } catch(e) {}\n  }\n  if (!allSymbols || !allSymbols.length) {\n    alert('Stock list could not be loaded from GitHub data/symbols.json.');\n    return;\n  }"""
+          if old in s:
+              s = s.replace(old, new, 1)
+
+          # Symbol list is sourced directly from GitHub data/symbols.json.
+          pattern = re.compile(r"async function loadSymbolList\(\)\{.*?\n\}\n\nfunction openSearchModal", re.S)
+          replacement = """async function loadSymbolList(){\n  try{\n    const res = await fetch(`${GITHUB_DATA_BASE}/symbols.json`, { cache: 'no-store' });\n    if (!res.ok) throw new Error(`HTTP ${res.status}`);\n    const payload = await res.json();\n    const fetched = Array.isArray(payload) ? payload : (payload.symbols || payload.data || []);\n    const seen = new Set();\n    allSymbols = fetched.map(s => ({\n      symbol: String(s.symbol || '').trim().toUpperCase(),\n      name: String(s.name || s.symbol || '').trim()\n    })).filter(s => s.symbol && !seen.has(s.symbol) && seen.add(s.symbol))\n      .sort((a,b) => a.symbol.localeCompare(b.symbol, undefined, {numeric:true, sensitivity:'base'}));\n    if (allSymbols.length > 0) {\n      loadSymbol(allSymbols[0].symbol, allSymbols[0].name, -1);\n    }\n    refreshWatchlists(false);\n  }catch(e){\n    console.warn('GitHub symbol list fetch error:', e);\n    refreshWatchlists(false);\n  }\n}\n\nfunction openSearchModal"""
+          s, n = pattern.subn(replacement, s, count=1)
+          if n != 1:
+              raise SystemExit('Could not replace loadSymbolList')
+
+          # Remove the old 100-row search cap so the complete GitHub universe is searchable.
+          s = s.replace('  renderSearchModalResults(list.slice(0, 100));', '  renderSearchModalResults(list);')
+
+          # Replace the chart candle fetcher with the GitHub data-folder loader.
+          pattern = re.compile(r"async function fetchAndParseOHLC_\(symbol\)\{.*?\n\}\n\nfunction saveCandlesToLocalStorage_", re.S)
+          replacement = """async function fetchAndParseOHLC_(symbol){\n  const cleanSymbol = String(symbol || '').trim().toUpperCase();\n  if (!cleanSymbol) throw new Error('Invalid symbol');\n  const first = cleanSymbol.charAt(0);\n  const bucket = /^[A-Z]$/.test(first) ? first : '0-9';\n  const url = `${GITHUB_DATA_BASE}/${encodeURIComponent(bucket)}/${encodeURIComponent(cleanSymbol)}.json`;\n  const res = await fetch(url, { cache: 'no-store' });\n  if (!res.ok) throw new Error(`GitHub chart data HTTP ${res.status} for ${cleanSymbol}`);\n  const payload = await res.json();\n  const candles = Array.isArray(payload) ? payload : (payload.candles || payload.records || []);\n  if (!Array.isArray(candles) || !candles.length) {\n    throw new Error(`No GitHub candle data for ${cleanSymbol}`);\n  }\n  return candles\n    .filter(c => c && c.time && !isNaN(Number(c.close)) && Number(c.close) > 0)\n    .map(c => ({\n      time: formatToDateOnly(c.time),\n      open: Number(c.open ?? c.close),\n      high: Number(c.high ?? c.close),\n      low: Number(c.low ?? c.close),\n      close: Number(c.close),\n      volume: Number(c.volume || 0)\n    }))\n    .sort((a,b) => a.time < b.time ? -1 : 1);\n}\n\nfunction saveCandlesToLocalStorage_"""
+          s, n = pattern.subn(replacement, s, count=1)
+          if n != 1:
+              raise SystemExit('Could not replace fetchAndParseOHLC_')
+
+          # Keep all other terminal features unchanged. CHARTS_API_URL remains
+          # available for existing watchlist/alert/live services.
+          path.write_text(s, encoding='utf-8')
+          print(f'Updated {path} ({len(s.splitlines())} lines)')
+          PY
+
+      - name: Validate chart migration
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s = Path('charts/index.html').read_text(encoding='utf-8')
+          required = [
+              "const GITHUB_DATA_BASE = '../data';",
+              "fetch(`${GITHUB_DATA_BASE}/symbols.json`",
+              "async function fetchAndParseOHLC_(symbol)",
+              "GITHUB_DATA_BASE}/${encodeURIComponent(bucket)}/${encodeURIComponent(cleanSymbol)}.json",
+          ]
+          for marker in required:
+              if marker not in s:
+                  raise SystemExit(f'Missing migration marker: {marker}')
+          if "action=getOHLC" in s:
+              raise SystemExit('Google getOHLC call still exists')
+          if "action=getSymbols" in s:
+              raise SystemExit('Google getSymbols call still exists')
+          print('Chart GitHub data migration validated.')
+          PY
+
+      - name: Commit and self-remove workflow
+        shell: bash
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/migrate-chart-to-github.yml
+          git add charts/index.html .github/workflows/migrate-chart-to-github.yml
+          git commit -m "Migrate charts stock data to GitHub"
+          git push origin main
