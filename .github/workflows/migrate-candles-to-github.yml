@@ -1,0 +1,114 @@
+name: Migrate Chart Candles To GitHub
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    if: github.event.head_commit.message == 'Migrate chart candles to GitHub'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update charts/index.html candle loader
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('charts/index.html')
+          s = path.read_text(encoding='utf-8')
+
+          pattern = re.compile(
+              r"async function fetchAndParseOHLC_\(symbol\)\{.*?\n\}\n\nfunction saveCandlesToLocalStorage_",
+              re.S,
+          )
+
+          replacement = r'''async function fetchAndParseOHLC_(symbol){
+  const cleanSymbol = String(symbol || '').trim().toUpperCase();
+  if (!cleanSymbol) throw new Error('Invalid symbol');
+
+  // Candle data is stored directly in the repository under /data/<A-Z>/<SYMBOL>.json.
+  // This keeps the existing terminal UI/features unchanged while removing the
+  // Google Sheet dependency from the stock OHLC/candle chart data.
+  const first = cleanSymbol.charAt(0);
+  const folder = /^[A-Z]$/.test(first) ? first : '0-9';
+  const url = `../data/${encodeURIComponent(folder)}/${encodeURIComponent(cleanSymbol)}.json`;
+
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) {
+    throw new Error(`GitHub candle data HTTP ${res.status} for ${cleanSymbol}`);
+  }
+
+  const payload = await res.json();
+  const candles = Array.isArray(payload)
+    ? payload
+    : (payload.candles || payload.records || []);
+
+  if (!Array.isArray(candles) || !candles.length) {
+    throw new Error(`No GitHub candle data for ${cleanSymbol}`);
+  }
+
+  return candles
+    .filter(c => c && c.time && !isNaN(Number(c.close)) && Number(c.close) > 0)
+    .map(c => ({
+      time: formatToDateOnly(c.time),
+      open: Number(c.open ?? c.close),
+      high: Number(c.high ?? c.close),
+      low: Number(c.low ?? c.close),
+      close: Number(c.close),
+      volume: Number(c.volume || 0)
+    }))
+    .sort((a,b) => a.time < b.time ? -1 : 1);
+}
+
+function saveCandlesToLocalStorage_'''
+
+          s, count = pattern.subn(replacement, s, count=1)
+          if count != 1:
+              raise SystemExit('Could not locate fetchAndParseOHLC_ in charts/index.html')
+
+          path.write_text(s, encoding='utf-8')
+          print('Updated charts/index.html')
+          PY
+
+      - name: Validate direct GitHub candle loader
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s = Path('charts/index.html').read_text(encoding='utf-8')
+
+          required = [
+              "async function fetchAndParseOHLC_(symbol){",
+              "const url = `../data/${encodeURIComponent(folder)}/${encodeURIComponent(cleanSymbol)}.json`;",
+              "const res = await fetch(url, { cache: 'no-store' });",
+          ]
+          for marker in required:
+              if marker not in s:
+                  raise SystemExit(f'Missing required marker: {marker}')
+
+          if 'action=getOHLC' in s:
+              raise SystemExit('Old Google getOHLC candle request still exists')
+
+          print('Direct GitHub candle loader validated.')
+          PY
+
+      - name: Commit index.html change and remove migration workflow
+        shell: bash
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/migrate-candles-to-github.yml
+          git add charts/index.html .github/workflows/migrate-candles-to-github.yml
+          git commit -m "Load chart candles from GitHub data"
+          git push origin main
