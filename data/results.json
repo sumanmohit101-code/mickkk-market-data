@@ -1,41 +1,47 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-08-29T17:00:48.250943+05:30",
+  "updatedAt": "2026-08-30T17:00:46.852257+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1246,
+  "symbolCount": 1245,
   "historyCount": 0,
   "today": [],
   "tomorrow": [
     {
-      "symbol": "NAGAFERT",
-      "company": "Nagarjuna Fertilizers and Chemicals Limited",
-      "date": "2026-08-30",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    }
-  ],
-  "thisWeek": [
-    {
-      "symbol": "NAGAFERT",
-      "company": "Nagarjuna Fertilizers and Chemicals Limited",
-      "date": "2026-08-30",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    }
-  ],
-  "allUpcoming": [
-    {
-      "symbol": "NAGAFERT",
-      "company": "Nagarjuna Fertilizers and Chemicals Limited",
-      "date": "2026-08-30",
+      "symbol": "LEAPIND",
+      "company": "LEAP India Limited",
+      "date": "2026-08-31",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
+    {
+      "symbol": "MILKYMIST",
+      "company": "Milky Mist Dairy Food Limited",
+      "date": "2026-08-31",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the Unaudited financial results for the period ended June 30, 2026"
+    },
+    {
+      "symbol": "SETCO",
+      "company": "Setco Automotive Limited",
+      "date": "2026-08-31",
+      "purpose": "Financial Results/Other business matters",
+      "description": "SETCO : 31-Aug-2026 :  The Company has informed the Exchange that a Board meeting to be held on August 29, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on August 31, 2026, , To consider and approve the financial results for the period ended March 31, 2026 and other business matters"
+    },
+    {
+      "symbol": "SUPREMEENG",
+      "company": "Supreme Engineering Limited",
+      "date": "2026-08-31",
+      "purpose": "Financial Results/Fund Raising",
+      "description": "SUPREMEENG : 31-Aug-2026 :  The Company has informed the Exchange that the Board Meeting scheduled for August 29, 2026, has been re-scheduled to August 31, 2026. The Board will consider and approve the financial results for the first quarter ended June 30, 2026, and the proposal for fund raising."
+    }
+  ],
+  "thisWeek": [],
+  "allUpcoming": [
     {
       "symbol": "LEAPIND",
       "company": "LEAP India Limited",
@@ -6857,23 +6863,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "NAGAFERT",
-      "company": "Nagarjuna Fertilizers and Chemicals Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-08-30",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "NAGAFERT",
-          "company": "Nagarjuna Fertilizers and Chemicals Limited",
-          "date": "2026-08-30",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
       "historyCount": 0
     },
     {
