@@ -1,75 +1,26 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-08-30T17:00:46.852257+05:30",
+  "updatedAt": "2026-08-31T16:30:07.750411+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1245,
+  "symbolCount": 1241,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [
+  "tomorrow": [],
+  "thisWeek": [
     {
-      "symbol": "LEAPIND",
-      "company": "LEAP India Limited",
-      "date": "2026-08-31",
+      "symbol": "TECHNOCRAF",
+      "company": "Technocraft Ventures Limited",
+      "date": "2026-09-02",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "MILKYMIST",
-      "company": "Milky Mist Dairy Food Limited",
-      "date": "2026-08-31",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the Unaudited financial results for the period ended June 30, 2026"
-    },
-    {
-      "symbol": "SETCO",
-      "company": "Setco Automotive Limited",
-      "date": "2026-08-31",
-      "purpose": "Financial Results/Other business matters",
-      "description": "SETCO : 31-Aug-2026 :  The Company has informed the Exchange that a Board meeting to be held on August 29, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on August 31, 2026, , To consider and approve the financial results for the period ended March 31, 2026 and other business matters"
-    },
-    {
-      "symbol": "SUPREMEENG",
-      "company": "Supreme Engineering Limited",
-      "date": "2026-08-31",
-      "purpose": "Financial Results/Fund Raising",
-      "description": "SUPREMEENG : 31-Aug-2026 :  The Company has informed the Exchange that the Board Meeting scheduled for August 29, 2026, has been re-scheduled to August 31, 2026. The Board will consider and approve the financial results for the first quarter ended June 30, 2026, and the proposal for fund raising."
     }
   ],
-  "thisWeek": [],
   "allUpcoming": [
-    {
-      "symbol": "LEAPIND",
-      "company": "LEAP India Limited",
-      "date": "2026-08-31",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "MILKYMIST",
-      "company": "Milky Mist Dairy Food Limited",
-      "date": "2026-08-31",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the Unaudited financial results for the period ended June 30, 2026"
-    },
-    {
-      "symbol": "SETCO",
-      "company": "Setco Automotive Limited",
-      "date": "2026-08-31",
-      "purpose": "Financial Results/Other business matters",
-      "description": "SETCO : 31-Aug-2026 :  The Company has informed the Exchange that a Board meeting to be held on August 29, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on August 31, 2026, , To consider and approve the financial results for the period ended March 31, 2026 and other business matters"
-    },
-    {
-      "symbol": "SUPREMEENG",
-      "company": "Supreme Engineering Limited",
-      "date": "2026-08-31",
-      "purpose": "Financial Results/Fund Raising",
-      "description": "SUPREMEENG : 31-Aug-2026 :  The Company has informed the Exchange that the Board Meeting scheduled for August 29, 2026, has been re-scheduled to August 31, 2026. The Board will consider and approve the financial results for the first quarter ended June 30, 2026, and the proposal for fund raising."
-    },
     {
       "symbol": "TECHNOCRAF",
       "company": "Technocraft Ventures Limited",
@@ -6013,23 +5964,6 @@
       "historyCount": 0
     },
     {
-      "symbol": "LEAPIND",
-      "company": "LEAP India Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-08-31",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "LEAPIND",
-          "company": "LEAP India Limited",
-          "date": "2026-08-31",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
-      "historyCount": 0
-    },
-    {
       "symbol": "LEMONTREE",
       "company": "Lemon Tree Hotels Ltd",
       "lastResultDate": null,
@@ -6612,23 +6546,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "MILKYMIST",
-      "company": "Milky Mist Dairy Food Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-08-31",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "MILKYMIST",
-          "company": "Milky Mist Dairy Food Limited",
-          "date": "2026-08-31",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the Unaudited financial results for the period ended June 30, 2026"
-        }
-      ],
       "historyCount": 0
     },
     {
@@ -9008,23 +8925,6 @@
       "historyCount": 0
     },
     {
-      "symbol": "SETCO",
-      "company": "Setco Automotive Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-08-31",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "SETCO",
-          "company": "Setco Automotive Limited",
-          "date": "2026-08-31",
-          "purpose": "Financial Results/Other business matters",
-          "description": "SETCO : 31-Aug-2026 :  The Company has informed the Exchange that a Board meeting to be held on August 29, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on August 31, 2026, , To consider and approve the financial results for the period ended March 31, 2026 and other business matters"
-        }
-      ],
-      "historyCount": 0
-    },
-    {
       "symbol": "SETL",
       "company": "Standard Enginnering Technology Ltd",
       "lastResultDate": null,
@@ -9796,23 +9696,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "SUPREMEENG",
-      "company": "Supreme Engineering Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-08-31",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "SUPREMEENG",
-          "company": "Supreme Engineering Limited",
-          "date": "2026-08-31",
-          "purpose": "Financial Results/Fund Raising",
-          "description": "SUPREMEENG : 31-Aug-2026 :  The Company has informed the Exchange that the Board Meeting scheduled for August 29, 2026, has been re-scheduled to August 31, 2026. The Board will consider and approve the financial results for the first quarter ended June 30, 2026, and the proposal for fund raising."
-        }
-      ],
       "historyCount": 0
     },
     {
