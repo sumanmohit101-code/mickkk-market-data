@@ -1,21 +1,36 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-08-31T17:00:35.778715+05:30",
+  "updatedAt": "2026-09-01T15:00:49.899361+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1241,
+  "symbolCount": 1243,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [],
+  "tomorrow": [
+    {
+      "symbol": "TECHNOCRAF",
+      "company": "Technocraft Ventures Limited",
+      "date": "2026-09-02",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    }
+  ],
   "thisWeek": [
     {
       "symbol": "TECHNOCRAF",
       "company": "Technocraft Ventures Limited",
       "date": "2026-09-02",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "DHOOTTRANS",
+      "company": "Dhoot Transmission Limited",
+      "date": "2026-09-04",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     }
@@ -27,6 +42,27 @@
       "date": "2026-09-02",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "DHOOTTRANS",
+      "company": "Dhoot Transmission Limited",
+      "date": "2026-09-04",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "BLEL",
+      "company": "Behari Lal Engineering Limited",
+      "date": "2026-09-07",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "ULTRACEMCO",
+      "company": "UltraTech Cement Limited",
+      "date": "2026-10-19",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     }
   ],
   "history": [],
@@ -1599,6 +1635,23 @@
       "historyCount": 0
     },
     {
+      "symbol": "BLEL",
+      "company": "Behari Lal Engineering Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-07",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "BLEL",
+          "company": "Behari Lal Engineering Limited",
+          "date": "2026-09-07",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
+      "historyCount": 0
+    },
+    {
       "symbol": "BLISSGVS",
       "company": "Bliss Gvs Pharma Limited",
       "lastResultDate": null,
@@ -2667,6 +2720,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "DHOOTTRANS",
+      "company": "Dhoot Transmission Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-04",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "DHOOTTRANS",
+          "company": "Dhoot Transmission Limited",
+          "date": "2026-09-04",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -10475,9 +10545,17 @@
       "symbol": "ULTRACEMCO",
       "company": "Ultratech Cement Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-19",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ULTRACEMCO",
+          "company": "UltraTech Cement Limited",
+          "date": "2026-10-19",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
