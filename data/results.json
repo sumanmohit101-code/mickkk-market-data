@@ -1,54 +1,46 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-01T17:00:30.824233+05:30",
+  "updatedAt": "2026-09-02T14:23:53.610201+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1243,
+  "symbolCount": 1244,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [
-    {
-      "symbol": "TECHNOCRAF",
-      "company": "Technocraft Ventures Limited",
-      "date": "2026-09-02",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    }
-  ],
+  "tomorrow": [],
   "thisWeek": [
-    {
-      "symbol": "TECHNOCRAF",
-      "company": "Technocraft Ventures Limited",
-      "date": "2026-09-02",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
     {
       "symbol": "DHOOTTRANS",
       "company": "Dhoot Transmission Limited",
       "date": "2026-09-04",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "MOLBIO",
+      "company": "Molbio Diagnostics Limited",
+      "date": "2026-09-05",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the Unaudited Standalone and Consolidated Financial Results for the quarter ended 30 June 2026."
     }
   ],
   "allUpcoming": [
     {
-      "symbol": "TECHNOCRAF",
-      "company": "Technocraft Ventures Limited",
-      "date": "2026-09-02",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
       "symbol": "DHOOTTRANS",
       "company": "Dhoot Transmission Limited",
       "date": "2026-09-04",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "MOLBIO",
+      "company": "Molbio Diagnostics Limited",
+      "date": "2026-09-05",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the Unaudited Standalone and Consolidated Financial Results for the quarter ended 30 June 2026."
     },
     {
       "symbol": "BLEL",
@@ -56,6 +48,20 @@
       "date": "2026-09-07",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "SHIPROCKET",
+      "company": "Shiprocket Limited",
+      "date": "2026-09-07",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "INDIACEM",
+      "company": "The India Cements Limited",
+      "date": "2026-10-17",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "ULTRACEMCO",
@@ -4804,9 +4810,17 @@
       "symbol": "INDIACEM",
       "company": "The India Cements Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-17",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "INDIACEM",
+          "company": "The India Cements Limited",
+          "date": "2026-10-17",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -6670,6 +6684,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "MOLBIO",
+      "company": "Molbio Diagnostics Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-05",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "MOLBIO",
+          "company": "Molbio Diagnostics Limited",
+          "date": "2026-09-05",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the Unaudited Standalone and Consolidated Financial Results for the quarter ended 30 June 2026."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -9112,6 +9143,23 @@
       "historyCount": 0
     },
     {
+      "symbol": "SHIPROCKET",
+      "company": "Shiprocket Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-07",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "SHIPROCKET",
+          "company": "Shiprocket Limited",
+          "date": "2026-09-07",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
+      "historyCount": 0
+    },
+    {
       "symbol": "SHK",
       "company": "S H Kelkar And Company Limited",
       "lastResultDate": null,
@@ -10090,23 +10138,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "TECHNOCRAF",
-      "company": "Technocraft Ventures Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-02",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "TECHNOCRAF",
-          "company": "Technocraft Ventures Limited",
-          "date": "2026-09-02",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
       "historyCount": 0
     },
     {
