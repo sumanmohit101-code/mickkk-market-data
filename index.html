@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="description" content="Mickkk Market — professional NSE stock and index charts.">
+  <title>Mickkk Market — Charts</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div><div class="brand-name">MICKKK MARKET</div><div class="brand-sub">MARKET CHARTS</div></div>
+    </div>
+    <div class="search-area">
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input id="symbolSearch" type="search" autocomplete="off" placeholder="Search symbol or company..." aria-label="Search symbol or company">
+        <kbd>Ctrl K</kbd>
+      </div>
+      <div id="searchResults" class="search-results hidden"></div>
+    </div>
+    <div class="top-actions">
+      <span id="dataStatus" class="status-pill"><span class="status-dot"></span> Loading</span>
+      <button id="refreshBtn" class="icon-btn" title="Reload data" aria-label="Reload data">↻</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <aside class="watchlist">
+      <div class="panel-heading"><span>WATCHLIST</span><span id="watchCount" class="muted">0</span></div>
+      <div class="watch-label">INDICES</div>
+      <div id="indexList" class="watch-list"></div>
+      <div class="watch-label stocks">STOCKS</div>
+      <div id="stockList" class="watch-list"></div>
+    </aside>
+
+    <section class="terminal">
+      <div class="instrument-header">
+        <div class="instrument">
+          <div class="symbol-line">
+            <strong id="instrumentSymbol">NIFTY50</strong>
+            <span id="instrumentExchange" class="badge">NSE</span>
+            <span id="instrumentType" class="badge">INDEX</span>
+          </div>
+          <div id="instrumentName" class="instrument-name">NIFTY 50</div>
+        </div>
+        <div class="quote">
+          <div id="lastPrice" class="last-price">—</div>
+          <div id="priceChange" class="change neutral">—</div>
+        </div>
+        <div class="ohlc">
+          <div><span>O</span><b id="qOpen">—</b></div>
+          <div><span>H</span><b id="qHigh">—</b></div>
+          <div><span>L</span><b id="qLow">—</b></div>
+          <div><span>C</span><b id="qClose">—</b></div>
+          <div><span>VOL</span><b id="qVolume">—</b></div>
+        </div>
+        <div class="band-info">
+          <span class="small-label">PRICE BAND</span>
+          <strong id="priceBand">—</strong>
+          <span id="seriesInfo" class="muted">—</span>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="button-group">
+          <button class="tf active" data-tf="1D">1D</button>
+          <button class="tf" data-tf="1W">1W</button>
+          <button class="tf" data-tf="1M">1M</button>
+        </div>
+        <div class="divider"></div>
+        <div class="button-group ranges">
+          <button class="range" data-range="1M">1M</button>
+          <button class="range" data-range="3M">3M</button>
+          <button class="range" data-range="6M">6M</button>
+          <button class="range active" data-range="1Y">1Y</button>
+          <button class="range" data-range="5Y">5Y</button>
+          <button class="range" data-range="ALL">ALL</button>
+        </div>
+        <div class="spacer"></div>
+        <div class="button-group chart-types">
+          <button class="chart-type active" data-chart="candle">Candles</button>
+          <button class="chart-type" data-chart="bar">Bars</button>
+          <button class="chart-type" data-chart="line">Line</button>
+        </div>
+        <button id="volumeToggle" class="tool-toggle active">Volume</button>
+        <button id="fitBtn" class="tool-toggle">Fit</button>
+      </div>
+
+      <div class="chart-wrap">
+        <div id="chart"></div>
+        <div id="chartLoading" class="chart-loading"><div class="loader"></div><span>Loading chart...</span></div>
+        <div id="emptyState" class="empty-state hidden"><strong>No chart data</strong><span>This symbol has no usable data in the repository.</span></div>
+      </div>
+
+      <div class="chart-footer">
+        <span><i class="legend-dot"></i><span id="footerInstrument">NIFTY 50</span></span>
+        <span id="dataDate">Data date: —</span>
+        <span>EOD • NSE</span>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="https://unpkg.com/lightweight-charts@4.2.2/dist/lightweight-charts.standalone.production.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
