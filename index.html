@@ -351,28 +351,49 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
 .watchlist-status{padding:4px 10px;color:var(--muted);font-size:9px;min-height:17px;border-top:1px solid var(--border);}
 
 /* RIGHT DOCK TRADINGVIEW FIXES */
-.shell{ display:flex !important; flex-direction:row !important; align-items:stretch !important; }
-.main{ order:2 !important; flex:1 1 auto !important; min-width:0 !important; width:auto !important; }
+.shell{display:flex !important;flex-direction:row !important;align-items:stretch !important;}
+.main{order:2 !important;flex:1 1 auto !important;min-width:0 !important;width:auto !important;}
 .drawing-bar{order:1 !important;}
-.watchlist-toggle{ position:absolute !important; left:auto !important; right:8px !important; top:10px !important; z-index:90 !important; }
-.watchlist-panel{
-  position:relative !important; order:3 !important; left:auto !important; right:auto !important;
-  top:auto !important; bottom:auto !important; width:310px !important; min-width:310px !important;
-  max-width:310px !important; height:100% !important; max-height:none !important; margin:0 !important;
-  border-radius:0 !important; border-top:0 !important; border-right:0 !important; border-bottom:0 !important;
-  border-left:1px solid var(--border) !important; box-shadow:-12px 0 30px rgba(0,0,0,.28) !important;
-  backdrop-filter:none !important; flex:0 0 310px !important; z-index:70 !important;
+
+/* Dedicated, very slim right rail for the watchlist. */
+.watchlist-dock{
+  order:3 !important;position:relative !important;width:34px;min-width:34px;max-width:34px;
+  height:100%;display:flex;align-items:stretch;justify-content:flex-start;z-index:100 !important;
+  background:var(--surface);border-left:1px solid var(--border);flex:0 0 34px;
 }
-.watchlist-panel.open{display:flex !important;}
-.shell.watchlist-open .watchlist-toggle{display:none !important;}
-.watchlist-hide-btn{ color:var(--accent) !important; font-size:20px !important; font-weight:700 !important; }
-.watchlist-hide-btn:hover{ background:rgba(0,212,255,.08) !important; }
+.watchlist-dock .watchlist-toggle{
+  position:absolute !important;left:0 !important;right:0 !important;top:50% !important;
+  transform:translateY(-50%) !important;width:33px !important;min-width:33px !important;
+  height:76px !important;padding:0 !important;margin:0 !important;border-radius:0 !important;
+  border:0 !important;border-top:1px solid var(--border) !important;border-bottom:1px solid var(--border) !important;
+  border-left:0 !important;background:var(--card) !important;color:var(--accent) !important;
+  justify-content:center;font-size:20px !important;box-shadow:none !important;cursor:pointer;
+}
+.watchlist-dock .watchlist-toggle:hover{background:var(--card2) !important;color:var(--text) !important;}
+.watchlist-dock .watchlist-panel{
+  position:absolute !important;right:0 !important;left:auto !important;top:0 !important;bottom:0 !important;
+  width:310px !important;min-width:310px !important;max-width:310px !important;height:100% !important;
+  max-height:none !important;margin:0 !important;border-radius:0 !important;
+  border-top:0 !important;border-right:0 !important;border-bottom:0 !important;
+  border-left:1px solid var(--border) !important;box-shadow:-12px 0 30px rgba(0,0,0,.28) !important;
+  backdrop-filter:none !important;z-index:110 !important;
+}
+.watchlist-dock .watchlist-panel.open{display:flex !important;}
+.watchlist-dock .watchlist-hide-btn{color:var(--accent) !important;font-size:20px !important;font-weight:700 !important;}
+.watchlist-dock .watchlist-hide-btn:hover{background:rgba(0,212,255,.08) !important;}
+.watchlist-dock .watchlist-panel{overflow:hidden !important;}
+.watchlist-dock .watchlist-panel .watchlist-body{scrollbar-width:thin;}
+.shell.watchlist-open .watchlist-dock .watchlist-toggle{display:none !important;}
 .chart-toolbar{padding-right:12px !important;}
-.watchlist-panel{overflow:hidden !important;}
-.watchlist-panel .watchlist-body{scrollbar-width:thin;}
-.watchlist-toggle{border-radius:7px 0 0 7px !important;min-width:30px !important;width:30px !important;height:72px;justify-content:center;font-size:18px !important;padding:0 !important;}
-.shell:not(.watchlist-open) .watchlist-toggle{position:fixed !important;right:0 !important;top:50% !important;transform:translateY(-50%) !important;border-right:0 !important;background:var(--card) !important;}
-.shell.watchlist-open .watchlist-toggle{display:none !important;}
+
+/* One shared vertical crosshair spans price + indicator panes. */
+.shared-crosshair-v{
+  position:absolute;top:0;bottom:0;width:1px;display:none;pointer-events:none;z-index:60;
+  background:rgba(180,190,205,.72);box-shadow:0 0 0 .5px rgba(180,190,205,.15);
+}
+
+/* Indicator panes use the main price chart as the single X-axis. */
+.pane-rsi,.pane-rs{overflow:hidden;}
 
 @media(max-width:860px){
   .ppv-stats-widget{font-size:9px;left:54px;}
@@ -407,8 +428,9 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
 
 <div class="shell">
   <button class="draw-bar-floating-toggle" id="floating-draw-toggle" title="Show Drawing Toolbar (👁️)" onclick="toggleDrawingToolbar()">👁️ Tools</button>
-  <button class="watchlist-toggle" id="watchlist-toggle" onclick="toggleWatchlistPanel()" title="Open Watchlist">‹</button>
-  <div class="watchlist-panel" id="watchlist-panel">
+  <aside class="watchlist-dock" id="watchlist-dock">
+    <button class="watchlist-toggle" id="watchlist-toggle" onclick="toggleWatchlistPanel()" title="Open Watchlist">‹</button>
+    <div class="watchlist-panel" id="watchlist-panel">
     <div class="watchlist-head">
       <select id="watchlist-select" class="watchlist-select" onchange="selectWatchlist(this.value)"></select>
       <button class="watchlist-icon-btn" title="Rename watchlist" onclick="renameCurrentWatchlist()">✎</button>
@@ -422,7 +444,8 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
     </div>
     <div class="watchlist-body" id="watchlist-body"></div>
     <div class="watchlist-status" id="watchlist-status"></div>
-  </div>
+    </div>
+  </aside>
 
   <aside class="drawing-bar" id="drawing-toolbar">
     <button class="draw-btn active" id="tool-cursor" title="Cursor Navigation (🎯)" onclick="setTool('cursor',this)">🎯</button>
@@ -729,7 +752,7 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
         <span class="ema-lbl">Average:</span>
         <input type="number" id="rs-ma-len" value="20" min="1" max="500" class="ema-input-num" onchange="updateRelativeStrengthConfig()">
         <input type="color" id="rs-color" value="#00d4ff" class="ema-color-picker" onchange="updateRelativeStrengthConfig()">
-        <select id="rs-width" class="ema-select-width" onchange="updateRelativeStrengthConfig()"><option value="1">1px</option><option value="2" selected>2px</option><option value="3">3px</option></select>
+        <select id="rs-width" class="ema-select-width" onchange="updateRelativeStrengthConfig()"><option value="1" selected>1px</option><option value="2">2px</option><option value="3">3px</option></select>
       </div>
     </div>
 
@@ -743,7 +766,7 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
         <label>Monthly CPR</label>
         <label class="switch"><input type="checkbox" id="cpr-monthly-en" checked onchange="updateCPRConfig()"><span class="slider"></span></label>
       </div>
-      <div style="font-size:10px;color:var(--muted);line-height:1.4;margin-top:4px;">CPR levels are drawn only for the current weekly/monthly area, from the period start to the right edge.</div>
+      <div style="font-size:10px;color:var(--muted);line-height:1.4;margin-top:4px;">CPR levels overlay the latest 20 chart candles only.</div>
     </div>
 
     <div class="ind-section">
@@ -869,7 +892,7 @@ let rsiConfig = {
   showThresholds: true, upperVal: 60, lowerVal: 40
 };
 let rsiMAConfig = { enabled: true, len: 9, color: '#ffab00', width: 1 };
-let relativeStrengthConfig = { enabled: true, benchmarkSymbol: 'NIFTYSMALLCAP250', maLen: 20, color: '#00d4ff', width: 2 };
+let relativeStrengthConfig = { enabled: true, benchmarkSymbol: 'NIFTYSMALLCAP250', maLen: 20, color: '#ff9800', width: 1 };
 let cprConfig = { weekly: true, monthly: true };
 
 let smartBarConfig = {
@@ -1294,7 +1317,7 @@ function rebuildGridSystem() {
 
     chartContainer.innerHTML = `
       <div class="pane-box pane-price" id="pane-price-${i}">
-        <canvas class="panel-overlay-canvas" id="panel-canvas-${i}"></canvas>
+        <canvas class="panel-overlay-canvas" id="panel-canvas-${i}"></canvas><div class="shared-crosshair-v" id="shared-crosshair-${i}"></div>
       </div>
       <div class="pane-splitter" id="splitter-1-${i}"></div>
       <div class="pane-box pane-rsi" id="pane-rsi-${i}"></div>
@@ -1383,7 +1406,7 @@ function createPanelChartInstance(index, tf) {
       borderColor: isDark ? '#1e2d3d' : '#e0e3eb'
     },
     localization: { dateFormat: 'dd MMM yy' },
-    crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+    crosshair: { mode: LightweightCharts.CrosshairMode.Normal, vertLine: { visible: true, labelVisible: true }, horzLine: { visible: true, labelVisible: true } },
     autoSize: true,
   };
 
@@ -1425,9 +1448,12 @@ function createPanelChartInstance(index, tf) {
   const rsContainer = document.getElementById(`pane-rs-${index}`);
   const rsC = LightweightCharts.createChart(rsContainer, {
     ...baseChartOpts,
-    timeScale: { borderColor:isDark?'#1e2d3d':'#e0e3eb', timeVisible:false, secondsVisible:false, ticksVisible:true, visible:true, rightOffset:0, barSpacing:6, fixLeftEdge:false, lockVisibleTimeRangeOnResize:true, uniformDistribution:true, tickMarkFormatter:(time)=>formatXAxisDate(time) },
+    timeScale: { borderColor:isDark?'#1e2d3d':'#e0e3eb', timeVisible:false, secondsVisible:false, ticksVisible:false, visible:true, rightOffset:0, barSpacing:6, fixLeftEdge:false, lockVisibleTimeRangeOnResize:true, uniformDistribution:true, tickMarkFormatter:(time)=>formatXAxisDate(time) },
     localization:{dateFormat:'dd MMM yy'}
   });
+
+  rsiC.applyOptions({crosshair:{vertLine:{visible:false,labelVisible:false},horzLine:{visible:true,labelVisible:true}}});
+  rsC.applyOptions({crosshair:{vertLine:{visible:false,labelVisible:false},horzLine:{visible:true,labelVisible:true}}});
 
   const canvas = document.getElementById(`panel-canvas-${index}`);
 
@@ -1476,6 +1502,15 @@ function createPanelChartInstance(index, tf) {
   };
 
   let isSyncingCrosshair = false;
+  const sharedCrosshair = document.getElementById(`shared-crosshair-${index}`);
+  const updateSharedCrosshair = (param) => {
+    if (!sharedCrosshair) return;
+    if (!param || !param.point || param.point.x == null || !param.time) {
+      sharedCrosshair.style.display='none'; return;
+    }
+    sharedCrosshair.style.left = `${Math.max(0,param.point.x)}px`;
+    sharedCrosshair.style.display='block';
+  };
 
   const clearSyncedCrosshair = () => {
     try { priceC.clearCrosshairPosition(); } catch(e) {}
@@ -1501,6 +1536,7 @@ function createPanelChartInstance(index, tf) {
   };
 
   priceC.subscribeCrosshairMove(param => {
+    updateSharedCrosshair(param);
     onCrosshairMove(param, instObj.candleSeries, volS);
     if (!param || !param.point || !instObj.candleSeries || !param.time) {
       clearSyncedCrosshair(); return;
@@ -1515,6 +1551,7 @@ function createPanelChartInstance(index, tf) {
   });
 
   rsiC.subscribeCrosshairMove(param => {
+    updateSharedCrosshair(param);
     if (!param || !param.point || !instObj.candleSeries || !param.time) {
       clearSyncedCrosshair(); return;
     }
@@ -1539,6 +1576,7 @@ function createPanelChartInstance(index, tf) {
     return Math.abs(Number(a.time)-Number(targetTime)) < Math.abs(Number(b.time)-Number(targetTime)) ? a.value : b.value;
   };
   rsC.subscribeCrosshairMove(param => {
+    updateSharedCrosshair(param);
     if (!param || !param.point || !instObj.candleSeries || !param.time) { clearSyncedCrosshair(); return; }
     const rsBar = instObj.rsSeries && param.seriesData && param.seriesData.get(instObj.rsSeries);
     const rsValue = rsBar && typeof rsBar.value === 'number' ? rsBar.value : getNearestRSValue(instObj,param.time);
@@ -1942,11 +1980,13 @@ function setWatchlistStatus(msg, ok=false) {
 
 function toggleWatchlistPanel(force) {
   const panel = document.getElementById('watchlist-panel');
+  const dock = document.getElementById('watchlist-dock');
   if (!panel) return;
   const open = typeof force === 'boolean' ? force : !panel.classList.contains('open');
   panel.classList.toggle('open', open);
   const shell = document.querySelector('.shell');
   if (shell) shell.classList.toggle('watchlist-open', open);
+  if (dock) dock.classList.toggle('open', open);
   if (open) renderWatchlists();
 }
 
@@ -3298,35 +3338,61 @@ async function renderRelativeStrengthPane(data,panel){
   if(!relativeStrengthConfig.enabled){
     if(panel.rsSeries){try{panel.rsChart.removeSeries(panel.rsSeries);}catch(e){} panel.rsSeries=null;}
     if(panel.rsMASeries){try{panel.rsChart.removeSeries(panel.rsMASeries);}catch(e){} panel.rsMASeries=null;}
+    if(panel.rsBaseline){try{panel.rsSeries && panel.rsSeries.removePriceLine(panel.rsBaseline);}catch(e){} panel.rsBaseline=null;}
     panel.rsValueByTime=[]; updateTimeScaleVisibility(panel); return;
   }
   try{
     const benchmarkSymbol=relativeStrengthConfig.benchmarkSymbol || 'NIFTYSMALLCAP250';
     const benchRaw=await fetchSymbolCandles(benchmarkSymbol,'index');
     panel.benchmarkCandles=benchRaw||[];
-    const stockData=aggregate(data,'D') || data;
-    const benchData=aggregate(benchRaw || [], panel.interval);
+
+    // IMPORTANT: aggregate both instruments with the SAME chart interval and
+    // only keep timestamps that exist in BOTH series. This guarantees that the
+    // last RS point lands on the same candle/time as the main chart.
+    const stockData=aggregate(panel.rawDailyCandles || data, panel.interval) || data || [];
+    const benchData=aggregate(benchRaw || [], panel.interval) || [];
     if(!stockData.length || !benchData.length){return;}
-    const benchMap=new Map(benchData.map(c=>[c.time,Number(c.close)]));
+
+    const benchMap=new Map(benchData.map(c=>[String(c.time),Number(c.close)]));
     const common=[];
     for(const c of stockData){
-      const b=benchMap.get(c.time);
-      if(Number.isFinite(Number(c.close)) && Number.isFinite(b) && b>0) common.push({time:c.time,ratio:Number(c.close)/b});
+      const b=benchMap.get(String(c.time));
+      const close=Number(c.close);
+      if(Number.isFinite(close) && close>0 && Number.isFinite(b) && b>0){
+        common.push({time:c.time,ratio:close/b});
+      }
     }
     if(!common.length) return;
+
+    // Normalize to 100 at the first common observation.
     const base=common[0].ratio || 1;
     const rsData=common.map(x=>({time:x.time,value:+(x.ratio/base*100).toFixed(4)}));
     panel.rsValueByTime=rsData;
-    if(!panel.rsSeries) panel.rsSeries=panel.rsChart.addLineSeries({color:'#00d4ff',lineWidth:2,priceLineVisible:false,lastValueVisible:true,title:'RS'});
-    else panel.rsSeries.applyOptions({color:'#00d4ff',lineWidth:2});
+
+    if(!panel.rsSeries){
+      panel.rsSeries=panel.rsChart.addLineSeries({color:'#00d4ff',lineWidth:2,priceLineVisible:false,lastValueVisible:true,title:'RS'});
+    }else panel.rsSeries.applyOptions({color:'#00d4ff',lineWidth:2,title:'RS'});
     panel.rsSeries.setData(rsData);
+
     const maLen=Math.max(1,Number(relativeStrengthConfig.maLen)||20);
     const maData=[]; let sum=0;
-    for(let i=0;i<rsData.length;i++){sum+=rsData[i].value;if(i>=maLen)sum-=rsData[i-maLen].value;if(i>=maLen-1)maData.push({time:rsData[i].time,value:+(sum/maLen).toFixed(4)});}
-    if(!panel.rsMASeries) panel.rsMASeries=panel.rsChart.addLineSeries({color:relativeStrengthConfig.color,lineWidth:relativeStrengthConfig.width,priceLineVisible:false,lastValueVisible:true,title:`RS MA ${maLen}`});
-    else panel.rsMASeries.applyOptions({color:relativeStrengthConfig.color,lineWidth:relativeStrengthConfig.width,title:`RS MA ${maLen}`});
+    for(let i=0;i<rsData.length;i++){
+      sum+=rsData[i].value;
+      if(i>=maLen)sum-=rsData[i-maLen].value;
+      if(i>=maLen-1)maData.push({time:rsData[i].time,value:+(sum/maLen).toFixed(4)});
+    }
+    if(!panel.rsMASeries) panel.rsMASeries=panel.rsChart.addLineSeries({color:'#ff9800',lineWidth:1,priceLineVisible:false,lastValueVisible:true,title:`RS MA ${maLen}`});
+    else panel.rsMASeries.applyOptions({color:'#ff9800',lineWidth:1,title:`RS MA ${maLen}`});
     panel.rsMASeries.setData(maData);
+
     if(!panel.rsBaseline) panel.rsBaseline=panel.rsSeries.createPriceLine({price:100,color:'#7f8c8d',lineWidth:1,lineStyle:LightweightCharts.LineStyle.Dashed,axisLabelVisible:false,title:'100'});
+
+    // Re-apply the exact main-chart logical range after the async benchmark
+    // finishes so RS cannot drift to a different latest candle.
+    try{
+      const range=panel.priceChart.timeScale().getVisibleLogicalRange();
+      if(range) panel.rsChart.timeScale().setVisibleLogicalRange(range);
+    }catch(e){}
   }catch(e){console.warn('Relative strength error:',e);}
 }
 
@@ -3334,8 +3400,8 @@ function updateRelativeStrengthConfig(){
   relativeStrengthConfig.enabled=document.getElementById('rs-en')?.checked ?? true;
   relativeStrengthConfig.benchmarkSymbol=document.getElementById('rs-benchmark')?.value || 'NIFTYSMALLCAP250';
   relativeStrengthConfig.maLen=parseInt(document.getElementById('rs-ma-len')?.value)||20;
-  relativeStrengthConfig.color=document.getElementById('rs-color')?.value||'#00d4ff';
-  relativeStrengthConfig.width=parseInt(document.getElementById('rs-width')?.value)||2;
+  relativeStrengthConfig.color=document.getElementById('rs-color')?.value||'#ff9800';
+  relativeStrengthConfig.width=parseInt(document.getElementById('rs-width')?.value)||1;
   if(currentSymbol) rebuildAllPanels();
 }
 
@@ -3371,12 +3437,26 @@ function drawCPROverlay(panel,data){
   if(!panel || !panel.overlayCanvas || (!cprConfig.weekly && !cprConfig.monthly)) return;
   const canvas=panel.overlayCanvas,parent=canvas.parentElement;if(!parent)return;
   const rect=parent.getBoundingClientRect(); const ctx=canvas.getContext('2d');
+  const chartData=aggregate(panel.rawDailyCandles || data, panel.interval) || data || [];
+  if(!chartData.length) return;
+
+  // User requested CPR only over the latest 20 chart candles.
+  const visibleCandles=chartData.slice(Math.max(0,chartData.length-20));
+  const firstTime=visibleCandles[0]?.time;
+  const lastTime=visibleCandles[visibleCandles.length-1]?.time;
+  const x1raw=firstTime!=null ? panel.priceChart.timeScale().timeToCoordinate(firstTime) : null;
+  const x2raw=lastTime!=null ? panel.priceChart.timeScale().timeToCoordinate(lastTime) : null;
+  const x1=x1raw==null?0:Math.max(0,x1raw-6);
+  const x2=x2raw==null?rect.width:Math.min(rect.width,x2raw+8);
+
   const modes=[]; if(cprConfig.weekly)modes.push('W'); if(cprConfig.monthly)modes.push('M');
   modes.forEach(mode=>{
     const levels=getCPRLevels(panel.rawDailyCandles,mode); if(!levels)return;
-    const xStart=panel.priceChart.timeScale().timeToCoordinate(levels.periodStart); const x1=xStart===null?0:xStart;
     const vals=[['TC',levels.tc],['P',levels.p],['BC',levels.bc]];
-    vals.forEach((item,idx)=>{const y=panel.candleSeries.priceToCoordinate(item[1]);drawCPRLine(ctx,x1,rect.width,y,`${mode==='W'?'W':'M'} ${item[0]}`,item[1],idx===1);});
+    vals.forEach((item,idx)=>{
+      const y=panel.candleSeries.priceToCoordinate(item[1]);
+      drawCPRLine(ctx,x1,x2,y,`${mode==='W'?'W':'M'} ${item[0]}`,item[1],idx===1);
+    });
   });
 }
 
