@@ -141,7 +141,7 @@ body.light-theme .ohlc-box{background:rgba(255,255,255,0.92);}
 }
 .selective-del-btn:hover { background:var(--red);color:#fff; }
 
-/* 52W + CIRCUIT BAND INFO TABLE (TOP-RIGHT CORNER CARD) */
+/* 52W + CIRCUIT BAND INFO TABLE */
 .combined-info-table {
   position:absolute;top:8px;right:76px;z-index:25;font-family:var(--mono);
   font-size:9.5px;background:rgba(14,19,24,0.92);backdrop-filter:blur(8px);
@@ -206,7 +206,7 @@ body.light-theme .ppv-table-row{background:rgba(255,255,255,0.95);}
 .chart-panel {
   position: relative; background: var(--bg); width: 100%; height: 100%;
   display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--border);
-  padding-bottom: 24px; box-sizing: border-box;
+  padding-bottom: 0px; box-sizing: border-box;
 }
 
 .panel-top-bar {
@@ -238,8 +238,8 @@ body.light-theme .ppv-table-row{background:rgba(255,255,255,0.95);}
 
 .pane-box { position: relative; width: 100%; min-height: 40px; overflow: hidden; }
 .pane-price { flex: 4.0; }
-.pane-rsi { flex: 1.0; min-height: 90px; }
-.pane-rs { flex: 1.0; min-height: 90px; }
+.pane-rsi { flex: 1.0; min-height: 85px; }
+.pane-rs { flex: 1.0; min-height: 85px; }
 .pane-axis { flex: 0 0 28px; height: 28px; min-height: 28px; }
 .pane-rs .rs-pane-title{position:absolute;top:5px;left:8px;z-index:5;font:600 10px var(--mono);color:var(--muted);pointer-events:none;background:rgba(8,11,15,.55);padding:2px 5px;border-radius:3px;}
 body.light-theme .pane-rs .rs-pane-title{background:rgba(255,255,255,.65);}
@@ -251,6 +251,45 @@ body.light-theme .pane-rs .rs-pane-title{background:rgba(255,255,255,.65);}
 .pane-splitter:hover, .pane-splitter.dragging { height: 2px; background: var(--accent); }
 
 .panel-overlay-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 18; }
+
+/* ===== UNIFIED CROSSHAIR ENGINE (SPANS ENTIRE PANEL TO BOTTOM AXIS) ===== */
+.unified-crosshair-v {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  display: none;
+  pointer-events: none;
+  z-index: 85;
+  border-left: 1px dashed rgba(212, 228, 240, 0.65);
+}
+body.light-theme .unified-crosshair-v {
+  border-left: 1px dashed rgba(19, 23, 34, 0.65);
+}
+
+.unified-crosshair-date {
+  position: absolute;
+  bottom: 4px;
+  transform: translateX(-50%);
+  background: var(--card2);
+  border: 1px solid var(--accent);
+  color: #ffffff;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  pointer-events: none;
+  z-index: 95;
+}
+body.light-theme .unified-crosshair-date {
+  background: #ffffff;
+  border-color: #0088cc;
+  color: #131722;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
 
 .loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--muted);font-size:13px;background:var(--bg);z-index:20;}
 .spinner{width:22px;height:22px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;}
@@ -356,7 +395,7 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
 .main{order:2 !important;flex:1 1 auto !important;min-width:0 !important;width:auto !important;}
 .drawing-bar{order:1 !important;}
 
-/* Dedicated, very slim right rail for the watchlist. */
+/* Dedicated right rail for watchlist */
 .watchlist-dock{
   order:3 !important;position:relative !important;width:34px;min-width:34px;max-width:34px;
   height:100%;display:flex;align-items:stretch;justify-content:flex-start;z-index:100 !important;
@@ -387,13 +426,7 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
 .shell.watchlist-open .watchlist-dock .watchlist-toggle{display:none !important;}
 .chart-toolbar{padding-right:12px !important;}
 
-/* One shared vertical crosshair spans price + indicator panes. */
-.shared-crosshair-v{
-  position:absolute;top:0;bottom:0;width:1px;display:none;pointer-events:none;z-index:60;
-  background:rgba(180,190,205,.72);box-shadow:0 0 0 .5px rgba(180,190,205,.15);
-}
-
-/* Indicator panes use the main price chart as the single X-axis. */
+/* Indicator panes use the main price chart as the single X-axis */
 .pane-rsi,.pane-rs{overflow:hidden;}
 
 @media(max-width:860px){
@@ -526,7 +559,7 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
 
       <div class="ohlc-box" id="ohlc-box" style="display:none"></div>
       
-      <!-- TOP-RIGHT CORNER CARD: 52W + EMAs + ATR + CIRCUIT BANDS + GSM SURVEILLANCE -->
+      <!-- TOP-RIGHT CORNER CARD -->
       <div class="combined-info-table" id="widget-combined-info" style="display:none"></div>
       
       <div class="ppv-stats-widget" id="ppv-stats-widget" style="display:none"></div>
@@ -831,7 +864,6 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
 
 const CHARTS_API_URL = 'https://script.google.com/macros/s/AKfycbx65jssEWWjfjj53X6x8twwZ83kGoEwVOVA6ms_OHS7u9FDRn56U2sYbfW1SvisibwI/exec';
 
-// LOCAL STATIC INSTRUMENT CATALOGUE — sourced from the repository data files.
 const FALLBACK_SYMBOLS = [
   { symbol: "20MICRONS", name: "20 Microns Limited", type: "stock" },
   { symbol: "RELIANCE", name: "Reliance Industries Limited", type: "stock" },
@@ -851,10 +883,8 @@ let allSymbols = [...FALLBACK_SYMBOLS];
 let allIndices = [...FALLBACK_INDICES];
 let searchMode = 'stock';
 
-// PRICE BANDS & SURVEILLANCE MAP
 let priceBandsMap = {};
 
-// WATCHLIST STATE
 let watchlists = [];
 let activeWatchlistName = '';
 let collapsedWatchSections = {};
@@ -875,7 +905,6 @@ let currentChartType = 'candle';
 let currentScaleMode = 'log'; 
 let currentTheme = 'dark';
 
-// PROFESSIONAL DEFAULT INDICATORS
 const DEFAULT_EMA_CONFIGS = [
   { id: 1, enabled: true, len: 9, color: '#ffffff', width: 1 },
   { id: 2, enabled: true, len: 21, color: '#c58b1b', width: 1 },
@@ -927,7 +956,7 @@ let isLiveActive = false;
 let livePollTimer = null;
 const LIVE_POLL_MS = 45000;
 
-/* ============ FETCH PRICE BANDS & GSM SURVEILLANCE FROM GOOGLE SHEET ============ */
+/* ============ FETCH PRICE BANDS & GSM SURVEILLANCE ============ */
 async function fetchPriceBandsData() {
   try {
     const res = await fetch(`${CHARTS_API_URL}?action=getPriceBands`);
@@ -937,7 +966,6 @@ async function fetchPriceBandsData() {
       data.priceBands.forEach(b => {
         if (b.symbol) priceBandsMap[b.symbol.toUpperCase()] = b;
       });
-      // Refresh info card for current stock
       if (panelsArray[0] && panelsArray[0].rawDailyCandles) {
         renderCombinedInfoCard(aggregate(panelsArray[0].rawDailyCandles, 'D'));
       }
@@ -1318,13 +1346,16 @@ function rebuildGridSystem() {
 
     chartContainer.innerHTML = `
       <div class="pane-box pane-price" id="pane-price-${i}">
-        <canvas class="panel-overlay-canvas" id="panel-canvas-${i}"></canvas><div class="shared-crosshair-v" id="shared-crosshair-${i}"></div>
+        <canvas class="panel-overlay-canvas" id="panel-canvas-${i}"></canvas>
       </div>
       <div class="pane-splitter" id="splitter-1-${i}"></div>
       <div class="pane-box pane-rsi" id="pane-rsi-${i}"></div>
       <div class="pane-splitter" id="splitter-2-${i}"></div>
       <div class="pane-box pane-rs" id="pane-rs-${i}"><div class="rs-pane-title">Relative Strength</div></div>
       <div class="pane-box pane-axis" id="pane-axis-${i}"></div>
+      <div class="unified-crosshair-v" id="unified-crosshair-${i}">
+        <div class="unified-crosshair-date" id="unified-crosshair-date-${i}"></div>
+      </div>
     `;
 
     panelElem.appendChild(topBar);
@@ -1336,6 +1367,7 @@ function rebuildGridSystem() {
     panelsArray.push(inst);
 
     initPaneSplitterDrag(i);
+    setupUnifiedCrosshairEngine(inst);
   }
 
   if (currentSymbol) {
@@ -1367,9 +1399,6 @@ function updateTimeScaleVisibility(panel) {
   if (splitter1) splitter1.style.display = showRsi ? 'block' : 'none';
   if (splitter2) splitter2.style.display = showRs ? 'block' : 'none';
 
-  // ONE common X-axis for the ENTIRE panel. It is always the bottom pane.
-  // Price, RSI, Relative Strength and any future indicator panes do not render
-  // their own time axis. The dedicated bottom axis chart is the sole owner.
   [panel.priceChart, panel.rsiChart, panel.rsChart].forEach(c => {
     if (!c) return;
     c.timeScale().applyOptions({
@@ -1385,18 +1414,6 @@ function updateTimeScaleVisibility(panel) {
     tickMarkFormatter:(time)=>formatXAxisDate(time), uniformDistribution:true, rightOffset:0,
     borderColor:isDark?'#1e2d3d':'#e0e3eb'
   });
-  panel.rsiChart.timeScale().applyOptions({
-    visible:false, height:0,
-    timeVisible:false, secondsVisible:false, ticksVisible:false,
-    tickMarkFormatter:(time)=>formatXAxisDate(time), uniformDistribution:true, rightOffset:0,
-    borderColor:isDark?'#1e2d3d':'#e0e3eb'
-  });
-  panel.rsChart.timeScale().applyOptions({
-    visible:false, height:0,
-    timeVisible:false, secondsVisible:false, ticksVisible:false,
-    tickMarkFormatter:(time)=>formatXAxisDate(time), uniformDistribution:true, rightOffset:0,
-    borderColor:isDark?'#1e2d3d':'#e0e3eb'
-  });
 }
 
 function createPanelChartInstance(index, tf) {
@@ -1405,6 +1422,8 @@ function createPanelChartInstance(index, tf) {
   if (currentScaleMode === 'log') scaleMode = LightweightCharts.PriceScaleMode.Logarithmic;
   else if (currentScaleMode === 'pct') scaleMode = LightweightCharts.PriceScaleMode.Percentage;
 
+  // Horizontal price crosshairs on right scales are kept active,
+  // while individual vertical lines are turned OFF in favor of our unified crosshair.
   const baseChartOpts = {
     layout: { background: { color: 'transparent' }, textColor: isDark ? '#8a9ab0' : '#707a8a', fontFamily: "'JetBrains Mono', monospace", fontSize: 10 },
     grid: { vertLines: { visible: false }, horzLines: { visible: false } },
@@ -1413,17 +1432,21 @@ function createPanelChartInstance(index, tf) {
       minimumWidth: 68
     },
     timeScale: {
-      visible: true,
+      visible: false,
       timeVisible: false,
       secondsVisible: false,
-      ticksVisible: true,
+      ticksVisible: false,
       uniformDistribution: true,
       rightOffset: 0,
       tickMarkFormatter: (time) => formatXAxisDate(time),
       borderColor: isDark ? '#1e2d3d' : '#e0e3eb'
     },
     localization: { dateFormat: 'dd MMM yy' },
-    crosshair: { mode: LightweightCharts.CrosshairMode.Normal, vertLine: { visible: true, labelVisible: true }, horzLine: { visible: true, labelVisible: true } },
+    crosshair: { 
+      mode: LightweightCharts.CrosshairMode.Normal, 
+      vertLine: { visible: false, labelVisible: false }, 
+      horzLine: { visible: true, labelVisible: true } 
+    },
     autoSize: true,
   };
 
@@ -1445,32 +1468,14 @@ function createPanelChartInstance(index, tf) {
 
   const rsiContainer = document.getElementById(`pane-rsi-${index}`);
   const rsiC = LightweightCharts.createChart(rsiContainer, {
-    ...baseChartOpts,
-    timeScale: {
-      borderColor: isDark ? '#1e2d3d' : '#e0e3eb',
-      timeVisible: false,
-      secondsVisible: false,
-      ticksVisible: false,
-      visible: false,
-      rightOffset: 0,
-      barSpacing: 6,
-      fixLeftEdge: false,
-      lockVisibleTimeRangeOnResize: true,
-      uniformDistribution: true,
-      tickMarkFormatter: (time) => formatXAxisDate(time)
-    },
-    localization: { dateFormat: 'dd MMM yy' }
+    ...baseChartOpts
   });
 
   const rsContainer = document.getElementById(`pane-rs-${index}`);
   const rsC = LightweightCharts.createChart(rsContainer, {
-    ...baseChartOpts,
-    timeScale: { borderColor:isDark?'#1e2d3d':'#e0e3eb', timeVisible:false, secondsVisible:false, ticksVisible:false, visible:false, rightOffset:0, barSpacing:6, fixLeftEdge:false, lockVisibleTimeRangeOnResize:true, uniformDistribution:true, tickMarkFormatter:(time)=>formatXAxisDate(time) },
-    localization:{dateFormat:'dd MMM yy'}
+    ...baseChartOpts
   });
 
-  // Dedicated common time-axis chart. It is rendered AFTER all indicator panes,
-  // so the X-axis is physically the bottom-most element of the panel.
   const axisContainer = document.getElementById(`pane-axis-${index}`);
   const axisC = LightweightCharts.createChart(axisContainer, {
     layout: { background: { color: 'transparent' }, textColor: isDark ? '#8a9ab0' : '#707a8a', fontFamily: "'JetBrains Mono', monospace", fontSize: 10 },
@@ -1478,13 +1483,10 @@ function createPanelChartInstance(index, tf) {
     leftPriceScale: { visible: false },
     rightPriceScale: { visible: false },
     timeScale: { visible:true, timeVisible:false, secondsVisible:false, ticksVisible:true, uniformDistribution:true, rightOffset:0, borderColor:isDark?'#1e2d3d':'#e0e3eb', tickMarkFormatter:(time)=>formatXAxisDate(time) },
-    crosshair: { mode: LightweightCharts.CrosshairMode.Normal, vertLine: { visible: true, labelVisible: true }, horzLine: { visible: false, labelVisible: false } },
+    crosshair: { mode: LightweightCharts.CrosshairMode.Normal, vertLine: { visible: false, labelVisible: false }, horzLine: { visible: false, labelVisible: false } },
     autoSize: true
   });
   const axisSeries = axisC.addLineSeries({ color:'rgba(0,0,0,0)', lineWidth:1, priceLineVisible:false, lastValueVisible:false, visible:false });
-
-  rsiC.applyOptions({crosshair:{vertLine:{visible:false,labelVisible:false},horzLine:{visible:true,labelVisible:true}}});
-  rsC.applyOptions({crosshair:{vertLine:{visible:false,labelVisible:false},horzLine:{visible:true,labelVisible:true}}});
 
   const canvas = document.getElementById(`panel-canvas-${index}`);
 
@@ -1513,110 +1515,6 @@ function createPanelChartInstance(index, tf) {
 
   ensureSeriesType(instObj);
 
-  const getNearestCandle = (candles, targetTime) => {
-    if (!candles || !candles.length || targetTime == null) return null;
-    let lo = 0, hi = candles.length - 1;
-    while (lo < hi) {
-      const mid = (lo + hi) >> 1;
-      if (Number(candles[mid].time) < Number(targetTime)) lo = mid + 1;
-      else hi = mid;
-    }
-    const a = candles[lo];
-    const b = candles[Math.max(0, lo - 1)];
-    return Math.abs(Number(a.time) - Number(targetTime)) <
-      Math.abs(Number(b.time) - Number(targetTime)) ? a : b;
-  };
-
-  const getNearestRSIValue = (inst, targetTime) => {
-    const values = inst.rsiValueByTime;
-    if (!values || !values.length || targetTime == null) return 50;
-    const c = getNearestCandle(values, targetTime);
-    return c && typeof c.value === 'number' ? c.value : 50;
-  };
-
-  let isSyncingCrosshair = false;
-  const sharedCrosshair = document.getElementById(`shared-crosshair-${index}`);
-  const updateSharedCrosshair = (param) => {
-    if (!sharedCrosshair) return;
-    if (!param || !param.point || param.point.x == null || !param.time) {
-      sharedCrosshair.style.display='none'; return;
-    }
-    sharedCrosshair.style.left = `${Math.max(0,param.point.x)}px`;
-    sharedCrosshair.style.display='block';
-  };
-
-  const clearSyncedCrosshair = () => {
-    try { priceC.clearCrosshairPosition(); } catch(e) {}
-    try { rsiC.clearCrosshairPosition(); } catch(e) {}
-    try { rsC.clearCrosshairPosition(); } catch(e) {}
-  };
-
-  const syncCrosshairAtX = (sourceChart, targetChart, param, targetSeries, targetValueFn) => {
-    if (isSyncingCrosshair || !param || !param.point || !targetSeries) return;
-    if (param.point.x == null || param.point.y == null) return;
-    try {
-      isSyncingCrosshair = true;
-      const x = param.point.x;
-      const targetTime = targetChart.timeScale().coordinateToTime(x);
-      if (targetTime == null) return;
-      const targetValue = targetValueFn(targetTime);
-      if (typeof targetValue !== 'number' || !isFinite(targetValue)) return;
-      targetChart.setCrosshairPosition(targetValue, targetTime, targetSeries);
-    } catch(e) {
-    } finally {
-      isSyncingCrosshair = false;
-    }
-  };
-
-  priceC.subscribeCrosshairMove(param => {
-    updateSharedCrosshair(param);
-    onCrosshairMove(param, instObj.candleSeries, volS);
-    if (!param || !param.point || !instObj.candleSeries || !param.time) {
-      clearSyncedCrosshair(); return;
-    }
-    const candle = param.seriesData && param.seriesData.get(instObj.candleSeries);
-    const priceValue = candle ? (typeof candle.close === 'number' ? candle.close : candle.value) : null;
-    if (typeof priceValue === 'number') {
-      try { priceC.setCrosshairPosition(priceValue, param.time, instObj.candleSeries); } catch(e){}
-    }
-    syncCrosshairAtX(priceC, rsiC, param, instObj.rsiSeries, targetTime => getNearestRSIValue(instObj, targetTime));
-    syncCrosshairAtX(priceC, rsC, param, instObj.rsSeries, targetTime => getNearestRSValue(instObj, targetTime));
-  });
-
-  rsiC.subscribeCrosshairMove(param => {
-    updateSharedCrosshair(param);
-    if (!param || !param.point || !instObj.candleSeries || !param.time) {
-      clearSyncedCrosshair(); return;
-    }
-    const rsiBar = instObj.rsiSeries && param.seriesData && param.seriesData.get(instObj.rsiSeries);
-    const rsiValue = rsiBar && typeof rsiBar.value === 'number' ? rsiBar.value : getNearestRSIValue(instObj, param.time);
-    if (typeof rsiValue === 'number') {
-      try { rsiC.setCrosshairPosition(rsiValue, param.time, instObj.rsiSeries); } catch(e){}
-    }
-    syncCrosshairAtX(rsiC, priceC, param, instObj.candleSeries, targetTime => {
-      const candleData = aggregate(instObj.rawDailyCandles, instObj.interval) || [];
-      const candle = getNearestCandle(candleData, targetTime);
-      return candle && typeof candle.close === 'number' ? candle.close : null;
-    });
-  });
-
-  const getNearestRSValue = (inst, targetTime) => {
-    const values = inst.rsValueByTime;
-    if (!values || !values.length || targetTime == null) return 100;
-    let lo=0, hi=values.length-1;
-    while(lo<hi){ const mid=(lo+hi)>>1; if(Number(values[mid].time)<Number(targetTime)) lo=mid+1; else hi=mid; }
-    const a=values[lo], b=values[Math.max(0,lo-1)];
-    return Math.abs(Number(a.time)-Number(targetTime)) < Math.abs(Number(b.time)-Number(targetTime)) ? a.value : b.value;
-  };
-  rsC.subscribeCrosshairMove(param => {
-    updateSharedCrosshair(param);
-    if (!param || !param.point || !instObj.candleSeries || !param.time) { clearSyncedCrosshair(); return; }
-    const rsBar = instObj.rsSeries && param.seriesData && param.seriesData.get(instObj.rsSeries);
-    const rsValue = rsBar && typeof rsBar.value === 'number' ? rsBar.value : getNearestRSValue(instObj,param.time);
-    if (typeof rsValue === 'number') { try { rsC.setCrosshairPosition(rsValue,param.time,instObj.rsSeries); } catch(e){} }
-    syncCrosshairAtX(rsC,priceC,param,instObj.candleSeries,targetTime=>{ const cd=aggregate(instObj.rawDailyCandles,instObj.interval)||[]; const c=getNearestCandle(cd,targetTime); return c&&typeof c.close==='number'?c.close:null; });
-  });
-
   let isSyncing = false;
   const syncPanes = (source) => {
     source.timeScale().subscribeVisibleLogicalRangeChange(range => {
@@ -1634,6 +1532,77 @@ function createPanelChartInstance(index, tf) {
   updateTimeScaleVisibility(instObj);
 
   return instObj;
+}
+
+/* ============ CLEAN UNIFIED CROSSHAIR ENGINE ============ */
+function setupUnifiedCrosshairEngine(instObj) {
+  const container = document.getElementById(`panel-chart-${instObj.index}`);
+  const crosshair = document.getElementById(`unified-crosshair-${instObj.index}`);
+  const dateBadge = document.getElementById(`unified-crosshair-date-${instObj.index}`);
+  if (!container || !crosshair || !dateBadge) return;
+
+  container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+
+    // Time translation via master chart timescale
+    const time = instObj.priceChart.timeScale().coordinateToTime(mouseX);
+    if (!time) {
+      crosshair.style.display = 'none';
+      if (instObj.index === 0) {
+        const box = document.getElementById('ohlc-box');
+        if (box) box.style.display = 'none';
+      }
+      return;
+    }
+
+    // Snap cleanly to candle center coordinate
+    const snapX = instObj.priceChart.timeScale().timeToCoordinate(time);
+    const finalX = (snapX !== null && Number.isFinite(snapX)) ? snapX : mouseX;
+
+    crosshair.style.left = `${Math.round(finalX)}px`;
+    crosshair.style.display = 'block';
+
+    // Highlight active candle's date at the bottom axis
+    dateBadge.textContent = formatXAxisDate(time);
+
+    // Update top OHLC box
+    if (instObj.index === 0) {
+      const data = aggregate(instObj.rawDailyCandles, instObj.interval);
+      const candle = data.find(c => String(c.time) === String(time));
+      if (candle) updateOHLCBox(candle);
+    }
+  });
+
+  container.addEventListener('mouseleave', () => {
+    crosshair.style.display = 'none';
+    if (instObj.index === 0) {
+      const box = document.getElementById('ohlc-box');
+      if (box) box.style.display = 'none';
+    }
+  });
+}
+
+function updateOHLCBox(bar) {
+  const box = document.getElementById('ohlc-box');
+  if (!box || !bar) return;
+
+  const open = Number(bar.open), high = Number(bar.high), low = Number(bar.low), close = Number(bar.close);
+  const chg = close - open;
+  const chgPct = open ? (chg / open * 100) : 0;
+  const cls = chg >= 0 ? 'lg' : 'lr';
+
+  box.style.display = 'flex';
+  box.innerHTML = `
+    <b style="color:var(--text);">${currentSymbol || ''}</b>
+    <span style="color:var(--border);">|</span>
+    <span>O <b style="color:var(--text);">${open.toFixed(2)}</b></span>
+    <span>H <b style="color:var(--text);">${high.toFixed(2)}</b></span>
+    <span>L <b style="color:var(--text);">${low.toFixed(2)}</b></span>
+    <span>C <b style="color:var(--text);">${close.toFixed(2)}</b></span>
+    <span class="${cls}">${chg>=0?'+':''}${chg.toFixed(2)} (${chgPct>=0?'+':''}${chgPct.toFixed(2)}%)</span>
+    ${bar.volume !== undefined ? '<span style="color:var(--border);">|</span> Vol <b style="color:var(--text);">' + fmtVol(bar.volume) + '</b>' : ''}
+  `;
 }
 
 function initPaneSplitterDrag(index) {
@@ -1660,7 +1629,7 @@ function initPaneSplitterDrag(index) {
 
     const inst = panelsArray[index];
     if (inst) {
-      [inst.priceChart, inst.rsiChart].forEach(c => {
+      [inst.priceChart, inst.rsiChart, inst.rsChart, inst.axisChart].forEach(c => {
         try { c.applyOptions({ width: container.clientWidth }); } catch(err){}
       });
       drawPanelOverlays(inst);
@@ -1690,7 +1659,7 @@ function toggleTheme() {
 
   const isDark = currentTheme === 'dark';
   panelsArray.forEach(p => {
-    [p.priceChart, p.rsiChart].forEach(c => {
+    [p.priceChart, p.rsiChart, p.rsChart, p.axisChart].forEach(c => {
       if (c) {
         c.applyOptions({
           layout: { textColor: isDark ? '#8a9ab0' : '#707a8a' },
@@ -1722,7 +1691,7 @@ function navigateStockKeyboard(direction) {
 
 function initSystem(){
   rebuildGridSystem();
-  fetchPriceBandsData(); // FETCH PRICE BANDS & SURVEILLANCE STAGES ON INIT
+  fetchPriceBandsData();
 
   const container = document.getElementById('chart-grid-container');
   if (container) {
@@ -1733,9 +1702,6 @@ function initSystem(){
   window.addEventListener('keydown', handleGlobalKeyDown);
   window.addEventListener('resize', () => {
     if (panelsArray[0]) requestAnimationFrame(() => positionPocketPivotStatsWidget(panelsArray[0]));
-  });
-
-  window.addEventListener('resize', () => {
     panelsArray.forEach(p => {
       const elem = document.getElementById(`panel-chart-${p.index}`);
       if (elem) {
@@ -1958,35 +1924,6 @@ function getTimeFromXCoordinate(x, panel) {
 function clearDrawings(){
   userDrawings = []; drawingState.isDrawing = false; drawingState.startPoint = null;
   saveDrawingsToLocalStorage(); hideSelectiveDeleteBtn(); rebuildAllPanels();
-}
-
-/* ============ COMPACT OHLC BOX READOUT ============ */
-function onCrosshairMove(param, cSeries, vSeries){
-  const box = document.getElementById('ohlc-box');
-  if (!param || !param.time || !param.seriesData || !param.seriesData.get(cSeries)) {
-    box.style.display = 'none'; return;
-  }
-  const bar = param.seriesData.get(cSeries);
-  const volBar = param.seriesData.get(vSeries);
-  
-  let open = bar.open, high = bar.high, low = bar.low, close = bar.close;
-  if (bar.value !== undefined) { open = high = low = close = bar.value; }
-
-  const chg = close - open;
-  const chgPct = open ? (chg / open * 100) : 0;
-  const cls = chg >= 0 ? 'lg' : 'lr';
-  
-  box.style.display = 'flex';
-  box.innerHTML = `
-    <b style="color:var(--text);">${currentSymbol || ''}</b>
-    <span style="color:var(--border);">|</span>
-    <span>O <b style="color:var(--text);">${open.toFixed(2)}</b></span>
-    <span>H <b style="color:var(--text);">${high.toFixed(2)}</b></span>
-    <span>L <b style="color:var(--text);">${low.toFixed(2)}</b></span>
-    <span>C <b style="color:var(--text);">${close.toFixed(2)}</b></span>
-    <span class="${cls}">${chg>=0?'+':''}${chg.toFixed(2)} (${chgPct>=0?'+':''}${chgPct.toFixed(2)}%)</span>
-    ${volBar ? '<span style="color:var(--border);">|</span> Vol <b style="color:var(--text);">'+fmtVol(volBar.value)+'</b>' : ''}
-  `;
 }
 
 function fmtVol(v){
@@ -2367,7 +2304,7 @@ function candleCacheKey(symbol, type){ return `${type || 'stock'}:${symbol}`; }
 
 function openCandleCacheDB(){
   if (candleDbPromise) return candleDbPromise;
-  candleDbPromise = new Promise((resolve, reject) => {
+  candleDbPromise = new Promise((resolve) => {
     try {
       if (!window.indexedDB) { resolve(null); return; }
       const req = indexedDB.open(CANDLE_DB_NAME, 1);
@@ -2457,7 +2394,6 @@ async function refreshSymbolCandlesInBackground(symbol, type='stock'){
       try { sessionStorage.setItem(`MICKKK_CANDLES_${key}`, JSON.stringify(candles)); } catch(e){}
       await writeCandleCache(symbol,type,candles);
     } catch(e) {
-      // Static repository data is authoritative for historical charting.
     } finally {
       delete symbolCandleRefreshPromise[key];
     }
@@ -2501,7 +2437,6 @@ async function fetchSymbolCandles(symbol, type='stock') {
     try {
       return await fetchFreshCandlesFromStatic(symbol,type);
     } catch(staticErr) {
-      // Keep the existing API as a safety fallback if a static file is unavailable.
       if (type === 'stock') return await fetchFreshCandlesFromServer(symbol);
       throw staticErr;
     }
@@ -2621,7 +2556,7 @@ function aggregate(candles, interval){
   return result;
 }
 
-/* ============ PARALLEL ASYNC REBUILD ALL PANELS ============ */
+/* ============ REBUILD ALL PANELS ============ */
 async function rebuildAllPanels() {
   await Promise.all(panelsArray.map(p => rebuildPanelChart(p)));
   const primary = panelsArray[0];
@@ -2642,7 +2577,6 @@ async function rebuildPanelChart(panel) {
     const data = aggregate(rawCandles, panel.interval);
     if (!data || !data.length) return;
 
-    // Feed the same candle timestamps to the dedicated bottom X-axis.
     if (panel.axisSeries) {
       panel.axisSeries.setData(data.map((d,i) => ({ time:d.time, value:i + 1 })));
     }
@@ -3384,9 +3318,6 @@ async function renderRelativeStrengthPane(data,panel){
     const benchRaw=await fetchSymbolCandles(benchmarkSymbol,'index');
     panel.benchmarkCandles=benchRaw||[];
 
-    // IMPORTANT: aggregate both instruments with the SAME chart interval and
-    // only keep timestamps that exist in BOTH series. This guarantees that the
-    // last RS point lands on the same candle/time as the main chart.
     const stockData=aggregate(panel.rawDailyCandles || data, panel.interval) || data || [];
     const benchData=aggregate(benchRaw || [], panel.interval) || [];
     if(!stockData.length || !benchData.length){return;}
@@ -3402,7 +3333,6 @@ async function renderRelativeStrengthPane(data,panel){
     }
     if(!common.length) return;
 
-    // Normalize to 100 at the first common observation.
     const base=common[0].ratio || 1;
     const rsData=common.map(x=>({time:x.time,value:+(x.ratio/base*100).toFixed(4)}));
     panel.rsValueByTime=rsData;
@@ -3425,8 +3355,6 @@ async function renderRelativeStrengthPane(data,panel){
 
     if(!panel.rsBaseline) panel.rsBaseline=panel.rsSeries.createPriceLine({price:100,color:'#7f8c8d',lineWidth:1,lineStyle:LightweightCharts.LineStyle.Dashed,axisLabelVisible:false,title:'100'});
 
-    // Re-apply the exact main-chart logical range after the async benchmark
-    // finishes so RS cannot drift to a different latest candle.
     try{
       const range=panel.priceChart.timeScale().getVisibleLogicalRange();
       if(range) panel.rsChart.timeScale().setVisibleLogicalRange(range);
@@ -3478,7 +3406,6 @@ function drawCPROverlay(panel,data){
   const chartData=aggregate(panel.rawDailyCandles || data, panel.interval) || data || [];
   if(!chartData.length) return;
 
-  // User requested CPR only over the latest 20 chart candles.
   const visibleCandles=chartData.slice(Math.max(0,chartData.length-20));
   const firstTime=visibleCandles[0]?.time;
   const lastTime=visibleCandles[visibleCandles.length-1]?.time;
@@ -3589,7 +3516,7 @@ function resetToDefaults(){
   updateEMAConfig(); updateSmartBarConfig(); updateVolMAConfig(); updateRSIConfig(); updateRelativeStrengthConfig(); updateCPRConfig(); updateGapConfig(); updateMCPConfig(); updateATRExtConfig();
 }
 
-/* ============ MERGED INFO CARD (52W + EMAs + ATR + CIRCUIT BANDS + GSM SURVEILLANCE) ============ */
+/* ============ MERGED INFO CARD ============ */
 function renderCombinedInfoCard(data){
   if (!data || !data.length) return;
   const infoCard = document.getElementById('widget-combined-info');
@@ -3632,7 +3559,6 @@ function renderCombinedInfoCard(data){
     }
     const atrPct = close ? ((atr / close) * 100) : 0;
 
-    // LOOKUP PRICE BAND & GSM SURVEILLANCE STAGE FROM CACHE
     const bandInfo = priceBandsMap[currentSymbol.toUpperCase()];
     const rawBand = bandInfo ? bandInfo.band : '20';
     const bandDisplay = (rawBand === 'NO BAND' || rawBand === '20') ? '20%' : `${rawBand}%`;
