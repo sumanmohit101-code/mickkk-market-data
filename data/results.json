@@ -1,16 +1,24 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-02T17:00:49.908049+05:30",
+  "updatedAt": "2026-09-03T14:33:16.365001+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1244,
+  "symbolCount": 1245,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [],
+  "tomorrow": [
+    {
+      "symbol": "DHOOTTRANS",
+      "company": "Dhoot Transmission Limited",
+      "date": "2026-09-04",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    }
+  ],
   "thisWeek": [
     {
       "symbol": "DHOOTTRANS",
@@ -48,6 +56,13 @@
       "date": "2026-09-07",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "KOTYARK",
+      "company": "Kotyark Industries Limited",
+      "date": "2026-09-07",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     },
     {
       "symbol": "SHIPROCKET",
@@ -5856,6 +5871,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "KOTYARK",
+      "company": "Kotyark Industries Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-07",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "KOTYARK",
+          "company": "Kotyark Industries Limited",
+          "date": "2026-09-07",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
