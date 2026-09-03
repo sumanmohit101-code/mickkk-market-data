@@ -1364,19 +1364,24 @@ function updateTimeScaleVisibility(panel) {
   if (splitter1) splitter1.style.display = showRsi ? 'block' : 'none';
   if (splitter2) splitter2.style.display = showRs ? 'block' : 'none';
 
+  // ONE X-axis for the whole panel. The main price chart owns the time axis.
+  // Indicator panes (RSI / Relative Strength / any future indicator) never
+  // render their own time axis, so there is no duplicate date/time scale.
   panel.priceChart.timeScale().applyOptions({
-    visible: !(showRsi || showRs), height: (showRsi || showRs) ? 0 : 28,
-    timeVisible:false, secondsVisible:false, ticksVisible:!(showRsi || showRs),
+    visible:true, height:28,
+    timeVisible:false, secondsVisible:false, ticksVisible:true,
     tickMarkFormatter:(time)=>formatXAxisDate(time), uniformDistribution:true, rightOffset:0,
     borderColor:isDark?'#1e2d3d':'#e0e3eb'
   });
   panel.rsiChart.timeScale().applyOptions({
-    visible:showRsi, height:showRsi?28:0, timeVisible:false, secondsVisible:false, ticksVisible:showRsi,
+    visible:false, height:0,
+    timeVisible:false, secondsVisible:false, ticksVisible:false,
     tickMarkFormatter:(time)=>formatXAxisDate(time), uniformDistribution:true, rightOffset:0,
     borderColor:isDark?'#1e2d3d':'#e0e3eb'
   });
   panel.rsChart.timeScale().applyOptions({
-    visible:showRs, height:showRs?28:0, timeVisible:false, secondsVisible:false, ticksVisible:showRs,
+    visible:false, height:0,
+    timeVisible:false, secondsVisible:false, ticksVisible:false,
     tickMarkFormatter:(time)=>formatXAxisDate(time), uniformDistribution:true, rightOffset:0,
     borderColor:isDark?'#1e2d3d':'#e0e3eb'
   });
@@ -1433,8 +1438,8 @@ function createPanelChartInstance(index, tf) {
       borderColor: isDark ? '#1e2d3d' : '#e0e3eb',
       timeVisible: false,
       secondsVisible: false,
-      ticksVisible: true,
-      visible: true,
+      ticksVisible: false,
+      visible: false,
       rightOffset: 0,
       barSpacing: 6,
       fixLeftEdge: false,
@@ -1448,7 +1453,7 @@ function createPanelChartInstance(index, tf) {
   const rsContainer = document.getElementById(`pane-rs-${index}`);
   const rsC = LightweightCharts.createChart(rsContainer, {
     ...baseChartOpts,
-    timeScale: { borderColor:isDark?'#1e2d3d':'#e0e3eb', timeVisible:false, secondsVisible:false, ticksVisible:false, visible:true, rightOffset:0, barSpacing:6, fixLeftEdge:false, lockVisibleTimeRangeOnResize:true, uniformDistribution:true, tickMarkFormatter:(time)=>formatXAxisDate(time) },
+    timeScale: { borderColor:isDark?'#1e2d3d':'#e0e3eb', timeVisible:false, secondsVisible:false, ticksVisible:false, visible:false, rightOffset:0, barSpacing:6, fixLeftEdge:false, lockVisibleTimeRangeOnResize:true, uniformDistribution:true, tickMarkFormatter:(time)=>formatXAxisDate(time) },
     localization:{dateFormat:'dd MMM yy'}
   });
 
