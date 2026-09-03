@@ -239,6 +239,9 @@ body.light-theme .ppv-table-row{background:rgba(255,255,255,0.95);}
 .pane-box { position: relative; width: 100%; min-height: 40px; overflow: hidden; }
 .pane-price { flex: 4.0; }
 .pane-rsi { flex: 1.0; min-height: 90px; }
+.pane-rs { flex: 1.0; min-height: 90px; }
+.pane-rs .rs-pane-title{position:absolute;top:5px;left:8px;z-index:5;font:600 10px var(--mono);color:var(--muted);pointer-events:none;background:rgba(8,11,15,.55);padding:2px 5px;border-radius:3px;}
+body.light-theme .pane-rs .rs-pane-title{background:rgba(255,255,255,.65);}
 
 .pane-splitter {
   height: 1px; background: var(--border); cursor: row-resize;
@@ -367,7 +370,9 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
 .chart-toolbar{padding-right:12px !important;}
 .watchlist-panel{overflow:hidden !important;}
 .watchlist-panel .watchlist-body{scrollbar-width:thin;}
-.watchlist-toggle{border-radius:7px !important;min-width:72px;justify-content:center;}
+.watchlist-toggle{border-radius:7px 0 0 7px !important;min-width:30px !important;width:30px !important;height:72px;justify-content:center;font-size:18px !important;padding:0 !important;}
+.shell:not(.watchlist-open) .watchlist-toggle{position:fixed !important;right:0 !important;top:50% !important;transform:translateY(-50%) !important;border-right:0 !important;background:var(--card) !important;}
+.shell.watchlist-open .watchlist-toggle{display:none !important;}
 
 @media(max-width:860px){
   .ppv-stats-widget{font-size:9px;left:54px;}
@@ -402,7 +407,7 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
 
 <div class="shell">
   <button class="draw-bar-floating-toggle" id="floating-draw-toggle" title="Show Drawing Toolbar (👁️)" onclick="toggleDrawingToolbar()">👁️ Tools</button>
-  <button class="watchlist-toggle" id="watchlist-toggle" onclick="toggleWatchlistPanel()" title="Watchlists">☷ Lists</button>
+  <button class="watchlist-toggle" id="watchlist-toggle" onclick="toggleWatchlistPanel()" title="Open Watchlist">‹</button>
   <div class="watchlist-panel" id="watchlist-panel">
     <div class="watchlist-head">
       <select id="watchlist-select" class="watchlist-select" onchange="selectWatchlist(this.value)"></select>
@@ -709,6 +714,39 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
     </div>
 
     <div class="ind-section">
+      <div class="ind-section-title">📈 Relative Strength of Stock</div>
+      <div class="ind-option">
+        <label>Enable Relative Strength</label>
+        <label class="switch"><input type="checkbox" id="rs-en" checked onchange="updateRelativeStrengthConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl" style="width:88px;">Compare With:</span>
+        <select id="rs-benchmark" class="ema-select-width" style="flex:1;min-width:180px;" onchange="updateRelativeStrengthConfig()">
+          <option value="NIFTYSMALLCAP250">NIFTY SMALLCAP 250</option>
+        </select>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">Average:</span>
+        <input type="number" id="rs-ma-len" value="20" min="1" max="500" class="ema-input-num" onchange="updateRelativeStrengthConfig()">
+        <input type="color" id="rs-color" value="#00d4ff" class="ema-color-picker" onchange="updateRelativeStrengthConfig()">
+        <select id="rs-width" class="ema-select-width" onchange="updateRelativeStrengthConfig()"><option value="1">1px</option><option value="2" selected>2px</option><option value="3">3px</option></select>
+      </div>
+    </div>
+
+    <div class="ind-section">
+      <div class="ind-section-title">📐 CPR — Weekly & Monthly</div>
+      <div class="ind-option">
+        <label>Weekly CPR</label>
+        <label class="switch"><input type="checkbox" id="cpr-weekly-en" checked onchange="updateCPRConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ind-option">
+        <label>Monthly CPR</label>
+        <label class="switch"><input type="checkbox" id="cpr-monthly-en" checked onchange="updateCPRConfig()"><span class="slider"></span></label>
+      </div>
+      <div style="font-size:10px;color:var(--muted);line-height:1.4;margin-top:4px;">CPR levels are drawn only for the current weekly/monthly area, from the period start to the right edge.</div>
+    </div>
+
+    <div class="ind-section">
       <div class="ind-section-title">📦 Gap Detector</div>
       <div class="ind-option">
         <label>Enable Gap Detector Shaded Boxes</label>
@@ -831,6 +869,8 @@ let rsiConfig = {
   showThresholds: true, upperVal: 60, lowerVal: 40
 };
 let rsiMAConfig = { enabled: true, len: 9, color: '#ffab00', width: 1 };
+let relativeStrengthConfig = { enabled: true, benchmarkSymbol: 'NIFTYSMALLCAP250', maLen: 20, color: '#00d4ff', width: 2 };
+let cprConfig = { weekly: true, monthly: true };
 
 let smartBarConfig = {
   enabled: false, bodyEnabled: false, bodyThreshold: 4.0, bodyColor: '#2196f3',
@@ -1130,16 +1170,16 @@ function ensureSeriesType(panel) {
 
   if (currentChartType === 'bar') {
     panel.candleSeries = panel.priceChart.addBarSeries({
-      upColor: '#00e676', downColor: '#ff3d5a',
+      upColor: '#26a69a', downColor: '#ef5350',
       thinBars: false
     });
   } else if (currentChartType === 'line') {
     panel.candleSeries = panel.priceChart.addLineSeries({ color: '#00d4ff', lineWidth: 2 });
   } else {
     panel.candleSeries = panel.priceChart.addCandlestickSeries({
-      upColor: '#00e676', downColor: '#ff3d5a',
-      borderUpColor: '#00e676', borderDownColor: '#ff3d5a',
-      wickUpColor: '#00e67699', wickDownColor: '#ff3d5a99',
+      upColor: '#26a69a', downColor: '#ef5350',
+      borderUpColor: '#26a69a', borderDownColor: '#ef5350',
+      wickUpColor: '#26a69a', wickDownColor: '#ef5350',
     });
   }
 
@@ -1258,6 +1298,8 @@ function rebuildGridSystem() {
       </div>
       <div class="pane-splitter" id="splitter-1-${i}"></div>
       <div class="pane-box pane-rsi" id="pane-rsi-${i}"></div>
+      <div class="pane-splitter" id="splitter-2-${i}"></div>
+      <div class="pane-box pane-rs" id="pane-rs-${i}"><div class="rs-pane-title">Relative Strength</div></div>
     `;
 
     panelElem.appendChild(topBar);
@@ -1280,41 +1322,40 @@ function destroyPanels() {
   panelsArray.forEach(p => {
     if (p.priceChart) { try { p.priceChart.remove(); } catch(e){} }
     if (p.rsiChart) { try { p.rsiChart.remove(); } catch(e){} }
+    if (p.rsChart) { try { p.rsChart.remove(); } catch(e){} }
   });
   panelsArray = [];
 }
 
 function updateTimeScaleVisibility(panel) {
   const showRsi = rsiConfig.enabled;
+  const showRs = relativeStrengthConfig.enabled;
   const paneRsi = document.getElementById(`pane-rsi-${panel.index}`);
-  const splitter = document.getElementById(`splitter-1-${panel.index}`);
+  const paneRs = document.getElementById(`pane-rs-${panel.index}`);
+  const splitter1 = document.getElementById(`splitter-1-${panel.index}`);
+  const splitter2 = document.getElementById(`splitter-2-${panel.index}`);
   const isDark = currentTheme === 'dark';
 
   if (paneRsi) paneRsi.style.display = showRsi ? 'block' : 'none';
-  if (splitter) splitter.style.display = showRsi ? 'block' : 'none';
+  if (paneRs) paneRs.style.display = showRs ? 'block' : 'none';
+  if (splitter1) splitter1.style.display = showRsi ? 'block' : 'none';
+  if (splitter2) splitter2.style.display = showRs ? 'block' : 'none';
 
   panel.priceChart.timeScale().applyOptions({
-    visible: !showRsi,
-    height: showRsi ? 0 : 28,
-    timeVisible: false,
-    secondsVisible: false,
-    ticksVisible: !showRsi,
-    tickMarkFormatter: (time) => formatXAxisDate(time),
-    uniformDistribution: true,
-    rightOffset: 0,
-    borderColor: isDark ? '#1e2d3d' : '#e0e3eb'
+    visible: !(showRsi || showRs), height: (showRsi || showRs) ? 0 : 28,
+    timeVisible:false, secondsVisible:false, ticksVisible:!(showRsi || showRs),
+    tickMarkFormatter:(time)=>formatXAxisDate(time), uniformDistribution:true, rightOffset:0,
+    borderColor:isDark?'#1e2d3d':'#e0e3eb'
   });
-
   panel.rsiChart.timeScale().applyOptions({
-    visible: showRsi,
-    height: showRsi ? 28 : 0,
-    timeVisible: false,
-    secondsVisible: false,
-    ticksVisible: showRsi,
-    tickMarkFormatter: (time) => formatXAxisDate(time),
-    uniformDistribution: true,
-    rightOffset: 0,
-    borderColor: isDark ? '#1e2d3d' : '#e0e3eb'
+    visible:showRsi, height:showRsi?28:0, timeVisible:false, secondsVisible:false, ticksVisible:showRsi,
+    tickMarkFormatter:(time)=>formatXAxisDate(time), uniformDistribution:true, rightOffset:0,
+    borderColor:isDark?'#1e2d3d':'#e0e3eb'
+  });
+  panel.rsChart.timeScale().applyOptions({
+    visible:showRs, height:showRs?28:0, timeVisible:false, secondsVisible:false, ticksVisible:showRs,
+    tickMarkFormatter:(time)=>formatXAxisDate(time), uniformDistribution:true, rightOffset:0,
+    borderColor:isDark?'#1e2d3d':'#e0e3eb'
   });
 }
 
@@ -1381,12 +1422,20 @@ function createPanelChartInstance(index, tf) {
     localization: { dateFormat: 'dd MMM yy' }
   });
 
+  const rsContainer = document.getElementById(`pane-rs-${index}`);
+  const rsC = LightweightCharts.createChart(rsContainer, {
+    ...baseChartOpts,
+    timeScale: { borderColor:isDark?'#1e2d3d':'#e0e3eb', timeVisible:false, secondsVisible:false, ticksVisible:true, visible:true, rightOffset:0, barSpacing:6, fixLeftEdge:false, lockVisibleTimeRangeOnResize:true, uniformDistribution:true, tickMarkFormatter:(time)=>formatXAxisDate(time) },
+    localization:{dateFormat:'dd MMM yy'}
+  });
+
   const canvas = document.getElementById(`panel-canvas-${index}`);
 
   const instObj = {
     index: index,
     priceChart: priceC,
     rsiChart: rsiC,
+    rsChart: rsC,
     chart: priceC,
     candleSeries: null,
     seriesType: null,
@@ -1399,7 +1448,8 @@ function createPanelChartInstance(index, tf) {
     overlayCanvas: canvas,
     emaSeriesList: [],
     volMASeries: null,
-    rsiSeries: null, rsiMASeries: null, rsiThresholdLines: []
+    rsiSeries: null, rsiMASeries: null, rsiThresholdLines: [],
+    rsSeries: null, rsMASeries: null, rsValueByTime: [], benchmarkCandles: []
   };
 
   ensureSeriesType(instObj);
@@ -1430,6 +1480,7 @@ function createPanelChartInstance(index, tf) {
   const clearSyncedCrosshair = () => {
     try { priceC.clearCrosshairPosition(); } catch(e) {}
     try { rsiC.clearCrosshairPosition(); } catch(e) {}
+    try { rsC.clearCrosshairPosition(); } catch(e) {}
   };
 
   const syncCrosshairAtX = (sourceChart, targetChart, param, targetSeries, targetValueFn) => {
@@ -1460,6 +1511,7 @@ function createPanelChartInstance(index, tf) {
       try { priceC.setCrosshairPosition(priceValue, param.time, instObj.candleSeries); } catch(e){}
     }
     syncCrosshairAtX(priceC, rsiC, param, instObj.rsiSeries, targetTime => getNearestRSIValue(instObj, targetTime));
+    syncCrosshairAtX(priceC, rsC, param, instObj.rsSeries, targetTime => getNearestRSValue(instObj, targetTime));
   });
 
   rsiC.subscribeCrosshairMove(param => {
@@ -1478,12 +1530,28 @@ function createPanelChartInstance(index, tf) {
     });
   });
 
+  const getNearestRSValue = (inst, targetTime) => {
+    const values = inst.rsValueByTime;
+    if (!values || !values.length || targetTime == null) return 100;
+    let lo=0, hi=values.length-1;
+    while(lo<hi){ const mid=(lo+hi)>>1; if(Number(values[mid].time)<Number(targetTime)) lo=mid+1; else hi=mid; }
+    const a=values[lo], b=values[Math.max(0,lo-1)];
+    return Math.abs(Number(a.time)-Number(targetTime)) < Math.abs(Number(b.time)-Number(targetTime)) ? a.value : b.value;
+  };
+  rsC.subscribeCrosshairMove(param => {
+    if (!param || !param.point || !instObj.candleSeries || !param.time) { clearSyncedCrosshair(); return; }
+    const rsBar = instObj.rsSeries && param.seriesData && param.seriesData.get(instObj.rsSeries);
+    const rsValue = rsBar && typeof rsBar.value === 'number' ? rsBar.value : getNearestRSValue(instObj,param.time);
+    if (typeof rsValue === 'number') { try { rsC.setCrosshairPosition(rsValue,param.time,instObj.rsSeries); } catch(e){} }
+    syncCrosshairAtX(rsC,priceC,param,instObj.candleSeries,targetTime=>{ const cd=aggregate(instObj.rawDailyCandles,instObj.interval)||[]; const c=getNearestCandle(cd,targetTime); return c&&typeof c.close==='number'?c.close:null; });
+  });
+
   let isSyncing = false;
   const syncPanes = (source) => {
     source.timeScale().subscribeVisibleLogicalRangeChange(range => {
       if (isSyncing || !range) return;
       isSyncing = true;
-      [priceC, rsiC].forEach(c => {
+      [priceC, rsiC, rsC].forEach(c => {
         if (c !== source) { try { c.timeScale().setVisibleLogicalRange(range); } catch(e){} }
       });
       isSyncing = false;
@@ -2145,6 +2213,7 @@ async function loadSymbolList(){
     if (stocks.length) allSymbols = stocks;
     if (indices.length) allIndices = indices;
     updateInstrumentCounts();
+    populateRelativeStrengthIndexOptions();
 
     if (allSymbols.length && !currentSymbol) {
       loadSymbol(allSymbols[0].symbol, allSymbols[0].name, -1, 'stock');
@@ -2518,6 +2587,7 @@ async function rebuildPanelChart(panel) {
 
     renderEditableEMAs(data, panel);
     renderRSIPane(data, panel);
+    await renderRelativeStrengthPane(data, panel);
 
     updateTimeScaleVisibility(panel);
     applyRangeToPanel(panel, data);
@@ -2778,6 +2848,8 @@ function drawPanelOverlays(panel) {
 
   const data = aggregate(panel.rawDailyCandles, panel.interval);
   if (!data || !data.length) return;
+
+  drawCPROverlay(panel, data);
 
   if (emaEnvelopeEnabled && emaConfigs[0].enabled && emaConfigs[1].enabled) {
     try {
@@ -3211,6 +3283,109 @@ function updateRSIConfig(){
   if (currentSymbol) rebuildAllPanels();
 }
 
+/* ============ RELATIVE STRENGTH ENGINE ============ */
+function populateRelativeStrengthIndexOptions(){
+  const sel=document.getElementById('rs-benchmark');
+  if(!sel) return;
+  const current=relativeStrengthConfig.benchmarkSymbol || 'NIFTYSMALLCAP250';
+  const list = allIndices && allIndices.length ? allIndices : [{symbol:'NIFTYSMALLCAP250',name:'NIFTY SMALLCAP 250'}];
+  sel.innerHTML=list.map(x=>`<option value="${escapeHtml(x.symbol)}">${escapeHtml(x.name)} (${escapeHtml(x.symbol)})</option>`).join('');
+  sel.value=list.some(x=>x.symbol===current)?current:(list.find(x=>x.symbol==='NIFTYSMALLCAP250')?.symbol || list[0].symbol);
+}
+
+async function renderRelativeStrengthPane(data,panel){
+  if(!panel || !panel.rsChart) return;
+  if(!relativeStrengthConfig.enabled){
+    if(panel.rsSeries){try{panel.rsChart.removeSeries(panel.rsSeries);}catch(e){} panel.rsSeries=null;}
+    if(panel.rsMASeries){try{panel.rsChart.removeSeries(panel.rsMASeries);}catch(e){} panel.rsMASeries=null;}
+    panel.rsValueByTime=[]; updateTimeScaleVisibility(panel); return;
+  }
+  try{
+    const benchmarkSymbol=relativeStrengthConfig.benchmarkSymbol || 'NIFTYSMALLCAP250';
+    const benchRaw=await fetchSymbolCandles(benchmarkSymbol,'index');
+    panel.benchmarkCandles=benchRaw||[];
+    const stockData=aggregate(data,'D') || data;
+    const benchData=aggregate(benchRaw || [], panel.interval);
+    if(!stockData.length || !benchData.length){return;}
+    const benchMap=new Map(benchData.map(c=>[c.time,Number(c.close)]));
+    const common=[];
+    for(const c of stockData){
+      const b=benchMap.get(c.time);
+      if(Number.isFinite(Number(c.close)) && Number.isFinite(b) && b>0) common.push({time:c.time,ratio:Number(c.close)/b});
+    }
+    if(!common.length) return;
+    const base=common[0].ratio || 1;
+    const rsData=common.map(x=>({time:x.time,value:+(x.ratio/base*100).toFixed(4)}));
+    panel.rsValueByTime=rsData;
+    if(!panel.rsSeries) panel.rsSeries=panel.rsChart.addLineSeries({color:'#00d4ff',lineWidth:2,priceLineVisible:false,lastValueVisible:true,title:'RS'});
+    else panel.rsSeries.applyOptions({color:'#00d4ff',lineWidth:2});
+    panel.rsSeries.setData(rsData);
+    const maLen=Math.max(1,Number(relativeStrengthConfig.maLen)||20);
+    const maData=[]; let sum=0;
+    for(let i=0;i<rsData.length;i++){sum+=rsData[i].value;if(i>=maLen)sum-=rsData[i-maLen].value;if(i>=maLen-1)maData.push({time:rsData[i].time,value:+(sum/maLen).toFixed(4)});}
+    if(!panel.rsMASeries) panel.rsMASeries=panel.rsChart.addLineSeries({color:relativeStrengthConfig.color,lineWidth:relativeStrengthConfig.width,priceLineVisible:false,lastValueVisible:true,title:`RS MA ${maLen}`});
+    else panel.rsMASeries.applyOptions({color:relativeStrengthConfig.color,lineWidth:relativeStrengthConfig.width,title:`RS MA ${maLen}`});
+    panel.rsMASeries.setData(maData);
+    if(!panel.rsBaseline) panel.rsBaseline=panel.rsSeries.createPriceLine({price:100,color:'#7f8c8d',lineWidth:1,lineStyle:LightweightCharts.LineStyle.Dashed,axisLabelVisible:false,title:'100'});
+  }catch(e){console.warn('Relative strength error:',e);}
+}
+
+function updateRelativeStrengthConfig(){
+  relativeStrengthConfig.enabled=document.getElementById('rs-en')?.checked ?? true;
+  relativeStrengthConfig.benchmarkSymbol=document.getElementById('rs-benchmark')?.value || 'NIFTYSMALLCAP250';
+  relativeStrengthConfig.maLen=parseInt(document.getElementById('rs-ma-len')?.value)||20;
+  relativeStrengthConfig.color=document.getElementById('rs-color')?.value||'#00d4ff';
+  relativeStrengthConfig.width=parseInt(document.getElementById('rs-width')?.value)||2;
+  if(currentSymbol) rebuildAllPanels();
+}
+
+/* ============ CPR OVERLAY ENGINE ============ */
+function getCPRLevels(rawDaily, mode){
+  if(!rawDaily || !rawDaily.length) return null;
+  const groups={};
+  rawDaily.forEach(c=>{
+    const d=new Date(c.time+'T00:00:00');
+    let key;
+    if(mode==='W'){
+      const day=d.getDay(); const monday=new Date(d); monday.setDate(d.getDate()-((day+6)%7));
+      key=formatToDateOnly(monday);
+    }else key=c.time.slice(0,7)+'-01';
+    if(!groups[key]) groups[key]={key,high:Number(c.high),low:Number(c.low),close:Number(c.close)};
+    else {groups[key].high=Math.max(groups[key].high,Number(c.high));groups[key].low=Math.min(groups[key].low,Number(c.low));groups[key].close=Number(c.close);}
+  });
+  const keys=Object.keys(groups).sort();
+  if(keys.length<2) return null;
+  const prev=groups[keys[keys.length-2]], currentKey=keys[keys.length-1];
+  const p=(prev.high+prev.low+prev.close)/3, bc=(prev.high+prev.low)/2, tc=2*p-bc;
+  return {periodStart:currentKey,p,bc,tc};
+}
+
+function drawCPRLine(ctx,x1,x2,y,label,value,dash=false){
+  if(y===null || !Number.isFinite(y)) return;
+  ctx.save(); ctx.strokeStyle='rgba(255,171,0,.88)'; ctx.lineWidth=1; if(dash)ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x2,y);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='rgba(255,171,0,.95)';ctx.font='600 9px JetBrains Mono, monospace';ctx.textAlign='right';ctx.fillText(`${label} ${value.toFixed(2)}`,Math.max(x1+55,x2-6),y-3);ctx.restore();
+}
+
+function drawCPROverlay(panel,data){
+  if(!panel || !panel.overlayCanvas || (!cprConfig.weekly && !cprConfig.monthly)) return;
+  const canvas=panel.overlayCanvas,parent=canvas.parentElement;if(!parent)return;
+  const rect=parent.getBoundingClientRect(); const ctx=canvas.getContext('2d');
+  const modes=[]; if(cprConfig.weekly)modes.push('W'); if(cprConfig.monthly)modes.push('M');
+  modes.forEach(mode=>{
+    const levels=getCPRLevels(panel.rawDailyCandles,mode); if(!levels)return;
+    const xStart=panel.priceChart.timeScale().timeToCoordinate(levels.periodStart); const x1=xStart===null?0:xStart;
+    const vals=[['TC',levels.tc],['P',levels.p],['BC',levels.bc]];
+    vals.forEach((item,idx)=>{const y=panel.candleSeries.priceToCoordinate(item[1]);drawCPRLine(ctx,x1,rect.width,y,`${mode==='W'?'W':'M'} ${item[0]}`,item[1],idx===1);});
+  });
+}
+
+function updateCPRConfig(){
+  cprConfig.weekly=document.getElementById('cpr-weekly-en')?.checked ?? true;
+  cprConfig.monthly=document.getElementById('cpr-monthly-en')?.checked ?? true;
+  if(currentSymbol) rebuildAllPanels();
+}
+
 /* ============ EDITABLE EMAs ============ */
 function renderEditableEMAs(data, panel) {
   if (!data || !data.length) return;
@@ -3275,6 +3450,12 @@ function resetToDefaults(){
   document.getElementById('rsi-en').checked = true;
   document.getElementById('rsima-en').checked = true;
   document.getElementById('rsi-thresh-en').checked = true;
+  document.getElementById('rs-en').checked = true;
+  document.getElementById('rs-ma-len').value = 20;
+  document.getElementById('cpr-weekly-en').checked = true;
+  document.getElementById('cpr-monthly-en').checked = true;
+  populateRelativeStrengthIndexOptions();
+  const rsSel = document.getElementById('rs-benchmark'); if(rsSel) rsSel.value = 'NIFTYSMALLCAP250';
   document.getElementById('ind-ppv').checked = true;
   document.getElementById('ind-tables').checked = true;
 
@@ -3287,7 +3468,7 @@ function resetToDefaults(){
   currentScaleMode = 'log';
   const logBtn = document.getElementById('btn-scale-log'); const regBtn = document.getElementById('btn-scale-reg'); const pctBtn = document.getElementById('btn-scale-pct');
   if (logBtn) logBtn.classList.add('active'); if (regBtn) regBtn.classList.remove('active'); if (pctBtn) pctBtn.classList.remove('active');
-  updateEMAConfig(); updateSmartBarConfig(); updateVolMAConfig(); updateRSIConfig(); updateGapConfig(); updateMCPConfig(); updateATRExtConfig();
+  updateEMAConfig(); updateSmartBarConfig(); updateVolMAConfig(); updateRSIConfig(); updateRelativeStrengthConfig(); updateCPRConfig(); updateGapConfig(); updateMCPConfig(); updateATRExtConfig();
 }
 
 /* ============ MERGED INFO CARD (52W + EMAs + ATR + CIRCUIT BANDS + GSM SURVEILLANCE) ============ */
@@ -3411,7 +3592,8 @@ function toggleVolume(btn){
   if (currentSymbol) rebuildAllPanels();
 }
 
-function openIndicatorsModal(){ document.getElementById('ind-modal').classList.add('open'); }
+function openIndicatorsModal(){
+  populateRelativeStrengthIndexOptions(); document.getElementById('ind-modal').classList.add('open'); }
 function closeIndicatorsModal(){ document.getElementById('ind-modal').classList.remove('open'); }
 
 function toggleIndicator(key){
