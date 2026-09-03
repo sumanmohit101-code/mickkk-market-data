@@ -240,6 +240,7 @@ body.light-theme .ppv-table-row{background:rgba(255,255,255,0.95);}
 .pane-price { flex: 4.0; }
 .pane-rsi { flex: 1.0; min-height: 90px; }
 .pane-rs { flex: 1.0; min-height: 90px; }
+.pane-axis { flex: 0 0 28px; height: 28px; min-height: 28px; }
 .pane-rs .rs-pane-title{position:absolute;top:5px;left:8px;z-index:5;font:600 10px var(--mono);color:var(--muted);pointer-events:none;background:rgba(8,11,15,.55);padding:2px 5px;border-radius:3px;}
 body.light-theme .pane-rs .rs-pane-title{background:rgba(255,255,255,.65);}
 
@@ -1323,6 +1324,7 @@ function rebuildGridSystem() {
       <div class="pane-box pane-rsi" id="pane-rsi-${i}"></div>
       <div class="pane-splitter" id="splitter-2-${i}"></div>
       <div class="pane-box pane-rs" id="pane-rs-${i}"><div class="rs-pane-title">Relative Strength</div></div>
+      <div class="pane-box pane-axis" id="pane-axis-${i}"></div>
     `;
 
     panelElem.appendChild(topBar);
@@ -1346,6 +1348,7 @@ function destroyPanels() {
     if (p.priceChart) { try { p.priceChart.remove(); } catch(e){} }
     if (p.rsiChart) { try { p.rsiChart.remove(); } catch(e){} }
     if (p.rsChart) { try { p.rsChart.remove(); } catch(e){} }
+    if (p.axisChart) { try { p.axisChart.remove(); } catch(e){} }
   });
   panelsArray = [];
 }
@@ -1364,10 +1367,19 @@ function updateTimeScaleVisibility(panel) {
   if (splitter1) splitter1.style.display = showRsi ? 'block' : 'none';
   if (splitter2) splitter2.style.display = showRs ? 'block' : 'none';
 
-  // ONE X-axis for the whole panel. The main price chart owns the time axis.
-  // Indicator panes (RSI / Relative Strength / any future indicator) never
-  // render their own time axis, so there is no duplicate date/time scale.
-  panel.priceChart.timeScale().applyOptions({
+  // ONE common X-axis for the ENTIRE panel. It is always the bottom pane.
+  // Price, RSI, Relative Strength and any future indicator panes do not render
+  // their own time axis. The dedicated bottom axis chart is the sole owner.
+  [panel.priceChart, panel.rsiChart, panel.rsChart].forEach(c => {
+    if (!c) return;
+    c.timeScale().applyOptions({
+      visible:false, height:0,
+      timeVisible:false, secondsVisible:false, ticksVisible:false,
+      rightOffset:0, uniformDistribution:true,
+      borderColor:isDark?'#1e2d3d':'#e0e3eb'
+    });
+  });
+  if (panel.axisChart) panel.axisChart.timeScale().applyOptions({
     visible:true, height:28,
     timeVisible:false, secondsVisible:false, ticksVisible:true,
     tickMarkFormatter:(time)=>formatXAxisDate(time), uniformDistribution:true, rightOffset:0,
@@ -1457,6 +1469,20 @@ function createPanelChartInstance(index, tf) {
     localization:{dateFormat:'dd MMM yy'}
   });
 
+  // Dedicated common time-axis chart. It is rendered AFTER all indicator panes,
+  // so the X-axis is physically the bottom-most element of the panel.
+  const axisContainer = document.getElementById(`pane-axis-${index}`);
+  const axisC = LightweightCharts.createChart(axisContainer, {
+    layout: { background: { color: 'transparent' }, textColor: isDark ? '#8a9ab0' : '#707a8a', fontFamily: "'JetBrains Mono', monospace", fontSize: 10 },
+    grid: { vertLines: { visible: false }, horzLines: { visible: false } },
+    leftPriceScale: { visible: false },
+    rightPriceScale: { visible: false },
+    timeScale: { visible:true, timeVisible:false, secondsVisible:false, ticksVisible:true, uniformDistribution:true, rightOffset:0, borderColor:isDark?'#1e2d3d':'#e0e3eb', tickMarkFormatter:(time)=>formatXAxisDate(time) },
+    crosshair: { mode: LightweightCharts.CrosshairMode.Normal, vertLine: { visible: true, labelVisible: true }, horzLine: { visible: false, labelVisible: false } },
+    autoSize: true
+  });
+  const axisSeries = axisC.addLineSeries({ color:'rgba(0,0,0,0)', lineWidth:1, priceLineVisible:false, lastValueVisible:false, visible:false });
+
   rsiC.applyOptions({crosshair:{vertLine:{visible:false,labelVisible:false},horzLine:{visible:true,labelVisible:true}}});
   rsC.applyOptions({crosshair:{vertLine:{visible:false,labelVisible:false},horzLine:{visible:true,labelVisible:true}}});
 
@@ -1467,6 +1493,8 @@ function createPanelChartInstance(index, tf) {
     priceChart: priceC,
     rsiChart: rsiC,
     rsChart: rsC,
+    axisChart: axisC,
+    axisSeries: axisSeries,
     chart: priceC,
     candleSeries: null,
     seriesType: null,
@@ -1594,7 +1622,7 @@ function createPanelChartInstance(index, tf) {
     source.timeScale().subscribeVisibleLogicalRangeChange(range => {
       if (isSyncing || !range) return;
       isSyncing = true;
-      [priceC, rsiC, rsC].forEach(c => {
+      [priceC, rsiC, rsC, axisC].forEach(c => {
         if (c !== source) { try { c.timeScale().setVisibleLogicalRange(range); } catch(e){} }
       });
       isSyncing = false;
@@ -1602,7 +1630,7 @@ function createPanelChartInstance(index, tf) {
     });
   };
 
-  syncPanes(priceC); syncPanes(rsiC);
+  syncPanes(priceC); syncPanes(rsiC); syncPanes(rsC); syncPanes(axisC);
   updateTimeScaleVisibility(instObj);
 
   return instObj;
@@ -1711,7 +1739,7 @@ function initSystem(){
     panelsArray.forEach(p => {
       const elem = document.getElementById(`panel-chart-${p.index}`);
       if (elem) {
-        [p.priceChart, p.rsiChart].forEach(c => {
+        [p.priceChart, p.rsiChart, p.rsChart, p.axisChart].forEach(c => {
           if (c) c.applyOptions({ width: elem.clientWidth });
         });
         drawPanelOverlays(p);
@@ -2613,6 +2641,11 @@ async function rebuildPanelChart(panel) {
 
     const data = aggregate(rawCandles, panel.interval);
     if (!data || !data.length) return;
+
+    // Feed the same candle timestamps to the dedicated bottom X-axis.
+    if (panel.axisSeries) {
+      panel.axisSeries.setData(data.map((d,i) => ({ time:d.time, value:i + 1 })));
+    }
 
     ensureSeriesType(panel);
 
@@ -3643,7 +3676,7 @@ function renderCombinedInfoCard(data){
 function applyRangeToPanel(panel, data) {
   if (!panel || !data || !data.length) return;
   if (currentRange === 'ALL') {
-    [panel.priceChart, panel.rsiChart].forEach(c => { try { c.timeScale().fitContent(); } catch(e){} });
+    [panel.priceChart, panel.rsiChart, panel.rsChart, panel.axisChart].forEach(c => { try { c.timeScale().fitContent(); } catch(e){} });
     return;
   }
 
@@ -3655,11 +3688,11 @@ function applyRangeToPanel(panel, data) {
 
   try {
     const range = { from: Math.max(0, data.length - bars), to: data.length - 1 };
-    [panel.priceChart, panel.rsiChart].forEach(c => {
+    [panel.priceChart, panel.rsiChart, panel.rsChart, panel.axisChart].forEach(c => {
       try { c.timeScale().setVisibleLogicalRange(range); } catch(e){}
     });
   } catch(e) {
-    [panel.priceChart, panel.rsiChart].forEach(c => { try { c.timeScale().fitContent(); } catch(e){} });
+    [panel.priceChart, panel.rsiChart, panel.rsChart, panel.axisChart].forEach(c => { try { c.timeScale().fitContent(); } catch(e){} });
   }
 }
 
