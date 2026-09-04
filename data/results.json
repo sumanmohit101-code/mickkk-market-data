@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-03T17:00:32.925413+05:30",
+  "updatedAt": "2026-09-04T14:26:42.487147+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -12,21 +12,14 @@
   "today": [],
   "tomorrow": [
     {
-      "symbol": "DHOOTTRANS",
-      "company": "Dhoot Transmission Limited",
-      "date": "2026-09-04",
+      "symbol": "MOLBIO",
+      "company": "Molbio Diagnostics Limited",
+      "date": "2026-09-05",
       "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+      "description": "To consider and approve the Unaudited Standalone and Consolidated Financial Results for the quarter ended 30 June 2026."
     }
   ],
   "thisWeek": [
-    {
-      "symbol": "DHOOTTRANS",
-      "company": "Dhoot Transmission Limited",
-      "date": "2026-09-04",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
     {
       "symbol": "MOLBIO",
       "company": "Molbio Diagnostics Limited",
@@ -36,13 +29,6 @@
     }
   ],
   "allUpcoming": [
-    {
-      "symbol": "DHOOTTRANS",
-      "company": "Dhoot Transmission Limited",
-      "date": "2026-09-04",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
     {
       "symbol": "MOLBIO",
       "company": "Molbio Diagnostics Limited",
@@ -68,6 +54,13 @@
       "symbol": "SHIPROCKET",
       "company": "Shiprocket Limited",
       "date": "2026-09-07",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "GAJA",
+      "company": "Gaja Alternative Asset Management Limited",
+      "date": "2026-09-10",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
@@ -2744,23 +2737,6 @@
       "historyCount": 0
     },
     {
-      "symbol": "DHOOTTRANS",
-      "company": "Dhoot Transmission Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-04",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "DHOOTTRANS",
-          "company": "Dhoot Transmission Limited",
-          "date": "2026-09-04",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
-      "historyCount": 0
-    },
-    {
       "symbol": "DIACABS",
       "company": "Diamond Power Infrastructure Ltd",
       "lastResultDate": null,
@@ -3550,6 +3526,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "GAJA",
+      "company": "Gaja Alternative Asset Management Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-10",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "GAJA",
+          "company": "Gaja Alternative Asset Management Limited",
+          "date": "2026-09-10",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
