@@ -213,14 +213,14 @@
         <span class="ema-lbl">EMA 3:</span>
         <input type="number" id="ema3-len" value="55" min="1" max="500" class="ema-input-num" onchange="updateEMAConfig()">
         <input type="color" id="ema3-color" value="#4b55a2" class="ema-color-picker" onchange="updateEMAConfig()">
-        <select id="ema3-width" class="ema-select-width" onchange="updateEMAConfig()"><option value="1" selected>1px</option><option value="2">2px</option></select>
+        <select id="ema2-width" class="ema-select-width" onchange="updateEMAConfig()"><option value="1" selected>1px</option><option value="2">2px</option></select>
       </div>
       <div class="ema-row">
         <label class="switch"><input type="checkbox" id="ema4-en" checked onchange="updateEMAConfig()"><span class="slider"></span></label>
         <span class="ema-lbl">EMA 4:</span>
         <input type="number" id="ema4-len" value="200" min="1" max="500" class="ema-input-num" onchange="updateEMAConfig()">
         <input type="color" id="ema4-color" value="#f87171" class="ema-color-picker" onchange="updateEMAConfig()">
-        <select id="ema4-width" class="ema-select-width" onchange="updateEMAConfig()"><option value="1" selected>1px</option><option value="2">2px</option></select>
+        <select id="ema2-width" class="ema-select-width" onchange="updateEMAConfig()"><option value="1" selected>1px</option><option value="2">2px</option></select>
       </div>
       <div class="ind-option" style="margin-top:4px;">
         <label>EMA 9 & 21 Ribbon Fill</label>
@@ -297,7 +297,7 @@
   </div>
 </div>
 
-<!-- SCRIPTS IN ORDER -->
+<!-- SCRIPTS IN ORDER: NO DUPLICATE INLINE SCRIPT -->
 <script src="state.js"></script>
 <script src="data-service.js"></script>
 <script src="indicators.js"></script>
