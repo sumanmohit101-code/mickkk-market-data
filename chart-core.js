@@ -7,6 +7,7 @@ function changeGridFormat(fmt) {
   const container = document.getElementById('chart-grid-container');
   if (container) container.className = `chart-grid grid-${fmt}`;
   rebuildGridSystem();
+  if (currentSymbol) rebuildAllPanels();
 }
 
 function getPanelCountForFormat(fmt) {
@@ -83,12 +84,10 @@ function updateTimeScaleVisibility(panel) {
   if (s1) s1.style.display = showRsi ? 'block' : 'none';
   if (s2) s2.style.display = showRs ? 'block' : 'none';
 
-  // Upper indicator panes hide their time scale to keep one single clean date axis at the bottom
   [panel.priceChart, panel.rsiChart, panel.rsChart].forEach(c => {
     if (c) c.timeScale().applyOptions({ visible: false, height: 0, ticksVisible: false });
   });
 
-  // Dedicated bottom axis chart always remains visible
   if (panel.axisChart) {
     const isDark = currentTheme === 'dark';
     panel.axisChart.timeScale().applyOptions({
@@ -142,7 +141,6 @@ function createPanelChartInstance(index, tf) {
     crosshair: { mode: LightweightCharts.CrosshairMode.Normal, vertLine: { visible: false, labelVisible: false }, horzLine: { visible: false, labelVisible: false } },
     autoSize: true
   });
-  // Active series with transparent color so Lightweight Charts renders date marks completely
   const axisSeries = axisC.addLineSeries({ color: 'rgba(0,0,0,0)', lineWidth: 1, priceLineVisible: false, lastValueVisible: false });
 
   const canvas = document.getElementById(`panel-canvas-${index}`);
@@ -158,7 +156,6 @@ function createPanelChartInstance(index, tf) {
 
   ensureSeriesType(instObj);
 
-  // Synchronize all panes including dedicated bottom Date Axis
   let isSyncing = false;
   const syncPanes = (source) => {
     source.timeScale().subscribeVisibleLogicalRangeChange(range => {
@@ -278,7 +275,9 @@ async function rebuildAllPanels() {
   if (primary && primary.rawDailyCandles && primary.rawDailyCandles.length) {
     const dailyData = aggregate(primary.rawDailyCandles, 'D');
     renderCombinedInfoCard(dailyData);
-    renderPocketPivotStatsWidget(dailyData);
+    if (typeof renderPocketPivotStatsWidget === 'function') {
+      renderPocketPivotStatsWidget(dailyData);
+    }
   }
 }
 
@@ -292,7 +291,6 @@ async function rebuildPanelChart(panel) {
     const data = aggregate(raw, panel.interval);
     if (!data.length) return;
 
-    // Feed timestamps to dedicated bottom Date Axis
     if (panel.axisSeries) {
       panel.axisSeries.setData(data.map(d => ({ time: d.time, value: 0 })));
     }
@@ -390,6 +388,7 @@ function setPriceScaleMode(m, btn){
   btn.parentElement.querySelectorAll('.tbtn').forEach(b => b.classList.remove('active')); 
   btn.classList.add('active'); 
   rebuildGridSystem(); 
+  rebuildAllPanels();
 }
 
 function toggleVolume(btn){ 
@@ -402,6 +401,7 @@ function toggleTheme(){
   currentTheme = currentTheme === 'dark' ? 'light' : 'dark'; 
   document.body.classList.toggle('light-theme', currentTheme === 'light'); 
   rebuildGridSystem(); 
+  rebuildAllPanels();
 }
 
 function toggleDrawingToolbar(){ 
