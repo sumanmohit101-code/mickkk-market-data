@@ -388,9 +388,18 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
 .chart-toolbar{padding-right:12px !important;}
 
 /* SINGLE common crosshair for the whole panel: price + volume + RSI + RS + bottom axis. */
-.shared-crosshair-v{ display: none !important; }
-.shared-axis-date{ display: none !important; }
-  
+.shared-crosshair-v{
+  position:absolute;left:0;top:0;bottom:0;width:1px;display:none;pointer-events:none;z-index:60;
+  background:rgba(220,225,232,.9);box-shadow:0 0 0 .5px rgba(220,225,232,.18);
+}
+.shared-axis-date{
+  position:absolute;left:0;bottom:1px;transform:translateX(-50%);display:none;
+  z-index:8;pointer-events:none;white-space:nowrap;
+  background:var(--card2);border:1px solid var(--accent);color:var(--accent);
+  border-radius:3px;padding:2px 5px;font:600 9px var(--mono);
+  box-shadow:0 2px 8px rgba(0,0,0,.35);
+}
+
 /* Indicator panes use the main price chart as the single X-axis. */
 .pane-rsi,.pane-rs{overflow:hidden;}
 
@@ -1516,16 +1525,6 @@ function createPanelChartInstance(index, tf) {
   const sharedCrosshair = document.getElementById(`shared-crosshair-${index}`);
   const sharedAxisDate = document.getElementById(`shared-axis-date-${index}`);
   const panelContainer = document.getElementById(`panel-chart-${index}`);
-  
- const hideSharedCrosshair = () => {
-    if (instObj.axisChart) try { instObj.axisChart.clearCrosshairPosition(); } catch(e){}
-    if (instObj.rsiChart) try { instObj.rsiChart.clearCrosshairPosition(); } catch(e){}
-    if (instObj.rsChart) try { instObj.rsChart.clearCrosshairPosition(); } catch(e){}
-  };
-
- const sharedCrosshair = document.getElementById(`shared-crosshair-${index}`);
-  const sharedAxisDate = document.getElementById(`shared-axis-date-${index}`);
-  const panelContainer = document.getElementById(`panel-chart-${index}`);
   const hideSharedCrosshair = () => {
     if (sharedCrosshair) sharedCrosshair.style.display = 'none';
     if (sharedAxisDate) sharedAxisDate.style.display = 'none';
@@ -1572,7 +1571,7 @@ function createPanelChartInstance(index, tf) {
     panelContainer.addEventListener('mouseleave', hideSharedCrosshair);
   }
 
-    let isSyncing = false;
+  let isSyncing = false;
   const syncPanes = (source) => {
     source.timeScale().subscribeVisibleLogicalRangeChange(range => {
       if (isSyncing || !range) return;
@@ -3739,77 +3738,21 @@ async function pollLiveOnce(){
 function applyLivePrice(price){
   const primary = panelsArray[0];
   if (!primary || !primary.rawDailyCandles || !primary.rawDailyCandles.length) return;
-  const p = Number(price); 
-  if (isNaN(p) || p <= 0) return;
+  const p = Number(price); if (isNaN(p) || p <= 0) return;
+  const last = primary.rawDailyCandles[primary.rawDailyCandles.length-1];
+  const today = new Date().toISOString().slice(0,10);
 
-  const last = primary.rawDailyCandles[primary.rawDailyCandles.length - 1];
-  const prevClose = Number(last.close);
-
-  // 1. SPIKE GUARD: 20% se zyada abnormal jump reject hoga (Scale extend nahi hoga)
-  if (prevClose > 0 && Math.abs(p - prevClose) / prevClose > 0.20) {
-    console.warn(`[Live Spike Guard] Ignored abnormal tick: ₹${p} (Prev: ₹${prevClose})`);
-    return;
-  }
-
-  // 2. Indian Market Date (IST YYYY-MM-DD)
-  const now = new Date();
-  const today = now.toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
-
-  if (last.time === today || last.time >= today){
-    last.close = p; 
-    last.high = Math.max(last.open, last.high, p); 
-    last.low = Math.min(last.open, last.low, p);
+  if (last.time === today){
+    last.close = p; last.high = Math.max(Number(last.high || p), p); last.low = Math.min(Number(last.low || p), p);
   } else {
-    primary.rawDailyCandles.push({ 
-      time: today, 
-      open: last.close, 
-      high: Math.max(last.close, p), 
-      low: Math.min(last.close, p), 
-      close: p, 
-      volume: 0 
-    });
+    primary.rawDailyCandles.push({ time: today, open: last.close, high: Math.max(last.close, p), low: Math.min(last.close, p), close: p, volume: 0 });
   }
-
+  
   checkPriceAlerts(currentSymbol, p);
   updateHeader();
-
-  // 3. Update Candlestick, Volume aur BOTTOM DATE AXIS SERIES
-  panelsArray.forEach(panel => {
-    const d = aggregate(primary.rawDailyCandles, panel.interval);
-    if (!d.length) return;
-    const lastBar = d[d.length - 1];
-
-    if (panel.candleSeries) {
-      if (currentChartType === 'line') {
-        panel.candleSeries.update({ time: lastBar.time, value: lastBar.close });
-      } else {
-        panel.candleSeries.update(lastBar);
-      }
-    }
-
-    // YEH LINE BOTTOM DATE AXIS KO AAJ KI DATE DEGI
-    if (panel.axisSeries) {
-      try {
-        panel.axisSeries.update({ time: lastBar.time, value: 0 });
-      } catch(e){}
-    }
-
-    if (panel.volumeSeries && volVisible) {
-      try {
-        panel.volumeSeries.update({
-          time: lastBar.time,
-          value: lastBar.volume || 0,
-          color: lastBar.close >= lastBar.open ? '#00e67688' : '#ff3d5a88'
-        });
-      } catch(e){}
-    }
-  });
-
-  const dailyData = aggregate(primary.rawDailyCandles, 'D');
-  renderCombinedInfoCard(dailyData);
-  renderPocketPivotStatsWidget(dailyData);
+  rebuildAllPanels();
 }
-  
+
 /* ============ INIT START ============ */
 initSystem();
 loadSymbolList();
