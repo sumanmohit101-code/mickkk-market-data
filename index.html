@@ -1523,25 +1523,48 @@ function createPanelChartInstance(index, tf) {
     if (instObj.rsChart) try { instObj.rsChart.clearCrosshairPosition(); } catch(e){}
   };
 
+ const sharedCrosshair = document.getElementById(`shared-crosshair-${index}`);
+  const sharedAxisDate = document.getElementById(`shared-axis-date-${index}`);
+  const panelContainer = document.getElementById(`panel-chart-${index}`);
+  const hideSharedCrosshair = () => {
+    if (sharedCrosshair) sharedCrosshair.style.display = 'none';
+    if (sharedAxisDate) sharedAxisDate.style.display = 'none';
+  };
+
+  // Single common crosshair: mouse position is converted to the nearest MAIN candle.
+  // The same X coordinate is then used for price, RSI, RS and the bottom date axis.
   const showSharedCrosshair = (event) => {
     if (!panelContainer || !instObj.rawDailyCandles?.length || !instObj.candleSeries) return;
     const rect = panelContainer.getBoundingClientRect();
     const x = event.clientX - rect.left;
     if (x < 0 || x > rect.width) { hideSharedCrosshair(); return; }
 
-    const time = instObj.priceChart.timeScale().coordinateToTime(x);
-    if (!time) { hideSharedCrosshair(); return; }
+    const chartData = aggregate(instObj.rawDailyCandles, instObj.interval) || [];
+    if (!chartData.length) { hideSharedCrosshair(); return; }
 
-    // Sync native crosshair down to bottom date axis and indicator panes
-    if (instObj.axisChart && instObj.axisSeries) {
-      try { instObj.axisChart.setCrosshairPosition(0, time, instObj.axisSeries); } catch(e){}
+    let nearestTime = null, nearestX = null, minDist = Infinity;
+    for (const candle of chartData) {
+      const cx = instObj.priceChart.timeScale().timeToCoordinate(candle.time);
+      if (cx == null) continue;
+      const dist = Math.abs(cx - x);
+      if (dist < minDist) { minDist = dist; nearestTime = candle.time; nearestX = cx; }
     }
-    if (instObj.rsiChart && instObj.rsiSeries) {
-      try { instObj.rsiChart.setCrosshairPosition(getNearestRSIValue(instObj, time), time, instObj.rsiSeries); } catch(e){}
+    if (nearestTime == null || nearestX == null) { hideSharedCrosshair(); return; }
+
+    // The dedicated axis uses the same plot width as the main chart, so the
+    // snapped candle X-coordinate is also the exact bottom-axis highlight X.
+    const axisX = nearestX;
+
+    if (sharedCrosshair) {
+      sharedCrosshair.style.left = `${nearestX}px`;
+      sharedCrosshair.style.display = 'block';
     }
-    if (instObj.rsChart && instObj.rsSeries) {
-      try { instObj.rsChart.setCrosshairPosition(getNearestRSValue(instObj, time), time, instObj.rsSeries); } catch(e){}
+    if (sharedAxisDate) {
+      sharedAxisDate.textContent = formatXAxisDate(nearestTime);
+      sharedAxisDate.style.left = `${Math.max(45, Math.min(rect.width - 45, axisX))}px`;
+      sharedAxisDate.style.display = 'block';
     }
+
   };
 
   if (panelContainer) {
@@ -1549,7 +1572,7 @@ function createPanelChartInstance(index, tf) {
     panelContainer.addEventListener('mouseleave', hideSharedCrosshair);
   }
 
-  let isSyncing = false;
+    let isSyncing = false;
   const syncPanes = (source) => {
     source.timeScale().subscribeVisibleLogicalRangeChange(range => {
       if (isSyncing || !range) return;
