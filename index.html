@@ -1485,6 +1485,11 @@ function createPanelChartInstance(index, tf) {
     leftPriceScale: { visible: false },
     rightPriceScale: { visible: true, borderVisible: false, drawTicks: false, minimumWidth: 68 },
     timeScale: { visible:true, timeVisible:false, secondsVisible:false, ticksVisible:true, uniformDistribution:true, rightOffset:0, borderColor:isDark?'#1e2d3d':'#e0e3eb', tickMarkFormatter:(time)=>formatXAxisDate(time) },
+    crosshair: {
+      mode: LightweightCharts.CrosshairMode.Normal,
+      vertLine: { visible: true, labelVisible: true, style: LightweightCharts.LineStyle.Dashed, width: 1, color: isDark ? 'rgba(212, 228, 240, 0.45)' : 'rgba(19, 23, 34, 0.45)' },
+      horzLine: { visible: false, labelVisible: false } // YEH HORIZONTAL DOTTED LINE KO HIDE KAREGA
+    },
     autoSize: true
   });
   const axisSeries = axisC.addLineSeries({ color:'rgba(0,0,0,0)', lineWidth:1, priceLineVisible:false, lastValueVisible:false, visible:true, priceFormat:{type:'custom', formatter:()=>''} });
@@ -1698,6 +1703,14 @@ function handleGlobalKeyDown(e) {
     return;
   }
 
+  // Agar search modal pehle se khula hai toh seedha input par focus rakhein
+  const modal = document.getElementById('search-modal');
+  if (modal && modal.classList.contains('open')) {
+    const input = document.getElementById('modal-search-input');
+    if (input && document.activeElement !== input) input.focus();
+    return;
+  }
+
   if (e.key === 'ArrowUp') {
     e.preventDefault(); navigateStockKeyboard(-1); return;
   } else if (e.key === 'ArrowDown') {
@@ -1709,11 +1722,10 @@ function handleGlobalKeyDown(e) {
   }
   if (e.ctrlKey || e.altKey || e.metaKey) return;
 
+  // DIRECT TYPING: Pehla letter lekar modal kholega aur cursor ko input ke andar daal dega
   if (e.key && e.key.length === 1 && !e.repeat && /^[a-zA-Z0-9]$/.test(e.key)) {
     e.preventDefault();
-    openSearchModal(-1);
-    const input = document.getElementById('modal-search-input');
-    if (input) { input.value = e.key; filterSearchModal(); }
+    openSearchModal(-1, e.key);
   }
 }
 
@@ -2222,17 +2234,30 @@ function setSearchMode(mode){
   filterSearchModal();
 }
 
-function openSearchModal(targetPanelIdx){
+function openSearchModal(targetPanelIdx, initialChar = ''){
   searchTargetPanelIndex = targetPanelIdx !== undefined ? targetPanelIdx : -1;
-  document.getElementById('search-modal').classList.add('open');
+  const modal = document.getElementById('search-modal');
+  modal.classList.add('open');
   modalHighlightIdx = -1;
   const input = document.getElementById('modal-search-input');
   setSearchMode(searchTargetPanelIdx >= 0 && panelsArray[searchTargetPanelIdx] ? (panelsArray[searchTargetPanelIdx].instrumentType || 'stock') : currentInstrumentType);
-  if (input) { input.value = ''; input.focus(); }
-  updateInstrumentCounts();
-  renderSearchModalResults(searchMode === 'index' ? allIndices : allSymbols);
-}
+  
+  if (input) {
+    input.value = initialChar;
+    // Input box par auto-focus karein aur cursor ko aakhri me rakhein
+    setTimeout(() => {
+      input.focus();
+      input.setSelectionRange(input.value.length, input.value.length);
+    }, 30);
+  }
 
+  updateInstrumentCounts();
+  if (initialChar) {
+    filterSearchModal();
+  } else {
+    renderSearchModalResults(searchMode === 'index' ? allIndices : allSymbols);
+  }
+}
 function closeSearchModal(){ document.getElementById('search-modal').classList.remove('open'); modalHighlightIdx = -1; }
 
 function filterSearchModal(){
