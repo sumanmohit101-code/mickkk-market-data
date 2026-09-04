@@ -1548,93 +1548,18 @@ function createPanelChartInstance(index, tf) {
     panelContainer.addEventListener('mouseleave', hideSharedCrosshair);
   }
 
-  // Single matching dashed vertical line style for all panes
-  const sharedVertLine = {
-    visible: true,
-    labelVisible: false,
-    style: LightweightCharts.LineStyle.Dashed,
-    width: 1,
-    color: isDark ? 'rgba(212, 228, 240, 0.45)' : 'rgba(19, 23, 34, 0.45)'
+  let isSyncing = false;
+  const syncPanes = (source) => {
+    source.timeScale().subscribeVisibleLogicalRangeChange(range => {
+      if (isSyncing || !range) return;
+      isSyncing = true;
+      [priceC, rsiC, rsC, axisC].forEach(c => {
+        if (c !== source) { try { c.timeScale().setVisibleLogicalRange(range); } catch(e){} }
+      });
+      isSyncing = false;
+      requestAnimationFrame(() => drawPanelOverlays(instObj));
+    });
   };
-
-  // Apply dashed vertical line across Price, RSI, RS and Axis
-  priceC.applyOptions({ crosshair: { mode: LightweightCharts.CrosshairMode.Normal, vertLine: sharedVertLine, horzLine: { visible: true, labelVisible: true } } });
-  rsiC.applyOptions({ crosshair: { mode: LightweightCharts.CrosshairMode.Normal, vertLine: sharedVertLine, horzLine: { visible: true, labelVisible: true } } });
-  rsC.applyOptions({ crosshair: { mode: LightweightCharts.CrosshairMode.Normal, vertLine: sharedVertLine, horzLine: { visible: true, labelVisible: true } } });
-  axisC.applyOptions({
-    crosshair: {
-      mode: LightweightCharts.CrosshairMode.Normal,
-      vertLine: { ...sharedVertLine, labelVisible: true }, // Highlights date on bottom timescale
-      horzLine: { visible: false, labelVisible: false }
-    }
-  });
-
-  const panelContainer = document.getElementById(`panel-chart-${index}`);
-
-  const getRsiValAtTime = (t) => {
-    if (instObj.rsiValueByTime && instObj.rsiValueByTime.length) {
-      const found = instObj.rsiValueByTime.find(d => String(d.time) === String(t));
-      if (found && typeof found.value === 'number') return found.value;
-    }
-    return 50; // Visible inside RSI 0-100 scale
-  };
-
-  const getRsValAtTime = (t) => {
-    if (instObj.rsValueByTime && instObj.rsValueByTime.length) {
-      const found = instObj.rsValueByTime.find(d => String(d.time) === String(t));
-      if (found && typeof found.value === 'number') return found.value;
-    }
-    return 100; // Visible inside RS scale
-  };
-
-  const getPriceValAtTime = (t) => {
-    const cData = aggregate(instObj.rawDailyCandles, instObj.interval) || [];
-    const found = cData.find(d => String(d.time) === String(t));
-    return found ? (found.close ?? 0) : 0;
-  };
-
-  let isCrosshairSyncing = false;
-  const syncCrosshairAtTime = (time, sourceChart) => {
-    if (isCrosshairSyncing) return;
-    isCrosshairSyncing = true;
-    try {
-      if (!time) {
-        [priceC, rsiC, rsC, axisC].forEach(c => {
-          if (c && c !== sourceChart) try { c.clearCrosshairPosition(); } catch(e){}
-        });
-      } else {
-        const pVal = getPriceValAtTime(time);
-        const rsiVal = getRsiValAtTime(time);
-        const rsVal = getRsValAtTime(time);
-
-        if (priceC && sourceChart !== priceC && instObj.candleSeries) {
-          try { priceC.setCrosshairPosition(pVal, time, instObj.candleSeries); } catch(e){}
-        }
-        if (rsiC && instObj.rsiSeries) {
-          try { rsiC.setCrosshairPosition(rsiVal, time, instObj.rsiSeries); } catch(e){}
-        }
-        if (rsC && instObj.rsSeries) {
-          try { rsC.setCrosshairPosition(rsVal, time, instObj.rsSeries); } catch(e){}
-        }
-        if (axisC && instObj.axisSeries) {
-          try { axisC.setCrosshairPosition(1, time, instObj.axisSeries); } catch(e){}
-        }
-      }
-    } finally {
-      isCrosshairSyncing = false;
-    }
-  };
-
-  priceC.subscribeCrosshairMove(p => {
-    onCrosshairMove(p, instObj.candleSeries, volS);
-    syncCrosshairAtTime(p ? p.time : null, priceC);
-  });
-  rsiC.subscribeCrosshairMove(p => syncCrosshairAtTime(p ? p.time : null, rsiC));
-  rsC.subscribeCrosshairMove(p => syncCrosshairAtTime(p ? p.time : null, rsC));
-
-  if (panelContainer) {
-    panelContainer.addEventListener('mouseleave', () => syncCrosshairAtTime(null, null));
-  }
 
   syncPanes(priceC); syncPanes(rsiC); syncPanes(rsC); syncPanes(axisC);
   updateTimeScaleVisibility(instObj);
