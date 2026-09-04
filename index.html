@@ -3722,13 +3722,13 @@ function applyLivePrice(price){
   const last = primary.rawDailyCandles[primary.rawDailyCandles.length - 1];
   const prevClose = Number(last.close);
 
-  // 1. SPIKE GUARD: 20% se zyada abnormal jump aane par live tick reject hoga (Scale extend nahi hoga)
+  // 1. SPIKE GUARD: 20% se zyada abnormal jump reject hoga (Scale extend nahi hoga)
   if (prevClose > 0 && Math.abs(p - prevClose) / prevClose > 0.20) {
-    console.warn(`[Spike Guard] Ignored abnormal tick: ₹${p} (Prev: ₹${prevClose})`);
+    console.warn(`[Live Spike Guard] Ignored abnormal tick: ₹${p} (Prev: ₹${prevClose})`);
     return;
   }
 
-  // 2. Indian Market Date (IST)
+  // 2. Indian Market Date (IST YYYY-MM-DD)
   const now = new Date();
   const today = now.toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
 
@@ -3750,18 +3750,35 @@ function applyLivePrice(price){
   checkPriceAlerts(currentSymbol, p);
   updateHeader();
 
-  // 3. Smooth update without destroying zoom or chart scale
+  // 3. Update Candlestick, Volume aur BOTTOM DATE AXIS SERIES
   panelsArray.forEach(panel => {
+    const d = aggregate(primary.rawDailyCandles, panel.interval);
+    if (!d.length) return;
+    const lastBar = d[d.length - 1];
+
     if (panel.candleSeries) {
-      const d = aggregate(primary.rawDailyCandles, panel.interval);
-      if (d.length) {
-        const lastBar = d[d.length - 1];
-        if (currentChartType === 'line') {
-          panel.candleSeries.update({ time: lastBar.time, value: lastBar.close });
-        } else {
-          panel.candleSeries.update(lastBar);
-        }
+      if (currentChartType === 'line') {
+        panel.candleSeries.update({ time: lastBar.time, value: lastBar.close });
+      } else {
+        panel.candleSeries.update(lastBar);
       }
+    }
+
+    // YEH LINE BOTTOM DATE AXIS KO AAJ KI DATE DEGI
+    if (panel.axisSeries) {
+      try {
+        panel.axisSeries.update({ time: lastBar.time, value: 0 });
+      } catch(e){}
+    }
+
+    if (panel.volumeSeries && volVisible) {
+      try {
+        panel.volumeSeries.update({
+          time: lastBar.time,
+          value: lastBar.volume || 0,
+          color: lastBar.close >= lastBar.open ? '#00e67688' : '#ff3d5a88'
+        });
+      } catch(e){}
     }
   });
 
