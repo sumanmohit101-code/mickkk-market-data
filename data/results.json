@@ -1,13 +1,13 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-04T14:26:42.487147+05:30",
+  "updatedAt": "2026-09-04T17:00:53.060952+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1245,
+  "symbolCount": 1246,
   "historyCount": 0,
   "today": [],
   "tomorrow": [
@@ -63,6 +63,13 @@
       "date": "2026-09-10",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "LALITHAA",
+      "company": "Lalithaa Jewellery Mart Limited",
+      "date": "2026-09-11",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     },
     {
       "symbol": "INDIACEM",
@@ -6025,6 +6032,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "LALITHAA",
+      "company": "Lalithaa Jewellery Mart Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-11",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "LALITHAA",
+          "company": "Lalithaa Jewellery Mart Limited",
+          "date": "2026-09-11",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
