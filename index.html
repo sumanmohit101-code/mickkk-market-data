@@ -566,6 +566,21 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
   border-left:1px solid var(--border) !important;
   flex:0 0 22px !important;
 }
+  /* WATCHLIST OPEN: RESERVE SPACE FOR PANEL */
+.watchlist-dock.open{
+  width:310px !important;
+  min-width:310px !important;
+  max-width:310px !important;
+  flex:0 0 310px !important;
+}
+
+.watchlist-dock.open .watchlist-panel{
+  width:310px !important;
+  min-width:310px !important;
+  max-width:310px !important;
+  right:0 !important;
+  left:auto !important;
+}
 .watchlist-dock .watchlist-toggle{
   position:absolute !important;
   left:0 !important;
