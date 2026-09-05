@@ -179,13 +179,46 @@ body.light-theme .ohlc-box{background:rgba(255,255,255,0.92);}
 .ohlc-box b{color:var(--text);}
 .ohlc-box .lg{color:var(--green);} .ohlc-box .lr{color:var(--red);}
 
-.selective-del-btn {
-  position:absolute;z-index:35;background:var(--card);color:var(--red);
-  border:1px solid var(--red);padding:4px 10px;border-radius:4px;font-family:var(--mono);
-  font-size:10.5px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.6);
-  display:none;align-items:center;gap:4px;
+.drawing-action-btns{
+  position:absolute;
+  z-index:35;
+  display:none;
+  align-items:center;
+  gap:4px;
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:4px;
+  border-radius:5px;
+  box-shadow:0 4px 12px rgba(0,0,0,.6);
 }
-.selective-del-btn:hover { background:var(--red);color:#fff; }
+
+.drawing-action-btns button{
+  height:24px;
+  padding:2px 8px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  border-radius:4px;
+  font-family:var(--mono);
+  font-size:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.drawing-action-btns button:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+}
+
+.drawing-action-btns button.delete{
+  color:var(--red);
+  border-color:var(--red);
+}
+
+.drawing-action-btns button.delete:hover{
+  background:var(--red);
+  color:#fff;
+}
 
 /* 52W + CIRCUIT BAND INFO TABLE (TOP-RIGHT CORNER CARD) */
 .combined-info-table {
@@ -855,7 +888,10 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
   <div class="main">
     
     <div class="chart-wrap">
-      <button class="selective-del-btn" id="selective-del-btn" onclick="deleteSelectedDrawing()">🗑️ Delete</button>
+      <div class="drawing-action-btns" id="drawing-action-btns">
+  <button onclick="editSelectedDrawing()">✏️ Edit</button>
+  <button class="delete" onclick="deleteSelectedDrawing()">🗑️ Delete</button>
+</div>
 
       <div class="ohlc-box" id="ohlc-box" style="display:none"></div>
       
@@ -1323,16 +1359,53 @@ function toggleDrawingStylePanel(){
 }
 
 function applyDrawingStyle(){
-  const color = document.getElementById('drawing-color');
-  const width = document.getElementById('drawing-width');
-  const style = document.getElementById('drawing-line-style');
 
-  if(color) drawingStyle.color = color.value;
-  if(width) drawingStyle.width = parseFloat(width.value) || 2;
-  if(style) drawingStyle.style = style.value;
-
+  const colorEl = document.getElementById('drawing-color');
+  const widthEl = document.getElementById('drawing-width');
+  const styleEl = document.getElementById('drawing-line-style');
   const panel = document.getElementById('drawing-style-panel');
-  if(panel) panel.classList.remove('show');
+
+  const newColor = colorEl.value;
+  const newWidth = parseFloat(widthEl.value) || 2;
+  const newStyle = styleEl.value;
+
+  /*
+   * If an existing drawing is being edited,
+   * update that drawing only.
+   */
+  const editIndex = panel.dataset.editIndex;
+
+  if(editIndex !== undefined && editIndex !== ''){
+
+    const idx = parseInt(editIndex,10);
+
+    if(idx >= 0 && idx < userDrawings.length){
+
+      userDrawings[idx].color = newColor;
+      userDrawings[idx].width = newWidth;
+      userDrawings[idx].style = newStyle;
+
+      saveDrawingsToLocalStorage();
+      rebuildAllPanels();
+    }
+
+    delete panel.dataset.editIndex;
+    panel.classList.remove('show');
+
+    hideSelectiveDeleteBtn();
+
+    return;
+  }
+
+  /*
+   * Otherwise these settings become
+   * the default for the next drawing.
+   */
+  drawingStyle.color = newColor;
+  drawingStyle.width = newWidth;
+  drawingStyle.style = newStyle;
+
+  panel.classList.remove('show');
 }
 
 function resetDrawingStyle(){
@@ -2527,14 +2600,22 @@ function distToSegment(p, v, w) {
 }
 
 function showSelectiveDeleteBtn(x, y) {
-  const btn = document.getElementById('selective-del-btn');
+  const btn = document.getElementById('drawing-action-btns');
   if (!btn) return;
-  btn.style.left = `${x + 15}px`; btn.style.top = `${y - 10}px`; btn.style.display = 'flex';
+
+  btn.style.left = `${x + 15}px`;
+  btn.style.top = `${y - 10}px`;
+  btn.style.display = 'flex';
 }
 
 function hideSelectiveDeleteBtn() {
-  const btn = document.getElementById('selective-del-btn');
-  if (btn) btn.style.display = 'none'; selectedDrawingIdx = -1;
+  const btn = document.getElementById('drawing-action-btns');
+
+  if (btn) {
+    btn.style.display = 'none';
+  }
+
+  selectedDrawingIdx = -1;
 }
 
 function deleteSelectedDrawing() {
@@ -2545,6 +2626,33 @@ function deleteSelectedDrawing() {
   hideSelectiveDeleteBtn();
 }
 
+  function editSelectedDrawing(){
+
+  if(
+    selectedDrawingIdx === -1 ||
+    selectedDrawingIdx >= userDrawings.length
+  ){
+    return;
+  }
+
+  const d = userDrawings[selectedDrawingIdx];
+
+  const color = document.getElementById('drawing-color');
+  const width = document.getElementById('drawing-width');
+  const style = document.getElementById('drawing-line-style');
+  const panel = document.getElementById('drawing-style-panel');
+
+  if(!panel) return;
+
+  color.value = d.color || '#00d4ff';
+  width.value = d.width || 2;
+  style.value = d.style || 'solid';
+
+  panel.classList.add('show');
+
+  panel.dataset.editIndex = selectedDrawingIdx;
+}
+  
 function getTimeFromXCoordinate(x, panel) {
   const data = aggregate(panel.rawDailyCandles, panel.interval);
   if (!data || !data.length) return null;
