@@ -1674,67 +1674,121 @@ function createPanelChartInstance(index, tf) {
 function initPaneSplitterDrag(index) {
   const container = document.getElementById(`panel-chart-${index}`);
   const panePrice = document.getElementById(`pane-price-${index}`);
-  const paneRsi = document.getElementById(`pane-rsi-${index}`);
+  const paneRsi   = document.getElementById(`pane-rsi-${index}`);
+  const paneRs    = document.getElementById(`pane-rs-${index}`);
+  const paneAxis  = document.getElementById(`pane-axis-${index}`);
   const splitter1 = document.getElementById(`splitter-1-${index}`);
   const splitter2 = document.getElementById(`splitter-2-${index}`);
 
   if (!container || !panePrice) return;
 
-  let activeSplitter = null;
+  let dragMode = 0; // 0: none, 1: splitter-1 (Price/RSI), 2: splitter-2 (RSI/RS)
+  let startState = null;
 
   if (splitter1) {
     splitter1.addEventListener('mousedown', (e) => {
       e.preventDefault();
-      activeSplitter = 1;
+      dragMode = 1;
       splitter1.classList.add('dragging');
+      captureInitialHeights();
     });
   }
 
   if (splitter2) {
     splitter2.addEventListener('mousedown', (e) => {
       e.preventDefault();
-      activeSplitter = 2;
+      dragMode = 2;
       splitter2.classList.add('dragging');
+      captureInitialHeights();
     });
   }
 
+  function captureInitialHeights() {
+    const cRect = container.getBoundingClientRect();
+    const pRect = panePrice ? panePrice.getBoundingClientRect() : null;
+    const rRect = paneRsi && paneRsi.style.display !== 'none' ? paneRsi.getBoundingClientRect() : null;
+    const sRect = paneRs && paneRs.style.display !== 'none' ? paneRs.getBoundingClientRect() : null;
+
+    startState = {
+      containerTop: cRect.top,
+      containerH: cRect.height,
+      priceH: pRect ? pRect.height : 0,
+      rsiH: rRect ? rRect.height : 0,
+      rsH: sRect ? sRect.height : 0,
+    };
+  }
+
   window.addEventListener('mouseup', () => {
-    activeSplitter = null;
+    if (!dragMode) return;
+    dragMode = 0;
     if (splitter1) splitter1.classList.remove('dragging');
     if (splitter2) splitter2.classList.remove('dragging');
   });
 
-  window.addEventListener('mousemove', e => {
-    if (!activeSplitter) return;
-    const rect = container.getBoundingClientRect();
-    const containerH = rect.height;
-    const axisH = 26; // 26px fixed axis
+  window.addEventListener('mousemove', (e) => {
+    if (!dragMode || !startState) return;
 
-    const showRsi = rsiConfig.enabled;
-    const showRs = relativeStrengthConfig.enabled;
+    const showRsi = rsiConfig.enabled && paneRsi && paneRsi.style.display !== 'none';
+    const showRs  = relativeStrengthConfig.enabled && paneRs && paneRs.style.display !== 'none';
 
-    if (activeSplitter === 1) {
-      // Drag boundary clamp: Date Axis ko screen se bahar push hone se rokega
-      let minBelow = axisH;
-      if (showRsi) minBelow += 45 + 1;
-      if (showRs) minBelow += 45 + 1;
+    const cTop = startState.containerTop;
+    const cHeight = container.getBoundingClientRect().height;
+    const axisH = 26; // Fixed bottom Date Axis
+    const minPrice = 80;
+    const minRsi = 40;
+    const minRs = 40;
 
-      const maxPriceH = containerH - minBelow;
-      const offsetY = e.clientY - rect.top;
-      const priceH = Math.min(maxPriceH, Math.max(80, offsetY));
+    const totalSplitters = (showRsi ? 1 : 0) + (showRs ? 1 : 0);
+    // Panes ke liye total available jagah (Date Axis ko chhod kar)
+    const availablePanesH = cHeight - axisH - totalSplitters;
 
-      panePrice.style.flex = `0 0 ${priceH}px`;
-    } else if (activeSplitter === 2 && paneRsi) {
-      // Splitter 2 drag (RSI aur RS ke beech)
-      const priceH = panePrice.getBoundingClientRect().height;
-      let minBelow = axisH;
-      if (showRs) minBelow += 45 + 1;
+    const mouseY = e.clientY - cTop;
 
-      const maxRsiBottom = containerH - minBelow;
-      const currentY = e.clientY - rect.top;
-      const rsiH = Math.min(maxRsiBottom - priceH - 1, Math.max(45, currentY - priceH - 1));
+    if (dragMode === 1) {
+      // --- DRAGGING SPLITTER 1 (Price aur RSI ke beech) ---
+      if (showRsi && showRs) {
+        // RS Pane ko uski jagah par bilkul LOCK rakhein
+        const lockedRsH = Math.max(minRs, startState.rsH);
+        const spaceForPriceAndRsi = availablePanesH - lockedRsH;
 
-      paneRsi.style.flex = `0 0 ${rsiH}px`;
+        const maxPriceH = spaceForPriceAndRsi - minRsi;
+        const newPriceH = Math.min(maxPriceH, Math.max(minPrice, mouseY));
+        const newRsiH = spaceForPriceAndRsi - newPriceH;
+
+        panePrice.style.flex = `0 0 ${newPriceH}px`;
+        paneRsi.style.flex = `0 0 ${newRsiH}px`;
+        paneRs.style.flex = `0 0 ${lockedRsH}px`;
+      } else if (showRsi && !showRs) {
+        const maxPriceH = availablePanesH - minRsi;
+        const newPriceH = Math.min(maxPriceH, Math.max(minPrice, mouseY));
+        const newRsiH = availablePanesH - newPriceH;
+
+        panePrice.style.flex = `0 0 ${newPriceH}px`;
+        paneRsi.style.flex = `0 0 ${newRsiH}px`;
+      } else if (!showRsi && showRs) {
+        const maxPriceH = availablePanesH - minRs;
+        const newPriceH = Math.min(maxPriceH, Math.max(minPrice, mouseY));
+        const newRsH = availablePanesH - newPriceH;
+
+        panePrice.style.flex = `0 0 ${newPriceH}px`;
+        paneRs.style.flex = `0 0 ${newRsH}px`;
+      }
+    } else if (dragMode === 2 && showRsi && showRs) {
+      // --- DRAGGING SPLITTER 2 (RSI aur RS ke beech) ---
+      // Price Pane ko uski jagah par bilkul LOCK rakhein
+      const lockedPriceH = Math.max(minPrice, panePrice.getBoundingClientRect().height);
+      const spaceForRsiAndRs = availablePanesH - lockedPriceH;
+
+      const rsiTop = panePrice.getBoundingClientRect().height + 1;
+      const targetRsiH = mouseY - rsiTop;
+
+      const maxRsiH = spaceForRsiAndRs - minRs;
+      const newRsiH = Math.min(maxRsiH, Math.max(minRsi, targetRsiH));
+      const newRsH = spaceForRsiAndRs - newRsiH;
+
+      panePrice.style.flex = `0 0 ${lockedPriceH}px`;
+      paneRsi.style.flex = `0 0 ${newRsiH}px`;
+      paneRs.style.flex = `0 0 ${newRsH}px`;
     }
 
     const inst = panelsArray[index];
