@@ -1,41 +1,18 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-04T17:00:53.060952+05:30",
+  "updatedAt": "2026-09-05T17:00:32.516338+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1246,
+  "symbolCount": 1245,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [
-    {
-      "symbol": "MOLBIO",
-      "company": "Molbio Diagnostics Limited",
-      "date": "2026-09-05",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the Unaudited Standalone and Consolidated Financial Results for the quarter ended 30 June 2026."
-    }
-  ],
-  "thisWeek": [
-    {
-      "symbol": "MOLBIO",
-      "company": "Molbio Diagnostics Limited",
-      "date": "2026-09-05",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the Unaudited Standalone and Consolidated Financial Results for the quarter ended 30 June 2026."
-    }
-  ],
+  "tomorrow": [],
+  "thisWeek": [],
   "allUpcoming": [
-    {
-      "symbol": "MOLBIO",
-      "company": "Molbio Diagnostics Limited",
-      "date": "2026-09-05",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the Unaudited Standalone and Consolidated Financial Results for the quarter ended 30 June 2026."
-    },
     {
       "symbol": "BLEL",
       "company": "Behari Lal Engineering Limited",
@@ -6733,23 +6710,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "MOLBIO",
-      "company": "Molbio Diagnostics Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-05",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "MOLBIO",
-          "company": "Molbio Diagnostics Limited",
-          "date": "2026-09-05",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the Unaudited Standalone and Consolidated Financial Results for the quarter ended 30 June 2026."
-        }
-      ],
       "historyCount": 0
     },
     {
