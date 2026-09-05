@@ -36,18 +36,23 @@ body{
 
 nav{
   position:relative !important;
+  top:auto !important;
+  left:auto !important;
+  right:auto !important;
   width:100% !important;
-  height:38px !important;
+  height:32px !important; /* Optimized Compact Size */
   flex-shrink:0 !important;
   z-index:200;
-  background:rgba(8,11,15,0.94);
-  backdrop-filter:blur(16px);
+  background:rgba(8,11,15,0.95);
   border-bottom:1px solid var(--border);
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 16px;
+  padding:0 14px;
 }
+.logo{font-size:16px !important;}
+.header-tagline{font-size:10.5px !important;}
+.nav-links a{padding:3px 8px !important;font-size:11.5px !important;}
 body.light-theme nav{background:rgba(255,255,255,0.92);}
 
 .logo-group{display:flex;align-items:center;gap:10px;}
@@ -118,13 +123,27 @@ body.light-theme nav{background:rgba(255,255,255,0.92);}
 .main.tools-collapsed .chart-wrap{padding-left:0;}
 .main:not(.tools-collapsed) .chart-wrap{padding-left:44px;}
 .chart-toolbar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 12px;border-bottom:1px solid var(--border);
-  flex-wrap:wrap;gap:6px;background:var(--surface);margin:0 0 -2px 0;
-  flex-shrink:0;height:30px;position:relative;z-index:22;overflow:visible;
+  width:100% !important;
+  height:32px !important;
+  flex-shrink:0 !important;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 12px;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+  position:relative;
+  z-index:22;
+  margin:0 !important;
 }
 
-.symbol-header-box{display:flex;align-items:center;gap:10px;transform:translateX(44px);min-height:30px;}
+.symbol-header-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  transform:none !important; /* Left se 44px indentation hata diya taaki natural start ho */
+  min-height:30px;
+}
 
 .top-stock-btn{
   display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);
@@ -381,23 +400,60 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
 /* RIGHT DOCK TRADINGVIEW FIXES */
 .shell{display:flex !important;flex-direction:row !important;align-items:stretch !important;}
 .main{order:2 !important;flex:1 1 auto !important;min-width:0 !important;width:auto !important;}
-.drawing-bar{order:1 !important;}
+.drawing-bar{
+  position:absolute !important;
+  left:0 !important;
+  top:0 !important; /* Toolbar ke theek neeche se chipak kar start hoga */
+  bottom:0 !important;
+  width:44px !important;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:8px 0;
+  gap:6px;
+  z-index:60;
+}
 
 /* Dedicated, very slim right rail for the watchlist. */
 /* Watchlist dock: Minimum width (22px) aur arrow shifted to TOP */
 .watchlist-dock{
-  order:3 !important;position:relative !important;width:22px !important;min-width:22px !important;max-width:22px !important;
-  height:100% !important;display:flex !important;align-items:stretch !important;justify-content:flex-start !important;z-index:100 !important;
-  background:var(--surface) !important;border-left:1px solid var(--border) !important;flex:0 0 22px !important;
+  order:3 !important;
+  position:relative !important;
+  width:22px !important;
+  min-width:22px !important;
+  max-width:22px !important;
+  height:100% !important;
+  display:flex !important;
+  align-items:stretch !important;
+  justify-content:flex-start !important;
+  z-index:100 !important;
+  background:var(--surface) !important;
+  border-left:1px solid var(--border) !important;
+  flex:0 0 22px !important;
 }
 .watchlist-dock .watchlist-toggle{
-  position:absolute !important;left:0 !important;right:0 !important;top:0 !important;
-  transform:none !important;width:21px !important;min-width:21px !important;
-  height:30px !important;padding:0 !important;margin:0 !important;border-radius:0 !important;
-  border:0 !important;border-bottom:1px solid var(--border) !important;
-  background:var(--card) !important;color:var(--accent) !important;
-  display:flex !important;align-items:center !important;justify-content:center !important;
-  font-size:16px !important;font-weight:700 !important;box-shadow:none !important;cursor:pointer !important;
+  position:absolute !important;
+  left:0 !important;
+  right:0 !important;
+  top:0 !important; /* Toolbar ke bottom se chipak kar top par rahega */
+  transform:none !important;
+  width:21px !important;
+  min-width:21px !important;
+  height:30px !important;
+  padding:0 !important;
+  margin:0 !important;
+  border:0 !important;
+  border-bottom:1px solid var(--border) !important;
+  background:var(--card) !important;
+  color:var(--accent) !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:16px !important;
+  font-weight:700 !important;
+  cursor:pointer !important;
 }
 .watchlist-dock .watchlist-toggle:hover{background:var(--card2) !important;color:var(--text) !important;}
   
@@ -459,47 +515,7 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
   </div>
 </nav>
 
-<div class="shell">
-  <button class="draw-bar-floating-toggle" id="floating-draw-toggle" title="Show Drawing Toolbar (👁️)" onclick="toggleDrawingToolbar()">👁️ Tools</button>
-  <aside class="watchlist-dock" id="watchlist-dock">
-    <button class="watchlist-toggle" id="watchlist-toggle" onclick="toggleWatchlistPanel()" title="Open Watchlist">‹</button>
-    <div class="watchlist-panel" id="watchlist-panel">
-    <div class="watchlist-head">
-      <select id="watchlist-select" class="watchlist-select" onchange="selectWatchlist(this.value)"></select>
-      <button class="watchlist-icon-btn" title="Rename watchlist" onclick="renameCurrentWatchlist()">✎</button>
-      <button class="watchlist-icon-btn" title="Delete watchlist" onclick="deleteCurrentWatchlist()">×</button>
-      <button class="watchlist-icon-btn watchlist-hide-btn" title="Hide watchlist panel" onclick="toggleWatchlistPanel(false)">›</button>
-    </div>
-    <div class="watchlist-actions">
-      <button class="watchlist-action" onclick="addWatchlistUI()">＋ Watchlist</button>
-      <button class="watchlist-action" onclick="addSectionUI()">＋ Section</button>
-      <button class="watchlist-action" onclick="addStockUI()">＋ Stock</button>
-    </div>
-    <div class="watchlist-body" id="watchlist-body"></div>
-    <div class="watchlist-status" id="watchlist-status"></div>
-    </div>
-  </aside>
-
-  <aside class="drawing-bar" id="drawing-toolbar">
-    <button class="draw-btn active" id="tool-cursor" title="Cursor Navigation (🎯)" onclick="setTool('cursor',this)">🎯</button>
-    <button class="draw-btn" id="tool-trendline" title="Trend Line Tool (📈 Click 2 points)" onclick="setTool('trendline',this)">📈</button>
-    <button class="draw-btn" id="tool-hline" title="Horizontal Price Line (➖ Single Click)" onclick="setTool('hline',this)">➖</button>
-    <button class="draw-btn" id="tool-vline" title="Vertical Date Line (⏛ Single Click)" onclick="setTool('vline',this)">⏛</button>
-    <button class="draw-btn" id="tool-rectangle" title="Rectangle Zone Box (▭ Click 2 points)" onclick="setTool('rectangle',this)">▭</button>
-    <button class="draw-btn" id="tool-fibonacci" title="Fibonacci Retracement (🌀 Click High & Low)" onclick="setTool('fibonacci',this)">🌀</button>
-    <button class="draw-btn" id="tool-measure" title="Ruler / Measure Tool (📏 Click 2 points)" onclick="setTool('measure',this)">📏</button>
-    <button class="draw-btn" id="tool-text" title="Text Note (💬 Click to place text)" onclick="setTool('text',this)">💬</button>
-    <button class="draw-btn" id="tool-eraser" title="Selective Eraser (🧹 Click any line to delete)" onclick="setTool('eraser',this)">🧹</button>
-    <button class="draw-btn" title="Clear All Drawings" onclick="clearDrawings()" style="color:var(--red);">🗑️</button>
-    <div style="width:24px;height:1px;background:var(--border);margin:2px 0;"></div>
-    <button class="draw-btn" title="Zoom In" onclick="zoomChart(0.72)">🔍+</button>
-    <button class="draw-btn" title="Zoom Out" onclick="zoomChart(1.35)">🔍−</button>
-    <button class="draw-btn" title="Reset Chart View" onclick="resetChartView()">↺</button>
-    <button class="draw-btn" title="Hide Toolbar (👁️)" onclick="toggleDrawingToolbar()" style="margin-top:auto;color:var(--accent);">👁️</button>
-  </aside>
-
-  <div class="main">
-    <div class="chart-toolbar">
+  <div class="chart-toolbar">
       <div class="symbol-header-box">
         <button class="top-stock-btn" onclick="openSearchModal(-1)">
           <span id="top-stock-btn-label">🔍 Select Instrument</span>
@@ -552,7 +568,48 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
         <button class="tbtn" title="Take Screenshot (📷)" onclick="captureChartScreenshot()">📷</button>
       </div>
     </div>
+  
+<div class="shell">
+  <button class="draw-bar-floating-toggle" id="floating-draw-toggle" title="Show Drawing Toolbar (👁️)" onclick="toggleDrawingToolbar()">👁️ Tools</button>
+  <aside class="watchlist-dock" id="watchlist-dock">
+    <button class="watchlist-toggle" id="watchlist-toggle" onclick="toggleWatchlistPanel()" title="Open Watchlist">‹</button>
+    <div class="watchlist-panel" id="watchlist-panel">
+    <div class="watchlist-head">
+      <select id="watchlist-select" class="watchlist-select" onchange="selectWatchlist(this.value)"></select>
+      <button class="watchlist-icon-btn" title="Rename watchlist" onclick="renameCurrentWatchlist()">✎</button>
+      <button class="watchlist-icon-btn" title="Delete watchlist" onclick="deleteCurrentWatchlist()">×</button>
+      <button class="watchlist-icon-btn watchlist-hide-btn" title="Hide watchlist panel" onclick="toggleWatchlistPanel(false)">›</button>
+    </div>
+    <div class="watchlist-actions">
+      <button class="watchlist-action" onclick="addWatchlistUI()">＋ Watchlist</button>
+      <button class="watchlist-action" onclick="addSectionUI()">＋ Section</button>
+      <button class="watchlist-action" onclick="addStockUI()">＋ Stock</button>
+    </div>
+    <div class="watchlist-body" id="watchlist-body"></div>
+    <div class="watchlist-status" id="watchlist-status"></div>
+    </div>
+  </aside>
 
+  <aside class="drawing-bar" id="drawing-toolbar">
+    <button class="draw-btn active" id="tool-cursor" title="Cursor Navigation (🎯)" onclick="setTool('cursor',this)">🎯</button>
+    <button class="draw-btn" id="tool-trendline" title="Trend Line Tool (📈 Click 2 points)" onclick="setTool('trendline',this)">📈</button>
+    <button class="draw-btn" id="tool-hline" title="Horizontal Price Line (➖ Single Click)" onclick="setTool('hline',this)">➖</button>
+    <button class="draw-btn" id="tool-vline" title="Vertical Date Line (⏛ Single Click)" onclick="setTool('vline',this)">⏛</button>
+    <button class="draw-btn" id="tool-rectangle" title="Rectangle Zone Box (▭ Click 2 points)" onclick="setTool('rectangle',this)">▭</button>
+    <button class="draw-btn" id="tool-fibonacci" title="Fibonacci Retracement (🌀 Click High & Low)" onclick="setTool('fibonacci',this)">🌀</button>
+    <button class="draw-btn" id="tool-measure" title="Ruler / Measure Tool (📏 Click 2 points)" onclick="setTool('measure',this)">📏</button>
+    <button class="draw-btn" id="tool-text" title="Text Note (💬 Click to place text)" onclick="setTool('text',this)">💬</button>
+    <button class="draw-btn" id="tool-eraser" title="Selective Eraser (🧹 Click any line to delete)" onclick="setTool('eraser',this)">🧹</button>
+    <button class="draw-btn" title="Clear All Drawings" onclick="clearDrawings()" style="color:var(--red);">🗑️</button>
+    <div style="width:24px;height:1px;background:var(--border);margin:2px 0;"></div>
+    <button class="draw-btn" title="Zoom In" onclick="zoomChart(0.72)">🔍+</button>
+    <button class="draw-btn" title="Zoom Out" onclick="zoomChart(1.35)">🔍−</button>
+    <button class="draw-btn" title="Reset Chart View" onclick="resetChartView()">↺</button>
+    <button class="draw-btn" title="Hide Toolbar (👁️)" onclick="toggleDrawingToolbar()" style="margin-top:auto;color:var(--accent);">👁️</button>
+  </aside>
+
+  <div class="main">
+    
     <div class="chart-wrap">
       <button class="selective-del-btn" id="selective-del-btn" onclick="deleteSelectedDrawing()">🗑️ Delete</button>
 
