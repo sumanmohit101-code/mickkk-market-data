@@ -289,7 +289,52 @@ body.light-theme .ppv-table-row{background:rgba(255,255,255,0.95);}
 .pane-rs { flex: 1.0; min-height: 45px !important; }
 .pane-macd{flex:1.0;min-height:40px;display:none;}
 .pane-axis { flex: 0 0 26px !important; height: 26px !important; min-height: 26px !important; max-height: 26px !important; background: var(--surface) !important; border-top: 1px solid var(--border) !important; position: relative !important; width: 100% !important; overflow: hidden !important; flex-shrink: 0 !important; }
-.pane-rs .rs-pane-title, .pane-macd .macd-pane-title{position:absolute;top:5px;left:8px;z-index:5;font:600 10px var(--mono);color:var(--muted);background:rgba(8,11,15,.65);padding:2px 5px;border-radius:3px;pointer-events:none;}
+/* TRADINGVIEW PANE TITLE BAR (Title + ▲ ▼ + ⚙️ + ✕) */
+.pane-legend {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font: 600 10px var(--mono);
+  color: var(--muted);
+  background: rgba(8, 11, 15, 0.78);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: auto;
+  user-select: none;
+}
+body.light-theme .pane-legend {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: var(--text);
+}
+.pane-legend .legend-title {
+  margin-right: 4px;
+  color: var(--text);
+  font-weight: 700;
+}
+.pane-legend-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 10px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.pane-legend-btn:hover {
+  color: var(--accent);
+  background: rgba(0, 212, 255, 0.15);
+}
 .pane-splitter {
   height: 1px; background: var(--border); cursor: row-resize;
   z-index: 30; flex-shrink: 0; transition: background 0.15s;
@@ -1432,18 +1477,41 @@ function rebuildGridSystem() {
     chartContainer.className = 'panel-chart-container';
     chartContainer.id = `panel-chart-${i}`;
 
-   chartContainer.innerHTML = `
+ chartContainer.innerHTML = `
       <div class="pane-box pane-price" id="pane-price-${i}"><canvas class="panel-overlay-canvas" id="panel-canvas-${i}"></canvas></div>
       <div class="pane-splitter" id="splitter-rsi-${i}"></div>
-      <div class="pane-box pane-rsi" id="pane-rsi-${i}"></div>
+      <div class="pane-box pane-rsi" id="pane-rsi-${i}">
+        <div class="pane-legend">
+          <span class="legend-title" id="title-rsi-${i}">RSI (14)</span>
+          <button class="pane-legend-btn" title="Move Up" onclick="moveIndicatorPane(${i}, 'rsi', -1)">▲</button>
+          <button class="pane-legend-btn" title="Move Down" onclick="moveIndicatorPane(${i}, 'rsi', 1)">▼</button>
+          <button class="pane-legend-btn" title="Settings" onclick="openSingleIndicatorSettings('rsi')">⚙️</button>
+          <button class="pane-legend-btn" title="Hide" onclick="toggleIndicatorFromLegend('rsi')">✕</button>
+        </div>
+      </div>
       <div class="pane-splitter" id="splitter-macd-${i}"></div>
-      <div class="pane-box pane-macd" id="pane-macd-${i}"><div class="macd-pane-title">MACD (12, 26, 9)</div></div>
+      <div class="pane-box pane-macd" id="pane-macd-${i}">
+        <div class="pane-legend">
+          <span class="legend-title" id="title-macd-${i}">MACD (12, 26, 9)</span>
+          <button class="pane-legend-btn" title="Move Up" onclick="moveIndicatorPane(${i}, 'macd', -1)">▲</button>
+          <button class="pane-legend-btn" title="Move Down" onclick="moveIndicatorPane(${i}, 'macd', 1)">▼</button>
+          <button class="pane-legend-btn" title="Settings" onclick="openSingleIndicatorSettings('macd')">⚙️</button>
+          <button class="pane-legend-btn" title="Hide" onclick="toggleIndicatorFromLegend('macd')">✕</button>
+        </div>
+      </div>
       <div class="pane-splitter" id="splitter-rs-${i}"></div>
-      <div class="pane-box pane-rs" id="pane-rs-${i}"><div class="rs-pane-title">Relative Strength</div></div>
+      <div class="pane-box pane-rs" id="pane-rs-${i}">
+        <div class="pane-legend">
+          <span class="legend-title" id="title-rs-${i}">RS</span>
+          <button class="pane-legend-btn" title="Move Up" onclick="moveIndicatorPane(${i}, 'rs', -1)">▲</button>
+          <button class="pane-legend-btn" title="Move Down" onclick="moveIndicatorPane(${i}, 'rs', 1)">▼</button>
+          <button class="pane-legend-btn" title="Settings" onclick="openSingleIndicatorSettings('rs')">⚙️</button>
+          <button class="pane-legend-btn" title="Hide" onclick="toggleIndicatorFromLegend('rs')">✕</button>
+        </div>
+      </div>
       <div class="pane-box pane-axis" id="pane-axis-${i}"></div>
       <div class="shared-crosshair-v" id="shared-crosshair-${i}"></div>
     `;
-
     panelElem.appendChild(topBar);
     panelElem.appendChild(chartContainer);
     container.appendChild(panelElem);
@@ -1471,7 +1539,71 @@ function destroyPanels() {
 }
 
   let macdConfig = { enabled: false, fast: 12, slow: 26, signal: 9, lineColor: '#2962ff', signalColor: '#ff6d00' };
+/* TRADINGVIEW INDICATOR CONTROLS: REORDER, SETTINGS & QUICK-CLOSE */
+let indicatorOrder = ['rsi', 'macd', 'rs'];
 
+function moveIndicatorPane(panelIndex, indKey, dir) {
+  const idx = indicatorOrder.indexOf(indKey);
+  if (idx === -1) return;
+  const targetIdx = idx + dir;
+  if (targetIdx < 0 || targetIdx >= indicatorOrder.length) return;
+
+  // Swap position in order
+  const temp = indicatorOrder[idx];
+  indicatorOrder[idx] = indicatorOrder[targetIdx];
+  indicatorOrder[targetIdx] = temp;
+
+  const container = document.getElementById(`panel-chart-${panelIndex}`);
+  const axisPane = document.getElementById(`pane-axis-${panelIndex}`);
+  if (!container || !axisPane) return;
+
+  // Reorder physically in DOM
+  indicatorOrder.forEach(key => {
+    const sp = document.getElementById(`splitter-${key}-${panelIndex}`);
+    const pane = document.getElementById(`pane-${key}-${panelIndex}`);
+    if (sp && pane) {
+      container.insertBefore(sp, axisPane);
+      container.insertBefore(pane, axisPane);
+    }
+  });
+
+  if (panelsArray[panelIndex]) {
+    updateTimeScaleVisibility(panelsArray[panelIndex]);
+  }
+}
+
+function toggleIndicatorFromLegend(key) {
+  if (key === 'rsi') {
+    rsiConfig.enabled = false;
+    const chk = document.getElementById('rsi-en'); if (chk) chk.checked = false;
+  } else if (key === 'macd') {
+    macdConfig.enabled = false;
+    const chk = document.getElementById('macd-en'); if (chk) chk.checked = false;
+  } else if (key === 'rs') {
+    relativeStrengthConfig.enabled = false;
+    const chk = document.getElementById('rs-en'); if (chk) chk.checked = false;
+  }
+  if (currentSymbol) rebuildAllPanels();
+}
+
+function openSingleIndicatorSettings(key) {
+  openIndicatorsModal();
+  const targetId = key === 'rsi' ? 'rsi-len' : key === 'macd' ? 'macd-en' : 'rs-benchmark';
+  const el = document.getElementById(targetId);
+  if (el) {
+    const section = el.closest('.ind-section');
+    if (section) {
+      setTimeout(() => {
+        section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        section.style.transition = 'background 0.3s';
+        section.style.background = 'rgba(0, 212, 255, 0.12)';
+        section.style.borderRadius = '6px';
+        setTimeout(() => { section.style.background = 'transparent'; }, 1200);
+      }, 100);
+    }
+  }
+}
+  
 /* UNIVERSAL MULTI-PANE AUTO-RESET MANAGER */
 function updateTimeScaleVisibility(panel) {
   const showRsi  = rsiConfig.enabled;
