@@ -1729,50 +1729,96 @@ function createPanelChartInstance(index, tf) {
   return instObj;
 }
 
-/* UNIVERSAL MULTI-PANE SPLITTER RESIZE ENGINE */
+/* TRADINGVIEW 1:1 DELTA SPLITTER ENGINE: HAR PANE SMOOTH RESIZE HOGA */
 function initPaneSplitterDrag(index) {
   const container = document.getElementById(`panel-chart-${index}`);
   const panePrice = document.getElementById(`pane-price-${index}`);
-  const paneRsi   = document.getElementById(`pane-rsi-${index}`);
-  const paneMacd  = document.getElementById(`pane-macd-${index}`);
-  const paneRs    = document.getElementById(`pane-rs-${index}`);
-
   const sRsi  = document.getElementById(`splitter-rsi-${index}`);
   const sMacd = document.getElementById(`splitter-macd-${index}`);
   const sRs   = document.getElementById(`splitter-rs-${index}`);
 
   if (!container || !panePrice) return;
 
-  let dragTarget = null; // 'rsi', 'macd', 'rs'
+  let dragData = null;
 
-  if (sRsi)  sRsi.addEventListener('mousedown', (e) => { e.preventDefault(); dragTarget = 'rsi'; sRsi.classList.add('dragging'); });
-  if (sMacd) sMacd.addEventListener('mousedown', (e) => { e.preventDefault(); dragTarget = 'macd'; sMacd.classList.add('dragging'); });
-  if (sRs)   sRs.addEventListener('mousedown', (e) => { e.preventDefault(); dragTarget = 'rs'; sRs.classList.add('dragging'); });
+  // Splitter ke theek upar wala visible pane dhoondein
+  function getVisibleAbove(sp) {
+    let el = sp.previousElementSibling;
+    while (el) {
+      if (el.classList.contains('pane-box') && el.style.display !== 'none') return el;
+      el = el.previousElementSibling;
+    }
+    return panePrice;
+  }
+
+  // Splitter ke theek neeche wala visible pane dhoondein (Date Axis ko chhod kar)
+  function getVisibleBelow(sp) {
+    let el = sp.nextElementSibling;
+    while (el) {
+      if (el.classList.contains('pane-box') && el.style.display !== 'none' && !el.classList.contains('pane-axis')) return el;
+      el = el.nextElementSibling;
+    }
+    return null;
+  }
+
+  function startDrag(e, splitter) {
+    const above = getVisibleAbove(splitter);
+    const below = getVisibleBelow(splitter);
+    if (!above || !below) return;
+
+    e.preventDefault();
+    splitter.classList.add('dragging');
+
+    const hA = above.getBoundingClientRect().height;
+    const hB = below.getBoundingClientRect().height;
+
+    dragData = {
+      splitter: splitter,
+      above: above,
+      below: below,
+      startY: e.clientY,
+      startHA: hA,
+      startHB: hB,
+      totalH: hA + hB,
+      minA: above === panePrice ? 80 : 35,
+      minB: 35
+    };
+  }
+
+  [sRsi, sMacd, sRs].forEach(sp => {
+    if (!sp) return;
+    sp.addEventListener('mousedown', (e) => startDrag(e, sp));
+  });
 
   window.addEventListener('mouseup', () => {
-    dragTarget = null;
-    [sRsi, sMacd, sRs].forEach(s => { if (s) s.classList.remove('dragging'); });
+    if (!dragData) return;
+    if (dragData.splitter) dragData.splitter.classList.remove('dragging');
+    dragData = null;
   });
 
   window.addEventListener('mousemove', (e) => {
-    if (!dragTarget) return;
-    const cRect = container.getBoundingClientRect();
-    const cHeight = cRect.height;
-    const axisH = 26;
-    const availableH = cHeight - axisH;
-    const mouseY = e.clientY - cRect.top;
+    if (!dragData) return;
+    const delta = e.clientY - dragData.startY;
 
-    if (dragTarget === 'rsi') {
-      const priceH = Math.min(availableH - 80, Math.max(80, mouseY));
-      panePrice.style.flex = `${priceH} 1 0px`;
-    } else if (dragTarget === 'macd' && paneRsi) {
-      const pRect = panePrice.getBoundingClientRect();
-      const rsiH = Math.min(availableH - pRect.height - 50, Math.max(40, mouseY - pRect.height));
-      paneRsi.style.flex = `${rsiH} 1 0px`;
-    } else if (dragTarget === 'rs') {
-      const rsH = Math.min(availableH - 80, Math.max(40, availableH - mouseY));
-      paneRs.style.flex = `${rsH} 1 0px`;
+    let newHA = dragData.startHA + delta;
+    let newHB = dragData.startHB - delta;
+
+    // Minimum boundary clamp taaki pane gayab na ho
+    if (newHA < dragData.minA) {
+      newHA = dragData.minA;
+      newHB = dragData.totalH - newHA;
     }
+    if (newHB < dragData.minB) {
+      newHB = dragData.minB;
+      newHA = dragData.totalH - newHB;
+    }
+
+    // Sirf inhi 2 panes ki height badlegi, baaki saare panes aur Date Axis apni jagah locked rahenge
+    dragData.above.style.height = `${newHA}px`;
+    dragData.above.style.flex = 'none';
+
+    dragData.below.style.height = `${newHB}px`;
+    dragData.below.style.flex = 'none';
 
     const inst = panelsArray[index];
     if (inst) {
@@ -1780,6 +1826,7 @@ function initPaneSplitterDrag(index) {
         if (c) try { c.applyOptions({ width: container.clientWidth }); } catch(err){}
       });
       drawPanelOverlays(inst);
+      if (typeof positionPocketPivotStatsWidget === 'function') positionPocketPivotStatsWidget(inst);
     }
   });
 }
