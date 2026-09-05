@@ -549,8 +549,7 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
   z-index:60;
 }
 
-/* Dedicated, very slim right rail for the watchlist. */
-/* Watchlist dock: Minimum width (22px) aur arrow shifted to TOP */
+/* Dedicated right rail for the watchlist (Non-overlapping Flex Layout) */
 .watchlist-dock{
   order:3 !important;
   position:relative !important;
@@ -565,12 +564,23 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
   background:var(--surface) !important;
   border-left:1px solid var(--border) !important;
   flex:0 0 22px !important;
+  transition:width 0.15s ease, min-width 0.15s ease, max-width 0.15s ease, flex 0.15s ease;
 }
+
+/* Jab Watchlist OPEN ho to ye 310px flex legi aur chart ko baayein (left) shift karegi */
+.shell.watchlist-open .watchlist-dock,
+.watchlist-dock.open {
+  width: 310px !important;
+  min-width: 310px !important;
+  max-width: 310px !important;
+  flex: 0 0 310px !important;
+}
+
 .watchlist-dock .watchlist-toggle{
   position:absolute !important;
   left:0 !important;
   right:0 !important;
-  top:0 !important; /* Toolbar ke bottom se chipak kar top par rahega */
+  top:0 !important;
   transform:none !important;
   width:21px !important;
   min-width:21px !important;
@@ -589,21 +599,30 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
   cursor:pointer !important;
 }
 .watchlist-dock .watchlist-toggle:hover{background:var(--card2) !important;color:var(--text) !important;}
-  
+
 .watchlist-dock .watchlist-panel{
-  position:absolute !important;right:0 !important;left:auto !important;top:0 !important;bottom:0 !important;
-  width:310px !important;min-width:310px !important;max-width:310px !important;height:100% !important;
-  max-height:none !important;margin:0 !important;border-radius:0 !important;
-  border-top:0 !important;border-right:0 !important;border-bottom:0 !important;
-  border-left:1px solid var(--border) !important;box-shadow:-12px 0 30px rgba(0,0,0,.28) !important;
-  backdrop-filter:none !important;z-index:110 !important;
+  position:relative !important;
+  width:100% !important;
+  min-width:100% !important;
+  max-width:100% !important;
+  height:100% !important;
+  max-height:none !important;
+  margin:0 !important;
+  border:none !important;
+  background:transparent !important;
+  display:none !important;
+  flex-direction:column !important;
+  overflow:hidden !important;
 }
-.watchlist-dock .watchlist-panel.open{display:flex !important;}
+.watchlist-dock.open .watchlist-panel,
+.shell.watchlist-open .watchlist-dock .watchlist-panel{
+  display:flex !important;
+}
 .watchlist-dock .watchlist-hide-btn{color:var(--accent) !important;font-size:20px !important;font-weight:700 !important;}
 .watchlist-dock .watchlist-hide-btn:hover{background:rgba(0,212,255,.08) !important;}
-.watchlist-dock .watchlist-panel{overflow:hidden !important;}
 .watchlist-dock .watchlist-panel .watchlist-body{scrollbar-width:thin;}
 .shell.watchlist-open .watchlist-dock .watchlist-toggle{display:none !important;}
+  
 .chart-toolbar{padding-right:12px !important;}
 
 /* SINGLE common crosshair for the whole panel: price + volume + RSI + RS + bottom axis. */
@@ -1473,8 +1492,15 @@ function ensureSeriesType(panel) {
     });
   }
 
-  panel.seriesType = currentChartType;
-  panel.candleSeries.priceScale().applyOptions({ scaleMargins: { top: 0.02, bottom: 0.30 }, autoScale: true });
+panel.seriesType = currentChartType;
+  // Candles aur indicators ke beech ka khali space khatam karne ke liye bottom margin 0.12 rakhein
+  panel.candleSeries.priceScale().applyOptions({ 
+    scaleMargins: { 
+      top: 0.05, 
+      bottom: 0.12 
+    }, 
+    autoScale: true 
+  });
 }
 
 /* ============ PRICE SCALE MODE SWITCHER ============ */
@@ -1816,11 +1842,18 @@ function createPanelChartInstance(index, tf) {
     }
   });
 
-  const volS = priceC.addHistogramSeries({
+ const volS = priceC.addHistogramSeries({
     priceFormat: { type: 'volume' },
     priceScaleId: 'vol',
   });
-  priceC.priceScale('vol').applyOptions({ scaleMargins: { top: 0.72, bottom: 0.02 }, autoScale: true });
+  // Volume bars ko bilkul bottom pane boundary se chipkayenge (bottom: 0) aur height 22% limit karenge
+  priceC.priceScale('vol').applyOptions({
+    scaleMargins: {
+      top: 0.78,
+      bottom: 0.0,
+    },
+    autoScale: true
+  });
 
   const rsiContainer = document.getElementById(`pane-rsi-${index}`);
   const rsiC = LightweightCharts.createChart(rsiContainer, {
@@ -2389,12 +2422,28 @@ function setWatchlistStatus(msg, ok=false) {
 function toggleWatchlistPanel(force) {
   const panel = document.getElementById('watchlist-panel');
   const dock = document.getElementById('watchlist-dock');
-  if (!panel) return;
-  const open = typeof force === 'boolean' ? force : !panel.classList.contains('open');
-  panel.classList.toggle('open', open);
   const shell = document.querySelector('.shell');
+  if (!panel || !dock) return;
+
+  const open = typeof force === 'boolean' ? force : !dock.classList.contains('open');
+  panel.classList.toggle('open', open);
+  dock.classList.toggle('open', open);
   if (shell) shell.classList.toggle('watchlist-open', open);
-  if (dock) dock.classList.toggle('open', open);
+
+  // Watchlist khulne ya band hone par chart ki width turant 1:1 auto-fit hogi
+  setTimeout(() => {
+    panelsArray.forEach(p => {
+      const container = document.getElementById(`panel-chart-${p.index}`);
+      if (container) {
+        const w = container.clientWidth;
+        [p.priceChart, p.rsiChart, p.macdChart, p.rsChart, p.axisChart].forEach(c => {
+          if (c) try { c.applyOptions({ width: w }); } catch(e){}
+        });
+        drawPanelOverlays(p);
+      }
+    });
+  }, 160);
+
   if (open) renderWatchlists();
 }
 
