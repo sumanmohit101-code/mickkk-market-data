@@ -285,11 +285,13 @@ body.light-theme .ppv-table-row{background:rgba(255,255,255,0.95);}
 
 /* --- START: PANE PROPORTIONS & GRABBABLE SPLITTERS --- */
 .pane-box { position: relative; width: 100%; overflow: hidden; }
-.pane-price { flex: 7.0; min-height: 80px; }
-.pane-rsi { flex: 0.8; min-height: 25px; }
-.pane-macd { flex: 0.8; min-height: 25px; display: none; }
-.pane-rs { flex: 0.8; min-height: 25px; }
+.pane-price { flex: 5.5; min-height: 90px; }
+.pane-volume { flex: 1.0; min-height: 40px; }
+.pane-rsi { flex: 0.75; min-height: 30px; }
+.pane-macd { flex: 0.75; min-height: 30px; display: none; }
+.pane-rs { flex: 0.75; min-height: 30px; }
 .pane-axis { flex: 0 0 26px !important; height: 26px !important; min-height: 26px !important; max-height: 26px !important; background: var(--surface) !important; border-top: 1px solid var(--border) !important; position: relative !important; width: 100% !important; overflow: hidden !important; flex-shrink: 0 !important; }
+
 /* TRADINGVIEW PANE TITLE BAR (Title + ▲ ▼ + ⚙️ + ✕) */
 .pane-legend {
   position: absolute;
@@ -337,7 +339,7 @@ body.light-theme .pane-legend {
   background: rgba(0, 212, 255, 0.15);
 }
   
-/* Easy-to-grab Splitters with 9px invisible hit area */
+/* Easy-to-grab Splitters with hit area */
 .pane-splitter {
   height: 1px;
   background: var(--border);
@@ -488,103 +490,38 @@ body.light-theme .pane-legend {
 input:checked + .slider{background-color:var(--accent);}
 input:checked + .slider:before{transform:translateX(18px);background-color:#fff;}
 
-/* WATCHLIST OVERLAY */
-.watchlist-toggle{
-  position:absolute;left:50px;top:54px;z-index:75;
-  background:var(--card);border:1px solid var(--border);color:var(--accent);
-  padding:4px 8px;border-radius:6px;cursor:pointer;font:600 11px var(--mono);
-  box-shadow:0 4px 12px rgba(0,0,0,.35);display:flex;align-items:center;gap:5px;
-}
-.watchlist-toggle:hover{border-color:var(--accent);background:rgba(0,212,255,.08);}
-.watchlist-panel{
-  position:absolute;left:50px;top:88px;width:285px;max-height:calc(100vh - 110px);
-  z-index:74;background:rgba(14,19,24,.98);border:1px solid var(--border);
-  border-radius:9px;box-shadow:0 18px 42px rgba(0,0,0,.58);display:none;overflow:hidden;
-  backdrop-filter:blur(12px);
-}
-body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
-.watchlist-panel.open{display:flex;flex-direction:column;}
-.watchlist-head{padding:9px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;}
-.watchlist-select{flex:1;min-width:0;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:5px;padding:5px 7px;font:600 11px var(--mono);outline:none;}
-.watchlist-icon-btn{width:27px;height:27px;border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:5px;cursor:pointer;font-size:14px;line-height:1;}
-.watchlist-icon-btn:hover{color:var(--accent);border-color:var(--accent);}
-.watchlist-actions{display:flex;gap:5px;padding:7px 10px;border-bottom:1px solid var(--border);}
-.watchlist-action{flex:1;border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:5px;padding:5px 6px;font:600 10px var(--font);cursor:pointer;}
-.watchlist-action:hover{color:var(--accent);border-color:var(--accent);}
-.watchlist-body{overflow:auto;padding:6px 5px 9px;}
-.watch-section{margin:0 0 5px;border:1px solid transparent;border-radius:6px;}
-.watch-section-head{display:flex;align-items:center;gap:5px;padding:5px 6px;color:var(--accent);font:700 10.5px var(--mono);cursor:pointer;}
-.watch-section-head:hover{background:rgba(0,212,255,.05);}
-.watch-section-head .watch-chevron{width:12px;text-align:center;color:var(--muted);}
-.watch-section-head .watch-section-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.watch-section-head .watch-section-menu{color:var(--muted);font-size:11px;opacity:.75;}
-.watch-items{padding:0 3px 3px 20px;}
-.watch-item{display:flex;align-items:center;gap:6px;padding:5px 6px;border-radius:5px;cursor:pointer;min-width:0;}
-.watch-item:hover{background:var(--card2);}
-.watch-item.active{background:rgba(0,212,255,.09);border-left:2px solid var(--accent);padding-left:4px;}
-.watch-item .watch-sym{font:700 10.5px var(--mono);color:var(--text);white-space:nowrap;}
-.watch-item .watch-name{font:400 9px var(--font);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
-.watch-item .watch-remove{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:11px;padding:0 2px;opacity:0;}
-.watch-item:hover .watch-remove{opacity:1;}
-.watch-item .watch-remove:hover{color:var(--red);}
-.watch-empty{padding:18px 10px;text-align:center;color:var(--muted);font-size:11px;line-height:1.5;}
-.watchlist-status{padding:4px 10px;color:var(--muted);font-size:9px;min-height:17px;border-top:1px solid var(--border);}
-
-/* RIGHT DOCK TRADINGVIEW FIXES */
-.shell{display:flex !important;flex-direction:row !important;align-items:stretch !important;}
-.main{order:2 !important;flex:1 1 auto !important;min-width:0 !important;width:auto !important;}
-.drawing-bar{
-  position:absolute !important;
-  left:0 !important;
-  top:0 !important; /* Toolbar ke theek neeche se chipak kar start hoga */
-  bottom:0 !important;
-  width:44px !important;
-  background:var(--surface);
-  border-right:1px solid var(--border);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:8px 0;
-  gap:6px;
-  z-index:60;
-}
-
-/* Dedicated right rail for the watchlist (Non-overlapping Flex Layout) */
+/* WATCHLIST FIXED FLEX LAYOUT (NO OVERLAP, PERFECT VISIBILITY) */
 .watchlist-dock{
   order:3 !important;
   position:relative !important;
-  width:22px !important;
-  min-width:22px !important;
-  max-width:22px !important;
+  width:24px !important;
+  min-width:24px !important;
+  max-width:24px !important;
   height:100% !important;
   display:flex !important;
   align-items:stretch !important;
   justify-content:flex-start !important;
-  z-index:100 !important;
+  z-index:50 !important;
   background:var(--surface) !important;
   border-left:1px solid var(--border) !important;
-  flex:0 0 22px !important;
-  transition:width 0.15s ease, min-width 0.15s ease, max-width 0.15s ease, flex 0.15s ease;
+  flex:0 0 24px !important;
+  box-sizing:border-box !important;
+  transition:width 0.15s ease, min-width 0.15s ease, max-width 0.15s ease, flex-basis 0.15s ease;
 }
-
-/* Jab Watchlist OPEN ho to ye 310px flex legi aur chart ko baayein (left) shift karegi */
 .shell.watchlist-open .watchlist-dock,
 .watchlist-dock.open {
-  width: 310px !important;
-  min-width: 310px !important;
-  max-width: 310px !important;
-  flex: 0 0 310px !important;
+  width:310px !important;
+  min-width:310px !important;
+  max-width:310px !important;
+  flex:0 0 310px !important;
 }
 
 .watchlist-dock .watchlist-toggle{
   position:absolute !important;
   left:0 !important;
-  right:0 !important;
   top:0 !important;
-  transform:none !important;
-  width:21px !important;
-  min-width:21px !important;
-  height:30px !important;
+  width:23px !important;
+  height:32px !important;
   padding:0 !important;
   margin:0 !important;
   border:0 !important;
@@ -606,21 +543,73 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
   min-width:100% !important;
   max-width:100% !important;
   height:100% !important;
-  max-height:none !important;
-  margin:0 !important;
-  border:none !important;
-  background:transparent !important;
   display:none !important;
   flex-direction:column !important;
+  background:var(--surface) !important;
+  box-sizing:border-box !important;
   overflow:hidden !important;
+  border:none !important;
 }
 .watchlist-dock.open .watchlist-panel,
 .shell.watchlist-open .watchlist-dock .watchlist-panel{
   display:flex !important;
 }
-.watchlist-dock .watchlist-hide-btn{color:var(--accent) !important;font-size:20px !important;font-weight:700 !important;}
-.watchlist-dock .watchlist-hide-btn:hover{background:rgba(0,212,255,.08) !important;}
-.watchlist-dock .watchlist-panel .watchlist-body{scrollbar-width:thin;}
+
+.watchlist-head{
+  padding:6px 8px !important;
+  border-bottom:1px solid var(--border);
+  display:flex !important;
+  align-items:center !important;
+  gap:4px !important;
+  width:100% !important;
+  box-sizing:border-box !important;
+  flex-shrink:0 !important;
+}
+.watchlist-select{
+  flex:1 !important;
+  min-width:80px !important;
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:5px;
+  padding:4px 6px;
+  font:600 11px var(--mono);
+  outline:none;
+}
+.watchlist-icon-btn{
+  width:25px !important;
+  height:25px !important;
+  min-width:25px !important;
+  flex-shrink:0 !important;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--muted);
+  border-radius:5px;
+  cursor:pointer;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  line-height:1;
+}
+.watchlist-icon-btn:hover{color:var(--accent);border-color:var(--accent);}
+
+/* PROMINENT ARROW TO HIDE WATCHLIST */
+.watchlist-dock .watchlist-hide-btn{
+  background:rgba(0,212,255,0.14) !important;
+  border-color:var(--accent) !important;
+  color:var(--accent) !important;
+  font-size:16px !important;
+  font-weight:900 !important;
+}
+.watchlist-dock .watchlist-hide-btn:hover{
+  background:var(--accent) !important;
+  color:#000 !important;
+}
+.watchlist-actions{display:flex;gap:5px;padding:6px 8px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.watchlist-action{flex:1;border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:5px;padding:5px 4px;font:600 10px var(--font);cursor:pointer;}
+.watchlist-action:hover{color:var(--accent);border-color:var(--accent);}
+.watchlist-body{flex:1;overflow-y:auto;padding:6px 5px 9px;}
 .shell.watchlist-open .watchlist-dock .watchlist-toggle{display:none !important;}
   
 .chart-toolbar{padding-right:12px !important;}
@@ -1490,14 +1479,14 @@ function ensureSeriesType(panel) {
       borderUpColor: '#26a69a', borderDownColor: '#ef5350',
       wickUpColor: '#26a69a', wickDownColor: '#ef5350',
     });
-  }
-
+  } 
+  
 panel.seriesType = currentChartType;
   // Candles aur indicators ke beech ka khali space khatam karne ke liye bottom margin 0.12 rakhein
   panel.candleSeries.priceScale().applyOptions({ 
     scaleMargins: { 
       top: 0.05, 
-      bottom: 0.12 
+      bottom: 0.05 
     }, 
     autoScale: true 
   });
@@ -1608,8 +1597,21 @@ function rebuildGridSystem() {
     chartContainer.className = 'panel-chart-container';
     chartContainer.id = `panel-chart-${i}`;
 
- chartContainer.innerHTML = `
+    chartContainer.innerHTML = `
       <div class="pane-box pane-price" id="pane-price-${i}"><canvas class="panel-overlay-canvas" id="panel-canvas-${i}"></canvas></div>
+
+      <!-- SEPARATE DEDICATED VOLUME PANE -->
+      <div class="pane-splitter" id="splitter-volume-${i}"></div>
+      <div class="pane-box pane-volume" id="pane-volume-${i}">
+        <div class="pane-legend">
+          <span class="legend-title" id="title-volume-${i}">Volume</span>
+          <button class="pane-legend-btn" title="Move Up" onclick="moveIndicatorPane(${i}, 'volume', -1)">▲</button>
+          <button class="pane-legend-btn" title="Move Down" onclick="moveIndicatorPane(${i}, 'volume', 1)">▼</button>
+          <button class="pane-legend-btn" title="Settings" onclick="openSingleIndicatorSettings('volume')">⚙️</button>
+          <button class="pane-legend-btn" title="Hide" onclick="toggleIndicatorFromLegend('volume')">✕</button>
+        </div>
+      </div>
+
       <div class="pane-splitter" id="splitter-rsi-${i}"></div>
       <div class="pane-box pane-rsi" id="pane-rsi-${i}">
         <div class="pane-legend">
@@ -1620,6 +1622,7 @@ function rebuildGridSystem() {
           <button class="pane-legend-btn" title="Hide" onclick="toggleIndicatorFromLegend('rsi')">✕</button>
         </div>
       </div>
+
       <div class="pane-splitter" id="splitter-macd-${i}"></div>
       <div class="pane-box pane-macd" id="pane-macd-${i}">
         <div class="pane-legend">
@@ -1630,6 +1633,7 @@ function rebuildGridSystem() {
           <button class="pane-legend-btn" title="Hide" onclick="toggleIndicatorFromLegend('macd')">✕</button>
         </div>
       </div>
+
       <div class="pane-splitter" id="splitter-rs-${i}"></div>
       <div class="pane-box pane-rs" id="pane-rs-${i}">
         <div class="pane-legend">
@@ -1640,6 +1644,7 @@ function rebuildGridSystem() {
           <button class="pane-legend-btn" title="Hide" onclick="toggleIndicatorFromLegend('rs')">✕</button>
         </div>
       </div>
+
       <div class="pane-box pane-axis" id="pane-axis-${i}"></div>
       <div class="shared-crosshair-v" id="shared-crosshair-${i}"></div>
     `;
@@ -1671,7 +1676,7 @@ function destroyPanels() {
 
  
 /* TRADINGVIEW INDICATOR CONTROLS: REORDER, SETTINGS & QUICK-CLOSE */
-let indicatorOrder = ['rsi', 'macd', 'rs'];
+let indicatorOrder = ['volume', 'rsi', 'macd', 'rs'];
 
 function moveIndicatorPane(panelIndex, indKey, dir) {
   const idx = indicatorOrder.indexOf(indKey);
@@ -1679,7 +1684,6 @@ function moveIndicatorPane(panelIndex, indKey, dir) {
   const targetIdx = idx + dir;
   if (targetIdx < 0 || targetIdx >= indicatorOrder.length) return;
 
-  // Swap position in order
   const temp = indicatorOrder[idx];
   indicatorOrder[idx] = indicatorOrder[targetIdx];
   indicatorOrder[targetIdx] = temp;
@@ -1688,7 +1692,6 @@ function moveIndicatorPane(panelIndex, indKey, dir) {
   const axisPane = document.getElementById(`pane-axis-${panelIndex}`);
   if (!container || !axisPane) return;
 
-  // Reorder physically in DOM
   indicatorOrder.forEach(key => {
     const sp = document.getElementById(`splitter-${key}-${panelIndex}`);
     const pane = document.getElementById(`pane-${key}-${panelIndex}`);
@@ -1704,7 +1707,11 @@ function moveIndicatorPane(panelIndex, indKey, dir) {
 }
 
 function toggleIndicatorFromLegend(key) {
-  if (key === 'rsi') {
+  if (key === 'volume') {
+    volVisible = false;
+    const btn = document.getElementById('btn-vol');
+    if (btn) btn.classList.remove('active');
+  } else if (key === 'rsi') {
     rsiConfig.enabled = false;
     const chk = document.getElementById('rsi-en'); if (chk) chk.checked = false;
   } else if (key === 'macd') {
@@ -1719,7 +1726,7 @@ function toggleIndicatorFromLegend(key) {
 
 function openSingleIndicatorSettings(key) {
   openIndicatorsModal();
-  const targetId = key === 'rsi' ? 'rsi-len' : key === 'macd' ? 'macd-en' : 'rs-benchmark';
+  const targetId = key === 'volume' ? 'volma-len' : key === 'rsi' ? 'rsi-len' : key === 'macd' ? 'macd-en' : 'rs-benchmark';
   const el = document.getElementById(targetId);
   if (el) {
     const section = el.closest('.ind-section');
@@ -1734,55 +1741,56 @@ function openSingleIndicatorSettings(key) {
     }
   }
 }
-  
+
 /* UNIVERSAL MULTI-PANE AUTO-RESET MANAGER */
 function updateTimeScaleVisibility(panel) {
+  const showVol  = volVisible;
   const showRsi  = rsiConfig.enabled;
   const showMacd = macdConfig.enabled;
   const showRs   = relativeStrengthConfig.enabled;
 
-  const panePrice = document.getElementById(`pane-price-${panel.index}`);
-  const paneRsi   = document.getElementById(`pane-rsi-${panel.index}`);
-  const paneMacd  = document.getElementById(`pane-macd-${panel.index}`);
-  const paneRs    = document.getElementById(`pane-rs-${panel.index}`);
+  const panePrice  = document.getElementById(`pane-price-${panel.index}`);
+  const paneVolume = document.getElementById(`pane-volume-${panel.index}`);
+  const paneRsi    = document.getElementById(`pane-rsi-${panel.index}`);
+  const paneMacd   = document.getElementById(`pane-macd-${panel.index}`);
+  const paneRs     = document.getElementById(`pane-rs-${panel.index}`);
 
+  const sVol  = document.getElementById(`splitter-volume-${panel.index}`);
   const sRsi  = document.getElementById(`splitter-rsi-${panel.index}`);
   const sMacd = document.getElementById(`splitter-macd-${panel.index}`);
   const sRs   = document.getElementById(`splitter-rs-${panel.index}`);
 
-  if (paneRsi)  paneRsi.style.display  = showRsi  ? 'block' : 'none';
-  if (paneMacd) paneMacd.style.display = showMacd ? 'block' : 'none';
-  if (paneRs)   paneRs.style.display   = showRs   ? 'block' : 'none';
+  if (paneVolume) paneVolume.style.display = showVol ? 'block' : 'none';
+  if (paneRsi)    paneRsi.style.display    = showRsi  ? 'block' : 'none';
+  if (paneMacd)   paneMacd.style.display   = showMacd ? 'block' : 'none';
+  if (paneRs)     paneRs.style.display     = showRs   ? 'block' : 'none';
+
+  if (sVol)  sVol.style.display  = showVol  ? 'block' : 'none';
+  if (sRsi)  sRsi.style.display  = showRsi  ? 'block' : 'none';
+  if (sMacd) sMacd.style.display = showMacd ? 'block' : 'none';
+  if (sRs)   sRs.style.display   = showRs   ? 'block' : 'none';
 
   const visibleIndicators = [];
+  if (showVol)  visibleIndicators.push(paneVolume);
   if (showRsi)  visibleIndicators.push(paneRsi);
   if (showMacd) visibleIndicators.push(paneMacd);
   if (showRs)   visibleIndicators.push(paneRs);
 
-  // Splitters hide/show
-  if (sRsi)  sRsi.style.display  = showRsi ? 'block' : 'none';
-  if (sMacd) sMacd.style.display = (showMacd && (showRsi || panePrice)) ? 'block' : 'none';
-  if (sRs)   sRs.style.display   = (showRs && (showMacd || showRsi || panePrice)) ? 'block' : 'none';
-
- // --- AUTO PROPORTIONAL RESET: NO FIXED PIXELS LEFTOVER ---
   if (visibleIndicators.length === 0) {
-    if (panePrice) {
-      panePrice.style.flex = '1 1 auto';
-      panePrice.style.height = '';
-    }
+    if (panePrice) { panePrice.style.flex = '1 1 auto'; panePrice.style.height = ''; }
   } else {
-    // Price pane ko zyada space (7.0) aur indicators ko compact (0.8) kiya
-    if (panePrice) panePrice.style.flex = '7.0 1 0px';
-    visibleIndicators.forEach(p => { if (p) p.style.flex = '0.8 1 0px'; });
+    if (panePrice) panePrice.style.flex = '5.5 1 0px';
+    if (paneVolume) paneVolume.style.flex = '0.9 1 0px';
+    if (paneRsi) paneRsi.style.flex = '0.7 1 0px';
+    if (paneMacd) paneMacd.style.flex = '0.7 1 0px';
+    if (paneRs) paneRs.style.flex = '0.7 1 0px';
   }
 
-  // Upper indicator panes hide their time scale
-  [panel.priceChart, panel.rsiChart, panel.macdChart, panel.rsChart].forEach(c => {
+  [panel.priceChart, panel.volumeChart, panel.rsiChart, panel.macdChart, panel.rsChart].forEach(c => {
     if (!c) return;
     c.timeScale().applyOptions({ visible: false, height: 0, ticksVisible: false });
   });
 
-  // Dedicated bottom axis chart always remains permanently pinned at the bottom
   if (panel.axisChart) {
     const isDark = currentTheme === 'dark';
     try { panel.axisChart.applyOptions({ height: 26 }); } catch(e) {}
@@ -1796,7 +1804,7 @@ function updateTimeScaleVisibility(panel) {
   const container = document.getElementById(`panel-chart-${panel.index}`);
   if (container) {
     setTimeout(() => {
-      [panel.priceChart, panel.rsiChart, panel.macdChart, panel.rsChart, panel.axisChart].forEach(c => {
+      [panel.priceChart, panel.volumeChart, panel.rsiChart, panel.macdChart, panel.rsChart, panel.axisChart].forEach(c => {
         if (c) try { c.applyOptions({ width: container.clientWidth }); } catch(err){}
       });
       drawPanelOverlays(panel);
@@ -1804,7 +1812,7 @@ function updateTimeScaleVisibility(panel) {
     }, 25);
   }
 }
-  
+
 function createPanelChartInstance(index, tf) {
   const isDark = currentTheme === 'dark';
   let scaleMode = LightweightCharts.PriceScaleMode.Normal;
@@ -1814,20 +1822,8 @@ function createPanelChartInstance(index, tf) {
   const baseChartOpts = {
     layout: { background: { color: 'transparent' }, textColor: isDark ? '#8a9ab0' : '#707a8a', fontFamily: "'JetBrains Mono', monospace", fontSize: 10 },
     grid: { vertLines: { visible: false }, horzLines: { visible: false } },
-    rightPriceScale: {
-      borderColor: isDark ? '#1e2d3d' : '#e0e3eb',
-      minimumWidth: 68
-    },
-    timeScale: {
-      visible: true,
-      timeVisible: false,
-      secondsVisible: false,
-      ticksVisible: true,
-      uniformDistribution: true,
-      rightOffset: 0,
-      tickMarkFormatter: (time) => formatXAxisDate(time),
-      borderColor: isDark ? '#1e2d3d' : '#e0e3eb'
-    },
+    rightPriceScale: { borderColor: isDark ? '#1e2d3d' : '#e0e3eb', minimumWidth: 68 },
+    timeScale: { visible: false, timeVisible: false, secondsVisible: false, ticksVisible: false, uniformDistribution: true, rightOffset: 0, borderColor: isDark ? '#1e2d3d' : '#e0e3eb' },
     localization: { dateFormat: 'dd MMM yy' },
     autoSize: true,
   };
@@ -1835,85 +1831,50 @@ function createPanelChartInstance(index, tf) {
   const priceContainer = document.getElementById(`pane-price-${index}`);
   const priceC = LightweightCharts.createChart(priceContainer, {
     ...baseChartOpts,
-    rightPriceScale: {
-      borderColor: isDark ? '#1e2d3d' : '#e0e3eb',
-      mode: scaleMode,
-      minimumWidth: 68
-    }
+    rightPriceScale: { borderColor: isDark ? '#1e2d3d' : '#e0e3eb', mode: scaleMode, minimumWidth: 68 }
   });
 
- const volS = priceC.addHistogramSeries({
-    priceFormat: { type: 'volume' },
-    priceScaleId: 'vol',
+  // SEPARATE VOLUME CHART INSTANCE
+  const volumeContainer = document.getElementById(`pane-volume-${index}`);
+  const volC = LightweightCharts.createChart(volumeContainer, {
+    ...baseChartOpts,
+    rightPriceScale: { borderColor: isDark ? '#1e2d3d' : '#e0e3eb', minimumWidth: 68 }
   });
-  // Volume bars ko bilkul bottom pane boundary se chipkayenge (bottom: 0) aur height 22% limit karenge
-  priceC.priceScale('vol').applyOptions({
-    scaleMargins: {
-      top: 0.78,
-      bottom: 0.0,
-    },
-    autoScale: true
+  const volS = volC.addHistogramSeries({
+    priceFormat: { type: 'volume' },
   });
 
   const rsiContainer = document.getElementById(`pane-rsi-${index}`);
-  const rsiC = LightweightCharts.createChart(rsiContainer, {
-    ...baseChartOpts,
-    timeScale: {
-      borderColor: isDark ? '#1e2d3d' : '#e0e3eb',
-      timeVisible: false,
-      secondsVisible: false,
-      ticksVisible: false,
-      visible: false,
-      rightOffset: 0,
-      barSpacing: 6,
-      fixLeftEdge: false,
-      lockVisibleTimeRangeOnResize: true,
-      uniformDistribution: true,
-      tickMarkFormatter: (time) => formatXAxisDate(time)
-    },
-    localization: { dateFormat: 'dd MMM yy' }
-  });
+  const rsiC = LightweightCharts.createChart(rsiContainer, baseChartOpts);
 
   const rsContainer = document.getElementById(`pane-rs-${index}`);
-  const rsC = LightweightCharts.createChart(rsContainer, {
-    ...baseChartOpts,
-    timeScale: { borderColor:isDark?'#1e2d3d':'#e0e3eb', timeVisible:false, secondsVisible:false, ticksVisible:false, visible:false, rightOffset:0, barSpacing:6, fixLeftEdge:false, lockVisibleTimeRangeOnResize:true, uniformDistribution:true, tickMarkFormatter:(time)=>formatXAxisDate(time) },
-    localization:{dateFormat:'dd MMM yy'}
-  });
+  const rsC = LightweightCharts.createChart(rsContainer, baseChartOpts);
 
   const macdContainer = document.getElementById(`pane-macd-${index}`);
-  const macdC = LightweightCharts.createChart(macdContainer, {
-    ...baseChartOpts,
-    timeScale: { borderColor:isDark?'#1e2d3d':'#e0e3eb', timeVisible:false, secondsVisible:false, ticksVisible:false, visible:false, rightOffset:0, barSpacing:6, fixLeftEdge:false, lockVisibleTimeRangeOnResize:true, uniformDistribution:true, tickMarkFormatter:(time)=>formatXAxisDate(time) },
-    localization:{dateFormat:'dd MMM yy'}
-  });
+  const macdC = LightweightCharts.createChart(macdContainer, baseChartOpts);
   
-  // Dedicated common time-axis chart. It is rendered AFTER all indicator panes,
-  // so the X-axis is physically the bottom-most element of the panel. The right
-  // price-scale width matches the main chart, keeping the date ticks pixel-aligned
-  // with the candle/RS plots.
   const axisContainer = document.getElementById(`pane-axis-${index}`);
   const axisC = LightweightCharts.createChart(axisContainer, {
     layout: { background: { color: 'transparent' }, textColor: isDark ? '#8a9ab0' : '#707a8a', fontFamily: "'JetBrains Mono', monospace", fontSize: 10 },
     grid: { vertLines: { visible: false }, horzLines: { visible: false } },
     leftPriceScale: { visible: false },
     rightPriceScale: { visible: true, borderVisible: false, drawTicks: false, minimumWidth: 68 },
-    timeScale: { visible:true, timeVisible:false, secondsVisible:false, ticksVisible:true, uniformDistribution:true, rightOffset:0, borderColor:isDark?'#1e2d3d':'#e0e3eb', tickMarkFormatter:(time)=>formatXAxisDate(time) },
+    timeScale: { visible: true, timeVisible: false, secondsVisible: false, ticksVisible: true, uniformDistribution: true, rightOffset: 0, borderColor: isDark ? '#1e2d3d' : '#e0e3eb', tickMarkFormatter:(time)=>formatXAxisDate(time) },
     crosshair: {
       mode: LightweightCharts.CrosshairMode.Normal,
       vertLine: { visible: true, labelVisible: true, style: LightweightCharts.LineStyle.Dashed, width: 1, color: isDark ? 'rgba(212, 228, 240, 0.45)' : 'rgba(19, 23, 34, 0.45)' },
-      horzLine: { visible: false, labelVisible: false } // YEH HORIZONTAL DOTTED LINE KO HIDE KAREGA
+      horzLine: { visible: false, labelVisible: false }
     },
     autoSize: true
   });
   const axisSeries = axisC.addLineSeries({ color:'rgba(0,0,0,0)', lineWidth:1, priceLineVisible:false, lastValueVisible:false, visible:true, priceFormat:{type:'custom', formatter:()=>''} });
-
 
   const canvas = document.getElementById(`panel-canvas-${index}`);
 
   const instObj = {
     index: index,
     priceChart: priceC,
+    volumeChart: volC,
     rsiChart: rsiC,
     rsChart: rsC,
     axisChart: axisC,
@@ -1937,11 +1898,9 @@ function createPanelChartInstance(index, tf) {
 
   ensureSeriesType(instObj);
 
-  // Native chart ki vertical line off karein taaki double line na bane
-  priceC.applyOptions({ crosshair: { vertLine: { visible: false } } });
-  rsiC.applyOptions({ crosshair: { vertLine: { visible: false } } });
-  rsC.applyOptions({ crosshair: { vertLine: { visible: false } } });
-  axisC.applyOptions({ crosshair: { vertLine: { visible: false } } });
+  [priceC, volC, rsiC, rsC, axisC].forEach(c => {
+    c.applyOptions({ crosshair: { vertLine: { visible: false } } });
+  });
 
   const sharedCrosshair = document.getElementById(`shared-crosshair-${index}`);
   const panelContainer = document.getElementById(`panel-chart-${index}`);
@@ -1963,13 +1922,11 @@ function createPanelChartInstance(index, tf) {
     const snapX = instObj.priceChart.timeScale().timeToCoordinate(time);
     const finalX = (snapX !== null && isFinite(snapX)) ? snapX : x;
 
-    // Single dashed line crosses top price, RSI, RS and touches the date axis
     if (sharedCrosshair) {
       sharedCrosshair.style.left = `${finalX}px`;
       sharedCrosshair.style.display = 'block';
     }
 
-    // Bottom timescale par date ko highlight karein
     if (instObj.axisChart && instObj.axisSeries) {
       try { instObj.axisChart.setCrosshairPosition(0, time, instObj.axisSeries); } catch(e){}
     }
@@ -1979,12 +1936,13 @@ function createPanelChartInstance(index, tf) {
     panelContainer.addEventListener('mousemove', showSharedCrosshair);
     panelContainer.addEventListener('mouseleave', hideSharedCrosshair);
   }
+
   let isSyncing = false;
   const syncPanes = (source) => {
     source.timeScale().subscribeVisibleLogicalRangeChange(range => {
       if (isSyncing || !range) return;
       isSyncing = true;
-      [priceC, rsiC, rsC, axisC].forEach(c => {
+      [priceC, volC, rsiC, macdC, rsC, axisC].forEach(c => {
         if (c !== source) { try { c.timeScale().setVisibleLogicalRange(range); } catch(e){} }
       });
       isSyncing = false;
@@ -1992,17 +1950,16 @@ function createPanelChartInstance(index, tf) {
     });
   };
 
-  syncPanes(priceC); syncPanes(rsiC); syncPanes(rsC); syncPanes(axisC);
+  syncPanes(priceC); syncPanes(volC); syncPanes(rsiC); syncPanes(macdC); syncPanes(rsC); syncPanes(axisC);
   updateTimeScaleVisibility(instObj);
 
   return instObj;
 }
 
-/* TRADINGVIEW 1:1 DELTA SPLITTER ENGINE: HAR PANE SMOOTH RESIZE HOGA */
-
 function initPaneSplitterDrag(index) {
   const container = document.getElementById(`panel-chart-${index}`);
   const panePrice = document.getElementById(`pane-price-${index}`);
+  const sVol  = document.getElementById(`splitter-volume-${index}`);
   const sRsi  = document.getElementById(`splitter-rsi-${index}`);
   const sMacd = document.getElementById(`splitter-macd-${index}`);
   const sRs   = document.getElementById(`splitter-rs-${index}`);
@@ -2053,7 +2010,7 @@ function initPaneSplitterDrag(index) {
     };
   }
 
-  [sRsi, sMacd, sRs].forEach(sp => {
+  [sVol, sRsi, sMacd, sRs].forEach(sp => {
     if (!sp) return;
     sp.onmousedown = (e) => startDrag(e, sp);
   });
@@ -2088,7 +2045,7 @@ function initPaneSplitterDrag(index) {
 
     const inst = panelsArray[index];
     if (inst) {
-      [inst.priceChart, inst.rsiChart, inst.macdChart, inst.rsChart, inst.axisChart].forEach(c => {
+      [inst.priceChart, inst.volumeChart, inst.rsiChart, inst.macdChart, inst.rsChart, inst.axisChart].forEach(c => {
         if (c) try { c.applyOptions({ width: container.clientWidth }); } catch(err){}
       });
       drawPanelOverlays(inst);
@@ -2430,13 +2387,13 @@ function toggleWatchlistPanel(force) {
   dock.classList.toggle('open', open);
   if (shell) shell.classList.toggle('watchlist-open', open);
 
-  // Watchlist khulne ya band hone par chart ki width turant 1:1 auto-fit hogi
+  // Resize charts to fit new container dimensions
   setTimeout(() => {
     panelsArray.forEach(p => {
       const container = document.getElementById(`panel-chart-${p.index}`);
       if (container) {
         const w = container.clientWidth;
-        [p.priceChart, p.rsiChart, p.macdChart, p.rsChart, p.axisChart].forEach(c => {
+        [p.priceChart, p.volumeChart, p.rsiChart, p.macdChart, p.rsChart, p.axisChart].forEach(c => {
           if (c) try { c.applyOptions({ width: w }); } catch(e){}
         });
         drawPanelOverlays(p);
@@ -3694,22 +3651,22 @@ function renderPocketPivotStatsWidget(data){
 }
 
 function renderVolumeMALine(data, panel, volSMA) {
-  if (!data || !data.length) return;
-  if (volMAConfig.enabled && activeIndicators.ppv && volSMA && volSMA.length) {
+  if (!data || !data.length || !panel.volumeChart) return;
+  if (volMAConfig.enabled && volVisible && volSMA && volSMA.length) {
     const maData = [];
     for (let i = 0; i < data.length; i++) {
       if (volSMA[i] !== undefined) maData.push({ time: data[i].time, value: +volSMA[i].toFixed(2) });
     }
     if (!panel.volMASeries) {
-      panel.volMASeries = panel.priceChart.addLineSeries({
-        priceScaleId: 'vol', color: volMAConfig.color, lineWidth: volMAConfig.width, priceLineVisible: false, lastValueVisible: false
+      panel.volMASeries = panel.volumeChart.addLineSeries({
+        color: volMAConfig.color, lineWidth: volMAConfig.width, priceLineVisible: false, lastValueVisible: false
       });
     } else {
       panel.volMASeries.applyOptions({ color: volMAConfig.color, lineWidth: volMAConfig.width });
     }
     panel.volMASeries.setData(maData);
   } else if (panel.volMASeries) {
-    panel.priceChart.removeSeries(panel.volMASeries);
+    panel.volumeChart.removeSeries(panel.volMASeries);
     panel.volMASeries = null;
   }
 }
