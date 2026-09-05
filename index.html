@@ -283,11 +283,12 @@ body.light-theme .ppv-table-row{background:rgba(255,255,255,0.95);}
   position: relative; width: 100%; height: 100%; overflow: hidden;
 }
 
+/* --- START: PANE PROPORTIONS & GRABBABLE SPLITTERS --- */
 .pane-box { position: relative; width: 100%; overflow: hidden; }
-.pane-price { flex: 5.2 !important; min-height: 80px; }
-.pane-rsi { flex: 1.0 !important; min-height: 50px; }
-.pane-macd { flex: 1.0 !important; min-height: 50px; display: none; }
-.pane-rs { flex: 1.0 !important; min-height: 50px; }
+.pane-price { flex: 6.5; min-height: 80px; }
+.pane-rsi { flex: 1.0; min-height: 40px; }
+.pane-macd { flex: 1.0; min-height: 40px; display: none; }
+.pane-rs { flex: 1.0; min-height: 40px; }
 .pane-axis { flex: 0 0 26px !important; height: 26px !important; min-height: 26px !important; max-height: 26px !important; background: var(--surface) !important; border-top: 1px solid var(--border) !important; position: relative !important; width: 100% !important; overflow: hidden !important; flex-shrink: 0 !important; }
 /* TRADINGVIEW PANE TITLE BAR (Title + ▲ ▼ + ⚙️ + ✕) */
 .pane-legend {
@@ -335,11 +336,31 @@ body.light-theme .pane-legend {
   color: var(--accent);
   background: rgba(0, 212, 255, 0.15);
 }
+  
+/* Easy-to-grab Splitters with 9px invisible hit area */
 .pane-splitter {
-  height: 1px; background: var(--border); cursor: row-resize;
-  z-index: 30; flex-shrink: 0; transition: background 0.15s;
+  height: 1px;
+  background: var(--border);
+  cursor: row-resize;
+  position: relative;
+  z-index: 30;
+  flex-shrink: 0;
+  transition: background 0.15s;
 }
-.pane-splitter:hover, .pane-splitter.dragging { height: 2px; background: var(--accent); }
+.pane-splitter::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  z-index: 5;
+}
+.pane-splitter:hover, .pane-splitter.dragging {
+  height: 2px;
+  background: var(--accent);
+}
+/* --- END: PANE PROPORTIONS & GRABBABLE SPLITTERS --- */
 
 .panel-overlay-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 18; }
 
@@ -860,32 +881,33 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
       </div>
     </div>
 
+    <!-- START: MODAL INDICATORS CHECKBOXES ON -->
     <div class="ind-section">
       <div class="ind-section-title">🕯️ Smart Bar Color Rules & Inside Bar</div>
       <div class="ind-option">
         <label>Master Enable Smart Bar Colors</label>
-        <label class="switch"><input type="checkbox" id="candle-clr-en" onchange="updateSmartBarConfig()"><span class="slider"></span></label>
+        <label class="switch"><input type="checkbox" id="candle-clr-en" checked onchange="updateSmartBarConfig()"><span class="slider"></span></label>
       </div>
       <div class="ema-row">
-        <label class="switch"><input type="checkbox" id="smart-body-en" onchange="updateSmartBarConfig()"><span class="slider"></span></label>
+        <label class="switch"><input type="checkbox" id="smart-body-en" checked onchange="updateSmartBarConfig()"><span class="slider"></span></label>
         <span class="ema-lbl" style="width:75px;">Body > %:</span>
         <input type="number" id="smart-body-pct" value="4" min="0.1" max="20" step="0.5" class="ema-input-num" onchange="updateSmartBarConfig()">
         <input type="color" id="smart-body-color" value="#2196f3" class="ema-color-picker" onchange="updateSmartBarConfig()">
       </div>
       <div class="ema-row">
-        <label class="switch"><input type="checkbox" id="smart-range-en" onchange="updateSmartBarConfig()"><span class="slider"></span></label>
+        <label class="switch"><input type="checkbox" id="smart-range-en" checked onchange="updateSmartBarConfig()"><span class="slider"></span></label>
         <span class="ema-lbl" style="width:75px;">Range < %:</span>
         <input type="number" id="smart-range-pct" value="3.0" min="0.1" max="20" step="0.1" class="ema-input-num" onchange="updateSmartBarConfig()">
         <input type="color" id="smart-range-color" value="#ffffff" class="ema-color-picker" onchange="updateSmartBarConfig()">
       </div>
       <div class="ema-row">
-        <label class="switch"><input type="checkbox" id="smart-nr7-en" onchange="updateSmartBarConfig()"><span class="slider"></span></label>
+        <label class="switch"><input type="checkbox" id="smart-nr7-en" checked onchange="updateSmartBarConfig()"><span class="slider"></span></label>
         <span class="ema-lbl" style="width:75px;">NR7 Color:</span>
         <input type="color" id="smart-nr7-color" value="#ff9900" class="ema-color-picker" onchange="updateSmartBarConfig()">
       </div>
       <div class="ind-option" style="margin-top:8px;">
         <label>Inside Bar (IB / WIB Labels)</label>
-        <label class="switch"><input type="checkbox" id="ib-label-en" onchange="toggleIndicator('ibLabel')"><span class="slider"></span></label>
+        <label class="switch"><input type="checkbox" id="ib-label-en" checked onchange="toggleIndicator('ibLabel')"><span class="slider"></span></label>
       </div>
       <div class="ema-row">
         <span class="ema-lbl">IB Max Mother Bar:</span>
@@ -898,7 +920,7 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
       <div class="ind-section-title">🌀 Mini Coil Pattern (MCP)</div>
       <div class="ind-option">
         <label>Enable Mini Coil Pattern</label>
-        <label class="switch"><input type="checkbox" id="mcp-en" onchange="updateMCPConfig()"><span class="slider"></span></label>
+        <label class="switch"><input type="checkbox" id="mcp-en" checked onchange="updateMCPConfig()"><span class="slider"></span></label>
       </div>
       <div class="ema-row">
         <span class="ema-lbl">Max Wide Bar %:</span>
@@ -1013,17 +1035,12 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
     </div>
     <!-- END: CPR SECTION -->
 
+   
     <div class="ind-section">
       <div class="ind-section-title">📦 Gap Detector</div>
       <div class="ind-option">
         <label>Enable Gap Detector Shaded Boxes</label>
-        <label class="switch"><input type="checkbox" id="gap-en" onchange="updateGapConfig()"><span class="slider"></span></label>
-      </div>
-      <div class="ema-row">
-        <span class="ema-lbl">Min Gap %:</span>
-        <input type="number" id="gap-min-pct" value="1.0" step="0.1" min="0.1" max="20" class="ema-input-num" onchange="updateGapConfig()">
-        <span class="ema-lbl" style="width:65px;margin-left:8px;">Max Gaps:</span>
-        <input type="number" id="gap-max-count" value="5" min="1" max="20" class="ema-input-num" onchange="updateGapConfig()">
+        <label class="switch"><input type="checkbox" id="gap-en" checked onchange="updateGapConfig()"><span class="slider"></span></label>
       </div>
     </div>
 
@@ -1031,27 +1048,28 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
       <div class="ind-section-title">⚡ Weekly Tight Close, Climax & Overextension</div>
       <div class="ind-option">
         <label>Weekly Tight Close (3WTC / 4WTC / 5WTC)</label>
-        <label class="switch"><input type="checkbox" id="wtc-en" onchange="toggleIndicator('wtc')"><span class="slider"></span></label>
+        <label class="switch"><input type="checkbox" id="wtc-en" checked onchange="toggleIndicator('wtc')"><span class="slider"></span></label>
       </div>
       <div class="ind-option">
         <label>9 EMA Sell Signal (Red Cross ❌)</label>
-        <label class="switch"><input type="checkbox" id="ema9sell-en" onchange="toggleIndicator('ema9Sell')"><span class="slider"></span></label>
+        <label class="switch"><input type="checkbox" id="ema9sell-en" checked onchange="toggleIndicator('ema9Sell')"><span class="slider"></span></label>
       </div>
       <div class="ind-option">
         <label>Selling Climax Signal (Green Cross ❌)</label>
-        <label class="switch"><input type="checkbox" id="sellclimax-en" onchange="toggleIndicator('sellClimax')"><span class="slider"></span></label>
+        <label class="switch"><input type="checkbox" id="sellclimax-en" checked onchange="toggleIndicator('sellClimax')"><span class="slider"></span></label>
       </div>
       <div class="ind-option">
         <label>Buying Climax Signal (Red Triangle ▼)</label>
-        <label class="switch"><input type="checkbox" id="buyclimax-en" onchange="toggleIndicator('buyClimax')"><span class="slider"></span></label>
+        <label class="switch"><input type="checkbox" id="buyclimax-en" checked onchange="toggleIndicator('buyClimax')"><span class="slider"></span></label>
       </div>
       <div class="ema-row" style="margin-top:4px;">
-        <label class="switch"><input type="checkbox" id="atr-ext-en" onchange="updateATRExtConfig()"><span class="slider"></span></label>
+        <label class="switch"><input type="checkbox" id="atr-ext-en" checked onchange="updateATRExtConfig()"><span class="slider"></span></label>
         <span class="ema-lbl" style="width:130px;">ATR% Overext (🔴 Dot):</span>
         <input type="number" id="atr-ext-thresh" value="5.0" min="1" max="50" step="0.5" class="ema-input-num" onchange="updateATRExtConfig()">
       </div>
     </div>
-
+    <!-- END: MODAL INDICATORS CHECKBOXES ON -->
+    
     <div class="ind-section" style="border:none;margin:0;padding:0;">
       <div class="ind-section-title">🚀 Other Indicators & Merged Info Card</div>
       <div class="ind-option">
@@ -1129,7 +1147,8 @@ const DEFAULT_EMA_CONFIGS = [
 let emaConfigs = JSON.parse(JSON.stringify(DEFAULT_EMA_CONFIGS));
 let emaEnvelopeEnabled = true;
 
-let volMAConfig = { enabled: false, len: 30, color: '#ff9800', width: 1 };
+/* --- START: ALL INDICATORS ON BY DEFAULT (EXCEPT MACD & CPR) --- */
+let volMAConfig = { enabled: true, len: 30, color: '#ff9800', width: 1 };
 
 let rsiConfig = {
   enabled: true, len: 14, color: '#9c27b0', width: 2,
@@ -1137,25 +1156,28 @@ let rsiConfig = {
 };
 let rsiMAConfig = { enabled: true, len: 9, color: '#ffab00', width: 1 };
 let relativeStrengthConfig = { enabled: true, benchmarkSymbol: 'NIFTYSMALLCAP250', maLen: 20, color: '#ff9800', width: 1 };
+
+// CPR & MACD are strictly OFF by default
 let cprConfig = { weekly: false, monthly: false, weeklyColor: '#00d4ff', monthlyColor: '#ff9800', showLabels: false };
-let macdConfig = { enabled: false, fast: 12, slow: 26, signal: 9, lineColor: '#2962ff', signalColor: '#ff6d00' }; 
-  
+let macdConfig = { enabled: false, fast: 12, slow: 26, signal: 9, lineColor: '#2962ff', signalColor: '#ff6d00' };
+
 let smartBarConfig = {
-  enabled: false, bodyEnabled: false, bodyThreshold: 4.0, bodyColor: '#2196f3',
-  rangeEnabled: false, rangeThreshold: 3.0, rangeColor: '#ffffff',
-  nr7Enabled: false, nr7Color: '#ff9900'
+  enabled: true, bodyEnabled: true, bodyThreshold: 4.0, bodyColor: '#2196f3',
+  rangeEnabled: true, rangeThreshold: 3.0, rangeColor: '#ffffff',
+  nr7Enabled: true, nr7Color: '#ff9900'
 };
 
 let ibMaxMotherBarRange = 8.0;
-let mcpConfig = { enabled: false, r1: 8.0, lastOnly: false };
-let gapConfig = { enabled: false, minGapPct: 1.0, maxGaps: 5 };
-let atrExtConfig = { enabled: false, threshold: 5.0 };
+let mcpConfig = { enabled: true, r1: 8.0, lastOnly: false };
+let gapConfig = { enabled: true, minGapPct: 1.0, maxGaps: 5 };
+let atrExtConfig = { enabled: true, threshold: 5.0 };
 
 let activeIndicators = {
   ppv: true, tables: true, tablesEmaDist: false,
-  candleClr: false, ibLabel: false, wtc: false, ema9Sell: false,
-  sellClimax: false, buyClimax: false
+  candleClr: true, ibLabel: true, wtc: true, ema9Sell: true,
+  sellClimax: true, buyClimax: true
 };
+/* --- END: ALL INDICATORS ON BY DEFAULT (EXCEPT MACD & CPR) --- */
 
 let userDrawings = [];
 let activeTool = 'cursor';
@@ -1945,6 +1967,7 @@ function createPanelChartInstance(index, tf) {
 }
 
 /* TRADINGVIEW 1:1 DELTA SPLITTER ENGINE: HAR PANE SMOOTH RESIZE HOGA */
+
 function initPaneSplitterDrag(index) {
   const container = document.getElementById(`panel-chart-${index}`);
   const panePrice = document.getElementById(`pane-price-${index}`);
@@ -1956,7 +1979,6 @@ function initPaneSplitterDrag(index) {
 
   let dragData = null;
 
-  // Splitter ke theek upar wala visible pane dhoondein
   function getVisibleAbove(sp) {
     let el = sp.previousElementSibling;
     while (el) {
@@ -1966,7 +1988,6 @@ function initPaneSplitterDrag(index) {
     return panePrice;
   }
 
-  // Splitter ke theek neeche wala visible pane dhoondein (Date Axis ko chhod kar)
   function getVisibleBelow(sp) {
     let el = sp.nextElementSibling;
     while (el) {
@@ -2002,7 +2023,7 @@ function initPaneSplitterDrag(index) {
 
   [sRsi, sMacd, sRs].forEach(sp => {
     if (!sp) return;
-    sp.addEventListener('mousedown', (e) => startDrag(e, sp));
+    sp.onmousedown = (e) => startDrag(e, sp);
   });
 
   window.addEventListener('mouseup', () => {
@@ -2018,7 +2039,6 @@ function initPaneSplitterDrag(index) {
     let newHA = dragData.startHA + delta;
     let newHB = dragData.startHB - delta;
 
-    // Minimum boundary clamp taaki pane gayab na ho
     if (newHA < dragData.minA) {
       newHA = dragData.minA;
       newHB = dragData.totalH - newHA;
@@ -2028,7 +2048,6 @@ function initPaneSplitterDrag(index) {
       newHA = dragData.totalH - newHB;
     }
 
-    // Sirf inhi 2 panes ki height badlegi, baaki saare panes aur Date Axis apni jagah locked rahenge
     dragData.above.style.height = `${newHA}px`;
     dragData.above.style.flex = 'none';
 
@@ -2045,6 +2064,7 @@ function initPaneSplitterDrag(index) {
     }
   });
 }
+/* END: SMOOTH 1:1 SPLITTER RESIZE ENGINE */
   
 function setPanelInterval(idx, tf, btn) {
   const panel = panelsArray[idx];
