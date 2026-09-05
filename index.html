@@ -285,10 +285,10 @@ body.light-theme .ppv-table-row{background:rgba(255,255,255,0.95);}
 
 /* --- START: PANE PROPORTIONS & GRABBABLE SPLITTERS --- */
 .pane-box { position: relative; width: 100%; overflow: hidden; }
-.pane-price { flex: 6.5; min-height: 80px; }
-.pane-rsi { flex: 0.8; min-height: 30px; }
-.pane-macd { flex: 0.8; min-height: 30px; display: none; }
-.pane-rs { flex: 0.8; min-height: 30px; }
+.pane-price { flex: 7.5; min-height: 80px; }
+.pane-rsi { flex: 0.65; min-height: 25px; }
+.pane-macd { flex: 0.65; min-height: 25px; display: none; }
+.pane-rs { flex: 0.65; min-height: 25px; }
 .pane-axis { flex: 0 0 26px !important; height: 26px !important; min-height: 26px !important; max-height: 26px !important; background: var(--surface) !important; border-top: 1px solid var(--border) !important; position: relative !important; width: 100% !important; overflow: hidden !important; flex-shrink: 0 !important; }
 /* TRADINGVIEW PANE TITLE BAR (Title + ▲ ▼ + ⚙️ + ✕) */
 .pane-legend {
@@ -1738,17 +1738,16 @@ function updateTimeScaleVisibility(panel) {
   if (sMacd) sMacd.style.display = (showMacd && (showRsi || panePrice)) ? 'block' : 'none';
   if (sRs)   sRs.style.display   = (showRs && (showMacd || showRsi || panePrice)) ? 'block' : 'none';
 
-  // --- AUTO PROPORTIONAL RESET: NO FIXED PIXELS LEFTOVER ---
+ // --- AUTO PROPORTIONAL RESET: NO FIXED PIXELS LEFTOVER ---
   if (visibleIndicators.length === 0) {
-    // Agar koi indicator on nahi hai: Price pane 100% full height lega!
     if (panePrice) {
       panePrice.style.flex = '1 1 auto';
       panePrice.style.height = '';
     }
   } else {
-    // Proportional flex weights (Auto-expands/shrinks gracefully)
-    if (panePrice) panePrice.style.flex = '5.2 1 0px';
-    visibleIndicators.forEach(p => { if (p) p.style.flex = '1.0 1 0px'; });
+    // Price pane ko zyada space (7.5) aur indicators ko compact (0.65) kiya
+    if (panePrice) panePrice.style.flex = '7.5 1 0px';
+    visibleIndicators.forEach(p => { if (p) p.style.flex = '0.65 1 0px'; });
   }
 
   // Upper indicator panes hide their time scale
