@@ -284,9 +284,9 @@ body.light-theme .ppv-table-row{background:rgba(255,255,255,0.95);}
 
 .pane-box { position: relative; width: 100%; min-height: 40px; overflow: hidden; }
 .pane-price { flex: 4.0; }
-.pane-rsi { flex: 1.0; min-height: 90px; }
-.pane-rs { flex: 1.0; min-height: 90px; }
-.pane-axis { flex: 0 0 28px; height: 28px; min-height: 28px; }
+.pane-rsi { flex: 1.0; min-height: 45px !important; }
+.pane-rs { flex: 1.0; min-height: 45px !important; }
+.pane-axis { flex: 0 0 20px !important; height: 20px !important; min-height: 20px !important; max-height: 20px !important; background: var(--surface) !important; border-top: 1px solid var(--border) !important; position: relative !important; width: 100% !important; overflow: hidden !important; flex-shrink: 0 !important; }
 .pane-rs .rs-pane-title{position:absolute;top:5px;left:8px;z-index:5;font:600 10px var(--mono);color:var(--muted);pointer-events:none;background:rgba(8,11,15,.55);padding:2px 5px;border-radius:3px;}
 body.light-theme .pane-rs .rs-pane-title{background:rgba(255,255,255,.65);}
 
@@ -1673,36 +1673,79 @@ function createPanelChartInstance(index, tf) {
 function initPaneSplitterDrag(index) {
   const container = document.getElementById(`panel-chart-${index}`);
   const panePrice = document.getElementById(`pane-price-${index}`);
+  const paneRsi = document.getElementById(`pane-rsi-${index}`);
   const splitter1 = document.getElementById(`splitter-1-${index}`);
+  const splitter2 = document.getElementById(`splitter-2-${index}`);
 
-  if (!container || !panePrice || !splitter1) return;
+  if (!container || !panePrice) return;
 
-  let isDragging1 = false;
+  let activeSplitter = null;
 
-  splitter1.addEventListener('mousedown', () => { isDragging1 = true; splitter1.classList.add('dragging'); });
+  if (splitter1) {
+    splitter1.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      activeSplitter = 1;
+      splitter1.classList.add('dragging');
+    });
+  }
+
+  if (splitter2) {
+    splitter2.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      activeSplitter = 2;
+      splitter2.classList.add('dragging');
+    });
+  }
 
   window.addEventListener('mouseup', () => {
-    isDragging1 = false; splitter1.classList.remove('dragging');
+    activeSplitter = null;
+    if (splitter1) splitter1.classList.remove('dragging');
+    if (splitter2) splitter2.classList.remove('dragging');
   });
 
   window.addEventListener('mousemove', e => {
-    if (!isDragging1) return;
+    if (!activeSplitter) return;
     const rect = container.getBoundingClientRect();
-    const offsetY = e.clientY - rect.top;
-    const priceH = Math.max(120, offsetY);
-    panePrice.style.flex = `0 0 ${priceH}px`;
+    const containerH = rect.height;
+    const axisH = 20; // 20px fixed axis
+
+    const showRsi = rsiConfig.enabled;
+    const showRs = relativeStrengthConfig.enabled;
+
+    if (activeSplitter === 1) {
+      // Drag boundary clamp: Date Axis ko screen se bahar push hone se rokega
+      let minBelow = axisH;
+      if (showRsi) minBelow += 45 + 1;
+      if (showRs) minBelow += 45 + 1;
+
+      const maxPriceH = containerH - minBelow;
+      const offsetY = e.clientY - rect.top;
+      const priceH = Math.min(maxPriceH, Math.max(80, offsetY));
+
+      panePrice.style.flex = `0 0 ${priceH}px`;
+    } else if (activeSplitter === 2 && paneRsi) {
+      // Splitter 2 drag (RSI aur RS ke beech)
+      const priceH = panePrice.getBoundingClientRect().height;
+      let minBelow = axisH;
+      if (showRs) minBelow += 45 + 1;
+
+      const maxRsiBottom = containerH - minBelow;
+      const currentY = e.clientY - rect.top;
+      const rsiH = Math.min(maxRsiBottom - priceH - 1, Math.max(45, currentY - priceH - 1));
+
+      paneRsi.style.flex = `0 0 ${rsiH}px`;
+    }
 
     const inst = panelsArray[index];
     if (inst) {
-      [inst.priceChart, inst.rsiChart].forEach(c => {
-        try { c.applyOptions({ width: container.clientWidth }); } catch(err){}
+      [inst.priceChart, inst.rsiChart, inst.rsChart, inst.axisChart].forEach(c => {
+        if (c) try { c.applyOptions({ width: container.clientWidth }); } catch(err){}
       });
       drawPanelOverlays(inst);
       requestAnimationFrame(() => positionPocketPivotStatsWidget(inst));
     }
   });
 }
-
 function setPanelInterval(idx, tf, btn) {
   const panel = panelsArray[idx];
   if (!panel) return;
