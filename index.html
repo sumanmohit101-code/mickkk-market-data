@@ -641,7 +641,97 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
   .chart-grid.grid-1x2, .chart-grid.grid-2x2, .chart-grid.grid-3x2, .chart-grid.grid-4x2 { grid-template-columns: 1fr; }
   .watchlist-panel{ width:min(300px,78vw) !important; min-width:min(300px,78vw) !important; max-width:min(300px,78vw) !important; flex-basis:min(300px,78vw) !important; }
 }
-</style>
+  /* ===== DRAWING STYLE POPUP ===== */
+.drawing-style-panel{
+  position:fixed;
+  left:52px;
+  top:110px;
+  width:190px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+  padding:10px;
+  z-index:9999;
+  display:none;
+  font-family:var(--font);
+}
+
+.drawing-style-panel.show{
+  display:block;
+}
+
+.drawing-style-title{
+  font-size:11px;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:8px;
+  padding-bottom:7px;
+  border-bottom:1px solid var(--border);
+}
+
+.drawing-style-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin:8px 0;
+}
+
+.drawing-style-row label{
+  font-size:10px;
+  color:var(--muted);
+}
+
+.drawing-style-panel input[type="color"]{
+  width:42px;
+  height:24px;
+  padding:1px;
+  border:1px solid var(--border);
+  background:var(--card);
+  border-radius:4px;
+  cursor:pointer;
+}
+
+.drawing-style-panel select{
+  width:95px;
+  height:25px;
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text);
+  border-radius:4px;
+  font-size:10px;
+  padding:2px 5px;
+}
+
+.drawing-style-actions{
+  display:flex;
+  gap:5px;
+  margin-top:10px;
+}
+
+.drawing-style-actions button{
+  flex:1;
+  height:27px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--muted);
+  border-radius:4px;
+  cursor:pointer;
+  font-size:10px;
+}
+
+.drawing-style-actions button:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+}
+
+.drawing-style-actions .apply{
+  background:rgba(0,212,255,.08);
+  color:var(--accent);
+  border-color:var(--accent);
+}
+  </style>
 </head>
 <body>
 <nav>
@@ -749,6 +839,12 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
     <button class="draw-btn" id="tool-text" title="Text Note (💬 Click to place text)" onclick="setTool('text',this)">💬</button>
     <button class="draw-btn" id="tool-eraser" title="Selective Eraser (🧹 Click any line to delete)" onclick="setTool('eraser',this)">🧹</button>
     <button class="draw-btn" title="Clear All Drawings" onclick="clearDrawings()" style="color:var(--red);">🗑️</button>
+    <button class="draw-btn"
+        id="tool-drawing-settings"
+        title="Drawing Style Settings"
+        onclick="toggleDrawingStylePanel()">
+  ⚙️
+</button>
     <div style="width:24px;height:1px;background:var(--border);margin:2px 0;"></div>
     <button class="draw-btn" title="Zoom In" onclick="zoomChart(0.72)">🔍+</button>
     <button class="draw-btn" title="Zoom Out" onclick="zoomChart(1.35)">🔍−</button>
@@ -1199,7 +1295,61 @@ let activeTool = 'cursor';
 let drawingState = { isDrawing: false, startPoint: null, currentPoint: null };
 let selectedDrawingIdx = -1;
 let modalHighlightIdx = -1;
+  
+  /* ===== DRAWING STYLE CONFIG ===== */
+let drawingStyle = {
+  color: '#00d4ff',
+  width: 2,
+  style: 'solid'
+};
 
+function getDrawingDash(style){
+  if(style === 'dashed') return [6,4];
+  if(style === 'dotted') return [2,3];
+  return [];
+}
+
+function toggleDrawingStylePanel(){
+  const panel = document.getElementById('drawing-style-panel');
+  if(!panel) return;
+
+  panel.classList.toggle('show');
+
+  if(panel.classList.contains('show')){
+    document.getElementById('drawing-color').value = drawingStyle.color;
+    document.getElementById('drawing-width').value = drawingStyle.width;
+    document.getElementById('drawing-line-style').value = drawingStyle.style;
+  }
+}
+
+function applyDrawingStyle(){
+  const color = document.getElementById('drawing-color');
+  const width = document.getElementById('drawing-width');
+  const style = document.getElementById('drawing-line-style');
+
+  if(color) drawingStyle.color = color.value;
+  if(width) drawingStyle.width = parseFloat(width.value) || 2;
+  if(style) drawingStyle.style = style.value;
+
+  const panel = document.getElementById('drawing-style-panel');
+  if(panel) panel.classList.remove('show');
+}
+
+function resetDrawingStyle(){
+  drawingStyle = {
+    color: '#00d4ff',
+    width: 2,
+    style: 'solid'
+  };
+
+  const color = document.getElementById('drawing-color');
+  const width = document.getElementById('drawing-width');
+  const style = document.getElementById('drawing-line-style');
+
+  if(color) color.value = drawingStyle.color;
+  if(width) width.value = drawingStyle.width;
+  if(style) style.value = drawingStyle.style;
+}
 let volVisible = true;
 let currentRange = '1Y';
 let currentSymbol = '20MICRONS', currentName = '20 Microns Limited';
@@ -2256,11 +2406,32 @@ function handleChartMouseDown(e) {
   }
 
   if (activeTool === 'hline') {
-    userDrawings.push({ id: Date.now(), type: 'hline', price: price, color: '#00d4ff' }); finalizeDrawing(); return;
-  }
-  if (activeTool === 'vline') {
-    userDrawings.push({ id: Date.now(), type: 'vline', time: time, color: '#00d4ff' }); finalizeDrawing(); return;
-  }
+  userDrawings.push({
+    id: Date.now(),
+    type: 'hline',
+    price: price,
+    color: drawingStyle.color,
+    width: drawingStyle.width,
+    style: drawingStyle.style
+  });
+
+  finalizeDrawing();
+  return;
+}
+
+if (activeTool === 'vline') {
+  userDrawings.push({
+    id: Date.now(),
+    type: 'vline',
+    time: time,
+    color: drawingStyle.color,
+    width: drawingStyle.width,
+    style: drawingStyle.style
+  });
+
+  finalizeDrawing();
+  return;
+}
   if (activeTool === 'text') {
     const textNote = prompt("Enter Text Note:", "Support Level");
     if (textNote) { userDrawings.push({ id: Date.now(), type: 'text', time: time, price: price, text: textNote, color: '#00d4ff' }); finalizeDrawing(); }
@@ -2272,10 +2443,24 @@ function handleChartMouseDown(e) {
     drawingState.currentPoint = { time: time, price: price, x: x, y: y };
     drawingState.isDrawing = true;
   } else {
-    userDrawings.push({
-      id: Date.now(), type: activeTool, p1: drawingState.startPoint,
-      p2: { time: time, price: price, x: x, y: y }, color: activeTool === 'measure' ? '#ffab00' : '#00d4ff'
-    });
+   userDrawings.push({
+  id: Date.now(),
+  type: activeTool,
+  p1: drawingState.startPoint,
+  p2: {
+    time: time,
+    price: price,
+    x: x,
+    y: y
+  },
+
+  color: activeTool === 'measure'
+    ? '#ffab00'
+    : drawingStyle.color,
+
+  width: drawingStyle.width,
+  style: drawingStyle.style
+});
     drawingState.isDrawing = false; drawingState.startPoint = null; finalizeDrawing();
   }
 }
@@ -3465,13 +3650,13 @@ function drawPanelOverlays(panel) {
         if (d.type === 'hline') {
           const y = panel.candleSeries.priceToCoordinate(d.price);
           if (y !== null) {
-            ctx.strokeStyle = d.color || '#00d4ff'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
+            ctx.strokeStyle = d.color || '#00d4ff'; ctx.lineWidth = d.width || 1.5; ctx.setLineDash(getDrawingDash(d.style));
             ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(rect.width, y); ctx.stroke(); ctx.setLineDash([]);
           }
         } else if (d.type === 'vline') {
           const x = panel.priceChart.timeScale().timeToCoordinate(d.time);
           if (x !== null) {
-            ctx.strokeStyle = d.color || '#00d4ff'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
+            ctx.strokeStyle = d.color || '#00d4ff'; ctx.lineWidth = d.width || 1.5; ctx.setLineDash(getDrawingDash(d.style));
             ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, rect.height); ctx.stroke(); ctx.setLineDash([]);
           }
         } else if (d.type === 'trendline' && d.p1 && d.p2) {
@@ -3480,8 +3665,8 @@ function drawPanelOverlays(panel) {
           const x2 = panel.priceChart.timeScale().timeToCoordinate(d.p2.time);
           const y2 = panel.candleSeries.priceToCoordinate(d.p2.price);
           if (x1 !== null && y1 !== null && x2 !== null && y2 !== null) {
-            ctx.strokeStyle = d.color || '#00d4ff'; ctx.lineWidth = 2;
-            ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+            ctx.strokeStyle = d.color || '#00d4ff'; ctx.lineWidth = d.width || 2.0; ctx.setLineDash(getDrawingDash(d.style));
+            ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();ctx.setLineDash([]);
           }
         } else if (d.type === 'rectangle' && d.p1 && d.p2) {
           const x1 = panel.priceChart.timeScale().timeToCoordinate(d.p1.time);
@@ -3491,8 +3676,8 @@ function drawPanelOverlays(panel) {
           if (x1 !== null && y1 !== null && x2 !== null && y2 !== null) {
             const bx = Math.min(x1, x2), by = Math.min(y1, y2);
             const bw = Math.abs(x2 - x1), bh = Math.abs(y2 - y1);
-            ctx.fillStyle = 'rgba(0, 212, 255, 0.12)'; ctx.strokeStyle = d.color || '#00d4ff'; ctx.lineWidth = 1.5;
-            ctx.fillRect(bx, by, bw, bh); ctx.strokeRect(bx, by, bw, bh);
+            ctx.fillStyle = 'rgba(0, 212, 255, 0.12)'; ctx.strokeStyle = d.color || '#00d4ff'; ctx.lineWidth = d.width || 1.5;ctx.setLineDash(getDrawingDash(d.style));
+            ctx.fillRect(bx, by, bw, bh); ctx.strokeRect(bx, by, bw, bh);ctx.setLineDash([]);
           }
         } else if (d.type === 'fibonacci' && d.p1 && d.p2) {
           const x1 = panel.priceChart.timeScale().timeToCoordinate(d.p1.time);
@@ -4371,5 +4556,44 @@ function applyLivePrice(price){
 initSystem();
 loadSymbolList();
 </script>
+  
+  <!-- ===== DRAWING STYLE SETTINGS ===== -->
+<div class="drawing-style-panel" id="drawing-style-panel">
+
+  <div class="drawing-style-title">
+    Drawing Style
+  </div>
+
+  <div class="drawing-style-row">
+    <label>Color</label>
+    <input type="color" id="drawing-color" value="#00d4ff">
+  </div>
+
+  <div class="drawing-style-row">
+    <label>Thickness</label>
+    <select id="drawing-width">
+      <option value="1">1 px</option>
+      <option value="1.5">1.5 px</option>
+      <option value="2" selected>2 px</option>
+      <option value="3">3 px</option>
+      <option value="4">4 px</option>
+    </select>
+  </div>
+
+  <div class="drawing-style-row">
+    <label>Style</label>
+    <select id="drawing-line-style">
+      <option value="solid" selected>Solid</option>
+      <option value="dashed">Dashed</option>
+      <option value="dotted">Dotted</option>
+    </select>
+  </div>
+
+  <div class="drawing-style-actions">
+    <button onclick="resetDrawingStyle()">Reset</button>
+    <button class="apply" onclick="applyDrawingStyle()">Apply</button>
+  </div>
+
+</div>
 </body>
 </html>
