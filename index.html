@@ -287,10 +287,9 @@ body.light-theme .ppv-table-row{background:rgba(255,255,255,0.95);}
 .pane-price { flex: 4.0; }
 .pane-rsi { flex: 1.0; min-height: 45px !important; }
 .pane-rs { flex: 1.0; min-height: 45px !important; }
+.pane-macd{flex:1.0;min-height:40px;display:none;}
 .pane-axis { flex: 0 0 20px !important; height: 26px !important; min-height: 26px !important; max-height: 26px !important; background: var(--surface) !important; border-top: 1px solid var(--border) !important; position: relative !important; width: 100% !important; overflow: hidden !important; flex-shrink: 0 !important; }
-.pane-rs .rs-pane-title{position:absolute;top:5px;left:8px;z-index:5;font:600 10px var(--mono);color:var(--muted);pointer-events:none;background:rgba(8,11,15,.55);padding:2px 5px;border-radius:3px;}
-body.light-theme .pane-rs .rs-pane-title{background:rgba(255,255,255,.65);}
-
+.pane-rs .rs-pane-title, .pane-macd .macd-pane-title{position:absolute;top:5px;left:8px;z-index:5;font:600 10px var(--mono);color:var(--muted);background:rgba(8,11,15,.65);padding:2px 5px;border-radius:3px;pointer-events:none;}
 .pane-splitter {
   height: 1px; background: var(--border); cursor: row-resize;
   z-index: 30; flex-shrink: 0; transition: background 0.15s;
@@ -844,6 +843,21 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
         <input type="number" id="rs-ma-len" value="20" min="1" max="500" class="ema-input-num" onchange="updateRelativeStrengthConfig()">
         <input type="color" id="rs-color" value="#00d4ff" class="ema-color-picker" onchange="updateRelativeStrengthConfig()">
         <select id="rs-width" class="ema-select-width" onchange="updateRelativeStrengthConfig()"><option value="1" selected>1px</option><option value="2">2px</option><option value="3">3px</option></select>
+      </div>
+    </div>
+
+    <div class="ind-section">
+      <div class="ind-section-title">📊 MACD (12, 26, 9)</div>
+      <div class="ind-option"><label>Enable MACD Indicator</label><label class="switch"><input type="checkbox" id="macd-en" onchange="updateMACDConfig()"><span class="slider"></span></label></div>
+      <div class="ema-row">
+        <span class="ema-lbl">Fast / Slow:</span>
+        <input type="number" id="macd-fast" value="12" min="1" max="100" class="ema-input-num" onchange="updateMACDConfig()">
+        <input type="number" id="macd-slow" value="26" min="1" max="100" class="ema-input-num" onchange="updateMACDConfig()">
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">Signal Line:</span>
+        <input type="number" id="macd-signal" value="9" min="1" max="100" class="ema-input-num" onchange="updateMACDConfig()">
+        <input type="color" id="macd-color" value="#2962ff" class="ema-color-picker" onchange="updateMACDConfig()">
       </div>
     </div>
 
@@ -1418,15 +1432,15 @@ function rebuildGridSystem() {
     chartContainer.className = 'panel-chart-container';
     chartContainer.id = `panel-chart-${i}`;
 
-    chartContainer.innerHTML = `
-      <div class="pane-box pane-price" id="pane-price-${i}">
-        <canvas class="panel-overlay-canvas" id="panel-canvas-${i}"></canvas>
-      </div>
-      <div class="pane-splitter" id="splitter-1-${i}"></div>
+   chartContainer.innerHTML = `
+      <div class="pane-box pane-price" id="pane-price-${i}"><canvas class="panel-overlay-canvas" id="panel-canvas-${i}"></canvas></div>
+      <div class="pane-splitter" id="splitter-rsi-${i}"></div>
       <div class="pane-box pane-rsi" id="pane-rsi-${i}"></div>
-      <div class="pane-splitter" id="splitter-2-${i}"></div>
+      <div class="pane-splitter" id="splitter-macd-${i}"></div>
+      <div class="pane-box pane-macd" id="pane-macd-${i}"><div class="macd-pane-title">MACD (12, 26, 9)</div></div>
+      <div class="pane-splitter" id="splitter-rs-${i}"></div>
       <div class="pane-box pane-rs" id="pane-rs-${i}"><div class="rs-pane-title">Relative Strength</div></div>
-      <div class="pane-box pane-axis" id="pane-axis-${i}"><div class="shared-axis-date" id="shared-axis-date-${i}"></div></div>
+      <div class="pane-box pane-axis" id="pane-axis-${i}"></div>
       <div class="shared-crosshair-v" id="shared-crosshair-${i}"></div>
     `;
 
@@ -1456,86 +1470,79 @@ function destroyPanels() {
   panelsArray = [];
 }
 
+  let macdConfig = { enabled: false, fast: 12, slow: 26, signal: 9, lineColor: '#2962ff', signalColor: '#ff6d00' };
 
-  function updateTimeScaleVisibility(panel) {
-  const showRsi = rsiConfig.enabled;
-  const showRs = relativeStrengthConfig.enabled;
+/* UNIVERSAL MULTI-PANE AUTO-RESET MANAGER */
+function updateTimeScaleVisibility(panel) {
+  const showRsi  = rsiConfig.enabled;
+  const showMacd = macdConfig.enabled;
+  const showRs   = relativeStrengthConfig.enabled;
+
   const panePrice = document.getElementById(`pane-price-${panel.index}`);
-  const paneRsi = document.getElementById(`pane-rsi-${panel.index}`);
-  const paneRs = document.getElementById(`pane-rs-${panel.index}`);
-  const splitter1 = document.getElementById(`splitter-1-${panel.index}`);
-  const splitter2 = document.getElementById(`splitter-2-${panel.index}`);
-  const container = document.getElementById(`panel-chart-${panel.index}`);
-  const isDark = currentTheme === 'dark';
+  const paneRsi   = document.getElementById(`pane-rsi-${panel.index}`);
+  const paneMacd  = document.getElementById(`pane-macd-${panel.index}`);
+  const paneRs    = document.getElementById(`pane-rs-${panel.index}`);
 
-  if (paneRsi) paneRsi.style.display = showRsi ? 'block' : 'none';
-  if (paneRs) paneRs.style.display = showRs ? 'block' : 'none';
+  const sRsi  = document.getElementById(`splitter-rsi-${panel.index}`);
+  const sMacd = document.getElementById(`splitter-macd-${panel.index}`);
+  const sRs   = document.getElementById(`splitter-rs-${panel.index}`);
 
-  // Splitters management:
-  // Splitter 1 is between Price and indicators (only if at least one indicator is on)
-  if (splitter1) splitter1.style.display = (showRsi || showRs) ? 'block' : 'none';
-  // Splitter 2 is between RSI and RS (only if BOTH indicators are on)
-  if (splitter2) splitter2.style.display = (showRsi && showRs) ? 'block' : 'none';
+  if (paneRsi)  paneRsi.style.display  = showRsi  ? 'block' : 'none';
+  if (paneMacd) paneMacd.style.display = showMacd ? 'block' : 'none';
+  if (paneRs)   paneRs.style.display   = showRs   ? 'block' : 'none';
 
-  // --- AUTO-RESET LOGIC: DRAGGED SIZES KO RESET KARNA ---
-  if (!showRsi && !showRs) {
-    // Agar dono indicators OFF hain: Price chart turant full screen (100%) expand hoga!
+  const visibleIndicators = [];
+  if (showRsi)  visibleIndicators.push(paneRsi);
+  if (showMacd) visibleIndicators.push(paneMacd);
+  if (showRs)   visibleIndicators.push(paneRs);
+
+  // Splitters hide/show
+  if (sRsi)  sRsi.style.display  = showRsi ? 'block' : 'none';
+  if (sMacd) sMacd.style.display = (showMacd && (showRsi || panePrice)) ? 'block' : 'none';
+  if (sRs)   sRs.style.display   = (showRs && (showMacd || showRsi || panePrice)) ? 'block' : 'none';
+
+  // --- AUTO PROPORTIONAL RESET: NO FIXED PIXELS LEFTOVER ---
+  if (visibleIndicators.length === 0) {
+    // Agar koi indicator on nahi hai: Price pane 100% full height lega!
     if (panePrice) {
       panePrice.style.flex = '1 1 auto';
       panePrice.style.height = '';
     }
-    if (paneRsi) { paneRsi.style.flex = ''; paneRsi.style.height = ''; }
-    if (paneRs)  { paneRs.style.flex = '';  paneRs.style.height = ''; }
-  } else if (showRsi && !showRs) {
-    // Agar sirf RSI ON hai: RS ko clear karein taaki layout na bikhre
-    if (paneRs)  { paneRs.style.flex = ''; paneRs.style.height = ''; }
-    if (paneRsi && (!paneRsi.style.flex || paneRsi.style.flex.includes('none'))) {
-      paneRsi.style.flex = '1.0';
-    }
-  } else if (!showRsi && showRs) {
-    // Agar sirf RS ON hai: RSI ko clear karein taaki layout na bikhre
-    if (paneRsi) { paneRsi.style.flex = ''; paneRsi.style.height = ''; }
-    if (paneRs && (!paneRs.style.flex || paneRs.style.flex.includes('none'))) {
-      paneRs.style.flex = '1.0';
-    }
+  } else {
+    // Proportional flex weights (Auto-expands/shrinks gracefully)
+    if (panePrice) panePrice.style.flex = '4.0 1 0px';
+    visibleIndicators.forEach(p => { if (p) p.style.flex = '1.0 1 0px'; });
   }
 
   // Upper indicator panes hide their time scale
-  [panel.priceChart, panel.rsiChart, panel.rsChart].forEach(c => {
+  [panel.priceChart, panel.rsiChart, panel.macdChart, panel.rsChart].forEach(c => {
     if (!c) return;
-    c.timeScale().applyOptions({
-      visible: false, height: 0,
-      timeVisible: false, secondsVisible: false, ticksVisible: false,
-      rightOffset: 0, uniformDistribution: true,
-      borderColor: isDark ? '#1e2d3d' : '#e0e3eb'
-    });
+    c.timeScale().applyOptions({ visible: false, height: 0, ticksVisible: false });
   });
 
-  // Dedicated bottom axis chart always remains cleanly pinned at the bottom
+  // Dedicated bottom axis chart always remains permanently pinned at the bottom
   if (panel.axisChart) {
+    const isDark = currentTheme === 'dark';
     try { panel.axisChart.applyOptions({ height: 26 }); } catch(e) {}
     panel.axisChart.timeScale().applyOptions({
-      visible: true, height: 26,
-      timeVisible: false, secondsVisible: false, ticksVisible: true,
-      tickMarkFormatter: (time) => formatXAxisDate(time), uniformDistribution: true, rightOffset: 0,
-      borderColor: isDark ? '#1e2d3d' : '#e0e3eb'
+      visible: true, height: 26, ticksVisible: true, borderVisible: true,
+      borderColor: isDark ? '#1e2d3d' : '#e0e3eb',
+      tickMarkFormatter: (t) => formatXAxisDate(t)
     });
   }
 
-  // Auto-resize chart canvas to fit full height immediately
+  const container = document.getElementById(`panel-chart-${panel.index}`);
   if (container) {
     setTimeout(() => {
-      [panel.priceChart, panel.rsiChart, panel.rsChart, panel.axisChart].forEach(c => {
+      [panel.priceChart, panel.rsiChart, panel.macdChart, panel.rsChart, panel.axisChart].forEach(c => {
         if (c) try { c.applyOptions({ width: container.clientWidth }); } catch(err){}
       });
       drawPanelOverlays(panel);
-      if (typeof positionPocketPivotStatsWidget === 'function') {
-        positionPocketPivotStatsWidget(panel);
-      }
+      if (typeof positionPocketPivotStatsWidget === 'function') positionPocketPivotStatsWidget(panel);
     }, 25);
   }
 }
-
+  
 function createPanelChartInstance(index, tf) {
   const isDark = currentTheme === 'dark';
   let scaleMode = LightweightCharts.PriceScaleMode.Normal;
@@ -1605,6 +1612,13 @@ function createPanelChartInstance(index, tf) {
     localization:{dateFormat:'dd MMM yy'}
   });
 
+  const macdContainer = document.getElementById(`pane-macd-${index}`);
+  const macdC = LightweightCharts.createChart(macdContainer, {
+    ...baseChartOpts,
+    timeScale: { borderColor:isDark?'#1e2d3d':'#e0e3eb', timeVisible:false, secondsVisible:false, ticksVisible:false, visible:false, rightOffset:0, barSpacing:6, fixLeftEdge:false, lockVisibleTimeRangeOnResize:true, uniformDistribution:true, tickMarkFormatter:(time)=>formatXAxisDate(time) },
+    localization:{dateFormat:'dd MMM yy'}
+  });
+  
   // Dedicated common time-axis chart. It is rendered AFTER all indicator panes,
   // so the X-axis is physically the bottom-most element of the panel. The right
   // price-scale width matches the main chart, keeping the date ticks pixel-aligned
@@ -1649,6 +1663,7 @@ function createPanelChartInstance(index, tf) {
     volMASeries: null,
     rsiSeries: null, rsiMASeries: null, rsiThresholdLines: [],
     rsSeries: null, rsMASeries: null, rsValueByTime: [], benchmarkCandles: []
+    macdChart: macdC, macdLineSeries: null, macdSignalSeries: null, macdHistSeries: null, macdValueByTime: []
   };
 
   ensureSeriesType(instObj);
@@ -1714,136 +1729,61 @@ function createPanelChartInstance(index, tf) {
   return instObj;
 }
 
+/* UNIVERSAL MULTI-PANE SPLITTER RESIZE ENGINE */
 function initPaneSplitterDrag(index) {
   const container = document.getElementById(`panel-chart-${index}`);
   const panePrice = document.getElementById(`pane-price-${index}`);
   const paneRsi   = document.getElementById(`pane-rsi-${index}`);
+  const paneMacd  = document.getElementById(`pane-macd-${index}`);
   const paneRs    = document.getElementById(`pane-rs-${index}`);
-  const paneAxis  = document.getElementById(`pane-axis-${index}`);
-  const splitter1 = document.getElementById(`splitter-1-${index}`);
-  const splitter2 = document.getElementById(`splitter-2-${index}`);
+
+  const sRsi  = document.getElementById(`splitter-rsi-${index}`);
+  const sMacd = document.getElementById(`splitter-macd-${index}`);
+  const sRs   = document.getElementById(`splitter-rs-${index}`);
 
   if (!container || !panePrice) return;
 
-  let dragMode = 0; // 0: none, 1: splitter-1 (Price/RSI), 2: splitter-2 (RSI/RS)
-  let startState = null;
+  let dragTarget = null; // 'rsi', 'macd', 'rs'
 
-  if (splitter1) {
-    splitter1.addEventListener('mousedown', (e) => {
-      e.preventDefault();
-      dragMode = 1;
-      splitter1.classList.add('dragging');
-      captureInitialHeights();
-    });
-  }
-
-  if (splitter2) {
-    splitter2.addEventListener('mousedown', (e) => {
-      e.preventDefault();
-      dragMode = 2;
-      splitter2.classList.add('dragging');
-      captureInitialHeights();
-    });
-  }
-
-  function captureInitialHeights() {
-    const cRect = container.getBoundingClientRect();
-    const pRect = panePrice ? panePrice.getBoundingClientRect() : null;
-    const rRect = paneRsi && paneRsi.style.display !== 'none' ? paneRsi.getBoundingClientRect() : null;
-    const sRect = paneRs && paneRs.style.display !== 'none' ? paneRs.getBoundingClientRect() : null;
-
-    startState = {
-      containerTop: cRect.top,
-      containerH: cRect.height,
-      priceH: pRect ? pRect.height : 0,
-      rsiH: rRect ? rRect.height : 0,
-      rsH: sRect ? sRect.height : 0,
-    };
-  }
+  if (sRsi)  sRsi.addEventListener('mousedown', (e) => { e.preventDefault(); dragTarget = 'rsi'; sRsi.classList.add('dragging'); });
+  if (sMacd) sMacd.addEventListener('mousedown', (e) => { e.preventDefault(); dragTarget = 'macd'; sMacd.classList.add('dragging'); });
+  if (sRs)   sRs.addEventListener('mousedown', (e) => { e.preventDefault(); dragTarget = 'rs'; sRs.classList.add('dragging'); });
 
   window.addEventListener('mouseup', () => {
-    if (!dragMode) return;
-    dragMode = 0;
-    if (splitter1) splitter1.classList.remove('dragging');
-    if (splitter2) splitter2.classList.remove('dragging');
+    dragTarget = null;
+    [sRsi, sMacd, sRs].forEach(s => { if (s) s.classList.remove('dragging'); });
   });
 
   window.addEventListener('mousemove', (e) => {
-    if (!dragMode || !startState) return;
+    if (!dragTarget) return;
+    const cRect = container.getBoundingClientRect();
+    const cHeight = cRect.height;
+    const axisH = 26;
+    const availableH = cHeight - axisH;
+    const mouseY = e.clientY - cRect.top;
 
-    const showRsi = rsiConfig.enabled && paneRsi && paneRsi.style.display !== 'none';
-    const showRs  = relativeStrengthConfig.enabled && paneRs && paneRs.style.display !== 'none';
-
-    const cTop = startState.containerTop;
-    const cHeight = container.getBoundingClientRect().height;
-    const axisH = 26; // Fixed bottom Date Axis
-    const minPrice = 80;
-    const minRsi = 40;
-    const minRs = 40;
-
-    const totalSplitters = (showRsi ? 1 : 0) + (showRs ? 1 : 0);
-    // Panes ke liye total available jagah (Date Axis ko chhod kar)
-    const availablePanesH = cHeight - axisH - totalSplitters;
-
-    const mouseY = e.clientY - cTop;
-
-    if (dragMode === 1) {
-      // --- DRAGGING SPLITTER 1 (Price aur RSI ke beech) ---
-      if (showRsi && showRs) {
-        // RS Pane ko uski jagah par bilkul LOCK rakhein
-        const lockedRsH = Math.max(minRs, startState.rsH);
-        const spaceForPriceAndRsi = availablePanesH - lockedRsH;
-
-        const maxPriceH = spaceForPriceAndRsi - minRsi;
-        const newPriceH = Math.min(maxPriceH, Math.max(minPrice, mouseY));
-        const newRsiH = spaceForPriceAndRsi - newPriceH;
-
-        panePrice.style.flex = `0 0 ${newPriceH}px`;
-        paneRsi.style.flex = `0 0 ${newRsiH}px`;
-        paneRs.style.flex = `0 0 ${lockedRsH}px`;
-      } else if (showRsi && !showRs) {
-        const maxPriceH = availablePanesH - minRsi;
-        const newPriceH = Math.min(maxPriceH, Math.max(minPrice, mouseY));
-        const newRsiH = availablePanesH - newPriceH;
-
-        panePrice.style.flex = `0 0 ${newPriceH}px`;
-        paneRsi.style.flex = `0 0 ${newRsiH}px`;
-      } else if (!showRsi && showRs) {
-        const maxPriceH = availablePanesH - minRs;
-        const newPriceH = Math.min(maxPriceH, Math.max(minPrice, mouseY));
-        const newRsH = availablePanesH - newPriceH;
-
-        panePrice.style.flex = `0 0 ${newPriceH}px`;
-        paneRs.style.flex = `0 0 ${newRsH}px`;
-      }
-    } else if (dragMode === 2 && showRsi && showRs) {
-      // --- DRAGGING SPLITTER 2 (RSI aur RS ke beech) ---
-      // Price Pane ko uski jagah par bilkul LOCK rakhein
-      const lockedPriceH = Math.max(minPrice, panePrice.getBoundingClientRect().height);
-      const spaceForRsiAndRs = availablePanesH - lockedPriceH;
-
-      const rsiTop = panePrice.getBoundingClientRect().height + 1;
-      const targetRsiH = mouseY - rsiTop;
-
-      const maxRsiH = spaceForRsiAndRs - minRs;
-      const newRsiH = Math.min(maxRsiH, Math.max(minRsi, targetRsiH));
-      const newRsH = spaceForRsiAndRs - newRsiH;
-
-      panePrice.style.flex = `0 0 ${lockedPriceH}px`;
-      paneRsi.style.flex = `0 0 ${newRsiH}px`;
-      paneRs.style.flex = `0 0 ${newRsH}px`;
+    if (dragTarget === 'rsi') {
+      const priceH = Math.min(availableH - 80, Math.max(80, mouseY));
+      panePrice.style.flex = `${priceH} 1 0px`;
+    } else if (dragTarget === 'macd' && paneRsi) {
+      const pRect = panePrice.getBoundingClientRect();
+      const rsiH = Math.min(availableH - pRect.height - 50, Math.max(40, mouseY - pRect.height));
+      paneRsi.style.flex = `${rsiH} 1 0px`;
+    } else if (dragTarget === 'rs') {
+      const rsH = Math.min(availableH - 80, Math.max(40, availableH - mouseY));
+      paneRs.style.flex = `${rsH} 1 0px`;
     }
 
     const inst = panelsArray[index];
     if (inst) {
-      [inst.priceChart, inst.rsiChart, inst.rsChart, inst.axisChart].forEach(c => {
+      [inst.priceChart, inst.rsiChart, inst.macdChart, inst.rsChart, inst.axisChart].forEach(c => {
         if (c) try { c.applyOptions({ width: container.clientWidth }); } catch(err){}
       });
       drawPanelOverlays(inst);
-      requestAnimationFrame(() => positionPocketPivotStatsWidget(inst));
     }
   });
 }
+  
 function setPanelInterval(idx, tf, btn) {
   const panel = panelsArray[idx];
   if (!panel) return;
