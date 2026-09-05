@@ -1456,40 +1456,83 @@ function destroyPanels() {
   panelsArray = [];
 }
 
-function updateTimeScaleVisibility(panel) {
+
+  function updateTimeScaleVisibility(panel) {
   const showRsi = rsiConfig.enabled;
   const showRs = relativeStrengthConfig.enabled;
+  const panePrice = document.getElementById(`pane-price-${panel.index}`);
   const paneRsi = document.getElementById(`pane-rsi-${panel.index}`);
   const paneRs = document.getElementById(`pane-rs-${panel.index}`);
   const splitter1 = document.getElementById(`splitter-1-${panel.index}`);
   const splitter2 = document.getElementById(`splitter-2-${panel.index}`);
+  const container = document.getElementById(`panel-chart-${panel.index}`);
   const isDark = currentTheme === 'dark';
 
   if (paneRsi) paneRsi.style.display = showRsi ? 'block' : 'none';
   if (paneRs) paneRs.style.display = showRs ? 'block' : 'none';
-  if (splitter1) splitter1.style.display = showRsi ? 'block' : 'none';
-  if (splitter2) splitter2.style.display = showRs ? 'block' : 'none';
 
-  // ONE common X-axis for the ENTIRE panel. It is always the bottom pane.
-  // Price, RSI, Relative Strength and any future indicator panes do not render
-  // their own time axis. The dedicated bottom axis chart is the sole owner.
+  // Splitters management:
+  // Splitter 1 is between Price and indicators (only if at least one indicator is on)
+  if (splitter1) splitter1.style.display = (showRsi || showRs) ? 'block' : 'none';
+  // Splitter 2 is between RSI and RS (only if BOTH indicators are on)
+  if (splitter2) splitter2.style.display = (showRsi && showRs) ? 'block' : 'none';
+
+  // --- AUTO-RESET LOGIC: DRAGGED SIZES KO RESET KARNA ---
+  if (!showRsi && !showRs) {
+    // Agar dono indicators OFF hain: Price chart turant full screen (100%) expand hoga!
+    if (panePrice) {
+      panePrice.style.flex = '1 1 auto';
+      panePrice.style.height = '';
+    }
+    if (paneRsi) { paneRsi.style.flex = ''; paneRsi.style.height = ''; }
+    if (paneRs)  { paneRs.style.flex = '';  paneRs.style.height = ''; }
+  } else if (showRsi && !showRs) {
+    // Agar sirf RSI ON hai: RS ko clear karein taaki layout na bikhre
+    if (paneRs)  { paneRs.style.flex = ''; paneRs.style.height = ''; }
+    if (paneRsi && (!paneRsi.style.flex || paneRsi.style.flex.includes('none'))) {
+      paneRsi.style.flex = '1.0';
+    }
+  } else if (!showRsi && showRs) {
+    // Agar sirf RS ON hai: RSI ko clear karein taaki layout na bikhre
+    if (paneRsi) { paneRsi.style.flex = ''; paneRsi.style.height = ''; }
+    if (paneRs && (!paneRs.style.flex || paneRs.style.flex.includes('none'))) {
+      paneRs.style.flex = '1.0';
+    }
+  }
+
+  // Upper indicator panes hide their time scale
   [panel.priceChart, panel.rsiChart, panel.rsChart].forEach(c => {
     if (!c) return;
     c.timeScale().applyOptions({
-      visible:false, height:0,
-      timeVisible:false, secondsVisible:false, ticksVisible:false,
-      rightOffset:0, uniformDistribution:true,
-      borderColor:isDark?'#1e2d3d':'#e0e3eb'
+      visible: false, height: 0,
+      timeVisible: false, secondsVisible: false, ticksVisible: false,
+      rightOffset: 0, uniformDistribution: true,
+      borderColor: isDark ? '#1e2d3d' : '#e0e3eb'
     });
   });
+
+  // Dedicated bottom axis chart always remains cleanly pinned at the bottom
   if (panel.axisChart) {
-    try { panel.axisChart.applyOptions({height:26}); } catch(e) {}
+    try { panel.axisChart.applyOptions({ height: 26 }); } catch(e) {}
     panel.axisChart.timeScale().applyOptions({
-    visible:true, height:26,
-    timeVisible:false, secondsVisible:false, ticksVisible:true,
-    tickMarkFormatter:(time)=>formatXAxisDate(time), uniformDistribution:true, rightOffset:0,
-    borderColor:isDark?'#1e2d3d':'#e0e3eb'
+      visible: true, height: 26,
+      timeVisible: false, secondsVisible: false, ticksVisible: true,
+      tickMarkFormatter: (time) => formatXAxisDate(time), uniformDistribution: true, rightOffset: 0,
+      borderColor: isDark ? '#1e2d3d' : '#e0e3eb'
     });
+  }
+
+  // Auto-resize chart canvas to fit full height immediately
+  if (container) {
+    setTimeout(() => {
+      [panel.priceChart, panel.rsiChart, panel.rsChart, panel.axisChart].forEach(c => {
+        if (c) try { c.applyOptions({ width: container.clientWidth }); } catch(err){}
+      });
+      drawPanelOverlays(panel);
+      if (typeof positionPocketPivotStatsWidget === 'function') {
+        positionPocketPivotStatsWidget(panel);
+      }
+    }, 25);
   }
 }
 
