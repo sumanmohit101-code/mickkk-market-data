@@ -1703,7 +1703,7 @@ function handleGlobalKeyDown(e) {
     return;
   }
 
-  // Agar search modal pehle se khula hai toh seedha input par focus rakhein
+  // Agar search modal pehle se khula hai toh input par hi focus rakhein
   const modal = document.getElementById('search-modal');
   if (modal && modal.classList.contains('open')) {
     const input = document.getElementById('modal-search-input');
@@ -1718,11 +1718,11 @@ function handleGlobalKeyDown(e) {
   }
 
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-    e.preventDefault(); openSearchModal(-1); return;
+    e.preventDefault(); openSearchModal(-1, ''); return;
   }
   if (e.ctrlKey || e.altKey || e.metaKey) return;
 
-  // DIRECT TYPING: Pehla letter lekar modal kholega aur cursor ko input ke andar daal dega
+  // Screen par direct type karte hi naya fresh search shuru karega
   if (e.key && e.key.length === 1 && !e.repeat && /^[a-zA-Z0-9]$/.test(e.key)) {
     e.preventDefault();
     openSearchModal(-1, e.key);
@@ -2237,18 +2237,21 @@ function setSearchMode(mode){
 function openSearchModal(targetPanelIdx, initialChar = ''){
   searchTargetPanelIndex = targetPanelIdx !== undefined ? targetPanelIdx : -1;
   const modal = document.getElementById('search-modal');
-  modal.classList.add('open');
+  if (modal) modal.classList.add('open');
   modalHighlightIdx = -1;
+  
   const input = document.getElementById('modal-search-input');
   setSearchMode(searchTargetPanelIdx >= 0 && panelsArray[searchTargetPanelIdx] ? (panelsArray[searchTargetPanelIdx].instrumentType || 'stock') : currentInstrumentType);
   
+  // Puraani query ko poora saaf karke naye letter se start karega
   if (input) {
-    input.value = initialChar;
-    // Input box par auto-focus karein aur cursor ko aakhri me rakhein
+    input.value = initialChar || '';
     setTimeout(() => {
       input.focus();
-      input.setSelectionRange(input.value.length, input.value.length);
-    }, 30);
+      if (input.value) {
+        input.setSelectionRange(input.value.length, input.value.length);
+      }
+    }, 25);
   }
 
   updateInstrumentCounts();
@@ -2258,8 +2261,19 @@ function openSearchModal(targetPanelIdx, initialChar = ''){
     renderSearchModalResults(searchMode === 'index' ? allIndices : allSymbols);
   }
 }
-function closeSearchModal(){ document.getElementById('search-modal').classList.remove('open'); modalHighlightIdx = -1; }
 
+function closeSearchModal(){ 
+  const modal = document.getElementById('search-modal');
+  if (modal) modal.classList.remove('open');
+  modalHighlightIdx = -1;
+  
+  // Modal band hote hi input box aur focus dono reset ho jayenge
+  const input = document.getElementById('modal-search-input');
+  if (input) {
+    input.value = '';
+    input.blur();
+  }
+}
 function filterSearchModal(){
   modalHighlightIdx = -1;
   const input = document.getElementById('modal-search-input');
@@ -3675,10 +3689,21 @@ function applyRangeToPanel(panel, data) {
   else if (currentRange === '6M') bars = 130;
   else if (currentRange === '1Y') bars = 252;
 
+  // Screenshot ki tarah Y-axis se 14 bars ka clean space/gap dega
+  const rightMarginBars = 14;
+
   try {
-    const range = { from: Math.max(0, data.length - bars), to: data.length - 1 };
+    const range = { 
+      from: Math.max(0, data.length - bars), 
+      to: (data.length - 1) + rightMarginBars 
+    };
     [panel.priceChart, panel.rsiChart, panel.rsChart, panel.axisChart].forEach(c => {
-      try { c.timeScale().setVisibleLogicalRange(range); } catch(e){}
+      if (c) {
+        try { 
+          c.timeScale().applyOptions({ rightOffset: rightMarginBars });
+          c.timeScale().setVisibleLogicalRange(range); 
+        } catch(e){}
+      }
     });
   } catch(e) {
     [panel.priceChart, panel.rsiChart, panel.rsChart, panel.axisChart].forEach(c => { try { c.timeScale().fitContent(); } catch(e){} });
