@@ -288,7 +288,7 @@ body.light-theme .ppv-table-row{background:rgba(255,255,255,0.95);}
 .pane-rsi { flex: 1.0; min-height: 45px !important; }
 .pane-rs { flex: 1.0; min-height: 45px !important; }
 .pane-macd{flex:1.0;min-height:40px;display:none;}
-.pane-axis { flex: 0 0 20px !important; height: 26px !important; min-height: 26px !important; max-height: 26px !important; background: var(--surface) !important; border-top: 1px solid var(--border) !important; position: relative !important; width: 100% !important; overflow: hidden !important; flex-shrink: 0 !important; }
+.pane-axis { flex: 0 0 26px !important; height: 26px !important; min-height: 26px !important; max-height: 26px !important; background: var(--surface) !important; border-top: 1px solid var(--border) !important; position: relative !important; width: 100% !important; overflow: hidden !important; flex-shrink: 0 !important; }
 .pane-rs .rs-pane-title, .pane-macd .macd-pane-title{position:absolute;top:5px;left:8px;z-index:5;font:600 10px var(--mono);color:var(--muted);background:rgba(8,11,15,.65);padding:2px 5px;border-radius:3px;pointer-events:none;}
 .pane-splitter {
   height: 1px; background: var(--border); cursor: row-resize;
@@ -1662,7 +1662,7 @@ function createPanelChartInstance(index, tf) {
     emaSeriesList: [],
     volMASeries: null,
     rsiSeries: null, rsiMASeries: null, rsiThresholdLines: [],
-    rsSeries: null, rsMASeries: null, rsValueByTime: [], benchmarkCandles: []
+    rsSeries: null, rsMASeries: null, rsValueByTime: [], benchmarkCandles: [],
     macdChart: macdC, macdLineSeries: null, macdSignalSeries: null, macdHistSeries: null, macdValueByTime: []
   };
 
@@ -2787,6 +2787,7 @@ async function rebuildPanelChart(panel) {
 
     renderEditableEMAs(data, panel);
     renderRSIPane(data, panel);
+    renderMACDPane(data, panel);
     await renderRelativeStrengthPane(data, panel);
 
     updateTimeScaleVisibility(panel);
@@ -3493,6 +3494,60 @@ function updateRSIConfig(){
   if (currentSymbol) rebuildAllPanels();
 }
 
+  /* MACD CALCULATION ENGINE */
+function renderMACDPane(data, panel) {
+  if (!data || !data.length || !panel.macdChart) return;
+  if (!macdConfig.enabled) {
+    if (panel.macdLineSeries) { try { panel.macdChart.removeSeries(panel.macdLineSeries); } catch(e){} panel.macdLineSeries = null; }
+    if (panel.macdSignalSeries) { try { panel.macdChart.removeSeries(panel.macdSignalSeries); } catch(e){} panel.macdSignalSeries = null; }
+    if (panel.macdHistSeries) { try { panel.macdChart.removeSeries(panel.macdHistSeries); } catch(e){} panel.macdHistSeries = null; }
+    return;
+  }
+
+  const fastLen = macdConfig.fast || 12, slowLen = macdConfig.slow || 26, sigLen = macdConfig.signal || 9;
+  const fastEma = calculateEMAValues(data, fastLen), slowEma = calculateEMAValues(data, slowLen);
+  const macdLineData = [], macdRaw = [];
+
+  for (let i = 0; i < data.length; i++) {
+    const val = fastEma[i] - slowEma[i];
+    macdRaw.push(val);
+    macdLineData.push({ time: data[i].time, value: +val.toFixed(2) });
+  }
+
+  const k = 2 / (sigLen + 1);
+  let sig = macdRaw[0];
+  const signalData = [], histData = [];
+
+  for (let i = 0; i < data.length; i++) {
+    sig = (macdRaw[i] * k) + (sig * (1 - k));
+    const sVal = +sig.toFixed(2);
+    signalData.push({ time: data[i].time, value: sVal });
+
+    const hist = +(macdLineData[i].value - sVal).toFixed(2);
+    const prevHist = i > 0 ? (histData[i - 1] ? histData[i - 1].value : 0) : 0;
+    const color = hist >= 0 ? (hist >= prevHist ? '#089981' : '#08998188') : (hist <= prevHist ? '#f23645' : '#f2364588');
+    histData.push({ time: data[i].time, value: hist, color });
+  }
+
+  if (!panel.macdHistSeries) panel.macdHistSeries = panel.macdChart.addHistogramSeries({ priceFormat: { type: 'price', precision: 2 } });
+  panel.macdHistSeries.setData(histData);
+
+  if (!panel.macdLineSeries) panel.macdLineSeries = panel.macdChart.addLineSeries({ color: macdConfig.lineColor, lineWidth: 2, priceLineVisible: false });
+  panel.macdLineSeries.setData(macdLineData);
+
+  if (!panel.macdSignalSeries) panel.macdSignalSeries = panel.macdChart.addLineSeries({ color: '#ff6d00', lineWidth: 1, priceLineVisible: false });
+  panel.macdSignalSeries.setData(signalData);
+}
+
+function updateMACDConfig() {
+  macdConfig.enabled = document.getElementById('macd-en')?.checked ?? false;
+  macdConfig.fast = parseInt(document.getElementById('macd-fast')?.value) || 12;
+  macdConfig.slow = parseInt(document.getElementById('macd-slow')?.value) || 26;
+  macdConfig.signal = parseInt(document.getElementById('macd-signal')?.value) || 9;
+  macdConfig.lineColor = document.getElementById('macd-color')?.value || '#2962ff';
+  if (currentSymbol) rebuildAllPanels();
+}
+  
 /* ============ RELATIVE STRENGTH ENGINE ============ */
 function populateRelativeStrengthIndexOptions(){
   const sel=document.getElementById('rs-benchmark');
