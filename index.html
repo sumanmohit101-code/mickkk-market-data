@@ -283,11 +283,11 @@ body.light-theme .ppv-table-row{background:rgba(255,255,255,0.95);}
   position: relative; width: 100%; height: 100%; overflow: hidden;
 }
 
-.pane-box { position: relative; width: 100%; min-height: 40px; overflow: hidden; }
-.pane-price { flex: 4.0; }
-.pane-rsi { flex: 1.0; min-height: 45px !important; }
-.pane-rs { flex: 1.0; min-height: 45px !important; }
-.pane-macd{flex:1.0;min-height:40px;display:none;}
+.pane-box { position: relative; width: 100%; overflow: hidden; }
+.pane-price { flex: 5.2 !important; min-height: 80px; }
+.pane-rsi { flex: 1.0 !important; min-height: 50px; }
+.pane-macd { flex: 1.0 !important; min-height: 50px; display: none; }
+.pane-rs { flex: 1.0 !important; min-height: 50px; }
 .pane-axis { flex: 0 0 26px !important; height: 26px !important; min-height: 26px !important; max-height: 26px !important; background: var(--surface) !important; border-top: 1px solid var(--border) !important; position: relative !important; width: 100% !important; overflow: hidden !important; flex-shrink: 0 !important; }
 /* TRADINGVIEW PANE TITLE BAR (Title + ▲ ▼ + ⚙️ + ✕) */
 .pane-legend {
@@ -343,8 +343,75 @@ body.light-theme .pane-legend {
 
 .panel-overlay-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 18; }
 
-.loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--muted);font-size:13px;background:var(--bg);z-index:20;}
-.spinner{width:22px;height:22px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;}
+/* --- START: ATTRACTIVE NEON TRADING LOADER --- */
+.loading {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(8, 11, 15, 0.92); backdrop-filter: blur(8px); z-index: 100;
+}
+.loading-card {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: rgba(19, 26, 34, 0.85); border: 1px solid var(--border);
+  padding: 24px 36px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+.candlestick-anim {
+  display: flex; align-items: center; gap: 8px; height: 42px; margin-bottom: 14px;
+}
+.c-bar {
+  width: 6px; border-radius: 2px; position: relative;
+  animation: candlePulse 1.2s ease-in-out infinite alternate;
+}
+.c-bar::before, .c-bar::after {
+  content: ''; position: absolute; left: 50%; width: 1.5px;
+  background: currentColor; transform: translateX(-50%);
+}
+.c-bar::before { top: -6px; height: 6px; }
+.c-bar::after  { bottom: -6px; height: 6px; }
+
+.c-bar.green {
+  background: var(--green); color: var(--green);
+  box-shadow: 0 0 10px rgba(0, 230, 118, 0.4);
+}
+.c-bar.red {
+  background: var(--red); color: var(--red);
+  box-shadow: 0 0 10px rgba(255, 61, 90, 0.4);
+}
+.c-bar.cyan {
+  background: var(--accent); color: var(--accent);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+}
+
+.c-bar:nth-child(1) { height: 16px; animation-delay: 0.1s; }
+.c-bar:nth-child(2) { height: 26px; animation-delay: 0.3s; }
+.c-bar:nth-child(3) { height: 34px; animation-delay: 0.5s; }
+.c-bar:nth-child(4) { height: 20px; animation-delay: 0.2s; }
+.c-bar:nth-child(5) { height: 28px; animation-delay: 0.4s; }
+
+@keyframes candlePulse {
+  0%   { transform: scaleY(0.6); opacity: 0.7; }
+  100% { transform: scaleY(1.2); opacity: 1; }
+}
+
+.loading-title {
+  font: 700 12px var(--mono); color: var(--text); letter-spacing: 1.5px; margin-bottom: 4px;
+}
+.loading-title span { color: var(--accent); }
+.loading-sub {
+  font: 400 10px var(--font); color: var(--muted); margin-bottom: 12px;
+}
+.loading-bar-wrap {
+  width: 130px; height: 2.5px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; position: relative;
+}
+.loading-bar-fill {
+  position: absolute; height: 100%; width: 45%;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: loadShim 1.2s infinite ease-in-out;
+}
+@keyframes loadShim {
+  0%   { left: -50%; }
+  100% { left: 100%; }
+}
+/* --- END: ATTRACTIVE NEON TRADING LOADER --- */
+  
 .empty-state{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted);font-size:13px;text-align:center;padding:20px;}
 .empty-state .big{font-size:32px;}
 
@@ -671,10 +738,24 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
         <div class="big">📈</div>
         <div>Type stock symbol directly on screen or press ▲ / ▼ Arrow Keys to switch stocks</div>
       </div>
+      <!-- START: ATTRACTIVE LOADING GRAPHIC -->
       <div class="loading" id="loading" style="display:none">
-        <div class="spinner"></div>
-        <div>Loading chart data…</div>
+        <div class="loading-card">
+          <div class="candlestick-anim">
+            <div class="c-bar green"></div>
+            <div class="c-bar red"></div>
+            <div class="c-bar cyan"></div>
+            <div class="c-bar green"></div>
+            <div class="c-bar red"></div>
+          </div>
+          <div class="loading-title">MICKKK <span>TERMINAL</span></div>
+          <div class="loading-sub">Fetching Candlesticks & Indicators…</div>
+          <div class="loading-bar-wrap">
+            <div class="loading-bar-fill"></div>
+          </div>
+        </div>
       </div>
+      <!-- END: ATTRACTIVE LOADING GRAPHIC -->
     </div>
   </div>
 </div>
@@ -906,11 +987,12 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
       </div>
     </div>
 
+         <!-- START: CPR SECTION (Default Unchecked) -->
     <div class="ind-section">
       <div class="ind-section-title">📐 CPR — Weekly & Monthly</div>
       <div class="ind-option">
         <label>Weekly CPR</label>
-        <label class="switch"><input type="checkbox" id="cpr-weekly-en" checked onchange="updateCPRConfig()"><span class="slider"></span></label>
+        <label class="switch"><input type="checkbox" id="cpr-weekly-en" onchange="updateCPRConfig()"><span class="slider"></span></label>
       </div>
       <div class="ema-row">
         <span class="ema-lbl" style="width:88px;">Weekly Color:</span>
@@ -918,7 +1000,7 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
       </div>
       <div class="ind-option">
         <label>Monthly CPR</label>
-        <label class="switch"><input type="checkbox" id="cpr-monthly-en" checked onchange="updateCPRConfig()"><span class="slider"></span></label>
+        <label class="switch"><input type="checkbox" id="cpr-monthly-en" onchange="updateCPRConfig()"><span class="slider"></span></label>
       </div>
       <div class="ema-row">
         <span class="ema-lbl" style="width:88px;">Monthly Color:</span>
@@ -928,8 +1010,8 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
         <label>Show CPR Values / Labels</label>
         <label class="switch"><input type="checkbox" id="cpr-labels-en" onchange="updateCPRConfig()"><span class="slider"></span></label>
       </div>
-      <div style="font-size:10px;color:var(--muted);line-height:1.4;margin-top:4px;">CPR levels overlay the latest 20 chart candles only. Values/labels are hidden by default.</div>
     </div>
+    <!-- END: CPR SECTION -->
 
     <div class="ind-section">
       <div class="ind-section-title">📦 Gap Detector</div>
@@ -1055,8 +1137,9 @@ let rsiConfig = {
 };
 let rsiMAConfig = { enabled: true, len: 9, color: '#ffab00', width: 1 };
 let relativeStrengthConfig = { enabled: true, benchmarkSymbol: 'NIFTYSMALLCAP250', maLen: 20, color: '#ff9800', width: 1 };
-let cprConfig = { weekly: true, monthly: true, weeklyColor: '#00d4ff', monthlyColor: '#ff9800', showLabels: false };
-
+let cprConfig = { weekly: false, monthly: false, weeklyColor: '#00d4ff', monthlyColor: '#ff9800', showLabels: false };
+let macdConfig = { enabled: false, fast: 12, slow: 26, signal: 9, lineColor: '#2962ff', signalColor: '#ff6d00' }; 
+  
 let smartBarConfig = {
   enabled: false, bodyEnabled: false, bodyThreshold: 4.0, bodyColor: '#2196f3',
   rangeEnabled: false, rangeThreshold: 3.0, rangeColor: '#ffffff',
@@ -1538,7 +1621,7 @@ function destroyPanels() {
   panelsArray = [];
 }
 
-  let macdConfig = { enabled: false, fast: 12, slow: 26, signal: 9, lineColor: '#2962ff', signalColor: '#ff6d00' };
+ 
 /* TRADINGVIEW INDICATOR CONTROLS: REORDER, SETTINGS & QUICK-CLOSE */
 let indicatorOrder = ['rsi', 'macd', 'rs'];
 
@@ -1642,7 +1725,7 @@ function updateTimeScaleVisibility(panel) {
     }
   } else {
     // Proportional flex weights (Auto-expands/shrinks gracefully)
-    if (panePrice) panePrice.style.flex = '4.0 1 0px';
+    if (panePrice) panePrice.style.flex = '5.2 1 0px';
     visibleIndicators.forEach(p => { if (p) p.style.flex = '1.0 1 0px'; });
   }
 
