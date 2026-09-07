@@ -1,13 +1,13 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-07T15:01:59.284374+05:30",
+  "updatedAt": "2026-09-07T17:00:48.616053+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1243,
+  "symbolCount": 1244,
   "historyCount": 0,
   "today": [],
   "tomorrow": [],
@@ -16,6 +16,13 @@
       "symbol": "GAJA",
       "company": "Gaja Alternative Asset Management Limited",
       "date": "2026-09-10",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "HORIZONIND",
+      "company": "Horizon Industrial Parks Limited",
+      "date": "2026-09-11",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
@@ -32,6 +39,13 @@
       "symbol": "GAJA",
       "company": "Gaja Alternative Asset Management Limited",
       "date": "2026-09-10",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "HORIZONIND",
+      "company": "Horizon Industrial Parks Limited",
+      "date": "2026-09-11",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
@@ -4492,6 +4506,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "HORIZONIND",
+      "company": "Horizon Industrial Parks Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-11",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "HORIZONIND",
+          "company": "Horizon Industrial Parks Limited",
+          "date": "2026-09-11",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
