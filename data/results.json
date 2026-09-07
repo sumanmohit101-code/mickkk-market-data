@@ -1,61 +1,33 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-06T17:00:48.041812+05:30",
+  "updatedAt": "2026-09-07T15:01:59.284374+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1246,
+  "symbolCount": 1243,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [
+  "tomorrow": [],
+  "thisWeek": [
     {
-      "symbol": "BLEL",
-      "company": "Behari Lal Engineering Limited",
-      "date": "2026-09-07",
+      "symbol": "GAJA",
+      "company": "Gaja Alternative Asset Management Limited",
+      "date": "2026-09-10",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
     {
-      "symbol": "KOTYARK",
-      "company": "Kotyark Industries Limited",
-      "date": "2026-09-07",
+      "symbol": "LALITHAA",
+      "company": "Lalithaa Jewellery Mart Limited",
+      "date": "2026-09-11",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-    },
-    {
-      "symbol": "SHIPROCKET",
-      "company": "Shiprocket Limited",
-      "date": "2026-09-07",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     }
   ],
-  "thisWeek": [],
   "allUpcoming": [
-    {
-      "symbol": "BLEL",
-      "company": "Behari Lal Engineering Limited",
-      "date": "2026-09-07",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "KOTYARK",
-      "company": "Kotyark Industries Limited",
-      "date": "2026-09-07",
-      "purpose": "Financial Results/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-    },
-    {
-      "symbol": "SHIPROCKET",
-      "company": "Shiprocket Limited",
-      "date": "2026-09-07",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
     {
       "symbol": "GAJA",
       "company": "Gaja Alternative Asset Management Limited",
@@ -1659,23 +1631,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "BLEL",
-      "company": "Behari Lal Engineering Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-07",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "BLEL",
-          "company": "Behari Lal Engineering Limited",
-          "date": "2026-09-07",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
       "historyCount": 0
     },
     {
@@ -5880,23 +5835,6 @@
       "historyCount": 0
     },
     {
-      "symbol": "KOTYARK",
-      "company": "Kotyark Industries Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-07",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "KOTYARK",
-          "company": "Kotyark Industries Limited",
-          "date": "2026-09-07",
-          "purpose": "Financial Results/Other business matters",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-        }
-      ],
-      "historyCount": 0
-    },
-    {
       "symbol": "KPEL",
       "company": "K.P. Energy Ltd",
       "lastResultDate": null,
@@ -9178,23 +9116,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "SHIPROCKET",
-      "company": "Shiprocket Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-07",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "SHIPROCKET",
-          "company": "Shiprocket Limited",
-          "date": "2026-09-07",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
       "historyCount": 0
     },
     {
