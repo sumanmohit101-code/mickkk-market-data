@@ -1,13 +1,13 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-07T17:00:48.616053+05:30",
+  "updatedAt": "2026-09-08T14:27:15.788515+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1244,
+  "symbolCount": 1245,
   "historyCount": 0,
   "today": [],
   "tomorrow": [],
@@ -18,6 +18,13 @@
       "date": "2026-09-10",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "SHANKESH",
+      "company": "Shankesh Jewellers Limited",
+      "date": "2026-09-10",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     },
     {
       "symbol": "HORIZONIND",
@@ -41,6 +48,13 @@
       "date": "2026-09-10",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "SHANKESH",
+      "company": "Shankesh Jewellers Limited",
+      "date": "2026-09-10",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     },
     {
       "symbol": "HORIZONIND",
@@ -9093,6 +9107,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "SHANKESH",
+      "company": "Shankesh Jewellers Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-10",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "SHANKESH",
+          "company": "Shankesh Jewellers Limited",
+          "date": "2026-09-10",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
