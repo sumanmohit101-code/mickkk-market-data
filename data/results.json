@@ -1,16 +1,31 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-08T17:00:35.950329+05:30",
+  "updatedAt": "2026-09-09T14:33:51.401379+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1245,
+  "symbolCount": 1247,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [],
+  "tomorrow": [
+    {
+      "symbol": "GAJA",
+      "company": "Gaja Alternative Asset Management Limited",
+      "date": "2026-09-10",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "SHANKESH",
+      "company": "Shankesh Jewellers Limited",
+      "date": "2026-09-10",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+    }
+  ],
   "thisWeek": [
     {
       "symbol": "GAJA",
@@ -25,6 +40,13 @@
       "date": "2026-09-10",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "CMICABLES",
+      "company": "CMI Limited",
+      "date": "2026-09-11",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2025"
     },
     {
       "symbol": "HORIZONIND",
@@ -57,6 +79,13 @@
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     },
     {
+      "symbol": "CMICABLES",
+      "company": "CMI Limited",
+      "date": "2026-09-11",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2025"
+    },
+    {
       "symbol": "HORIZONIND",
       "company": "Horizon Industrial Parks Limited",
       "date": "2026-09-11",
@@ -69,6 +98,13 @@
       "date": "2026-09-11",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "SUNSHINE",
+      "company": "Sunshine Pictures Limited",
+      "date": "2026-09-15",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the un-audited financial results for the period ended Jun 30, 2026"
     },
     {
       "symbol": "SKYWAYS",
@@ -88,6 +124,13 @@
       "symbol": "ULTRACEMCO",
       "company": "UltraTech Cement Limited",
       "date": "2026-10-19",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "COFORGE",
+      "company": "Coforge Limited",
+      "date": "2026-10-23",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     }
@@ -2229,6 +2272,23 @@
       "historyCount": 0
     },
     {
+      "symbol": "CMICABLES",
+      "company": "CMI Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-11",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "CMICABLES",
+          "company": "CMI Limited",
+          "date": "2026-09-11",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2025"
+        }
+      ],
+      "historyCount": 0
+    },
+    {
       "symbol": "CMPDI",
       "company": "Central Mine Planning & Design Institute Ltd",
       "lastResultDate": null,
@@ -2286,9 +2346,17 @@
       "symbol": "COFORGE",
       "company": "Coforge (Niit Tech) Ltd",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-23",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "COFORGE",
+          "company": "Coforge Limited",
+          "date": "2026-10-23",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -9825,6 +9893,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "SUNSHINE",
+      "company": "Sunshine Pictures Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-15",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "SUNSHINE",
+          "company": "Sunshine Pictures Limited",
+          "date": "2026-09-15",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the un-audited financial results for the period ended Jun 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
