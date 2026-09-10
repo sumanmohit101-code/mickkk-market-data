@@ -1,46 +1,39 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-09T17:00:54.916541+05:30",
+  "updatedAt": "2026-09-10T14:32:21.523430+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1247,
+  "symbolCount": 1246,
   "historyCount": 0,
   "today": [],
   "tomorrow": [
     {
-      "symbol": "GAJA",
-      "company": "Gaja Alternative Asset Management Limited",
-      "date": "2026-09-10",
+      "symbol": "CMICABLES",
+      "company": "CMI Limited",
+      "date": "2026-09-11",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2025"
+    },
+    {
+      "symbol": "HORIZONIND",
+      "company": "Horizon Industrial Parks Limited",
+      "date": "2026-09-11",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
     {
-      "symbol": "SHANKESH",
-      "company": "Shankesh Jewellers Limited",
-      "date": "2026-09-10",
+      "symbol": "LALITHAA",
+      "company": "Lalithaa Jewellery Mart Limited",
+      "date": "2026-09-11",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     }
   ],
   "thisWeek": [
-    {
-      "symbol": "GAJA",
-      "company": "Gaja Alternative Asset Management Limited",
-      "date": "2026-09-10",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "SHANKESH",
-      "company": "Shankesh Jewellers Limited",
-      "date": "2026-09-10",
-      "purpose": "Financial Results/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-    },
     {
       "symbol": "CMICABLES",
       "company": "CMI Limited",
@@ -65,20 +58,6 @@
   ],
   "allUpcoming": [
     {
-      "symbol": "GAJA",
-      "company": "Gaja Alternative Asset Management Limited",
-      "date": "2026-09-10",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "SHANKESH",
-      "company": "Shankesh Jewellers Limited",
-      "date": "2026-09-10",
-      "purpose": "Financial Results/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-    },
-    {
       "symbol": "CMICABLES",
       "company": "CMI Limited",
       "date": "2026-09-11",
@@ -100,11 +79,25 @@
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     },
     {
+      "symbol": "CMICABLES",
+      "company": "CMI Limited",
+      "date": "2026-09-14",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2025"
+    },
+    {
       "symbol": "SUNSHINE",
       "company": "Sunshine Pictures Limited",
       "date": "2026-09-15",
       "purpose": "Financial Results",
       "description": "To consider and approve the un-audited financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "TEMPSENS",
+      "company": "Tempsens Instruments (India) Limited",
+      "date": "2026-09-16",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
     {
       "symbol": "SKYWAYS",
@@ -2284,6 +2277,13 @@
           "date": "2026-09-11",
           "purpose": "Financial Results",
           "description": "To consider and approve the financial results for the period ended Jun 30, 2025"
+        },
+        {
+          "symbol": "CMICABLES",
+          "company": "CMI Limited",
+          "date": "2026-09-14",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2025"
         }
       ],
       "historyCount": 0
@@ -3590,23 +3590,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "GAJA",
-      "company": "Gaja Alternative Asset Management Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-10",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "GAJA",
-          "company": "Gaja Alternative Asset Management Limited",
-          "date": "2026-09-10",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
       "historyCount": 0
     },
     {
@@ -9178,23 +9161,6 @@
       "historyCount": 0
     },
     {
-      "symbol": "SHANKESH",
-      "company": "Shankesh Jewellers Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-10",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "SHANKESH",
-          "company": "Shankesh Jewellers Limited",
-          "date": "2026-09-10",
-          "purpose": "Financial Results/Other business matters",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-        }
-      ],
-      "historyCount": 0
-    },
-    {
       "symbol": "SHANTIGOLD",
       "company": "Shanti Gold International Ltd",
       "lastResultDate": null,
@@ -10297,6 +10263,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "TEMPSENS",
+      "company": "Tempsens Instruments (India) Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-16",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "TEMPSENS",
+          "company": "Tempsens Instruments (India) Limited",
+          "date": "2026-09-16",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
