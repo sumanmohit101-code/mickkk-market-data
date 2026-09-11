@@ -1,83 +1,18 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-10T17:00:38.404971+05:30",
+  "updatedAt": "2026-09-11T14:30:13.026643+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1247,
+  "symbolCount": 1245,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [
-    {
-      "symbol": "CMICABLES",
-      "company": "CMI Limited",
-      "date": "2026-09-11",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2025"
-    },
-    {
-      "symbol": "HORIZONIND",
-      "company": "Horizon Industrial Parks Limited",
-      "date": "2026-09-11",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "LALITHAA",
-      "company": "Lalithaa Jewellery Mart Limited",
-      "date": "2026-09-11",
-      "purpose": "Financial Results/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-    }
-  ],
-  "thisWeek": [
-    {
-      "symbol": "CMICABLES",
-      "company": "CMI Limited",
-      "date": "2026-09-11",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2025"
-    },
-    {
-      "symbol": "HORIZONIND",
-      "company": "Horizon Industrial Parks Limited",
-      "date": "2026-09-11",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "LALITHAA",
-      "company": "Lalithaa Jewellery Mart Limited",
-      "date": "2026-09-11",
-      "purpose": "Financial Results/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-    }
-  ],
+  "tomorrow": [],
+  "thisWeek": [],
   "allUpcoming": [
-    {
-      "symbol": "CMICABLES",
-      "company": "CMI Limited",
-      "date": "2026-09-11",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2025"
-    },
-    {
-      "symbol": "HORIZONIND",
-      "company": "Horizon Industrial Parks Limited",
-      "date": "2026-09-11",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "LALITHAA",
-      "company": "Lalithaa Jewellery Mart Limited",
-      "date": "2026-09-11",
-      "purpose": "Financial Results/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-    },
     {
       "symbol": "CMICABLES",
       "company": "CMI Limited",
@@ -86,11 +21,25 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2025"
     },
     {
+      "symbol": "CMICABLES",
+      "company": "CMI Limited",
+      "date": "2026-09-15",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended December 31, 2025"
+    },
+    {
       "symbol": "SUNSHINE",
       "company": "Sunshine Pictures Limited",
       "date": "2026-09-15",
       "purpose": "Financial Results",
       "description": "To consider and approve the un-audited financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "CMICABLES",
+      "company": "CMI Limited",
+      "date": "2026-09-16",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended March 31, 2026"
     },
     {
       "symbol": "SUPREMEENG",
@@ -114,6 +63,13 @@
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
     },
     {
+      "symbol": "SKYWAYS",
+      "company": "Skyways Air Services Limited",
+      "date": "2026-09-17",
+      "purpose": "Financial Results/Dividend/Other business matters",
+      "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+    },
+    {
       "symbol": "INDIACEM",
       "company": "The India Cements Limited",
       "date": "2026-10-17",
@@ -131,6 +87,13 @@
       "symbol": "COFORGE",
       "company": "Coforge Limited",
       "date": "2026-10-23",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "ABB",
+      "company": "ABB India Limited",
+      "date": "2026-11-13",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     }
@@ -223,9 +186,17 @@
       "symbol": "ABB",
       "company": "Abb India Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-13",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ABB",
+          "company": "ABB India Limited",
+          "date": "2026-11-13",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -2275,22 +2246,29 @@
       "symbol": "CMICABLES",
       "company": "CMI Limited",
       "lastResultDate": null,
-      "nextResultDate": "2026-09-11",
+      "nextResultDate": "2026-09-14",
       "lastResult": null,
       "upcomingResults": [
-        {
-          "symbol": "CMICABLES",
-          "company": "CMI Limited",
-          "date": "2026-09-11",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2025"
-        },
         {
           "symbol": "CMICABLES",
           "company": "CMI Limited",
           "date": "2026-09-14",
           "purpose": "Financial Results",
           "description": "To consider and approve the financial results for the period ended September 30, 2025"
+        },
+        {
+          "symbol": "CMICABLES",
+          "company": "CMI Limited",
+          "date": "2026-09-15",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended December 31, 2025"
+        },
+        {
+          "symbol": "CMICABLES",
+          "company": "CMI Limited",
+          "date": "2026-09-16",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended March 31, 2026"
         }
       ],
       "historyCount": 0
@@ -4581,23 +4559,6 @@
       "historyCount": 0
     },
     {
-      "symbol": "HORIZONIND",
-      "company": "Horizon Industrial Parks Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-11",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "HORIZONIND",
-          "company": "Horizon Industrial Parks Limited",
-          "date": "2026-09-11",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
-      "historyCount": 0
-    },
-    {
       "symbol": "HPL",
       "company": "Hpl Electric & Power Limited",
       "lastResultDate": null,
@@ -6079,23 +6040,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "LALITHAA",
-      "company": "Lalithaa Jewellery Mart Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-11",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "LALITHAA",
-          "company": "Lalithaa Jewellery Mart Limited",
-          "date": "2026-09-11",
-          "purpose": "Financial Results/Other business matters",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-        }
-      ],
       "historyCount": 0
     },
     {
@@ -9450,6 +9394,13 @@
           "date": "2026-09-17",
           "purpose": "Financial Results/Dividend/Other business matters",
           "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+        },
+        {
+          "symbol": "SKYWAYS",
+          "company": "Skyways Air Services Limited",
+          "date": "2026-09-17",
+          "purpose": "Financial Results/Dividend/Other business matters",
+          "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
         }
       ],
       "historyCount": 0
