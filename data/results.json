@@ -1,13 +1,13 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-11T14:30:13.026643+05:30",
+  "updatedAt": "2026-09-11T17:01:05.314677+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1245,
+  "symbolCount": 1246,
   "historyCount": 0,
   "today": [],
   "tomorrow": [],
@@ -68,6 +68,13 @@
       "date": "2026-09-17",
       "purpose": "Financial Results/Dividend/Other business matters",
       "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+    },
+    {
+      "symbol": "SYMBIOTEC",
+      "company": "Symbiotec Pharmalab Limited",
+      "date": "2026-09-21",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
     {
       "symbol": "INDIACEM",
@@ -9977,6 +9984,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "SYMBIOTEC",
+      "company": "Symbiotec Pharmalab Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-21",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "SYMBIOTEC",
+          "company": "Symbiotec Pharmalab Limited",
+          "date": "2026-09-21",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
