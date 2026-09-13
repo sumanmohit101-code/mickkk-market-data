@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-12T17:00:37.608796+05:30",
+  "updatedAt": "2026-09-13T17:00:52.138265+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -10,7 +10,15 @@
   "symbolCount": 1247,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [],
+  "tomorrow": [
+    {
+      "symbol": "CMICABLES",
+      "company": "CMI Limited",
+      "date": "2026-09-14",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2025"
+    }
+  ],
   "thisWeek": [],
   "allUpcoming": [
     {
