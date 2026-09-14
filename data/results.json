@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-13T17:00:52.138265+05:30",
+  "updatedAt": "2026-09-14T15:31:10.077185+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -14,20 +14,19 @@
     {
       "symbol": "CMICABLES",
       "company": "CMI Limited",
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended September 30, 2025"
+      "description": "To consider and approve the financial results for the period ended December 31, 2025"
+    },
+    {
+      "symbol": "SUNSHINE",
+      "company": "Sunshine Pictures Limited",
+      "date": "2026-09-15",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the un-audited financial results for the period ended Jun 30, 2026"
     }
   ],
-  "thisWeek": [],
-  "allUpcoming": [
-    {
-      "symbol": "CMICABLES",
-      "company": "CMI Limited",
-      "date": "2026-09-14",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended September 30, 2025"
-    },
+  "thisWeek": [
     {
       "symbol": "CMICABLES",
       "company": "CMI Limited",
@@ -68,7 +67,58 @@
       "company": "Skyways Air Services Limited",
       "date": "2026-09-17",
       "purpose": "Financial Results/Dividend/Other business matters",
+      "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+    },
+    {
+      "symbol": "SKYWAYS",
+      "company": "Skyways Air Services Limited",
+      "date": "2026-09-17",
+      "purpose": "Financial Results/Dividend/Other business matters",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+    },
+    {
+      "symbol": "HTEL",
+      "company": "Hy-Tech Engineers Limited",
+      "date": "2026-09-18",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    }
+  ],
+  "allUpcoming": [
+    {
+      "symbol": "CMICABLES",
+      "company": "CMI Limited",
+      "date": "2026-09-15",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended December 31, 2025"
+    },
+    {
+      "symbol": "SUNSHINE",
+      "company": "Sunshine Pictures Limited",
+      "date": "2026-09-15",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the un-audited financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "CMICABLES",
+      "company": "CMI Limited",
+      "date": "2026-09-16",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended March 31, 2026"
+    },
+    {
+      "symbol": "SUPREMEENG",
+      "company": "Supreme Engineering Limited",
+      "date": "2026-09-16",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the first quarter ended June 30, 2026"
+    },
+    {
+      "symbol": "TEMPSENS",
+      "company": "Tempsens Instruments (India) Limited",
+      "date": "2026-09-16",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
     {
       "symbol": "SKYWAYS",
@@ -76,6 +126,13 @@
       "date": "2026-09-17",
       "purpose": "Financial Results/Dividend/Other business matters",
       "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+    },
+    {
+      "symbol": "SKYWAYS",
+      "company": "Skyways Air Services Limited",
+      "date": "2026-09-17",
+      "purpose": "Financial Results/Dividend/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
     },
     {
       "symbol": "HTEL",
@@ -2268,16 +2325,9 @@
       "symbol": "CMICABLES",
       "company": "CMI Limited",
       "lastResultDate": null,
-      "nextResultDate": "2026-09-14",
+      "nextResultDate": "2026-09-15",
       "lastResult": null,
       "upcomingResults": [
-        {
-          "symbol": "CMICABLES",
-          "company": "CMI Limited",
-          "date": "2026-09-14",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended September 30, 2025"
-        },
         {
           "symbol": "CMICABLES",
           "company": "CMI Limited",
@@ -9432,14 +9482,14 @@
           "company": "Skyways Air Services Limited",
           "date": "2026-09-17",
           "purpose": "Financial Results/Dividend/Other business matters",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+          "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
         },
         {
           "symbol": "SKYWAYS",
           "company": "Skyways Air Services Limited",
           "date": "2026-09-17",
           "purpose": "Financial Results/Dividend/Other business matters",
-          "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
         }
       ],
       "historyCount": 0
