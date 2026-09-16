@@ -1,60 +1,16 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-15T17:00:52.453661+05:30",
+  "updatedAt": "2026-09-16T14:53:44.485902+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1246,
+  "symbolCount": 1244,
   "historyCount": 0,
   "today": [],
   "tomorrow": [
-    {
-      "symbol": "CMICABLES",
-      "company": "CMI Limited",
-      "date": "2026-09-16",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended March 31, 2026"
-    },
-    {
-      "symbol": "SUPREMEENG",
-      "company": "Supreme Engineering Limited",
-      "date": "2026-09-16",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the first quarter ended June 30, 2026"
-    },
-    {
-      "symbol": "TEMPSENS",
-      "company": "Tempsens Instruments (India) Limited",
-      "date": "2026-09-16",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    }
-  ],
-  "thisWeek": [
-    {
-      "symbol": "CMICABLES",
-      "company": "CMI Limited",
-      "date": "2026-09-16",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended March 31, 2026"
-    },
-    {
-      "symbol": "SUPREMEENG",
-      "company": "Supreme Engineering Limited",
-      "date": "2026-09-16",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the first quarter ended June 30, 2026"
-    },
-    {
-      "symbol": "TEMPSENS",
-      "company": "Tempsens Instruments (India) Limited",
-      "date": "2026-09-16",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
     {
       "symbol": "ORISSAMINE",
       "company": "The Orissa Minerals Development Company Limited",
@@ -67,7 +23,23 @@
       "company": "Skyways Air Services Limited",
       "date": "2026-09-17",
       "purpose": "Financial Results/Dividend/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+    },
+    {
+      "symbol": "SKYWAYS",
+      "company": "Skyways Air Services Limited",
+      "date": "2026-09-17",
+      "purpose": "Financial Results/Dividend/Other business matters",
       "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+    }
+  ],
+  "thisWeek": [
+    {
+      "symbol": "ORISSAMINE",
+      "company": "The Orissa Minerals Development Company Limited",
+      "date": "2026-09-17",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
     {
       "symbol": "SKYWAYS",
@@ -75,6 +47,13 @@
       "date": "2026-09-17",
       "purpose": "Financial Results/Dividend/Other business matters",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+    },
+    {
+      "symbol": "SKYWAYS",
+      "company": "Skyways Air Services Limited",
+      "date": "2026-09-17",
+      "purpose": "Financial Results/Dividend/Other business matters",
+      "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
     },
     {
       "symbol": "HTEL",
@@ -86,27 +65,6 @@
   ],
   "allUpcoming": [
     {
-      "symbol": "CMICABLES",
-      "company": "CMI Limited",
-      "date": "2026-09-16",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended March 31, 2026"
-    },
-    {
-      "symbol": "SUPREMEENG",
-      "company": "Supreme Engineering Limited",
-      "date": "2026-09-16",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the first quarter ended June 30, 2026"
-    },
-    {
-      "symbol": "TEMPSENS",
-      "company": "Tempsens Instruments (India) Limited",
-      "date": "2026-09-16",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
       "symbol": "ORISSAMINE",
       "company": "The Orissa Minerals Development Company Limited",
       "date": "2026-09-17",
@@ -118,14 +76,14 @@
       "company": "Skyways Air Services Limited",
       "date": "2026-09-17",
       "purpose": "Financial Results/Dividend/Other business matters",
-      "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
     },
     {
       "symbol": "SKYWAYS",
       "company": "Skyways Air Services Limited",
       "date": "2026-09-17",
       "purpose": "Financial Results/Dividend/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+      "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
     },
     {
       "symbol": "HTEL",
@@ -133,6 +91,13 @@
       "date": "2026-09-18",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "AUGMONT",
+      "company": "Augmont Enterprises Limited",
+      "date": "2026-09-21",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the Un-Audited Financial Results (Standalone And Consolidated) For The Quarter Ended 30Th June 2026, As Per Regulation 33(3)(J) Of The SEBI LODR."
     },
     {
       "symbol": "SYMBIOTEC",
@@ -161,6 +126,13 @@
       "date": "2026-10-23",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "INFY",
+      "company": "Infosys Limited",
+      "date": "2026-10-23",
+      "purpose": "Financial Results/Dividend",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
     },
     {
       "symbol": "ABB",
@@ -1187,6 +1159,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "AUGMONT",
+      "company": "Augmont Enterprises Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-21",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "AUGMONT",
+          "company": "Augmont Enterprises Limited",
+          "date": "2026-09-21",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the Un-Audited Financial Results (Standalone And Consolidated) For The Quarter Ended 30Th June 2026, As Per Regulation 33(3)(J) Of The SEBI LODR."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -2312,23 +2301,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "CMICABLES",
-      "company": "CMI Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-16",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "CMICABLES",
-          "company": "CMI Limited",
-          "date": "2026-09-16",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended March 31, 2026"
-        }
-      ],
       "historyCount": 0
     },
     {
@@ -5104,9 +5076,17 @@
       "symbol": "INFY",
       "company": "Infosys Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-23",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "INFY",
+          "company": "Infosys Limited",
+          "date": "2026-10-23",
+          "purpose": "Financial Results/Dividend",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -9476,14 +9456,14 @@
           "company": "Skyways Air Services Limited",
           "date": "2026-09-17",
           "purpose": "Financial Results/Dividend/Other business matters",
-          "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
         },
         {
           "symbol": "SKYWAYS",
           "company": "Skyways Air Services Limited",
           "date": "2026-09-17",
           "purpose": "Financial Results/Dividend/Other business matters",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+          "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
         }
       ],
       "historyCount": 0
@@ -9930,23 +9910,6 @@
       "historyCount": 0
     },
     {
-      "symbol": "SUPREMEENG",
-      "company": "Supreme Engineering Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-16",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "SUPREMEENG",
-          "company": "Supreme Engineering Limited",
-          "date": "2026-09-16",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the first quarter ended June 30, 2026"
-        }
-      ],
-      "historyCount": 0
-    },
-    {
       "symbol": "SUPREMEIND",
       "company": "Supreme Industries Limited",
       "lastResultDate": null,
@@ -10321,23 +10284,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "TEMPSENS",
-      "company": "Tempsens Instruments (India) Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-16",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "TEMPSENS",
-          "company": "Tempsens Instruments (India) Limited",
-          "date": "2026-09-16",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
       "historyCount": 0
     },
     {
