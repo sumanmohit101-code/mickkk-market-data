@@ -1,13 +1,13 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-16T14:53:44.485902+05:30",
+  "updatedAt": "2026-09-16T17:00:34.798096+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1244,
+  "symbolCount": 1245,
   "historyCount": 0,
   "today": [],
   "tomorrow": [
@@ -98,6 +98,13 @@
       "date": "2026-09-21",
       "purpose": "Financial Results",
       "description": "To consider and approve the Un-Audited Financial Results (Standalone And Consolidated) For The Quarter Ended 30Th June 2026, As Per Regulation 33(3)(J) Of The SEBI LODR."
+    },
+    {
+      "symbol": "LUMINO",
+      "company": "Lumino Industries Limited",
+      "date": "2026-09-21",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited standalone and consolidated financial results for the quarter ended June 30, 2026"
     },
     {
       "symbol": "SYMBIOTEC",
@@ -6311,6 +6318,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "LUMINO",
+      "company": "Lumino Industries Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-21",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "LUMINO",
+          "company": "Lumino Industries Limited",
+          "date": "2026-09-21",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the unaudited standalone and consolidated financial results for the quarter ended June 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
