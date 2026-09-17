@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-16T17:00:34.798096+05:30",
+  "updatedAt": "2026-09-17T15:03:50.007393+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -12,85 +12,50 @@
   "today": [],
   "tomorrow": [
     {
-      "symbol": "ORISSAMINE",
-      "company": "The Orissa Minerals Development Company Limited",
-      "date": "2026-09-17",
+      "symbol": "HTEL",
+      "company": "Hy-Tech Engineers Limited",
+      "date": "2026-09-18",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
     {
-      "symbol": "SKYWAYS",
-      "company": "Skyways Air Services Limited",
-      "date": "2026-09-17",
-      "purpose": "Financial Results/Dividend/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
-    },
-    {
-      "symbol": "SKYWAYS",
-      "company": "Skyways Air Services Limited",
-      "date": "2026-09-17",
-      "purpose": "Financial Results/Dividend/Other business matters",
-      "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
+      "symbol": "SUPREMEENG",
+      "company": "Supreme Engineering Limited",
+      "date": "2026-09-18",
+      "purpose": "Financial Results",
+      "description": "SUPREMEENG : 18-Sep-2026 :  The Company has informed the Exchange that a Board meeting to be held on September 16, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 18, 2026,  To consider and approve the financial results for the Quarter ended June 30, 2026"
     }
   ],
   "thisWeek": [
     {
-      "symbol": "ORISSAMINE",
-      "company": "The Orissa Minerals Development Company Limited",
-      "date": "2026-09-17",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "SKYWAYS",
-      "company": "Skyways Air Services Limited",
-      "date": "2026-09-17",
-      "purpose": "Financial Results/Dividend/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
-    },
-    {
-      "symbol": "SKYWAYS",
-      "company": "Skyways Air Services Limited",
-      "date": "2026-09-17",
-      "purpose": "Financial Results/Dividend/Other business matters",
-      "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
-    },
-    {
       "symbol": "HTEL",
       "company": "Hy-Tech Engineers Limited",
       "date": "2026-09-18",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "SUPREMEENG",
+      "company": "Supreme Engineering Limited",
+      "date": "2026-09-18",
+      "purpose": "Financial Results",
+      "description": "SUPREMEENG : 18-Sep-2026 :  The Company has informed the Exchange that a Board meeting to be held on September 16, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 18, 2026,  To consider and approve the financial results for the Quarter ended June 30, 2026"
     }
   ],
   "allUpcoming": [
     {
-      "symbol": "ORISSAMINE",
-      "company": "The Orissa Minerals Development Company Limited",
-      "date": "2026-09-17",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "SKYWAYS",
-      "company": "Skyways Air Services Limited",
-      "date": "2026-09-17",
-      "purpose": "Financial Results/Dividend/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
-    },
-    {
-      "symbol": "SKYWAYS",
-      "company": "Skyways Air Services Limited",
-      "date": "2026-09-17",
-      "purpose": "Financial Results/Dividend/Other business matters",
-      "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
-    },
-    {
       "symbol": "HTEL",
       "company": "Hy-Tech Engineers Limited",
       "date": "2026-09-18",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "SUPREMEENG",
+      "company": "Supreme Engineering Limited",
+      "date": "2026-09-18",
+      "purpose": "Financial Results",
+      "description": "SUPREMEENG : 18-Sep-2026 :  The Company has informed the Exchange that a Board meeting to be held on September 16, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 18, 2026,  To consider and approve the financial results for the Quarter ended June 30, 2026"
     },
     {
       "symbol": "AUGMONT",
@@ -140,6 +105,13 @@
       "date": "2026-10-23",
       "purpose": "Financial Results/Dividend",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
+      "symbol": "SHREECEM",
+      "company": "SHREE CEMENT LIMITED",
+      "date": "2026-10-23",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "ABB",
@@ -7538,17 +7510,9 @@
       "symbol": "ORISSAMINE",
       "company": "The Orissa Minerals Development Company Limited",
       "lastResultDate": null,
-      "nextResultDate": "2026-09-17",
+      "nextResultDate": null,
       "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "ORISSAMINE",
-          "company": "The Orissa Minerals Development Company Limited",
-          "date": "2026-09-17",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
+      "upcomingResults": [],
       "historyCount": 0
     },
     {
@@ -9274,9 +9238,17 @@
       "symbol": "SHREECEM",
       "company": "Shree Cements Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-23",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "SHREECEM",
+          "company": "SHREE CEMENT LIMITED",
+          "date": "2026-10-23",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -9466,30 +9438,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "SKYWAYS",
-      "company": "Skyways Air Services Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-17",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "SKYWAYS",
-          "company": "Skyways Air Services Limited",
-          "date": "2026-09-17",
-          "purpose": "Financial Results/Dividend/Other business matters",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
-        },
-        {
-          "symbol": "SKYWAYS",
-          "company": "Skyways Air Services Limited",
-          "date": "2026-09-17",
-          "purpose": "Financial Results/Dividend/Other business matters",
-          "description": "The Company has informed the Exchange that a Board meeting to be held on September 17, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 17, 2026, To consider and approve the financial results for the period ended Jun 30, 2026, dividend and other business matters"
-        }
-      ],
       "historyCount": 0
     },
     {
@@ -9931,6 +9879,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "SUPREMEENG",
+      "company": "Supreme Engineering Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-18",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "SUPREMEENG",
+          "company": "Supreme Engineering Limited",
+          "date": "2026-09-18",
+          "purpose": "Financial Results",
+          "description": "SUPREMEENG : 18-Sep-2026 :  The Company has informed the Exchange that a Board meeting to be held on September 16, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 18, 2026,  To consider and approve the financial results for the Quarter ended June 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
