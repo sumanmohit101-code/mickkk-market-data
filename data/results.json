@@ -1,62 +1,18 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-17T17:00:50.001596+05:30",
+  "updatedAt": "2026-09-18T14:35:54.086957+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1245,
+  "symbolCount": 1244,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [
-    {
-      "symbol": "HTEL",
-      "company": "Hy-Tech Engineers Limited",
-      "date": "2026-09-18",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "SUPREMEENG",
-      "company": "Supreme Engineering Limited",
-      "date": "2026-09-18",
-      "purpose": "Financial Results",
-      "description": "SUPREMEENG : 18-Sep-2026 :  The Company has informed the Exchange that a Board meeting to be held on September 16, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 18, 2026,  To consider and approve the financial results for the Quarter ended June 30, 2026"
-    }
-  ],
-  "thisWeek": [
-    {
-      "symbol": "HTEL",
-      "company": "Hy-Tech Engineers Limited",
-      "date": "2026-09-18",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "SUPREMEENG",
-      "company": "Supreme Engineering Limited",
-      "date": "2026-09-18",
-      "purpose": "Financial Results",
-      "description": "SUPREMEENG : 18-Sep-2026 :  The Company has informed the Exchange that a Board meeting to be held on September 16, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 18, 2026,  To consider and approve the financial results for the Quarter ended June 30, 2026"
-    }
-  ],
+  "tomorrow": [],
+  "thisWeek": [],
   "allUpcoming": [
-    {
-      "symbol": "HTEL",
-      "company": "Hy-Tech Engineers Limited",
-      "date": "2026-09-18",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "SUPREMEENG",
-      "company": "Supreme Engineering Limited",
-      "date": "2026-09-18",
-      "purpose": "Financial Results",
-      "description": "SUPREMEENG : 18-Sep-2026 :  The Company has informed the Exchange that a Board meeting to be held on September 16, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 18, 2026,  To consider and approve the financial results for the Quarter ended June 30, 2026"
-    },
     {
       "symbol": "AUGMONT",
       "company": "Augmont Enterprises Limited",
@@ -77,6 +33,27 @@
       "date": "2026-09-21",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "WINSOME",
+      "company": "Winsome Yarns Limited",
+      "date": "2026-09-23",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "HCLTECH",
+      "company": "HCL Technologies Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results/Dividend",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
+      "symbol": "AXISBANK",
+      "company": "Axis Bank Limited",
+      "date": "2026-10-17",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "INDIACEM",
@@ -1251,9 +1228,17 @@
       "symbol": "AXISBANK",
       "company": "Axis Bank Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-17",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "AXISBANK",
+          "company": "Axis Bank Limited",
+          "date": "2026-10-17",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -4310,9 +4295,17 @@
       "symbol": "HCLTECH",
       "company": "Hcl Technologies Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-12",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "HCLTECH",
+          "company": "HCL Technologies Limited",
+          "date": "2026-10-12",
+          "purpose": "Financial Results/Dividend",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -4583,23 +4576,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "HTEL",
-      "company": "Hy-Tech Engineers Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-18",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "HTEL",
-          "company": "Hy-Tech Engineers Limited",
-          "date": "2026-09-18",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
       "historyCount": 0
     },
     {
@@ -9882,23 +9858,6 @@
       "historyCount": 0
     },
     {
-      "symbol": "SUPREMEENG",
-      "company": "Supreme Engineering Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-18",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "SUPREMEENG",
-          "company": "Supreme Engineering Limited",
-          "date": "2026-09-18",
-          "purpose": "Financial Results",
-          "description": "SUPREMEENG : 18-Sep-2026 :  The Company has informed the Exchange that a Board meeting to be held on September 16, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on September 18, 2026,  To consider and approve the financial results for the Quarter ended June 30, 2026"
-        }
-      ],
-      "historyCount": 0
-    },
-    {
       "symbol": "SUPREMEIND",
       "company": "Supreme Industries Limited",
       "lastResultDate": null,
@@ -11262,6 +11221,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "WINSOME",
+      "company": "Winsome Yarns Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-23",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "WINSOME",
+          "company": "Winsome Yarns Limited",
+          "date": "2026-09-23",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
