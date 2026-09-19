@@ -1,13 +1,13 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-18T17:00:38.063762+05:30",
+  "updatedAt": "2026-09-19T17:00:41.906928+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1245,
+  "symbolCount": 1246,
   "historyCount": 0,
   "today": [],
   "tomorrow": [],
@@ -54,6 +54,13 @@
       "date": "2026-10-12",
       "purpose": "Financial Results/Dividend",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
+      "symbol": "STCINDIA",
+      "company": "The State Trading Corporation of India Limited",
+      "date": "2026-10-13",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     },
     {
       "symbol": "AXISBANK",
@@ -9690,6 +9697,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "STCINDIA",
+      "company": "The State Trading Corporation of India Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-10-13",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "STCINDIA",
+          "company": "The State Trading Corporation of India Limited",
+          "date": "2026-10-13",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
