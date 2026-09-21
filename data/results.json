@@ -1,61 +1,33 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-20T17:00:38.305602+05:30",
+  "updatedAt": "2026-09-21T15:36:12.362521+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1246,
+  "symbolCount": 1243,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [
+  "tomorrow": [],
+  "thisWeek": [
     {
-      "symbol": "AUGMONT",
-      "company": "Augmont Enterprises Limited",
-      "date": "2026-09-21",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the Un-Audited Financial Results (Standalone And Consolidated) For The Quarter Ended 30Th June 2026, As Per Regulation 33(3)(J) Of The SEBI LODR."
-    },
-    {
-      "symbol": "LUMINO",
-      "company": "Lumino Industries Limited",
-      "date": "2026-09-21",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the unaudited standalone and consolidated financial results for the quarter ended June 30, 2026"
-    },
-    {
-      "symbol": "SYMBIOTEC",
-      "company": "Symbiotec Pharmalab Limited",
-      "date": "2026-09-21",
+      "symbol": "ANNU",
+      "company": "Annu Projects Limited",
+      "date": "2026-09-23",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "WINSOME",
+      "company": "Winsome Yarns Limited",
+      "date": "2026-09-23",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     }
   ],
-  "thisWeek": [],
   "allUpcoming": [
-    {
-      "symbol": "AUGMONT",
-      "company": "Augmont Enterprises Limited",
-      "date": "2026-09-21",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the Un-Audited Financial Results (Standalone And Consolidated) For The Quarter Ended 30Th June 2026, As Per Regulation 33(3)(J) Of The SEBI LODR."
-    },
-    {
-      "symbol": "LUMINO",
-      "company": "Lumino Industries Limited",
-      "date": "2026-09-21",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the unaudited standalone and consolidated financial results for the quarter ended June 30, 2026"
-    },
-    {
-      "symbol": "SYMBIOTEC",
-      "company": "Symbiotec Pharmalab Limited",
-      "date": "2026-09-21",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
     {
       "symbol": "ANNU",
       "company": "Annu Projects Limited",
@@ -1168,23 +1140,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "AUGMONT",
-      "company": "Augmont Enterprises Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-21",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "AUGMONT",
-          "company": "Augmont Enterprises Limited",
-          "date": "2026-09-21",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the Un-Audited Financial Results (Standalone And Consolidated) For The Quarter Ended 30Th June 2026, As Per Regulation 33(3)(J) Of The SEBI LODR."
-        }
-      ],
       "historyCount": 0
     },
     {
@@ -6322,23 +6277,6 @@
       "historyCount": 0
     },
     {
-      "symbol": "LUMINO",
-      "company": "Lumino Industries Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-21",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "LUMINO",
-          "company": "Lumino Industries Limited",
-          "date": "2026-09-21",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the unaudited standalone and consolidated financial results for the quarter ended June 30, 2026"
-        }
-      ],
-      "historyCount": 0
-    },
-    {
       "symbol": "LUPIN",
       "company": "Lupin Limited",
       "lastResultDate": null,
@@ -10024,23 +9962,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "SYMBIOTEC",
-      "company": "Symbiotec Pharmalab Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-21",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "SYMBIOTEC",
-          "company": "Symbiotec Pharmalab Limited",
-          "date": "2026-09-21",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
       "historyCount": 0
     },
     {
