@@ -1,16 +1,31 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-21T17:00:39.965539+05:30",
+  "updatedAt": "2026-09-22T14:54:22.970631+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1243,
+  "symbolCount": 1245,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [],
+  "tomorrow": [
+    {
+      "symbol": "ANNU",
+      "company": "Annu Projects Limited",
+      "date": "2026-09-23",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "WINSOME",
+      "company": "Winsome Yarns Limited",
+      "date": "2026-09-23",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+    }
+  ],
   "thisWeek": [
     {
       "symbol": "ANNU",
@@ -25,6 +40,20 @@
       "date": "2026-09-23",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "ESDS",
+      "company": "ESDS Software Solution Limited",
+      "date": "2026-09-24",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "PERNIASPOP",
+      "company": "Purple Style Labs Limited",
+      "date": "2026-09-24",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited standalone and consolidated financial results of the Company for the quarter ending on June 30, 2026."
     }
   ],
   "allUpcoming": [
@@ -43,6 +72,20 @@
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     },
     {
+      "symbol": "ESDS",
+      "company": "ESDS Software Solution Limited",
+      "date": "2026-09-24",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "PERNIASPOP",
+      "company": "Purple Style Labs Limited",
+      "date": "2026-09-24",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited standalone and consolidated financial results of the Company for the quarter ending on June 30, 2026."
+    },
+    {
       "symbol": "HCLTECH",
       "company": "HCL Technologies Limited",
       "date": "2026-10-12",
@@ -57,11 +100,25 @@
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     },
     {
+      "symbol": "ANGELONE",
+      "company": "Angel One Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "AXISBANK",
       "company": "Axis Bank Limited",
       "date": "2026-10-17",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "HDFCBANK",
+      "company": "HDFC Bank Limited",
+      "date": "2026-10-17",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited standalone and consolidated financial results of the Bank for the quarter/half-year ending September 30, 2026"
     },
     {
       "symbol": "INDIACEM",
@@ -95,6 +152,20 @@
       "symbol": "SHREECEM",
       "company": "SHREE CEMENT LIMITED",
       "date": "2026-10-23",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "TMCV",
+      "company": "Tata Motors Limited",
+      "date": "2026-10-23",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the second quarter and half year ended September 30, 2026"
+    },
+    {
+      "symbol": "MPHASIS",
+      "company": "MphasiS Limited",
+      "date": "2026-11-05",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
@@ -697,9 +768,17 @@
       "symbol": "ANGELONE",
       "company": "Angel One Ltd",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ANGELONE",
+          "company": "Angel One Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -3274,6 +3353,23 @@
       "historyCount": 0
     },
     {
+      "symbol": "ESDS",
+      "company": "ESDS Software Solution Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-24",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "ESDS",
+          "company": "ESDS Software Solution Limited",
+          "date": "2026-09-24",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
+      "historyCount": 0
+    },
+    {
       "symbol": "ETERNAL",
       "company": "Eternal Ltd",
       "lastResultDate": null,
@@ -4338,9 +4434,17 @@
       "symbol": "HDFCBANK",
       "company": "Hdfc Bank Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-17",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "HDFCBANK",
+          "company": "HDFC Bank Limited",
+          "date": "2026-10-17",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the unaudited standalone and consolidated financial results of the Bank for the quarter/half-year ending September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -6811,9 +6915,17 @@
       "symbol": "MPHASIS",
       "company": "Mphasis Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-05",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "MPHASIS",
+          "company": "MphasiS Limited",
+          "date": "2026-11-05",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -7651,6 +7763,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "PERNIASPOP",
+      "company": "Purple Style Labs Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-24",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "PERNIASPOP",
+          "company": "Purple Style Labs Limited",
+          "date": "2026-09-24",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the unaudited standalone and consolidated financial results of the Company for the quarter ending on June 30, 2026."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -10418,9 +10547,17 @@
       "symbol": "TMCV",
       "company": "Tata Motors Commercial Vehicles Ltd",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-23",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "TMCV",
+          "company": "Tata Motors Limited",
+          "date": "2026-10-23",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the second quarter and half year ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
