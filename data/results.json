@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-22T14:54:22.970631+05:30",
+  "updatedAt": "2026-09-22T17:00:53.255957+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -100,6 +100,13 @@
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     },
     {
+      "symbol": "TATATECH",
+      "company": "Tata Technologies Limited",
+      "date": "2026-10-14",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "ANGELONE",
       "company": "Angel One Limited",
       "date": "2026-10-15",
@@ -142,6 +149,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "DRREDDY",
+      "company": "Dr. Reddy's Laboratories Limited",
+      "date": "2026-10-23",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "INFY",
       "company": "Infosys Limited",
       "date": "2026-10-23",
@@ -161,6 +175,20 @@
       "date": "2026-10-23",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the second quarter and half year ended September 30, 2026"
+    },
+    {
+      "symbol": "UTIAMC",
+      "company": "UTI Asset Management Company Limited",
+      "date": "2026-10-23",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the quarter and half year ending September 30, 2026 and other general business matters"
+    },
+    {
+      "symbol": "DABUR",
+      "company": "Dabur India Limited",
+      "date": "2026-11-04",
+      "purpose": "Financial Results/Dividend",
+      "description": "To consider and approve the unaudited financial results for the quarter and half year ending on September 30, 2026 and Interim dividend for the Financial Year 2026-27"
     },
     {
       "symbol": "MPHASIS",
@@ -2636,9 +2664,17 @@
       "symbol": "DABUR",
       "company": "Dabur India Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-04",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "DABUR",
+          "company": "Dabur India Limited",
+          "date": "2026-11-04",
+          "purpose": "Financial Results/Dividend",
+          "description": "To consider and approve the unaudited financial results for the quarter and half year ending on September 30, 2026 and Interim dividend for the Financial Year 2026-27"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -2996,9 +3032,17 @@
       "symbol": "DRREDDY",
       "company": "Dr. Reddy's Laboratories Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-23",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "DRREDDY",
+          "company": "Dr. Reddy's Laboratories Limited",
+          "date": "2026-10-23",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -10241,9 +10285,17 @@
       "symbol": "TATATECH",
       "company": "Tata Technologies Ltd",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-14",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "TATATECH",
+          "company": "Tata Technologies Limited",
+          "date": "2026-10-14",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the unaudited financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -10878,9 +10930,17 @@
       "symbol": "UTIAMC",
       "company": "UTI Asset Management Company Ltd",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-23",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "UTIAMC",
+          "company": "UTI Asset Management Company Limited",
+          "date": "2026-10-23",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the quarter and half year ending September 30, 2026 and other general business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
