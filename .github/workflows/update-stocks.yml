@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install yfinance pandas
+          pip install yfinance pandas requests
 
       - name: Organize existing stock data into A-Z folders
         run: |
@@ -86,6 +86,124 @@ jobs:
 
           print(f"Moved existing stock JSON files: {moved}")
           print(f"Protected non-stock files: {skipped}")
+          PY
+
+      - name: Sync latest NSE stock symbols
+        run: |
+          python - <<'PY'
+          import csv
+          import io
+          import json
+          import re
+          from pathlib import Path
+
+          import requests
+
+          EQUITY_URL = "https://nsearchives.nseindia.com/content/equities/EQUITY_L.csv"
+          SME_URL = "https://nsearchives.nseindia.com/emerge/corporates/content/SME_EQUITY_L.csv"
+
+          ROOT = Path(".")
+          DATA_DIR = ROOT / "data"
+          DATA_DIR.mkdir(exist_ok=True)
+
+          HEADERS = {
+              "User-Agent": (
+                  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/131.0 Safari/537.36"
+              ),
+              "Accept": "text/csv,application/octet-stream,*/*",
+              "Referer": "https://www.nseindia.com/",
+          }
+
+          def download_csv(url):
+              response = requests.get(url, headers=HEADERS, timeout=60)
+              response.raise_for_status()
+              raw = response.content
+              for encoding in ("utf-8-sig", "utf-8", "latin-1"):
+                  try:
+                      return raw.decode(encoding)
+                  except UnicodeDecodeError:
+                      pass
+              raise RuntimeError(f"Unable to decode NSE CSV: {url}")
+
+          def clean(value):
+              return str(value or "").strip()
+
+          def field(row, *names):
+              lowered = {clean(k).lower(): clean(v) for k, v in row.items() if k is not None}
+              for name in names:
+                  value = lowered.get(name.lower())
+                  if value:
+                      return value
+              return ""
+
+          securities = {}
+
+          for label, url in (("NSE Equity", EQUITY_URL), ("NSE SME", SME_URL)):
+              print(f"Downloading {label}: {url}")
+              csv_text = download_csv(url)
+              reader = csv.DictReader(io.StringIO(csv_text))
+              rows = 0
+
+              for row in reader:
+                  symbol = clean(field(row, "SYMBOL", "Symbol")).upper()
+                  name = clean(field(row, "NAME OF COMPANY", "Name of Company", "COMPANY NAME", "Company Name"))
+                  if not symbol:
+                      continue
+                  if not re.fullmatch(r"[A-Z0-9._&()' -]+", symbol):
+                      continue
+                  securities[symbol] = {"symbol": symbol, "name": name or symbol}
+                  rows += 1
+
+              print(f"{label}: {rows} rows read")
+
+          if len(securities) < 500:
+              raise RuntimeError(
+                  f"NSE symbol sync returned only {len(securities)} symbols. "
+                  "Refusing to overwrite symbols.txt with an incomplete list."
+              )
+
+          symbols_txt = ROOT / "symbols.txt"
+          old_symbols = []
+          if symbols_txt.exists():
+              old_symbols = [
+                  line.strip().upper()
+                  for line in symbols_txt.read_text(encoding="utf-8").splitlines()
+                  if line.strip()
+              ]
+
+          existing_metadata = {}
+          symbols_json = DATA_DIR / "symbols.json"
+          if symbols_json.exists():
+              try:
+                  old_data = json.loads(symbols_json.read_text(encoding="utf-8"))
+                  if isinstance(old_data, list):
+                      for item in old_data:
+                          if isinstance(item, dict) and item.get("symbol"):
+                              existing_metadata[str(item["symbol"]).strip().upper()] = item.get("name") or item["symbol"]
+              except Exception as exc:
+                  print(f"Could not read existing symbols.json: {exc}")
+
+          for symbol in old_symbols:
+              if symbol and symbol not in securities:
+                  securities[symbol] = {"symbol": symbol, "name": existing_metadata.get(symbol, symbol)}
+
+          ordered = sorted(securities.values(), key=lambda item: item["symbol"])
+
+          symbols_txt.write_text(
+              "\n".join(item["symbol"] for item in ordered) + "\n",
+              encoding="utf-8",
+          )
+
+          symbols_json.write_text(
+              json.dumps(ordered, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+
+          print(f"Updated symbols.txt: {len(ordered)} symbols")
+          print(f"Updated data/symbols.json: {len(ordered)} symbols")
+          print("NSE symbol synchronization completed successfully.")
           PY
 
       - name: Download stock market data
@@ -349,11 +467,10 @@ jobs:
           # unstaged changes." (this was the bug). Staging + committing first
           # gives us a clean working tree, so the rebase can never fail this way.
 
-          git add data/
+          git add data/ symbols.txt
 
           # Explicitly unstage non-stock files if they exist.
           git reset -- \
-            data/symbols.json \
             data/indices.json \
             data/price-bands.json \
             data/price-band-changes.json \
