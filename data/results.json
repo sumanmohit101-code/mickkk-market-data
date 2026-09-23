@@ -1,13 +1,13 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-23T14:54:44.001149+05:30",
+  "updatedAt": "2026-09-23T17:00:37.477584+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 1245,
+  "symbolCount": 1246,
   "historyCount": 0,
   "today": [],
   "tomorrow": [
@@ -56,6 +56,13 @@
       "date": "2026-09-24",
       "purpose": "Financial Results",
       "description": "To consider and approve the unaudited standalone and consolidated financial results of the Company for the quarter ending on June 30, 2026."
+    },
+    {
+      "symbol": "MOMSBELIEF",
+      "company": "Rays of Belief Limited",
+      "date": "2026-09-28",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited financial results for the period ended Jun 30, 2026"
     },
     {
       "symbol": "PRASOLCHEM",
@@ -217,6 +224,13 @@
       "date": "2026-11-05",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "TTKPRESTIG",
+      "company": "TTK Prestige Limited",
+      "date": "2026-11-06",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the un-audited financial results for the second quarter and half year ended September 30, 2026"
     },
     {
       "symbol": "ABB",
@@ -6938,6 +6952,23 @@
       "historyCount": 0
     },
     {
+      "symbol": "MOMSBELIEF",
+      "company": "Rays of Belief Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-28",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "MOMSBELIEF",
+          "company": "Rays of Belief Limited",
+          "date": "2026-09-28",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the unaudited financial results for the period ended Jun 30, 2026"
+        }
+      ],
+      "historyCount": 0
+    },
+    {
       "symbol": "MONARCH",
       "company": "Monarch Networth Capital Ltd",
       "lastResultDate": null,
@@ -10776,9 +10807,17 @@
       "symbol": "TTKPRESTIG",
       "company": "Ttk Prestige Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-06",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "TTKPRESTIG",
+          "company": "TTK Prestige Limited",
+          "date": "2026-11-06",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the un-audited financial results for the second quarter and half year ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
