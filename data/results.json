@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-22T17:00:53.255957+05:30",
+  "updatedAt": "2026-09-23T14:54:44.001149+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -12,35 +12,21 @@
   "today": [],
   "tomorrow": [
     {
-      "symbol": "ANNU",
-      "company": "Annu Projects Limited",
-      "date": "2026-09-23",
+      "symbol": "ESDS",
+      "company": "ESDS Software Solution Limited",
+      "date": "2026-09-24",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
     {
-      "symbol": "WINSOME",
-      "company": "Winsome Yarns Limited",
-      "date": "2026-09-23",
-      "purpose": "Financial Results/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+      "symbol": "PERNIASPOP",
+      "company": "Purple Style Labs Limited",
+      "date": "2026-09-24",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited standalone and consolidated financial results of the Company for the quarter ending on June 30, 2026."
     }
   ],
   "thisWeek": [
-    {
-      "symbol": "ANNU",
-      "company": "Annu Projects Limited",
-      "date": "2026-09-23",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "WINSOME",
-      "company": "Winsome Yarns Limited",
-      "date": "2026-09-23",
-      "purpose": "Financial Results/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-    },
     {
       "symbol": "ESDS",
       "company": "ESDS Software Solution Limited",
@@ -58,20 +44,6 @@
   ],
   "allUpcoming": [
     {
-      "symbol": "ANNU",
-      "company": "Annu Projects Limited",
-      "date": "2026-09-23",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "WINSOME",
-      "company": "Winsome Yarns Limited",
-      "date": "2026-09-23",
-      "purpose": "Financial Results/Other business matters",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-    },
-    {
       "symbol": "ESDS",
       "company": "ESDS Software Solution Limited",
       "date": "2026-09-24",
@@ -84,6 +56,27 @@
       "date": "2026-09-24",
       "purpose": "Financial Results",
       "description": "To consider and approve the unaudited standalone and consolidated financial results of the Company for the quarter ending on June 30, 2026."
+    },
+    {
+      "symbol": "PRASOLCHEM",
+      "company": "Prasol Chemicals Limited",
+      "date": "2026-09-28",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "GMBREW",
+      "company": "GM Breweries Limited",
+      "date": "2026-10-08",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "TCS",
+      "company": "Tata Consultancy Services Limited",
+      "date": "2026-10-08",
+      "purpose": "Financial Results/Dividend",
+      "description": "Approval of the Financial Results and consideration of declaration of second interim dividend"
     },
     {
       "symbol": "HCLTECH",
@@ -114,6 +107,20 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "HDFCAMC",
+      "company": "HDFC Asset Management Company Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "KARURVYSYA",
+      "company": "Karur Vysya Bank Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "AXISBANK",
       "company": "Axis Bank Limited",
       "date": "2026-10-17",
@@ -126,6 +133,13 @@
       "date": "2026-10-17",
       "purpose": "Financial Results",
       "description": "To consider and approve the unaudited standalone and consolidated financial results of the Bank for the quarter/half-year ending September 30, 2026"
+    },
+    {
+      "symbol": "ICICIBANK",
+      "company": "ICICI Bank Limited",
+      "date": "2026-10-17",
+      "purpose": "Financial Results",
+      "description": "To inter alia consider and approve the unaudited financial results (standalone and consolidated) for the quarter and six months ending September 30, 2026."
     },
     {
       "symbol": "INDIACEM",
@@ -182,6 +196,13 @@
       "date": "2026-10-23",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the quarter and half year ending September 30, 2026 and other general business matters"
+    },
+    {
+      "symbol": "TVTODAY",
+      "company": "TV Today Network Limited",
+      "date": "2026-11-02",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the un-audited financial results for the second quarter and half year ended September 30, 2026."
     },
     {
       "symbol": "DABUR",
@@ -805,23 +826,6 @@
           "date": "2026-10-15",
           "purpose": "Financial Results",
           "description": "To consider and approve the financial results for the period ended September 30, 2026"
-        }
-      ],
-      "historyCount": 0
-    },
-    {
-      "symbol": "ANNU",
-      "company": "Annu Projects Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-23",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "ANNU",
-          "company": "Annu Projects Limited",
-          "date": "2026-09-23",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
         }
       ],
       "historyCount": 0
@@ -3939,9 +3943,17 @@
       "symbol": "GMBREW",
       "company": "Gm Breweries Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-08",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "GMBREW",
+          "company": "GM Breweries Limited",
+          "date": "2026-10-08",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -4469,9 +4481,17 @@
       "symbol": "HDFCAMC",
       "company": "HDFC Asset Management Company Ltd",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "HDFCAMC",
+          "company": "HDFC Asset Management Company Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -4792,9 +4812,17 @@
       "symbol": "ICICIBANK",
       "company": "Icici Bank Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-17",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ICICIBANK",
+          "company": "ICICI Bank Limited",
+          "date": "2026-10-17",
+          "purpose": "Financial Results",
+          "description": "To inter alia consider and approve the unaudited financial results (standalone and consolidated) for the quarter and six months ending September 30, 2026."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -5861,9 +5889,17 @@
       "symbol": "KARURVYSYA",
       "company": "Karur Vysya Bank Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "KARURVYSYA",
+          "company": "Karur Vysya Bank Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -8178,6 +8214,23 @@
       "historyCount": 0
     },
     {
+      "symbol": "PRASOLCHEM",
+      "company": "Prasol Chemicals Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-09-28",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "PRASOLCHEM",
+          "company": "Prasol Chemicals Limited",
+          "date": "2026-09-28",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
+      "historyCount": 0
+    },
+    {
       "symbol": "PRECWIRE",
       "company": "Precision Wires India Limited",
       "lastResultDate": null,
@@ -10347,9 +10400,17 @@
       "symbol": "TCS",
       "company": "Tata Consultancy Services Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-08",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "TCS",
+          "company": "Tata Consultancy Services Limited",
+          "date": "2026-10-08",
+          "purpose": "Financial Results/Dividend",
+          "description": "Approval of the Financial Results and consideration of declaration of second interim dividend"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -10754,6 +10815,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "TVTODAY",
+      "company": "TV Today Network Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-11-02",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "TVTODAY",
+          "company": "TV Today Network Limited",
+          "date": "2026-11-02",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the un-audited financial results for the second quarter and half year ended September 30, 2026."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -11409,23 +11487,6 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
-      "historyCount": 0
-    },
-    {
-      "symbol": "WINSOME",
-      "company": "Winsome Yarns Limited",
-      "lastResultDate": null,
-      "nextResultDate": "2026-09-23",
-      "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "WINSOME",
-          "company": "Winsome Yarns Limited",
-          "date": "2026-09-23",
-          "purpose": "Financial Results/Other business matters",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
-        }
-      ],
       "historyCount": 0
     },
     {
