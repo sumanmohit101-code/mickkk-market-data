@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-24T14:54:51.178988+05:30",
+  "updatedAt": "2026-09-24T17:00:39.751523+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -33,6 +33,20 @@
       "date": "2026-09-28",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "ANSALAPI",
+      "company": "Ansal Properties & Infrastructure Limited",
+      "date": "2026-09-29",
+      "purpose": "Financial Results/Dividend",
+      "description": "The Company has informed the stock exchanges that in compliances with the Regulations 29 and 33 of SEBI (Listing Obligations and Disclosure Requirements) Regulations, 2015, as amended ( Listing Regulations ), please be informed that a meeting of the Board of Directors of the Company shall be held on Tuesday, the 29th September, 2026, to consider and approve, inter-alia, the following items: -1. the Audited Financial Results (Standalone) for the quarter/year ended on the 31st March, 2026.2. Recommendation of Dividend, if any, for the Financial year ended 2025-26."
+    },
+    {
+      "symbol": "BFUTILITIE",
+      "company": "BF Utilities Limited",
+      "date": "2026-09-30",
+      "purpose": "Other business matters",
+      "description": "To consider and approve the Audited Consolidated Financial Results for the quarter & year ended on March 31, 2026"
     },
     {
       "symbol": "STEAMHOUSE",
@@ -68,6 +82,13 @@
       "date": "2026-10-12",
       "purpose": "Financial Results/Dividend",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
+      "symbol": "ICICIPRULI",
+      "company": "ICICI Prudential Life Insurance Company Limited",
+      "date": "2026-10-13",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited standalone financial statements and financial results of the Company for the quarter and half year ended September 30, 2026."
     },
     {
       "symbol": "STCINDIA",
@@ -133,6 +154,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "LTTS",
+      "company": "L&T Technology Services Limited",
+      "date": "2026-10-19",
+      "purpose": "Financial Results/Dividend",
+      "description": "To consider and approve the financial results for the quarter and half year ending September 30, 2026, and interim dividend, if any."
+    },
+    {
       "symbol": "ULTRACEMCO",
       "company": "UltraTech Cement Limited",
       "date": "2026-10-19",
@@ -196,6 +224,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "NAVINFLUOR",
+      "company": "Navin Fluorine International Limited",
+      "date": "2026-10-30",
+      "purpose": "Financial Results/Dividend",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
       "symbol": "TVTODAY",
       "company": "TV Today Network Limited",
       "date": "2026-11-02",
@@ -215,6 +250,13 @@
       "date": "2026-11-04",
       "purpose": "Financial Results/Dividend",
       "description": "To consider and approve the unaudited financial results for the quarter and half year ending on September 30, 2026 and Interim dividend for the Financial Year 2026-27"
+    },
+    {
+      "symbol": "KANSAINER",
+      "company": "Kansai Nerolac Paints Limited",
+      "date": "2026-11-04",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "M&M",
@@ -1978,9 +2020,17 @@
       "symbol": "ANSALAPI",
       "company": "Ansal Properties & Infrastructure Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-09-29",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ANSALAPI",
+          "company": "Ansal Properties & Infrastructure Limited",
+          "date": "2026-09-29",
+          "purpose": "Financial Results/Dividend",
+          "description": "The Company has informed the stock exchanges that in compliances with the Regulations 29 and 33 of SEBI (Listing Obligations and Disclosure Requirements) Regulations, 2015, as amended ( Listing Regulations ), please be informed that a meeting of the Board of Directors of the Company shall be held on Tuesday, the 29th September, 2026, to consider and approve, inter-alia, the following items: -1. the Audited Financial Results (Standalone) for the quarter/year ended on the 31st March, 2026.2. Recommendation of Dividend, if any, for the Financial year ended 2025-26."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -3974,9 +4024,17 @@
       "symbol": "BFUTILITIE",
       "company": "BF Utilities Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-09-30",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "BFUTILITIE",
+          "company": "BF Utilities Limited",
+          "date": "2026-09-30",
+          "purpose": "Other business matters",
+          "description": "To consider and approve the Audited Consolidated Financial Results for the quarter & year ended on March 31, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -11279,9 +11337,17 @@
       "symbol": "ICICIPRULI",
       "company": "ICICI Prudential Life Insurance Company Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-13",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ICICIPRULI",
+          "company": "ICICI Prudential Life Insurance Company Limited",
+          "date": "2026-10-13",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the unaudited standalone financial statements and financial results of the Company for the quarter and half year ended September 30, 2026."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -13356,9 +13422,17 @@
       "symbol": "KANSAINER",
       "company": "Kansai Nerolac Paints Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-04",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "KANSAINER",
+          "company": "Kansai Nerolac Paints Limited",
+          "date": "2026-11-04",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -14930,9 +15004,17 @@
       "symbol": "LTTS",
       "company": "L&T Technology Services Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-19",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "LTTS",
+          "company": "L&T Technology Services Limited",
+          "date": "2026-10-19",
+          "purpose": "Financial Results/Dividend",
+          "description": "To consider and approve the financial results for the quarter and half year ending September 30, 2026, and interim dividend, if any."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -17132,9 +17214,17 @@
       "symbol": "NAVINFLUOR",
       "company": "Navin Fluorine International Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-30",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "NAVINFLUOR",
+          "company": "Navin Fluorine International Limited",
+          "date": "2026-10-30",
+          "purpose": "Financial Results/Dividend",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+        }
+      ],
       "historyCount": 0
     },
     {
