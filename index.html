@@ -1372,7 +1372,15 @@ let symbolCandleCacheMeta = {};
 let symbolCandleRefreshPromise = {};
 const CANDLE_DB_NAME = 'MICKKK_CHART_LOCAL_CACHE_V1';
 const CANDLE_DB_STORE = 'candles';
-const CANDLE_CACHE_TTL_MS = 15 * 60 * 1000;
+const APP_CACHE_STORE = 'appData';
+// Candle data is served from local IndexedDB first. Fresh repository data is
+// pulled in the background so opening a chart never waits for GitHub.
+const CANDLE_CACHE_TTL_MS = 30 * 60 * 1000;
+// Catalogues / bands / results change much less often than candles. Keep them
+// on disk for a few hours and refresh stale entries in the background.
+const REPO_DATA_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
+let repoDataRefreshPromise = {};
+let persistentStorageRequested = false;
 let aggregateCache = new WeakMap();
 let gridFormat = '1x1'; 
 let panelsArray = [];
@@ -1502,7 +1510,7 @@ async function fetchGithubDataJson(paths) {
 
 async function fetchPriceBandsData() {
   try {
-    const raw = await fetchGithubDataJson(['price-bands.json','price_bands.json','pricebands.json']);
+    const raw = await fetchGithubDataJsonCached(['price-bands.json','price_bands.json','pricebands.json'],'repo:price-bands', (fresh)=>{ try { const arr=unwrapArray(fresh,['priceBands','bands','data']); priceBandsMap={}; arr.forEach(b=>{const symbol=extractSymbol(b); if(symbol) priceBandsMap[symbol]=b;}); priceBandDataLoaded=true; refreshBandChangeMarkers?.(); } catch(e){} });
     const arr = unwrapArray(raw, ['priceBands','bands','data']);
     priceBandsMap = {};
     arr.forEach(b => {
@@ -1515,7 +1523,7 @@ async function fetchPriceBandsData() {
   }
 
   try {
-    const raw = await fetchGithubDataJson(['price-band-changes.json','price_band_changes.json','price-band-change.json','price_band_change.json']);
+    const raw = await fetchGithubDataJsonCached(['price-band-changes.json','price_band_changes.json','price-band-change.json','price_band_change.json'],'repo:price-band-changes', (fresh)=>{ try { const arr=unwrapArray(fresh,['priceBandChanges','bandChanges','changes','data']); priceBandChangesMap={}; arr.forEach(ch=>{const symbol=extractSymbol(ch); const date=extractDate(ch); if(!symbol||!date)return; const change=extractBandChange(ch); if(!priceBandChangesMap[symbol]) priceBandChangesMap[symbol]=[]; priceBandChangesMap[symbol].push({...ch,date,from:change.from,to:change.to});}); Object.keys(priceBandChangesMap).forEach(sym=>priceBandChangesMap[sym].sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:0)); panelsArray.forEach(p=>{if(p?.rawDailyCandles?.length) refreshBandChangeMarkers(p);}); } catch(e){} });
     const arr = unwrapArray(raw, ['priceBandChanges','bandChanges','changes','data']);
     priceBandChangesMap = {};
     arr.forEach(ch => {
@@ -1533,7 +1541,7 @@ async function fetchPriceBandsData() {
   }
 
   try {
-    const raw = await fetchGithubDataJson(['results.json','result.json','results/results.json','result/result.json']);
+    const raw = await fetchGithubDataJsonCached(['results.json','result.json','results/results.json','result/result.json'],'repo:results', (fresh)=>{ try { const arr=unwrapArray(fresh,['results','result','data','events']); resultsMap={}; arr.forEach(r=>{const symbol=extractSymbol(r); const date=extractDate(r); if(!symbol||!date)return; if(!resultsMap[symbol])resultsMap[symbol]=[]; resultsMap[symbol].push({...r,date,label:compactResultLabel(r)});}); Object.keys(resultsMap).forEach(sym=>resultsMap[sym].sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:0)); resultDataLoaded=true; panelsArray.forEach(p=>{if(p?.rawDailyCandles?.length){const d=aggregate(p.rawDailyCandles,'D'); renderCombinedInfoCardForPanel(d,p); updateResultAxisMarkers(p,d);}}); } catch(e){} });
     const arr = unwrapArray(raw, ['results','result','data','events']);
     resultsMap = {};
     arr.forEach(r => {
@@ -1569,7 +1577,7 @@ async function ensureResultsForSymbol(symbol) {
   if (!clean || resultsMap[clean]) return;
   const candidates = [`results/${encodeURIComponent(clean)}.json`,`result/${encodeURIComponent(clean)}.json`,`results/${encodeURIComponent(clean.toLowerCase())}.json`,`result/${encodeURIComponent(clean.toLowerCase())}.json`];
   try {
-    const raw = await fetchGithubDataJson(candidates);
+    const raw = await fetchGithubDataJsonCached(candidates,`repo:result:${clean}`, null, REPO_DATA_CACHE_TTL_MS);
     const arr = unwrapArray(raw, ['results','result','data','events']);
     const rows = [];
     arr.forEach(r => {
@@ -2756,6 +2764,7 @@ function navigateStockKeyboard(direction) {
 }
 
 function initSystem(){
+  requestPersistentStorage();
   rebuildGridSystem();
   fetchPriceBandsData(); // FETCH PRICE BANDS, BAND CHANGES & RESULTS FROM GITHUB DATA
   updateTrendlineBreakoutConfig();
@@ -3504,26 +3513,38 @@ function updateInstrumentCounts(){
 }
 
 async function loadSymbolList(){
-  try {
-    const [stockRaw, indexRaw] = await Promise.all([
-      fetchJsonFromCandidates('symbols.json'),
-      fetchJsonFromCandidates('indices.json')
-    ]);
-    const stocks = normalizeStockList(stockRaw);
-    const indices = normalizeIndexList(indexRaw);
-    if (stocks.length) allSymbols = stocks;
-    if (indices.length) allIndices = indices;
+  const applyStocks=(raw)=>{
+    const stocks=normalizeStockList(raw);
+    if(stocks.length) allSymbols=stocks;
     updateInstrumentCounts();
     populateRelativeStrengthIndexOptions();
+  };
+  const applyIndices=(raw)=>{
+    const indices=normalizeIndexList(raw);
+    if(indices.length) allIndices=indices;
+    updateInstrumentCounts();
+    populateRelativeStrengthIndexOptions();
+  };
 
-    if (allSymbols.length && !currentSymbol) {
-      loadSymbol(allSymbols[0].symbol, allSymbols[0].name, -1, 'stock');
+  try {
+    // Disk cache first: the symbol/search UI becomes usable without waiting for GitHub.
+    const [stockRaw,indexRaw]=await Promise.all([
+      fetchGithubDataJsonCached(['symbols.json'],'catalog:symbols',applyStocks),
+      fetchGithubDataJsonCached(['indices.json'],'catalog:indices',applyIndices)
+    ]);
+    if(stockRaw) applyStocks(stockRaw);
+    if(indexRaw) applyIndices(indexRaw);
+
+    // If this is a cold cache, the calls above fetched from GitHub. On a warm cache
+    // stale entries are refreshed in the background by fetchGithubDataJsonCached().
+    if(allSymbols.length && !currentSymbol) {
+      loadSymbol(allSymbols[0].symbol,allSymbols[0].name,-1,'stock');
     }
     refreshWatchlists(false);
   } catch(e) {
     updateInstrumentCounts();
     refreshWatchlists(false);
-    console.warn('Static instrument catalogue load failed:', e);
+    console.warn('Static instrument catalogue load failed:',e);
   }
 }
 
@@ -3646,24 +3667,105 @@ let candleDbPromise = null;
 
 function candleCacheKey(symbol, type){ return `${type || 'stock'}:${symbol}`; }
 
+function requestPersistentStorage(){
+  if (persistentStorageRequested) return;
+  persistentStorageRequested = true;
+  try {
+    if (navigator.storage && navigator.storage.persist) {
+      navigator.storage.persist().then(ok => {
+        if (ok) console.info('MICKKK local chart cache: persistent storage enabled');
+      }).catch(()=>{});
+    }
+  } catch(e) {}
+}
+
 function openCandleCacheDB(){
   if (candleDbPromise) return candleDbPromise;
   candleDbPromise = new Promise((resolve, reject) => {
     try {
       if (!window.indexedDB) { resolve(null); return; }
-      const req = indexedDB.open(CANDLE_DB_NAME, 1);
+      // V2 adds a generic appData store while keeping the existing candle store
+      // intact, so existing cached candles survive the upgrade.
+      const req = indexedDB.open(CANDLE_DB_NAME, 2);
       req.onupgradeneeded = () => {
         const db = req.result;
         if (!db.objectStoreNames.contains(CANDLE_DB_STORE)) {
           db.createObjectStore(CANDLE_DB_STORE, { keyPath: 'symbol' });
         }
+        if (!db.objectStoreNames.contains(APP_CACHE_STORE)) {
+          db.createObjectStore(APP_CACHE_STORE, { keyPath: 'key' });
+        }
       };
-      req.onsuccess = () => resolve(req.result);
+      req.onsuccess = () => {
+        const db=req.result;
+        db.onversionchange=()=>{ try{db.close();}catch(e){} };
+        requestPersistentStorage();
+        resolve(db);
+      };
       req.onerror = () => resolve(null);
       req.onblocked = () => resolve(null);
     } catch(e) { resolve(null); }
   });
   return candleDbPromise;
+}
+
+async function readRepoDataCache(key){
+  try {
+    const db=await openCandleCacheDB();
+    if(!db || !db.objectStoreNames.contains(APP_CACHE_STORE)) return null;
+    return await new Promise(resolve=>{
+      const tx=db.transaction(APP_CACHE_STORE,'readonly');
+      const req=tx.objectStore(APP_CACHE_STORE).get(key);
+      req.onsuccess=()=>resolve(req.result||null);
+      req.onerror=()=>resolve(null);
+    });
+  } catch(e){ return null; }
+}
+
+async function writeRepoDataCache(key,data){
+  try {
+    const db=await openCandleCacheDB();
+    if(!db || !db.objectStoreNames.contains(APP_CACHE_STORE)) return;
+    await new Promise(resolve=>{
+      const tx=db.transaction(APP_CACHE_STORE,'readwrite');
+      tx.objectStore(APP_CACHE_STORE).put({key,data,savedAt:Date.now()});
+      tx.oncomplete=()=>resolve(); tx.onerror=()=>resolve(); tx.onabort=()=>resolve();
+    });
+  } catch(e) {}
+}
+
+async function refreshRepoDataInBackground(cacheKey, paths, applyFresh){
+  if(repoDataRefreshPromise[cacheKey]) return repoDataRefreshPromise[cacheKey];
+  repoDataRefreshPromise[cacheKey]=(async()=>{
+    try{
+      const data=await fetchGithubDataJson(paths);
+      await writeRepoDataCache(cacheKey,data);
+      if(typeof applyFresh==='function') applyFresh(data);
+      return data;
+    }catch(e){
+      return null;
+    }finally{
+      delete repoDataRefreshPromise[cacheKey];
+    }
+  })();
+  return repoDataRefreshPromise[cacheKey];
+}
+
+async function fetchGithubDataJsonCached(paths, cacheKey, applyFresh, ttl=REPO_DATA_CACHE_TTL_MS){
+  const local=await readRepoDataCache(cacheKey);
+  if(local && Object.prototype.hasOwnProperty.call(local,'data')){
+    const age=Date.now()-Number(local.savedAt||0);
+    if(age>ttl) refreshRepoDataInBackground(cacheKey,paths,applyFresh);
+    return local.data;
+  }
+  try{
+    const fresh=await fetchGithubDataJson(paths);
+    // Do not block chart rendering on the disk write.
+    writeRepoDataCache(cacheKey,fresh);
+    return fresh;
+  }catch(e){
+    return null;
+  }
 }
 
 async function readCandleCache(symbol, type){
@@ -3736,7 +3838,7 @@ async function refreshSymbolCandlesInBackground(symbol, type='stock'){
       symbolCandleCache[key] = candles;
       symbolCandleCacheMeta[key] = Date.now();
       try { sessionStorage.setItem(`MICKKK_CANDLES_${key}`, JSON.stringify(candles)); } catch(e){}
-      await writeCandleCache(symbol,type,candles);
+      writeCandleCache(symbol,type,candles);
     } catch(e) {
       // Static repository data is authoritative for historical charting.
     } finally {
@@ -3793,7 +3895,7 @@ async function fetchSymbolCandles(symbol, type='stock') {
     symbolCandleCache[key] = candles;
     symbolCandleCacheMeta[key] = Date.now();
     try { sessionStorage.setItem(`MICKKK_CANDLES_${key}`, JSON.stringify(candles)); } catch(e){}
-    await writeCandleCache(symbol,type,candles);
+    writeCandleCache(symbol,type,candles);
     return candles;
   } finally {
     delete symbolCandlePromiseCache[key];
