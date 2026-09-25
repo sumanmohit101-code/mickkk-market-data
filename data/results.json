@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-25T15:12:46.878747+05:30",
+  "updatedAt": "2026-09-25T17:00:46.499833+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -63,6 +63,13 @@
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
     {
+      "symbol": "LCCPROJECT",
+      "company": "LCC Projects Limited",
+      "date": "2026-10-05",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the Standalone and Consolidated un-audited financial results along with the Limited Review Report for the quarter ended June 30, 2026"
+    },
+    {
       "symbol": "STEAMHOUSE",
       "company": "Steamhouse India Limited",
       "date": "2026-10-05",
@@ -110,6 +117,13 @@
       "date": "2026-10-13",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "CEATLTD",
+      "company": "CEAT Limited",
+      "date": "2026-10-14",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
     },
     {
       "symbol": "TATATECH",
@@ -231,6 +245,13 @@
       "description": "To consider and approve the financial results for the quarter and half year ending September 30, 2026 and other general business matters"
     },
     {
+      "symbol": "SBFC",
+      "company": "SBFC Finance Limited",
+      "date": "2026-10-24",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "BBL",
       "company": "Bharat Bijlee Limited",
       "date": "2026-10-27",
@@ -245,11 +266,25 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "CAMS",
+      "company": "Computer Age Management Services Limited",
+      "date": "2026-10-29",
+      "purpose": "Financial Results/Dividend",
+      "description": "To consider and approve the unaudited financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
       "symbol": "NAVINFLUOR",
       "company": "Navin Fluorine International Limited",
       "date": "2026-10-30",
       "purpose": "Financial Results/Dividend",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
+      "symbol": "ARE&M",
+      "company": "Amara Raja Energy & Mobility Limited",
+      "date": "2026-11-02",
+      "purpose": "Financial Results/Dividend",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and interim dividend, if any."
     },
     {
       "symbol": "TVTODAY",
@@ -320,6 +355,13 @@
       "date": "2026-11-05",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "HINDALCO",
+      "company": "Hindalco Industries Limited",
+      "date": "2026-11-06",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the Unaudited Standalone and Consolidated financial results of the Company for the quarter ending September 30, 2026"
     },
     {
       "symbol": "TTKPRESTIG",
@@ -2392,9 +2434,17 @@
       "symbol": "ARE&M",
       "company": "Amara Raja Energy & Mobility Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-02",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ARE&M",
+          "company": "Amara Raja Energy & Mobility Limited",
+          "date": "2026-11-02",
+          "purpose": "Financial Results/Dividend",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and interim dividend, if any."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -4953,9 +5003,17 @@
       "symbol": "CAMS",
       "company": "Computer Age Management Services Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-29",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "CAMS",
+          "company": "Computer Age Management Services Limited",
+          "date": "2026-10-29",
+          "purpose": "Financial Results/Dividend",
+          "description": "To consider and approve the unaudited financial results for the period ended September 30, 2026 and dividend"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -5160,9 +5218,17 @@
       "symbol": "CEATLTD",
       "company": "CEAT Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-14",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "CEATLTD",
+          "company": "CEAT Limited",
+          "date": "2026-10-14",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -10926,9 +10992,17 @@
       "symbol": "HINDALCO",
       "company": "Hindalco Industries Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-06",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "HINDALCO",
+          "company": "Hindalco Industries Limited",
+          "date": "2026-11-06",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the Unaudited Standalone and Consolidated financial results of the Company for the quarter ending September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -14726,9 +14800,17 @@
       "symbol": "LCCPROJECT",
       "company": "LCC Projects Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-05",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "LCCPROJECT",
+          "company": "LCC Projects Limited",
+          "date": "2026-10-05",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the Standalone and Consolidated un-audited financial results along with the Limited Review Report for the quarter ended June 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -22430,9 +22512,17 @@
       "symbol": "SBFC",
       "company": "SBFC Finance Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-24",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "SBFC",
+          "company": "SBFC Finance Limited",
+          "date": "2026-10-24",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
