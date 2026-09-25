@@ -1,13 +1,13 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-24T17:00:39.751523+05:30",
+  "updatedAt": "2026-09-25T15:12:46.878747+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 3160,
+  "symbolCount": 3163,
   "historyCount": 0,
   "today": [],
   "tomorrow": [],
@@ -42,11 +42,25 @@
       "description": "The Company has informed the stock exchanges that in compliances with the Regulations 29 and 33 of SEBI (Listing Obligations and Disclosure Requirements) Regulations, 2015, as amended ( Listing Regulations ), please be informed that a meeting of the Board of Directors of the Company shall be held on Tuesday, the 29th September, 2026, to consider and approve, inter-alia, the following items: -1. the Audited Financial Results (Standalone) for the quarter/year ended on the 31st March, 2026.2. Recommendation of Dividend, if any, for the Financial year ended 2025-26."
     },
     {
+      "symbol": "VIPULLTD",
+      "company": "Vipul Limited",
+      "date": "2026-09-29",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended March 31, 2026"
+    },
+    {
       "symbol": "BFUTILITIE",
       "company": "BF Utilities Limited",
       "date": "2026-09-30",
       "purpose": "Other business matters",
       "description": "To consider and approve the Audited Consolidated Financial Results for the quarter & year ended on March 31, 2026"
+    },
+    {
+      "symbol": "MPIMANIPAL",
+      "company": "Manipal Payment and Identity Solutions Limited",
+      "date": "2026-10-01",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
     {
       "symbol": "STEAMHOUSE",
@@ -224,6 +238,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "MFSL",
+      "company": "Max Financial Services Limited",
+      "date": "2026-10-27",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "NAVINFLUOR",
       "company": "Navin Fluorine International Limited",
       "date": "2026-10-30",
@@ -245,6 +266,20 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "FRACTAL",
+      "company": "Fractal Analytics Limited",
+      "date": "2026-11-03",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited standalone and consolidated financial results for the quarter and half year ending September 30, 2026"
+    },
+    {
+      "symbol": "BASF",
+      "company": "BASF India Limited",
+      "date": "2026-11-04",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "DABUR",
       "company": "Dabur India Limited",
       "date": "2026-11-04",
@@ -257,6 +292,20 @@
       "date": "2026-11-04",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "MINDTECK",
+      "company": "Mindteck (India) Limited",
+      "date": "2026-11-04",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "INSECTICID",
+      "company": "Insecticides (India) Limited",
+      "date": "2026-11-05",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
     },
     {
       "symbol": "M&M",
@@ -3719,9 +3768,17 @@
       "symbol": "BASF",
       "company": "BASF India Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-04",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "BASF",
+          "company": "BASF India Limited",
+          "date": "2026-11-04",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -8813,9 +8870,17 @@
       "symbol": "FRACTAL",
       "company": "Fractal Analytics Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-03",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "FRACTAL",
+          "company": "Fractal Analytics Limited",
+          "date": "2026-11-03",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the unaudited standalone and consolidated financial results for the quarter and half year ending September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -12090,9 +12155,17 @@
       "symbol": "INSECTICID",
       "company": "Insecticides (India) Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-05",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "INSECTICID",
+          "company": "Insecticides (India) Limited",
+          "date": "2026-11-05",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -13734,6 +13807,15 @@
     {
       "symbol": "KHANDSE",
       "company": "Khandwala Securities Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "KHERIAAUTO",
+      "company": "KHERIAAUTO",
       "lastResultDate": null,
       "nextResultDate": null,
       "lastResult": null,
@@ -16190,9 +16272,17 @@
       "symbol": "MFSL",
       "company": "Max Financial Services Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-27",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "MFSL",
+          "company": "Max Financial Services Limited",
+          "date": "2026-10-27",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -16352,9 +16442,17 @@
       "symbol": "MINDTECK",
       "company": "Mindteck (India) Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-04",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "MINDTECK",
+          "company": "Mindteck (India) Limited",
+          "date": "2026-11-04",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -16764,9 +16862,17 @@
       "symbol": "MPIMANIPAL",
       "company": "Manipal Payment and Identity Solutions Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-01",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "MPIMANIPAL",
+          "company": "Manipal Payment and Identity Solutions Limited",
+          "date": "2026-10-01",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -23967,6 +24073,15 @@
       "historyCount": 0
     },
     {
+      "symbol": "SONA",
+      "company": "Sonaselection India Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
       "symbol": "SONACOMS",
       "company": "Sona BLW Precision Forgings Limited",
       "lastResultDate": null,
@@ -24122,6 +24237,15 @@
     {
       "symbol": "SPECIALITY",
       "company": "Speciality Restaurants Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "SPECTRAA",
+      "company": "SPECTRAA",
       "lastResultDate": null,
       "nextResultDate": null,
       "lastResult": null,
@@ -27894,9 +28018,17 @@
       "symbol": "VIPULLTD",
       "company": "Vipul Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-09-29",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "VIPULLTD",
+          "company": "Vipul Limited",
+          "date": "2026-09-29",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended March 31, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
