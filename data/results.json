@@ -1,13 +1,13 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-25T17:00:46.499833+05:30",
+  "updatedAt": "2026-09-26T17:01:16.494601+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 3163,
+  "symbolCount": 3165,
   "historyCount": 0,
   "today": [],
   "tomorrow": [],
@@ -126,6 +126,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
     },
     {
+      "symbol": "HDBFS",
+      "company": "HDB Financial Services Limited",
+      "date": "2026-10-14",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "TATATECH",
       "company": "Tata Technologies Limited",
       "date": "2026-10-14",
@@ -152,6 +159,13 @@
       "date": "2026-10-15",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "NESTLEIND",
+      "company": "Nestle India Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited financial results (standalone and consolidated) for the second quarter and half year ending September 30, 2026"
     },
     {
       "symbol": "AXISBANK",
@@ -252,6 +266,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "KFINTECH",
+      "company": "Kfin Technologies Limited",
+      "date": "2026-10-26",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the standalone and consolidated unaudited financial results of the Company for the quarter and half year ending September 30, 2026."
+    },
+    {
       "symbol": "BBL",
       "company": "Bharat Bijlee Limited",
       "date": "2026-10-27",
@@ -264,6 +285,13 @@
       "date": "2026-10-27",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "STARHEALTH",
+      "company": "Star Health and Allied Insurance Company Limited",
+      "date": "2026-10-27",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the quarter and half year ended September 30, 2026"
     },
     {
       "symbol": "CAMS",
@@ -322,6 +350,13 @@
       "description": "To consider and approve the unaudited financial results for the quarter and half year ending on September 30, 2026 and Interim dividend for the Financial Year 2026-27"
     },
     {
+      "symbol": "ESABINDIA",
+      "company": "Esab India Limited",
+      "date": "2026-11-04",
+      "purpose": "Financial Results/Dividend",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
       "symbol": "KANSAINER",
       "company": "Kansai Nerolac Paints Limited",
       "date": "2026-11-04",
@@ -329,11 +364,25 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "LALPATHLAB",
+      "company": "Dr. Lal Path Labs Ltd.",
+      "date": "2026-11-04",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
       "symbol": "MINDTECK",
       "company": "Mindteck (India) Limited",
       "date": "2026-11-04",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "GUJENERGY",
+      "company": "GUJARAT ENERGY LIMITED",
+      "date": "2026-11-05",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "INSECTICID",
@@ -357,6 +406,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "COFFEEDAY",
+      "company": "Coffee Day Enterprises Limited",
+      "date": "2026-11-06",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "HINDALCO",
       "company": "Hindalco Industries Limited",
       "date": "2026-11-06",
@@ -369,6 +425,13 @@
       "date": "2026-11-06",
       "purpose": "Financial Results",
       "description": "To consider and approve the un-audited financial results for the second quarter and half year ended September 30, 2026"
+    },
+    {
+      "symbol": "PGHH",
+      "company": "Procter & Gamble Hygiene and Health Care Limited",
+      "date": "2026-11-12",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "ABB",
@@ -1274,6 +1337,15 @@
     {
       "symbol": "AGARWALTUF",
       "company": "AGARWALTUF",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "AGASTYAEN",
+      "company": "Agastya Energy and Infrastructure Limited",
       "lastResultDate": null,
       "nextResultDate": null,
       "lastResult": null,
@@ -3359,6 +3431,15 @@
     {
       "symbol": "AWL",
       "company": "AWL Agri Business Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "AXIOMGAS",
+      "company": "AXIOMGAS",
       "lastResultDate": null,
       "nextResultDate": null,
       "lastResult": null,
@@ -5828,9 +5909,17 @@
       "symbol": "COFFEEDAY",
       "company": "Coffee Day Enterprises Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-06",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "COFFEEDAY",
+          "company": "Coffee Day Enterprises Limited",
+          "date": "2026-11-06",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -8270,9 +8359,17 @@
       "symbol": "ESABINDIA",
       "company": "Esab India Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-04",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ESABINDIA",
+          "company": "Esab India Limited",
+          "date": "2026-11-04",
+          "purpose": "Financial Results/Dividend",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -10356,9 +10453,17 @@
       "symbol": "GUJENERGY",
       "company": "GUJARAT ENERGY LIMITED",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-05",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "GUJENERGY",
+          "company": "GUJARAT ENERGY LIMITED",
+          "date": "2026-11-05",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -10706,9 +10811,17 @@
       "symbol": "HDBFS",
       "company": "HDB Financial Services Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-14",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "HDBFS",
+          "company": "HDB Financial Services Limited",
+          "date": "2026-10-14",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -13846,9 +13959,17 @@
       "symbol": "KFINTECH",
       "company": "Kfin Technologies Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-26",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "KFINTECH",
+          "company": "Kfin Technologies Limited",
+          "date": "2026-10-26",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the standalone and consolidated unaudited financial results of the Company for the quarter and half year ending September 30, 2026."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -14656,9 +14777,17 @@
       "symbol": "LALPATHLAB",
       "company": "Dr. Lal Path Labs Ltd.",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-04",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "LALPATHLAB",
+          "company": "Dr. Lal Path Labs Ltd.",
+          "date": "2026-11-04",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -17644,9 +17773,17 @@
       "symbol": "NESTLEIND",
       "company": "Nestle India Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "NESTLEIND",
+          "company": "Nestle India Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the unaudited financial results (standalone and consolidated) for the second quarter and half year ending September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -18956,7 +19093,7 @@
     },
     {
       "symbol": "PARIN",
-      "company": "PARIN",
+      "company": "Parin Enterprises Limited",
       "lastResultDate": null,
       "nextResultDate": null,
       "lastResult": null,
@@ -19309,9 +19446,17 @@
       "symbol": "PGHH",
       "company": "Procter & Gamble Hygiene and Health Care Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-12",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "PGHH",
+          "company": "Procter & Gamble Hygiene and Health Care Limited",
+          "date": "2026-11-12",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -24607,9 +24752,17 @@
       "symbol": "STARHEALTH",
       "company": "Star Health and Allied Insurance Company Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-27",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "STARHEALTH",
+          "company": "Star Health and Allied Insurance Company Limited",
+          "date": "2026-10-27",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the quarter and half year ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
