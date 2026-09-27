@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-26T17:01:16.494601+05:30",
+  "updatedAt": "2026-09-27T17:01:11.682782+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -10,7 +10,29 @@
   "symbolCount": 3165,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [],
+  "tomorrow": [
+    {
+      "symbol": "DEEPA",
+      "company": "Deepa Jewellers Limited",
+      "date": "2026-09-28",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended June 30, 2026"
+    },
+    {
+      "symbol": "MOMSBELIEF",
+      "company": "Rays of Belief Limited",
+      "date": "2026-09-28",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "PRASOLCHEM",
+      "company": "Prasol Chemicals Limited",
+      "date": "2026-09-28",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    }
+  ],
   "thisWeek": [],
   "allUpcoming": [
     {
