@@ -1652,6 +1652,10 @@
     "name": "BF Utilities Limited"
   },
   {
+    "symbol": "BGLOBAL",
+    "name": "Bharatiya Global Infomedia Limited"
+  },
+  {
     "symbol": "BGRENERGY",
     "name": "BGR Energy Systems Limited"
   },
@@ -1814,6 +1818,10 @@
   {
     "symbol": "BLSE",
     "name": "BLS E-Services Limited"
+  },
+  {
+    "symbol": "BLUECHIP",
+    "name": "Blue Chip India Limited"
   },
   {
     "symbol": "BLUECLOUDS",
@@ -2192,6 +2200,10 @@
     "name": "Cera Sanitaryware Limited"
   },
   {
+    "symbol": "CEREBRAINT",
+    "name": "Cerebra Integrated Technologies Limited"
+  },
+  {
     "symbol": "CESC",
     "name": "CESC Limited"
   },
@@ -2324,6 +2336,10 @@
     "name": "CLAYCRAFT"
   },
   {
+    "symbol": "CLCIND",
+    "name": "CLC Industries Limited"
+  },
+  {
     "symbol": "CLEAN",
     "name": "Clean Science and Technology Limited"
   },
@@ -2342,6 +2358,10 @@
   {
     "symbol": "CLSL",
     "name": "CLSL"
+  },
+  {
+    "symbol": "CMICABLES",
+    "name": "CMI Limited"
   },
   {
     "symbol": "CMLL",
@@ -3202,6 +3222,10 @@
   {
     "symbol": "EDELWEISS",
     "name": "Edelweiss Financial Services Limited"
+  },
+  {
+    "symbol": "EDUCOMP",
+    "name": "Educomp Solutions Limited"
   },
   {
     "symbol": "EEPL",
@@ -6276,6 +6300,10 @@
     "name": "La Opala RG Limited"
   },
   {
+    "symbol": "LASA",
+    "name": "Lasa Supergenerics Limited"
+  },
+  {
     "symbol": "LASERPOWER",
     "name": "Laser Power & Infra Limited"
   },
@@ -7192,6 +7220,10 @@
     "name": "Monte Carlo Fashions Limited"
   },
   {
+    "symbol": "MORARJEE",
+    "name": "Morarjee Textiles Limited"
+  },
+  {
     "symbol": "MOREPENLAB",
     "name": "Morepen Laboratories Limited"
   },
@@ -7366,6 +7398,10 @@
   {
     "symbol": "NACLIND",
     "name": "NACL Industries Limited"
+  },
+  {
+    "symbol": "NAGAFERT",
+    "name": "Nagarjuna Fertilizers and Chemicals Limited"
   },
   {
     "symbol": "NAGREEKCAP",
@@ -7998,6 +8034,10 @@
   {
     "symbol": "ORKLAINDIA",
     "name": "Orkla India Limited"
+  },
+  {
+    "symbol": "ORTEL",
+    "name": "Ortel Communications Limited"
   },
   {
     "symbol": "ORTINGLOBE",
@@ -8812,6 +8852,10 @@
     "name": "Quint Digital Limited"
   },
   {
+    "symbol": "QUINTEGRA",
+    "name": "Quintegra Solutions Limited"
+  },
+  {
     "symbol": "QVCEL",
     "name": "QVCEL"
   },
@@ -8898,6 +8942,10 @@
   {
     "symbol": "RAJTV",
     "name": "Raj Television Network Limited"
+  },
+  {
+    "symbol": "RAJVIR",
+    "name": "Rajvir Industries Limited"
   },
   {
     "symbol": "RALLIS",
@@ -9772,6 +9820,10 @@
     "name": "Seamec Limited"
   },
   {
+    "symbol": "SECL",
+    "name": "SECL"
+  },
+  {
     "symbol": "SECMARK",
     "name": "SecMark Consultancy Limited"
   },
@@ -9802,6 +9854,10 @@
   {
     "symbol": "SELLOWRAP",
     "name": "SELLOWRAP"
+  },
+  {
+    "symbol": "SELMC",
+    "name": "SEL Manufacturing Company Limited"
   },
   {
     "symbol": "SEMAC",
@@ -10320,6 +10376,10 @@
     "name": "SKF India (Industrial) Limited"
   },
   {
+    "symbol": "SKIL",
+    "name": "SKIL Infrastructure Limited"
+  },
+  {
     "symbol": "SKIPPER",
     "name": "Skipper Limited"
   },
@@ -10514,6 +10574,10 @@
   {
     "symbol": "SPECTSTM",
     "name": "SPECTSTM"
+  },
+  {
+    "symbol": "SPELS",
+    "name": "SPEL Semiconductor Limited"
   },
   {
     "symbol": "SPENCERS",
@@ -11766,6 +11830,10 @@
   {
     "symbol": "UNITEDTEA",
     "name": "The United Nilgiri Tea Estates Company Limited"
+  },
+  {
+    "symbol": "UNIVAFOODS",
+    "name": "Univa Foods Limited"
   },
   {
     "symbol": "UNIVASTU",
