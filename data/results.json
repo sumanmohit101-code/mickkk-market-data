@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-29T16:19:12.505680+05:30",
+  "updatedAt": "2026-09-29T17:01:11.370540+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -343,6 +343,13 @@
       "date": "2026-10-23",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the quarter and half year ending September 30, 2026 and other general business matters"
+    },
+    {
+      "symbol": "IDFCFIRSTB",
+      "company": "IDFC First Bank Limited",
+      "date": "2026-10-24",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the quarter and half year ended September 30, 2026"
     },
     {
       "symbol": "SBFC",
@@ -11989,9 +11996,17 @@
       "symbol": "IDFCFIRSTB",
       "company": "IDFC First Bank Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-24",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "IDFCFIRSTB",
+          "company": "IDFC First Bank Limited",
+          "date": "2026-10-24",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the quarter and half year ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
