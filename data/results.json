@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-30T16:06:57.372712+05:30",
+  "updatedAt": "2026-09-30T17:00:57.057206+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -77,6 +77,13 @@
       "date": "2026-10-06",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "KANOHAR",
+      "company": "Kanohar Electricals Limited",
+      "date": "2026-10-06",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
     },
     {
       "symbol": "VEEGALAND",
@@ -14040,9 +14047,17 @@
       "symbol": "KANOHAR",
       "company": "Kanohar Electricals Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-06",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "KANOHAR",
+          "company": "Kanohar Electricals Limited",
+          "date": "2026-10-06",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
