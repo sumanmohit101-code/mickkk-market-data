@@ -1,32 +1,32 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-29T17:01:11.370540+05:30",
+  "updatedAt": "2026-09-30T16:06:57.372712+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 3182,
+  "symbolCount": 3184,
   "historyCount": 0,
   "today": [],
   "tomorrow": [
     {
-      "symbol": "BFUTILITIE",
-      "company": "BF Utilities Limited",
-      "date": "2026-09-30",
-      "purpose": "Other business matters",
-      "description": "To consider and approve the Audited Consolidated Financial Results for the quarter & year ended on March 31, 2026"
+      "symbol": "MPIMANIPAL",
+      "company": "Manipal Payment and Identity Solutions Limited",
+      "date": "2026-10-01",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "PRANAV",
+      "company": "Pranav Constructions Limited",
+      "date": "2026-10-01",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     }
   ],
   "thisWeek": [
-    {
-      "symbol": "BFUTILITIE",
-      "company": "BF Utilities Limited",
-      "date": "2026-09-30",
-      "purpose": "Other business matters",
-      "description": "To consider and approve the Audited Consolidated Financial Results for the quarter & year ended on March 31, 2026"
-    },
     {
       "symbol": "MPIMANIPAL",
       "company": "Manipal Payment and Identity Solutions Limited",
@@ -43,13 +43,6 @@
     }
   ],
   "allUpcoming": [
-    {
-      "symbol": "BFUTILITIE",
-      "company": "BF Utilities Limited",
-      "date": "2026-09-30",
-      "purpose": "Other business matters",
-      "description": "To consider and approve the Audited Consolidated Financial Results for the quarter & year ended on March 31, 2026"
-    },
     {
       "symbol": "MPIMANIPAL",
       "company": "Manipal Payment and Identity Solutions Limited",
@@ -75,6 +68,13 @@
       "symbol": "STEAMHOUSE",
       "company": "Steamhouse India Limited",
       "date": "2026-10-05",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "ARCIL",
+      "company": "Asset Reconstruction Company (India) Limited",
+      "date": "2026-10-06",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
@@ -133,6 +133,13 @@
       "date": "2026-10-12",
       "purpose": "Financial Results/Dividend",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
+      "symbol": "PLASTIBLEN",
+      "company": "Plastiblends India Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "ICICIPRULI",
@@ -247,6 +254,13 @@
       "description": "To consider and approve the financial results for the quarter and half year ending September 30, 2026, and interim dividend, if any."
     },
     {
+      "symbol": "SMLMAH",
+      "company": "SML Mahindra Limited",
+      "date": "2026-10-19",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "ULTRACEMCO",
       "company": "UltraTech Cement Limited",
       "date": "2026-10-19",
@@ -273,6 +287,20 @@
       "date": "2026-10-22",
       "purpose": "Financial Results",
       "description": "To consider and approve the un-audited Financial Results of the Company (Standalone and Consolidated) for the quarter and nine months ending 30th September, 2026."
+    },
+    {
+      "symbol": "MAHLIFE",
+      "company": "Mahindra Lifespace Developers Limited",
+      "date": "2026-10-22",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "NUVOCO",
+      "company": "Nuvoco Vistas Corporation Limited",
+      "date": "2026-10-22",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "ADANIPOWER",
@@ -464,6 +492,13 @@
       "description": "To consider and approve the unaudited standalone and consolidated financial results for the quarter and half year ending September 30, 2026"
     },
     {
+      "symbol": "RML",
+      "company": "Rane (Madras) Limited",
+      "date": "2026-11-03",
+      "purpose": "Financial Results",
+      "description": "RANE (MADRAS) Limited. has informed that the meeting of the Board of Directors of the Company is scheduled on November 03, 2026, inter alia, to consider and approve the Unaudited Financial Results for the quarter and half-year ending September 30, 2026. Further, in accordance with Rane's Insider code, the 'Trading window' would remain closed for Promoters, Directors, other connected persons and designated employees of the company from September 30, 2026 to November 05, 2026 (both days inclusive) for the above purpose."
+    },
+    {
       "symbol": "BASF",
       "company": "BASF India Limited",
       "date": "2026-11-04",
@@ -595,6 +630,13 @@
       "date": "2026-11-12",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "RANEHOLDIN",
+      "company": "Rane Holdings Limited",
+      "date": "2026-11-12",
+      "purpose": "Financial Results",
+      "description": "RANE HOLDINGS LTD. has informed that the meeting of the Board of Directors of the Company is scheduled on November 12, 2026, inter alia, to consider and approve the Un-Audited Financial Results for the quarter and half- year ending September 30, 2026. Further, in accordance with Rane's Insider code, the 'Trading window' would remain closed for Promoters, Directors, other connected persons and designated employees of the company from September 30, 2026 to November 14, 2026 (both days inclusive) for the above purpose."
     },
     {
       "symbol": "ABB",
@@ -2656,9 +2698,17 @@
       "symbol": "ARCIL",
       "company": "Asset Reconstruction Company (India) Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-06",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ARCIL",
+          "company": "Asset Reconstruction Company (India) Limited",
+          "date": "2026-10-06",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -4397,17 +4447,9 @@
       "symbol": "BFUTILITIE",
       "company": "BF Utilities Limited",
       "lastResultDate": null,
-      "nextResultDate": "2026-09-30",
+      "nextResultDate": null,
       "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "BFUTILITIE",
-          "company": "BF Utilities Limited",
-          "date": "2026-09-30",
-          "purpose": "Other business matters",
-          "description": "To consider and approve the Audited Consolidated Financial Results for the quarter & year ended on March 31, 2026"
-        }
-      ],
+      "upcomingResults": [],
       "historyCount": 0
     },
     {
@@ -15951,9 +15993,17 @@
       "symbol": "MAHLIFE",
       "company": "Mahindra Lifespace Developers Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-22",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "MAHLIFE",
+          "company": "Mahindra Lifespace Developers Limited",
+          "date": "2026-10-22",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -18732,9 +18782,17 @@
       "symbol": "NUVOCO",
       "company": "Nuvoco Vistas Corporation Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-22",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "NUVOCO",
+          "company": "Nuvoco Vistas Corporation Limited",
+          "date": "2026-10-22",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -19557,6 +19615,15 @@
       "historyCount": 0
     },
     {
+      "symbol": "PARTY-RE",
+      "company": "PARTY-RE",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
       "symbol": "PARTYCRUS",
       "company": "PARTYCRUS",
       "lastResultDate": null,
@@ -20054,9 +20121,17 @@
       "symbol": "PLASTIBLEN",
       "company": "Plastiblends India Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-12",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "PLASTIBLEN",
+          "company": "Plastiblends India Limited",
+          "date": "2026-10-12",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -21401,9 +21476,17 @@
       "symbol": "RANEHOLDIN",
       "company": "Rane Holdings Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-12",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "RANEHOLDIN",
+          "company": "Rane Holdings Limited",
+          "date": "2026-11-12",
+          "purpose": "Financial Results",
+          "description": "RANE HOLDINGS LTD. has informed that the meeting of the Board of Directors of the Company is scheduled on November 12, 2026, inter alia, to consider and approve the Un-Audited Financial Results for the quarter and half- year ending September 30, 2026. Further, in accordance with Rane's Insider code, the 'Trading window' would remain closed for Promoters, Directors, other connected persons and designated employees of the company from September 30, 2026 to November 14, 2026 (both days inclusive) for the above purpose."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -21986,9 +22069,17 @@
       "symbol": "RML",
       "company": "Rane (Madras) Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-03",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "RML",
+          "company": "Rane (Madras) Limited",
+          "date": "2026-11-03",
+          "purpose": "Financial Results",
+          "description": "RANE (MADRAS) Limited. has informed that the meeting of the Board of Directors of the Company is scheduled on November 03, 2026, inter alia, to consider and approve the Unaudited Financial Results for the quarter and half-year ending September 30, 2026. Further, in accordance with Rane's Insider code, the 'Trading window' would remain closed for Promoters, Directors, other connected persons and designated employees of the company from September 30, 2026 to November 05, 2026 (both days inclusive) for the above purpose."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -24639,9 +24730,17 @@
       "symbol": "SMLMAH",
       "company": "SML Mahindra Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-19",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "SMLMAH",
+          "company": "SML Mahindra Limited",
+          "date": "2026-10-19",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -28192,6 +28291,15 @@
     {
       "symbol": "VARDMNPOLY",
       "company": "Vardhman Polytex Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "VARMORA",
+      "company": "Varmora Granito Limited",
       "lastResultDate": null,
       "nextResultDate": null,
       "lastResult": null,
