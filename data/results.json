@@ -1,68 +1,31 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-09-30T17:00:57.057206+05:30",
+  "updatedAt": "2026-10-01T16:34:31.403738+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 3184,
+  "symbolCount": 3192,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [
-    {
-      "symbol": "MPIMANIPAL",
-      "company": "Manipal Payment and Identity Solutions Limited",
-      "date": "2026-10-01",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "PRANAV",
-      "company": "Pranav Constructions Limited",
-      "date": "2026-10-01",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    }
-  ],
-  "thisWeek": [
-    {
-      "symbol": "MPIMANIPAL",
-      "company": "Manipal Payment and Identity Solutions Limited",
-      "date": "2026-10-01",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "PRANAV",
-      "company": "Pranav Constructions Limited",
-      "date": "2026-10-01",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    }
-  ],
+  "tomorrow": [],
+  "thisWeek": [],
   "allUpcoming": [
-    {
-      "symbol": "MPIMANIPAL",
-      "company": "Manipal Payment and Identity Solutions Limited",
-      "date": "2026-10-01",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
-    {
-      "symbol": "PRANAV",
-      "company": "Pranav Constructions Limited",
-      "date": "2026-10-01",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-    },
     {
       "symbol": "LCCPROJECT",
       "company": "LCC Projects Limited",
       "date": "2026-10-05",
       "purpose": "Financial Results",
       "description": "To consider and approve the Standalone and Consolidated un-audited financial results along with the Limited Review Report for the quarter ended June 30, 2026"
+    },
+    {
+      "symbol": "RENTOMOJO",
+      "company": "Rentomojo Limited",
+      "date": "2026-10-05",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
     {
       "symbol": "STEAMHOUSE",
@@ -77,6 +40,13 @@
       "date": "2026-10-06",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "GLASSWALL",
+      "company": "Glass Wall Systems (India) Limited",
+      "date": "2026-10-06",
+      "purpose": "Financial Results",
+      "description": "Glass Wall Systems (India) Ltd has informed that the meeting of the Board of Directors of the Company is scheduled on 06/10/2026 ,inter alia, to consider and approve the Unaudited Standalone and Consolidated Financial Results for the quarter ended June 30, 2026"
     },
     {
       "symbol": "KANOHAR",
@@ -105,6 +75,13 @@
       "date": "2026-10-08",
       "purpose": "Financial Results/Dividend",
       "description": "Approval of the Financial Results and consideration of declaration of second interim dividend"
+    },
+    {
+      "symbol": "ANANDRATHI",
+      "company": "Anand Rathi Wealth Limited",
+      "date": "2026-10-09",
+      "purpose": "Financial Results/Dividend",
+      "description": "i. Consider, approve and take on record the Unaudited standalone and consolidated financial results of the Company for the Second quarter and Half year ended 30th September, 2026 after these results are reviewed by the Audit Committee of the Board.ii. Consider declaration of interim dividend on equity shares of the Company for the Financial Year 2026-27, if any.iii. Any Other matter with permission of the chair."
     },
     {
       "symbol": "CANFINHOME",
@@ -149,6 +126,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "EIMCOELECO",
+      "company": "Eimco Elecon (India) Limited",
+      "date": "2026-10-13",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
       "symbol": "ICICIPRULI",
       "company": "ICICI Prudential Life Insurance Company Limited",
       "date": "2026-10-13",
@@ -175,6 +159,20 @@
       "date": "2026-10-14",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "DIL",
+      "company": "Debock Industries Limited",
+      "date": "2026-10-14",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "ELECON",
+      "company": "Elecon Engineering Company Limited",
+      "date": "2026-10-14",
+      "purpose": "Financial Results/Dividend/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026, dividend and other business matters"
     },
     {
       "symbol": "HDBFS",
@@ -212,6 +210,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "HDFCLIFE",
+      "company": "HDFC Life Insurance Company Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results/Fund Raising",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and Fund Raising"
+    },
+    {
       "symbol": "KARURVYSYA",
       "company": "Karur Vysya Bank Limited",
       "date": "2026-10-15",
@@ -224,6 +229,13 @@
       "date": "2026-10-15",
       "purpose": "Financial Results",
       "description": "To consider and approve the unaudited financial results (standalone and consolidated) for the second quarter and half year ending September 30, 2026"
+    },
+    {
+      "symbol": "TECHM",
+      "company": "Tech Mahindra Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results/Dividend/Bonus/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026, dividend, bonus and other business matters"
     },
     {
       "symbol": "AXISBANK",
@@ -331,11 +343,25 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "CRISIL",
+      "company": "Crisil Limited",
+      "date": "2026-10-23",
+      "purpose": "Financial Results/Dividend",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
       "symbol": "DRREDDY",
       "company": "Dr. Reddy's Laboratories Limited",
       "date": "2026-10-23",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "INDUSINDBK",
+      "company": "IndusInd Bank Limited",
+      "date": "2026-10-23",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the Unaudited Standalone and Consolidated Financial Results for the quarter and half-year ending September 30, 2026"
     },
     {
       "symbol": "INFY",
@@ -422,6 +448,13 @@
       "description": "Cipla limited has informed the Exchange about Board Meeting to be held on 27th October, 2026 to inter-alia consider and approve the Unaudited Financial results of the Company for the quarter and half-year ended 30th September, 2026."
     },
     {
+      "symbol": "HONAUT",
+      "company": "Honeywell Automation India Limited",
+      "date": "2026-10-27",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "MEDPLUS",
       "company": "Medplus Health Services Limited",
       "date": "2026-10-27",
@@ -443,6 +476,13 @@
       "description": "To consider and approve the financial results for the quarter and half year ended September 30, 2026"
     },
     {
+      "symbol": "ANANTRAJ",
+      "company": "Anant Raj Limited",
+      "date": "2026-10-28",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "BLUESTARCO",
       "company": "Blue Star Limited",
       "date": "2026-10-29",
@@ -457,11 +497,25 @@
       "description": "To consider and approve the unaudited financial results for the period ended September 30, 2026 and dividend"
     },
     {
+      "symbol": "INDGN",
+      "company": "Indegene Limited",
+      "date": "2026-10-29",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
       "symbol": "NAVINFLUOR",
       "company": "Navin Fluorine International Limited",
       "date": "2026-10-30",
       "purpose": "Financial Results/Dividend",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
+      "symbol": "DLINKINDIA",
+      "company": "D-Link (India) Limited",
+      "date": "2026-10-31",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
     },
     {
       "symbol": "LATENTVIEW",
@@ -471,11 +525,25 @@
       "description": "Pursuant to Regulation 29 of the Listing Regulations, notice is hereby given that the meeting of the Board of Directors of the Company is scheduled to be held on Saturday, October 31, 2026, inter alia, to consider and approve the Unaudited Standalone and Consolidated Financial Results of the Company, prepared in accordance with Indian Accounting Standards (Ind AS) for the quarter and half year ending on September 30, 2026."
     },
     {
+      "symbol": "PAKKA",
+      "company": "PAKKA LIMITED",
+      "date": "2026-10-31",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
       "symbol": "ARE&M",
       "company": "Amara Raja Energy & Mobility Limited",
       "date": "2026-11-02",
       "purpose": "Financial Results/Dividend",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and interim dividend, if any."
+    },
+    {
+      "symbol": "PGHL",
+      "company": "Procter & Gamble Health Limited",
+      "date": "2026-11-02",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "TVTODAY",
@@ -590,6 +658,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "SAILIFE",
+      "company": "Sai Life Sciences Limited",
+      "date": "2026-11-05",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "BOSCHLTD",
       "company": "Bosch Limited",
       "date": "2026-11-06",
@@ -616,6 +691,13 @@
       "date": "2026-11-06",
       "purpose": "Financial Results",
       "description": "To consider and approve the Unaudited Standalone and Consolidated financial results of the Company for the quarter ending September 30, 2026"
+    },
+    {
+      "symbol": "KCP",
+      "company": "KCP Limited",
+      "date": "2026-11-06",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "RAIN",
@@ -1319,6 +1401,15 @@
     {
       "symbol": "ADOR",
       "company": "Ador Welding Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "ADROITIND",
+      "company": "Adroit Industries (India) Limited",
       "lastResultDate": null,
       "nextResultDate": null,
       "lastResult": null,
@@ -2283,18 +2374,34 @@
       "symbol": "ANANDRATHI",
       "company": "Anand Rathi Wealth Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-09",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ANANDRATHI",
+          "company": "Anand Rathi Wealth Limited",
+          "date": "2026-10-09",
+          "purpose": "Financial Results/Dividend",
+          "description": "i. Consider, approve and take on record the Unaudited standalone and consolidated financial results of the Company for the Second quarter and Half year ended 30th September, 2026 after these results are reviewed by the Audit Committee of the Board.ii. Consider declaration of interim dividend on equity shares of the Company for the Financial Year 2026-27, if any.iii. Any Other matter with permission of the chair."
+        }
+      ],
       "historyCount": 0
     },
     {
       "symbol": "ANANTRAJ",
       "company": "Anant Raj Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-28",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ANANTRAJ",
+          "company": "Anant Raj Limited",
+          "date": "2026-10-28",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -2855,6 +2962,15 @@
     {
       "symbol": "ARMANFIN",
       "company": "Arman Financial Services Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "ARMEE",
+      "company": "ArMee Infotech Limited",
       "lastResultDate": null,
       "nextResultDate": null,
       "lastResult": null,
@@ -6438,6 +6554,15 @@
       "historyCount": 0
     },
     {
+      "symbol": "COREIN",
+      "company": "COREIN",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
       "symbol": "COROMANDEL",
       "company": "Coromandel International Limited",
       "lastResultDate": null,
@@ -6611,9 +6736,17 @@
       "symbol": "CRISIL",
       "company": "Crisil Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-23",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "CRISIL",
+          "company": "Crisil Limited",
+          "date": "2026-10-23",
+          "purpose": "Financial Results/Dividend",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -7560,6 +7693,23 @@
       "historyCount": 0
     },
     {
+      "symbol": "DIL",
+      "company": "Debock Industries Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-10-14",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "DIL",
+          "company": "Debock Industries Limited",
+          "date": "2026-10-14",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
+      "historyCount": 0
+    },
+    {
       "symbol": "DIRL",
       "company": "DIRL",
       "lastResultDate": null,
@@ -7662,9 +7812,17 @@
       "symbol": "DLINKINDIA",
       "company": "D-Link (India) Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-31",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "DLINKINDIA",
+          "company": "D-Link (India) Limited",
+          "date": "2026-10-31",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -8228,9 +8386,17 @@
       "symbol": "EIMCOELECO",
       "company": "Eimco Elecon (India) Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-13",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "EIMCOELECO",
+          "company": "Eimco Elecon (India) Limited",
+          "date": "2026-10-13",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -8282,9 +8448,17 @@
       "symbol": "ELECON",
       "company": "Elecon Engineering Company Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-14",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ELECON",
+          "company": "Elecon Engineering Company Limited",
+          "date": "2026-10-14",
+          "purpose": "Financial Results/Dividend/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026, dividend and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -8299,6 +8473,15 @@
     {
       "symbol": "ELECTHERM",
       "company": "Electrotherm (India) Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "ELEVATE",
+      "company": "Elevate Campuses Limited",
       "lastResultDate": null,
       "nextResultDate": null,
       "lastResult": null,
@@ -9995,9 +10178,17 @@
       "symbol": "GLASSWALL",
       "company": "Glass Wall Systems (India) Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-06",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "GLASSWALL",
+          "company": "Glass Wall Systems (India) Limited",
+          "date": "2026-10-06",
+          "purpose": "Financial Results",
+          "description": "Glass Wall Systems (India) Ltd has informed that the meeting of the Board of Directors of the Company is scheduled on 06/10/2026 ,inter alia, to consider and approve the Unaudited Standalone and Consolidated Financial Results for the quarter ended June 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -10729,6 +10920,15 @@
       "historyCount": 0
     },
     {
+      "symbol": "GSPLTRANS",
+      "company": "GSPL Transmission Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
       "symbol": "GSS",
       "company": "GSS Infotech Limited",
       "lastResultDate": null,
@@ -11222,9 +11422,17 @@
       "symbol": "HDFCLIFE",
       "company": "HDFC Life Insurance Company Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "HDFCLIFE",
+          "company": "HDFC Life Insurance Company Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results/Fund Raising",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and Fund Raising"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -11707,9 +11915,17 @@
       "symbol": "HONAUT",
       "company": "Honeywell Automation India Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-27",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "HONAUT",
+          "company": "Honeywell Automation India Limited",
+          "date": "2026-10-27",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -12287,9 +12503,17 @@
       "symbol": "INDGN",
       "company": "Indegene Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-29",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "INDGN",
+          "company": "Indegene Limited",
+          "date": "2026-10-29",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -12565,9 +12789,17 @@
       "symbol": "INDUSINDBK",
       "company": "IndusInd Bank Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-23",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "INDUSINDBK",
+          "company": "IndusInd Bank Limited",
+          "date": "2026-10-23",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the Unaudited Standalone and Consolidated Financial Results for the quarter and half-year ending September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -14224,9 +14456,17 @@
       "symbol": "KCP",
       "company": "KCP Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-06",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "KCP",
+          "company": "KCP Limited",
+          "date": "2026-11-06",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -17531,17 +17771,9 @@
       "symbol": "MPIMANIPAL",
       "company": "Manipal Payment and Identity Solutions Limited",
       "lastResultDate": null,
-      "nextResultDate": "2026-10-01",
+      "nextResultDate": null,
       "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "MPIMANIPAL",
-          "company": "Manipal Payment and Identity Solutions Limited",
-          "date": "2026-10-01",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
+      "upcomingResults": [],
       "historyCount": 0
     },
     {
@@ -19408,9 +19640,17 @@
       "symbol": "PAKKA",
       "company": "PAKKA LIMITED",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-31",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "PAKKA",
+          "company": "PAKKA LIMITED",
+          "date": "2026-10-31",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -19956,9 +20196,17 @@
       "symbol": "PGHL",
       "company": "Procter & Gamble Health Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-02",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "PGHL",
+          "company": "Procter & Gamble Health Limited",
+          "date": "2026-11-02",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -20339,6 +20587,15 @@
       "historyCount": 0
     },
     {
+      "symbol": "POOJALOGIS",
+      "company": "POOJALOGIS",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
       "symbol": "POONAWALLA",
       "company": "Poonawalla Fincorp Limited",
       "lastResultDate": null,
@@ -20512,17 +20769,9 @@
       "symbol": "PRANAV",
       "company": "Pranav Constructions Limited",
       "lastResultDate": null,
-      "nextResultDate": "2026-10-01",
+      "nextResultDate": null,
       "lastResult": null,
-      "upcomingResults": [
-        {
-          "symbol": "PRANAV",
-          "company": "Pranav Constructions Limited",
-          "date": "2026-10-01",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
-        }
-      ],
+      "upcomingResults": [],
       "historyCount": 0
     },
     {
@@ -21814,9 +22063,17 @@
       "symbol": "RENTOMOJO",
       "company": "Rentomojo Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-05",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "RENTOMOJO",
+          "company": "Rentomojo Limited",
+          "date": "2026-10-05",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -22731,9 +22988,17 @@
       "symbol": "SAILIFE",
       "company": "Sai Life Sciences Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-05",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "SAILIFE",
+          "company": "Sai Life Sciences Limited",
+          "date": "2026-11-05",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -26142,6 +26407,15 @@
       "historyCount": 0
     },
     {
+      "symbol": "SWASTIKAIN",
+      "company": "Swastika Infra Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
       "symbol": "SWELECTES",
       "company": "Swelect Energy Systems Limited",
       "lastResultDate": null,
@@ -26692,9 +26966,17 @@
       "symbol": "TECHM",
       "company": "Tech Mahindra Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "TECHM",
+          "company": "Tech Mahindra Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results/Dividend/Bonus/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026, dividend, bonus and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
