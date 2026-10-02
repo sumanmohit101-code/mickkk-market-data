@@ -1,13 +1,13 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-10-01T17:00:42.783123+05:30",
+  "updatedAt": "2026-10-02T16:07:52.300685+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 3192,
+  "symbolCount": 3194,
   "historyCount": 0,
   "today": [],
   "tomorrow": [],
@@ -105,6 +105,13 @@
       "description": "To consider and approve the unaudited financial results of the Company for the period ended September 30, 2026"
     },
     {
+      "symbol": "DMART",
+      "company": "Avenue Supermarts Limited",
+      "date": "2026-10-10",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "HCLTECH",
       "company": "HCL Technologies Limited",
       "date": "2026-10-12",
@@ -124,6 +131,13 @@
       "date": "2026-10-12",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "SWARAJENG",
+      "company": "Swaraj Engines Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results",
+      "description": "Pursuant to Regulation 29(1)(a) of the Securities and Exchange Board of India (Listing Obligations and Disclosure Requirements) Regulations, 2015, we hereby inform that the Meeting of the Board of Directors of Swaraj Engines Limited will be held on 12th October, 2026 (Monday), to inter alia, consider and approve the Unaudited Financial Results of the Company for the second quarter and half year ended on 30th September, 2026."
     },
     {
       "symbol": "EIMCOELECO",
@@ -224,6 +238,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "LTF",
+      "company": "L&T Finance Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "NESTLEIND",
       "company": "Nestle India Limited",
       "date": "2026-10-15",
@@ -266,6 +287,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "ELEVATE",
+      "company": "Elevate Campuses Limited",
+      "date": "2026-10-19",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
       "symbol": "LTTS",
       "company": "L&T Technology Services Limited",
       "date": "2026-10-19",
@@ -297,6 +325,13 @@
       "symbol": "MHRIL",
       "company": "Mahindra Holidays & Resorts India Limited",
       "date": "2026-10-21",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "ATGL",
+      "company": "Adani Total Gas Limited",
+      "date": "2026-10-22",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
@@ -509,6 +544,13 @@
       "date": "2026-10-30",
       "purpose": "Financial Results/Dividend",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
+      "symbol": "SMARTWORKS",
+      "company": "Smartworks Coworking Spaces Limited",
+      "date": "2026-10-30",
+      "purpose": "Financial Results",
+      "description": "to consider and approve the Un-Audited Financial Results (Standalone and Consolidated) for the quarter and half year ended September 30, 2026, along with the Limited Review Reports thereon."
     },
     {
       "symbol": "DLINKINDIA",
@@ -2602,6 +2644,15 @@
       "historyCount": 0
     },
     {
+      "symbol": "AONESTEELS",
+      "company": "A-One Steels India Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
       "symbol": "APARINDS",
       "company": "Apar Industries Limited",
       "lastResultDate": null,
@@ -3431,9 +3482,17 @@
       "symbol": "ATGL",
       "company": "Adani Total Gas Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-22",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ATGL",
+          "company": "Adani Total Gas Limited",
+          "date": "2026-10-22",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -7829,9 +7888,17 @@
       "symbol": "DMART",
       "company": "Avenue Supermarts Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-10",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "DMART",
+          "company": "Avenue Supermarts Limited",
+          "date": "2026-10-10",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -8483,9 +8550,17 @@
       "symbol": "ELEVATE",
       "company": "Elevate Campuses Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-19",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ELEVATE",
+          "company": "Elevate Campuses Limited",
+          "date": "2026-10-19",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -15927,9 +16002,17 @@
       "symbol": "LTF",
       "company": "L&T Finance Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "LTF",
+          "company": "L&T Finance Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -17618,6 +17701,15 @@
     {
       "symbol": "MONEYBOXX",
       "company": "Moneyboxx Finance Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "MONEYVIEW",
+      "company": "Moneyview Limited",
       "lastResultDate": null,
       "nextResultDate": null,
       "lastResult": null,
@@ -24992,9 +25084,17 @@
       "symbol": "SMARTWORKS",
       "company": "Smartworks Coworking Spaces Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-30",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "SMARTWORKS",
+          "company": "Smartworks Coworking Spaces Limited",
+          "date": "2026-10-30",
+          "purpose": "Financial Results",
+          "description": "to consider and approve the Un-Audited Financial Results (Standalone and Consolidated) for the quarter and half year ended September 30, 2026, along with the Limited Review Reports thereon."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -26383,9 +26483,17 @@
       "symbol": "SWARAJENG",
       "company": "Swaraj Engines Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-12",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "SWARAJENG",
+          "company": "Swaraj Engines Limited",
+          "date": "2026-10-12",
+          "purpose": "Financial Results",
+          "description": "Pursuant to Regulation 29(1)(a) of the Securities and Exchange Board of India (Listing Obligations and Disclosure Requirements) Regulations, 2015, we hereby inform that the Meeting of the Board of Directors of Swaraj Engines Limited will be held on 12th October, 2026 (Monday), to inter alia, consider and approve the Unaudited Financial Results of the Company for the second quarter and half year ended on 30th September, 2026."
+        }
+      ],
       "historyCount": 0
     },
     {
