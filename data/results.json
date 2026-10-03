@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-10-02T17:01:18.648133+05:30",
+  "updatedAt": "2026-10-03T17:00:49.878990+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -108,6 +108,20 @@
       "symbol": "DMART",
       "company": "Avenue Supermarts Limited",
       "date": "2026-10-10",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "PREMIERPOL",
+      "company": "Premier Polyfilm Limited",
+      "date": "2026-10-10",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "GSFC",
+      "company": "Gujarat State Fertilizers & Chemicals Limited",
+      "date": "2026-10-12",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
@@ -10953,9 +10967,17 @@
       "symbol": "GSFC",
       "company": "Gujarat State Fertilizers & Chemicals Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-12",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "GSFC",
+          "company": "Gujarat State Fertilizers & Chemicals Limited",
+          "date": "2026-10-12",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -20987,9 +21009,17 @@
       "symbol": "PREMIERPOL",
       "company": "Premier Polyfilm Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-10",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "PREMIERPOL",
+          "company": "Premier Polyfilm Limited",
+          "date": "2026-10-10",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
