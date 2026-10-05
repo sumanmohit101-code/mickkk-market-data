@@ -212,6 +212,10 @@
     "name": "ACETEC"
   },
   {
+    "symbol": "ACEVECTOR",
+    "name": "AceVector Limited"
+  },
+  {
     "symbol": "ACGL",
     "name": "Automobile Corporation of Goa Limited"
   },
@@ -1212,6 +1216,10 @@
     "name": "Augmont Enterprises Limited"
   },
   {
+    "symbol": "AURIGROW",
+    "name": "Auri Grow India Limited"
+  },
+  {
     "symbol": "AURIONPRO",
     "name": "Aurionpro Solutions Limited"
   },
@@ -1874,6 +1882,10 @@
   {
     "symbol": "BMETRICS",
     "name": "BMETRICS"
+  },
+  {
+    "symbol": "BMISL",
+    "name": "BMISL"
   },
   {
     "symbol": "BMLL",
@@ -3976,6 +3988,10 @@
     "name": "Geojit Financial Services Limited"
   },
   {
+    "symbol": "GERMAN",
+    "name": "German Green Steel and Power Limited"
+  },
+  {
     "symbol": "GESHIP",
     "name": "The Great Eastern Shipping Company Limited"
   },
@@ -4682,6 +4698,10 @@
   {
     "symbol": "HILTON",
     "name": "Hilton Metal Forging Limited"
+  },
+  {
+    "symbol": "HIMALAYAN",
+    "name": "HIMALAYAN"
   },
   {
     "symbol": "HIMATSEIDE",
@@ -8024,6 +8044,10 @@
     "name": "Orient Bell Limited"
   },
   {
+    "symbol": "ORIENTCABL",
+    "name": "Orient Cables (India) Limited"
+  },
+  {
     "symbol": "ORIENTCEM",
     "name": "Orient Cement Limited"
   },
@@ -9454,6 +9478,10 @@
   {
     "symbol": "RULKA",
     "name": "RULKA"
+  },
+  {
+    "symbol": "RUNWALENTR",
+    "name": "Runwal Enterprises Limited"
   },
   {
     "symbol": "RUPA",
