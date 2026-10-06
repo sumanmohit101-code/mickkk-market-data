@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-10-06T16:54:15.642895+05:30",
+  "updatedAt": "2026-10-06T17:00:46.270218+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -200,15 +200,15 @@
       "symbol": "GSFC",
       "company": "Gujarat State Fertilizers & Chemicals Limited",
       "date": "2026-10-12",
-      "purpose": "Board meeting Rescheduled",
-      "description": "Gujarat State Fertilizers & Chemicals Limited has informed the Exchange that the meeting of the Board of Directors of the Company scheduled to be held on October 12, 2026 To consider and approve the financial results for the period ended September 30, 2026 has been postponed"
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "GSFC",
       "company": "Gujarat State Fertilizers & Chemicals Limited",
       "date": "2026-10-12",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+      "purpose": "Board meeting Rescheduled",
+      "description": "Gujarat State Fertilizers & Chemicals Limited has informed the Exchange that the meeting of the Board of Directors of the Company scheduled to be held on October 12, 2026 To consider and approve the financial results for the period ended September 30, 2026 has been postponed"
     },
     {
       "symbol": "HCLTECH",
@@ -300,6 +300,13 @@
       "date": "2026-10-13",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "TATAELXSI",
+      "company": "Tata Elxsi Limited",
+      "date": "2026-10-13",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "BHEL",
@@ -11594,15 +11601,15 @@
           "symbol": "GSFC",
           "company": "Gujarat State Fertilizers & Chemicals Limited",
           "date": "2026-10-12",
-          "purpose": "Board meeting Rescheduled",
-          "description": "Gujarat State Fertilizers & Chemicals Limited has informed the Exchange that the meeting of the Board of Directors of the Company scheduled to be held on October 12, 2026 To consider and approve the financial results for the period ended September 30, 2026 has been postponed"
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
         },
         {
           "symbol": "GSFC",
           "company": "Gujarat State Fertilizers & Chemicals Limited",
           "date": "2026-10-12",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+          "purpose": "Board meeting Rescheduled",
+          "description": "Gujarat State Fertilizers & Chemicals Limited has informed the Exchange that the meeting of the Board of Directors of the Company scheduled to be held on October 12, 2026 To consider and approve the financial results for the period ended September 30, 2026 has been postponed"
         }
       ],
       "historyCount": 0
@@ -27669,9 +27676,17 @@
       "symbol": "TATAELXSI",
       "company": "Tata Elxsi Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-13",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "TATAELXSI",
+          "company": "Tata Elxsi Limited",
+          "date": "2026-10-13",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
