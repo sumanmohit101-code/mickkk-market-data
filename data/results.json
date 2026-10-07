@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-10-07T16:42:34.691389+05:30",
+  "updatedAt": "2026-10-07T17:00:44.716433+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -215,15 +215,15 @@
       "symbol": "GSFC",
       "company": "Gujarat State Fertilizers & Chemicals Limited",
       "date": "2026-10-12",
-      "purpose": "Board meeting Rescheduled",
-      "description": "Gujarat State Fertilizers & Chemicals Limited has informed the Exchange that the meeting of the Board of Directors of the Company scheduled to be held on October 12, 2026 To consider and approve the financial results for the period ended September 30, 2026 has been postponed"
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "GSFC",
       "company": "Gujarat State Fertilizers & Chemicals Limited",
       "date": "2026-10-12",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+      "purpose": "Board meeting Rescheduled",
+      "description": "Gujarat State Fertilizers & Chemicals Limited has informed the Exchange that the meeting of the Board of Directors of the Company scheduled to be held on October 12, 2026 To consider and approve the financial results for the period ended September 30, 2026 has been postponed"
     },
     {
       "symbol": "HCLTECH",
@@ -314,14 +314,14 @@
       "company": "SS Retail Limited",
       "date": "2026-10-13",
       "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+      "description": "To consider and approve the unaudited Standalone and Consolidated financial results for the period ended Jun 30, 2026 - Revised Intimation"
     },
     {
       "symbol": "SSRETAIL",
       "company": "SS Retail Limited",
       "date": "2026-10-13",
       "purpose": "Financial Results",
-      "description": "To consider and approve the unaudited Standalone and Consolidated financial results for the period ended Jun 30, 2026 - Revised Intimation"
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
     },
     {
       "symbol": "STCINDIA",
@@ -490,6 +490,13 @@
       "date": "2026-10-15",
       "purpose": "Financial Results/Dividend",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
+      "symbol": "KABRAEXTRU",
+      "company": "Kabra Extrusion Technik Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
     },
     {
       "symbol": "KARURVYSYA",
@@ -798,6 +805,13 @@
       "date": "2026-10-23",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the quarter & half year ended September 30, 2026"
+    },
+    {
+      "symbol": "PONNIERODE",
+      "company": "Ponni Sugars (Erode) Limited",
+      "date": "2026-10-23",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the Unaudited Financial Results for the quarter and half year ended September 30, 2026"
     },
     {
       "symbol": "SHREECEM",
@@ -11876,15 +11890,15 @@
           "symbol": "GSFC",
           "company": "Gujarat State Fertilizers & Chemicals Limited",
           "date": "2026-10-12",
-          "purpose": "Board meeting Rescheduled",
-          "description": "Gujarat State Fertilizers & Chemicals Limited has informed the Exchange that the meeting of the Board of Directors of the Company scheduled to be held on October 12, 2026 To consider and approve the financial results for the period ended September 30, 2026 has been postponed"
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
         },
         {
           "symbol": "GSFC",
           "company": "Gujarat State Fertilizers & Chemicals Limited",
           "date": "2026-10-12",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+          "purpose": "Board meeting Rescheduled",
+          "description": "Gujarat State Fertilizers & Chemicals Limited has informed the Exchange that the meeting of the Board of Directors of the Company scheduled to be held on October 12, 2026 To consider and approve the financial results for the period ended September 30, 2026 has been postponed"
         }
       ],
       "historyCount": 0
@@ -15212,9 +15226,17 @@
       "symbol": "KABRAEXTRU",
       "company": "Kabra Extrusion Technik Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "KABRAEXTRU",
+          "company": "Kabra Extrusion Technik Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -21782,9 +21804,17 @@
       "symbol": "PONNIERODE",
       "company": "Ponni Sugars (Erode) Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-23",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "PONNIERODE",
+          "company": "Ponni Sugars (Erode) Limited",
+          "date": "2026-10-23",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the Unaudited Financial Results for the quarter and half year ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -26850,14 +26880,14 @@
           "company": "SS Retail Limited",
           "date": "2026-10-13",
           "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+          "description": "To consider and approve the unaudited Standalone and Consolidated financial results for the period ended Jun 30, 2026 - Revised Intimation"
         },
         {
           "symbol": "SSRETAIL",
           "company": "SS Retail Limited",
           "date": "2026-10-13",
           "purpose": "Financial Results",
-          "description": "To consider and approve the unaudited Standalone and Consolidated financial results for the period ended Jun 30, 2026 - Revised Intimation"
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
         }
       ],
       "historyCount": 0
