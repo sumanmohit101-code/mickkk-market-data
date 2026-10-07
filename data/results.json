@@ -1,16 +1,31 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-10-06T17:00:46.270218+05:30",
+  "updatedAt": "2026-10-07T16:42:34.691389+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 3201,
+  "symbolCount": 3203,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [],
+  "tomorrow": [
+    {
+      "symbol": "GMBREW",
+      "company": "GM Breweries Limited",
+      "date": "2026-10-08",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "TCS",
+      "company": "Tata Consultancy Services Limited",
+      "date": "2026-10-08",
+      "purpose": "Financial Results/Dividend",
+      "description": "Approval of the Financial Results and consideration of declaration of second interim dividend"
+    }
+  ],
   "thisWeek": [
     {
       "symbol": "GMBREW",
@@ -200,15 +215,15 @@
       "symbol": "GSFC",
       "company": "Gujarat State Fertilizers & Chemicals Limited",
       "date": "2026-10-12",
-      "purpose": "Financial Results",
-      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+      "purpose": "Board meeting Rescheduled",
+      "description": "Gujarat State Fertilizers & Chemicals Limited has informed the Exchange that the meeting of the Board of Directors of the Company scheduled to be held on October 12, 2026 To consider and approve the financial results for the period ended September 30, 2026 has been postponed"
     },
     {
       "symbol": "GSFC",
       "company": "Gujarat State Fertilizers & Chemicals Limited",
       "date": "2026-10-12",
-      "purpose": "Board meeting Rescheduled",
-      "description": "Gujarat State Fertilizers & Chemicals Limited has informed the Exchange that the meeting of the Board of Directors of the Company scheduled to be held on October 12, 2026 To consider and approve the financial results for the period ended September 30, 2026 has been postponed"
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "HCLTECH",
@@ -239,11 +254,25 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "SWANDEF",
+      "company": "Swan Defence and Heavy Industries Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "SWARAJENG",
       "company": "Swaraj Engines Limited",
       "date": "2026-10-12",
       "purpose": "Financial Results",
       "description": "Pursuant to Regulation 29(1)(a) of the Securities and Exchange Board of India (Listing Obligations and Disclosure Requirements) Regulations, 2015, we hereby inform that the Meeting of the Board of Directors of Swaraj Engines Limited will be held on 12th October, 2026 (Monday), to inter alia, consider and approve the Unaudited Financial Results of the Company for the second quarter and half year ended on 30th September, 2026."
+    },
+    {
+      "symbol": "UMIYA-MRO",
+      "company": "UMIYA BUILDCON LIMITED",
+      "date": "2026-10-12",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "DEN",
@@ -274,11 +303,11 @@
       "description": "To consider and approve the unaudited standalone financial statements and financial results of the Company for the quarter and half year ended September 30, 2026."
     },
     {
-      "symbol": "SSRETAIL",
-      "company": "SS Retail Limited",
+      "symbol": "PNBGILTS",
+      "company": "PNB Gilts Limited",
       "date": "2026-10-13",
       "purpose": "Financial Results",
-      "description": "To consider and approve the unaudited Standalone and Consolidated financial results for the period ended Jun 30, 2026 - Revised Intimation"
+      "description": "To consider and approve the unaudited financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "SSRETAIL",
@@ -286,6 +315,13 @@
       "date": "2026-10-13",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "SSRETAIL",
+      "company": "SS Retail Limited",
+      "date": "2026-10-13",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited Standalone and Consolidated financial results for the period ended Jun 30, 2026 - Revised Intimation"
     },
     {
       "symbol": "STCINDIA",
@@ -305,6 +341,20 @@
       "symbol": "TATAELXSI",
       "company": "Tata Elxsi Limited",
       "date": "2026-10-13",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "TRF",
+      "company": "TRF Limited",
+      "date": "2026-10-13",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "BAJAJCON",
+      "company": "Bajaj Consumer Care Limited",
+      "date": "2026-10-14",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
@@ -344,6 +394,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026, dividend and other business matters"
     },
     {
+      "symbol": "GROWW",
+      "company": "Billionbrains Garage Ventures Limited",
+      "date": "2026-10-14",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited financial results for the quarter and half year ended September 30, 2026"
+    },
+    {
       "symbol": "HDBFS",
       "company": "HDB Financial Services Limited",
       "date": "2026-10-14",
@@ -365,6 +422,13 @@
       "description": "Intimation of Board Meeting for considering Un-Audited Financial Results for the Quarter and Half-year ended September 30, 2026."
     },
     {
+      "symbol": "RIIL",
+      "company": "Reliance Industrial Infrastructure Limited",
+      "date": "2026-10-14",
+      "purpose": "Financial Results",
+      "description": "Reliance Industrial Infrastructure Limited has informed that the meeting of the Board of Directors of the Company is scheduled on October 14, 2026, inter alia, to consider and approve the Standalone and Consolidated Un-audited Financial Results of the Company for the quarter and half year ended September 30, 2026. This is for your information and records."
+    },
+    {
       "symbol": "TATATECH",
       "company": "Tata Technologies Limited",
       "date": "2026-10-14",
@@ -372,8 +436,22 @@
       "description": "To consider and approve the unaudited financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "VIJIFIN",
+      "company": "Viji Finance Limited",
+      "date": "2026-10-14",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
       "symbol": "ANGELONE",
       "company": "Angel One Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "BUTTERFLY",
+      "company": "Butterfly Gandhimathi Appliances Limited",
       "date": "2026-10-15",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
@@ -400,6 +478,20 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and Fund Raising"
     },
     {
+      "symbol": "HERITGFOOD",
+      "company": "Heritage Foods Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "IRFC",
+      "company": "Indian Railway Finance Corporation Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results/Dividend",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
       "symbol": "KARURVYSYA",
       "company": "Karur Vysya Bank Limited",
       "date": "2026-10-15",
@@ -419,6 +511,13 @@
       "date": "2026-10-15",
       "purpose": "Financial Results",
       "description": "To consider and approve the unaudited financial results (standalone and consolidated) for the second quarter and half year ending September 30, 2026"
+    },
+    {
+      "symbol": "ORIENTELEC",
+      "company": "Orient Electric Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the Un-audited financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "POLYCAB",
@@ -454,6 +553,20 @@
       "date": "2026-10-16",
       "purpose": "Financial Results",
       "description": "To consider and approve the unaudited standalone financial results for the quarter and half year ended 30 September 2026."
+    },
+    {
+      "symbol": "CROMPTON",
+      "company": "Crompton Greaves Consumer Electricals Limited",
+      "date": "2026-10-16",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "FEDERALBNK",
+      "company": "The Federal Bank  Limited",
+      "date": "2026-10-16",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "AXISBANK",
@@ -659,6 +772,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
     },
     {
+      "symbol": "JINDALSTEL",
+      "company": "JINDAL STEEL LIMITED",
+      "date": "2026-10-23",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "JSWSTEEL",
       "company": "JSW Steel Limited",
       "date": "2026-10-23",
@@ -671,6 +791,13 @@
       "date": "2026-10-23",
       "purpose": "Financial Results/Other business matters",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "MASTEK",
+      "company": "Mastek Limited",
+      "date": "2026-10-23",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the quarter & half year ended September 30, 2026"
     },
     {
       "symbol": "SHREECEM",
@@ -687,11 +814,25 @@
       "description": "Pursuant to Regulation 29 of SEBI (Listing Obligations and Disclosure Requirements) Regulations, 2015 ( SEBI LODR Regulations, 2015 ), we wish to inform you that a meeting of the Board of Directors of the Company is scheduled to be held on Friday, the 23rd day of October, 2026, inter alia, to:1. Consider and approve the Un-Audited Standalone and Consolidated Financial Results of the Company for the quarter and six months ended September 30, 2026;2. Consider the declaration of Interim Dividend, if any, for the financial year 2026-27."
     },
     {
+      "symbol": "STLTECH",
+      "company": "Sterlite Technologies Limited",
+      "date": "2026-10-23",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the quarter and half year ended September 30, 2026."
+    },
+    {
       "symbol": "TMCV",
       "company": "Tata Motors Limited",
       "date": "2026-10-23",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the second quarter and half year ended September 30, 2026"
+    },
+    {
+      "symbol": "TORNTPHARM",
+      "company": "Torrent Pharmaceuticals Limited",
+      "date": "2026-10-23",
+      "purpose": "Financial Results",
+      "description": "the Audited Financial Results on Standalone basis and Unaudited Financial Results (with limited review) on Consolidated basis of the Company for the quarter and half year ended on 30-Sep-26."
     },
     {
       "symbol": "UTIAMC",
@@ -734,6 +875,13 @@
       "date": "2026-10-26",
       "purpose": "Financial Results",
       "description": "To consider and approve the standalone and consolidated unaudited financial results of the Company for the quarter and half year ending September 30, 2026."
+    },
+    {
+      "symbol": "NDTV",
+      "company": "New Delhi Television Limited",
+      "date": "2026-10-26",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the Un-audited Financial Results (Standalone and Consolidated) of the Company for the quarter and half year ended September 30, 2026"
     },
     {
       "symbol": "SUMICHEM",
@@ -841,6 +989,20 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "BAJAJELEC",
+      "company": "Bajaj Electricals Limited",
+      "date": "2026-10-28",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the unaudited standalone and consolidated financial results of the Company for the second quarter and half year ended September 30, 2026"
+    },
+    {
+      "symbol": "HINDUNILVR",
+      "company": "Hindustan Unilever Limited",
+      "date": "2026-10-28",
+      "purpose": "Financial Results/Dividend",
+      "description": "Board Meeting Intimation for Consideration of Unaudited Standalone and Consolidated Financial Results for quarter and half year ended 30th September, 2026 and payment of Interim Dividend (if any)"
+    },
+    {
       "symbol": "RSSOFTWARE",
       "company": "R. S. Software (India) Limited",
       "date": "2026-10-28",
@@ -848,11 +1010,25 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
     },
     {
+      "symbol": "ZENSARTECH",
+      "company": "Zensar Technologies Limited",
+      "date": "2026-10-28",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "APARINDS",
       "company": "Apar Industries Limited",
       "date": "2026-10-29",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "ASIANPAINT",
+      "company": "Asian Paints Limited",
+      "date": "2026-10-29",
+      "purpose": "Financial Results/Dividend",
+      "description": "This is to inform you that a meeting of the Board of Directors of the Company will be held on Thursday, 29th October 2026, inter alia, to consider the following:1.Approval of audited standalone financial results of the Company for the quarter and half-year ended 30th September 2026; 2.Approval of unaudited consolidated financial results of the Company for the quarter and half-year ended 30th September 2026; and 3.Declaration of interim dividend, if any, for the financial year ending 31st March 2027. It is further informed that the record date for payment of interim dividend, if declared, will be Wednesday, 4th November 2026."
     },
     {
       "symbol": "BLUESTARCO",
@@ -888,6 +1064,13 @@
       "date": "2026-10-29",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the quarter and half year period ended September 30, 2026."
+    },
+    {
+      "symbol": "SURYODAY",
+      "company": "Suryoday Small Finance Bank Limited",
+      "date": "2026-10-29",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
       "symbol": "TRENT",
@@ -1009,6 +1192,13 @@
       "description": "To consider and approve the unaudited standalone and consolidated financial results for the quarter and half year ending September 30, 2026"
     },
     {
+      "symbol": "GSPLTRANS",
+      "company": "GSPL Transmission Limited",
+      "date": "2026-11-03",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the un-audited financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "RML",
       "company": "Rane (Madras) Limited",
       "date": "2026-11-03",
@@ -1049,6 +1239,13 @@
       "date": "2026-11-04",
       "purpose": "Financial Results",
       "description": "To consider and approve the unaudited financial results for the quarter and half year ending 30th September 2026."
+    },
+    {
+      "symbol": "JMFINANCIL",
+      "company": "JM Financial Limited",
+      "date": "2026-11-04",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the second quarter and half year ended September 30, 2026"
     },
     {
       "symbol": "KANSAINER",
@@ -1135,6 +1332,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
     },
     {
+      "symbol": "CHOLAHLDNG",
+      "company": "Cholamandalam Financial Holdings Limited",
+      "date": "2026-11-06",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the un-audited financial results for the quarter and half-year ended September 30, 2026"
+    },
+    {
       "symbol": "COFFEEDAY",
       "company": "Coffee Day Enterprises Limited",
       "date": "2026-11-06",
@@ -1175,6 +1379,13 @@
       "date": "2026-11-06",
       "purpose": "Financial Results",
       "description": "To consider and approve the un-audited financial results for the second quarter and half year ended September 30, 2026"
+    },
+    {
+      "symbol": "TATAPOWER",
+      "company": "Tata Power Company Limited",
+      "date": "2026-11-11",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the quarter and half year ended September 30, 2026, and other business matters"
     },
     {
       "symbol": "PGHH",
@@ -3790,9 +4001,17 @@
       "symbol": "ASIANPAINT",
       "company": "Asian Paints Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-29",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ASIANPAINT",
+          "company": "Asian Paints Limited",
+          "date": "2026-10-29",
+          "purpose": "Financial Results/Dividend",
+          "description": "This is to inform you that a meeting of the Board of Directors of the Company will be held on Thursday, 29th October 2026, inter alia, to consider the following:1.Approval of audited standalone financial results of the Company for the quarter and half-year ended 30th September 2026; 2.Approval of unaudited consolidated financial results of the Company for the quarter and half-year ended 30th September 2026; and 3.Declaration of interim dividend, if any, for the financial year ending 31st March 2027. It is further informed that the record date for payment of interim dividend, if declared, will be Wednesday, 4th November 2026."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -4513,18 +4732,34 @@
       "symbol": "BAJAJCON",
       "company": "Bajaj Consumer Care Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-14",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "BAJAJCON",
+          "company": "Bajaj Consumer Care Limited",
+          "date": "2026-10-14",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
       "symbol": "BAJAJELEC",
       "company": "Bajaj Electricals Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-28",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "BAJAJELEC",
+          "company": "Bajaj Electricals Limited",
+          "date": "2026-10-28",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the unaudited standalone and consolidated financial results of the Company for the second quarter and half year ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -6031,9 +6266,17 @@
       "symbol": "BUTTERFLY",
       "company": "Butterfly Gandhimathi Appliances Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "BUTTERFLY",
+          "company": "Butterfly Gandhimathi Appliances Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -6719,9 +6962,17 @@
       "symbol": "CHOLAHLDNG",
       "company": "Cholamandalam Financial Holdings Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-06",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "CHOLAHLDNG",
+          "company": "Cholamandalam Financial Holdings Limited",
+          "date": "2026-11-06",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the un-audited financial results for the quarter and half-year ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -7405,9 +7656,17 @@
       "symbol": "CROMPTON",
       "company": "Crompton Greaves Consumer Electricals Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-16",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "CROMPTON",
+          "company": "Crompton Greaves Consumer Electricals Limited",
+          "date": "2026-10-16",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -9919,9 +10178,17 @@
       "symbol": "FEDERALBNK",
       "company": "The Federal Bank  Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-16",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "FEDERALBNK",
+          "company": "The Federal Bank  Limited",
+          "date": "2026-10-16",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -11558,9 +11825,17 @@
       "symbol": "GROWW",
       "company": "Billionbrains Garage Ventures Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-14",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "GROWW",
+          "company": "Billionbrains Garage Ventures Limited",
+          "date": "2026-10-14",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the unaudited financial results for the quarter and half year ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -11601,15 +11876,15 @@
           "symbol": "GSFC",
           "company": "Gujarat State Fertilizers & Chemicals Limited",
           "date": "2026-10-12",
-          "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+          "purpose": "Board meeting Rescheduled",
+          "description": "Gujarat State Fertilizers & Chemicals Limited has informed the Exchange that the meeting of the Board of Directors of the Company scheduled to be held on October 12, 2026 To consider and approve the financial results for the period ended September 30, 2026 has been postponed"
         },
         {
           "symbol": "GSFC",
           "company": "Gujarat State Fertilizers & Chemicals Limited",
           "date": "2026-10-12",
-          "purpose": "Board meeting Rescheduled",
-          "description": "Gujarat State Fertilizers & Chemicals Limited has informed the Exchange that the meeting of the Board of Directors of the Company scheduled to be held on October 12, 2026 To consider and approve the financial results for the period ended September 30, 2026 has been postponed"
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
         }
       ],
       "historyCount": 0
@@ -11654,9 +11929,17 @@
       "symbol": "GSPLTRANS",
       "company": "GSPL Transmission Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-03",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "GSPLTRANS",
+          "company": "GSPL Transmission Limited",
+          "date": "2026-11-03",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the un-audited financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -12259,9 +12542,17 @@
       "symbol": "HERITGFOOD",
       "company": "Heritage Foods Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "HERITGFOOD",
+          "company": "Heritage Foods Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -12492,9 +12783,17 @@
       "symbol": "HINDUNILVR",
       "company": "Hindustan Unilever Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-28",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "HINDUNILVR",
+          "company": "Hindustan Unilever Limited",
+          "date": "2026-10-28",
+          "purpose": "Financial Results/Dividend",
+          "description": "Board Meeting Intimation for Consideration of Unaudited Standalone and Consolidated Financial Results for quarter and half year ended 30th September, 2026 and payment of Interim Dividend (if any)"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -13946,9 +14245,17 @@
       "symbol": "IRFC",
       "company": "Indian Railway Finance Corporation Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "IRFC",
+          "company": "Indian Railway Finance Corporation Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results/Dividend",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -14450,9 +14757,17 @@
       "symbol": "JINDALSTEL",
       "company": "JINDAL STEEL LIMITED",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-23",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "JINDALSTEL",
+          "company": "JINDAL STEEL LIMITED",
+          "date": "2026-10-23",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -14594,9 +14909,17 @@
       "symbol": "JMFINANCIL",
       "company": "JM Financial Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-04",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "JMFINANCIL",
+          "company": "JM Financial Limited",
+          "date": "2026-11-04",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the second quarter and half year ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -17520,9 +17843,17 @@
       "symbol": "MASTEK",
       "company": "Mastek Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-23",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "MASTEK",
+          "company": "Mastek Limited",
+          "date": "2026-10-23",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the quarter & half year ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -19168,9 +19499,17 @@
       "symbol": "NDTV",
       "company": "New Delhi Television Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-26",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "NDTV",
+          "company": "New Delhi Television Limited",
+          "date": "2026-10-26",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the Un-audited Financial Results (Standalone and Consolidated) of the Company for the quarter and half year ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -20281,9 +20620,17 @@
       "symbol": "ORIENTELEC",
       "company": "Orient Electric Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ORIENTELEC",
+          "company": "Orient Electric Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the Un-audited financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -21275,9 +21622,17 @@
       "symbol": "PNBGILTS",
       "company": "PNB Gilts Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-13",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "PNBGILTS",
+          "company": "PNB Gilts Limited",
+          "date": "2026-10-13",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the unaudited financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -23094,9 +23449,17 @@
       "symbol": "RIIL",
       "company": "Reliance Industrial Infrastructure Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-14",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "RIIL",
+          "company": "Reliance Industrial Infrastructure Limited",
+          "date": "2026-10-14",
+          "purpose": "Financial Results",
+          "description": "Reliance Industrial Infrastructure Limited has informed that the meeting of the Board of Directors of the Company is scheduled on October 14, 2026, inter alia, to consider and approve the Standalone and Consolidated Un-audited Financial Results of the Company for the quarter and half year ended September 30, 2026. This is for your information and records."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -24815,6 +25178,15 @@
       "historyCount": 0
     },
     {
+      "symbol": "SHAHINVEST",
+      "company": "Shah Investor's Home Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
       "symbol": "SHAILY",
       "company": "Shaily Engineering Plastics Limited",
       "lastResultDate": null,
@@ -26404,6 +26776,15 @@
       "historyCount": 0
     },
     {
+      "symbol": "SRIT",
+      "company": "SRIT India Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
       "symbol": "SRIVASAVI",
       "company": "SRIVASAVI",
       "lastResultDate": null,
@@ -26469,14 +26850,14 @@
           "company": "SS Retail Limited",
           "date": "2026-10-13",
           "purpose": "Financial Results",
-          "description": "To consider and approve the unaudited Standalone and Consolidated financial results for the period ended Jun 30, 2026 - Revised Intimation"
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
         },
         {
           "symbol": "SSRETAIL",
           "company": "SS Retail Limited",
           "date": "2026-10-13",
           "purpose": "Financial Results",
-          "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+          "description": "To consider and approve the unaudited Standalone and Consolidated financial results for the period ended Jun 30, 2026 - Revised Intimation"
         }
       ],
       "historyCount": 0
@@ -26662,9 +27043,17 @@
       "symbol": "STLTECH",
       "company": "Sterlite Technologies Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-23",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "STLTECH",
+          "company": "Sterlite Technologies Limited",
+          "date": "2026-10-23",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the quarter and half year ended September 30, 2026."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -27201,9 +27590,17 @@
       "symbol": "SURYODAY",
       "company": "Suryoday Small Finance Bank Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-29",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "SURYODAY",
+          "company": "Suryoday Small Finance Bank Limited",
+          "date": "2026-10-29",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -27291,9 +27688,17 @@
       "symbol": "SWANDEF",
       "company": "Swan Defence and Heavy Industries Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-12",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "SWANDEF",
+          "company": "Swan Defence and Heavy Industries Limited",
+          "date": "2026-10-12",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -27702,9 +28107,17 @@
       "symbol": "TATAPOWER",
       "company": "Tata Power Company Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-11",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "TATAPOWER",
+          "company": "Tata Power Company Limited",
+          "date": "2026-11-11",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the quarter and half year ended September 30, 2026, and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -28481,9 +28894,17 @@
       "symbol": "TORNTPHARM",
       "company": "Torrent Pharmaceuticals Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-23",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "TORNTPHARM",
+          "company": "Torrent Pharmaceuticals Limited",
+          "date": "2026-10-23",
+          "purpose": "Financial Results",
+          "description": "the Audited Financial Results on Standalone basis and Unaudited Financial Results (with limited review) on Consolidated basis of the Company for the quarter and half year ended on 30-Sep-26."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -28660,9 +29081,17 @@
       "symbol": "TRF",
       "company": "TRF Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-13",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "TRF",
+          "company": "TRF Limited",
+          "date": "2026-10-13",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -29106,9 +29535,17 @@
       "symbol": "UMIYA-MRO",
       "company": "UMIYA BUILDCON LIMITED",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-12",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "UMIYA-MRO",
+          "company": "UMIYA BUILDCON LIMITED",
+          "date": "2026-10-12",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -29942,9 +30379,17 @@
       "symbol": "VIJIFIN",
       "company": "Viji Finance Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-14",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "VIJIFIN",
+          "company": "Viji Finance Limited",
+          "date": "2026-10-14",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -31180,9 +31625,17 @@
       "symbol": "ZENSARTECH",
       "company": "Zensar Technologies Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-28",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ZENSARTECH",
+          "company": "Zensar Technologies Limited",
+          "date": "2026-10-28",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
