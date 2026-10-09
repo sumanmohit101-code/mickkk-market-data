@@ -424,6 +424,10 @@
     "name": "AGNI"
   },
   {
+    "symbol": "AGOL",
+    "name": "Ashapuri Gold Ornament Limited"
+  },
+  {
     "symbol": "AGRITECH",
     "name": "Agri-Tech (India) Limited"
   },
@@ -1622,6 +1626,10 @@
   {
     "symbol": "BEL",
     "name": "Bharat Electronics Limited"
+  },
+  {
+    "symbol": "BELDING",
+    "name": "Belding India Limited"
   },
   {
     "symbol": "BELLACASA",
@@ -7502,6 +7510,10 @@
   {
     "symbol": "NATCAPSUQ",
     "name": "Natural Capsules Limited"
+  },
+  {
+    "symbol": "NATCO-RE",
+    "name": "Natco Pharma Limited-RE"
   },
   {
     "symbol": "NATCOPHARM",
