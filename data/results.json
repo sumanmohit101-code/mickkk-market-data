@@ -1,16 +1,108 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-10-10T17:00:43.587979+05:30",
+  "updatedAt": "2026-10-11T17:00:59.561139+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 3212,
+  "symbolCount": 3213,
   "historyCount": 0,
   "today": [],
-  "tomorrow": [],
+  "tomorrow": [
+    {
+      "symbol": "ADROITIND",
+      "company": "Adroit Industries (India) Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results",
+      "description": "Adroit Industries (India) Limited has informed the Exchange about Board Meeting to be held on 12-Oct-2026 to inter-alia consider and approve the Unaudited Financial results of the Company for the Quarterly ended June 30, 2026 ."
+    },
+    {
+      "symbol": "AGRITECH",
+      "company": "Agri-Tech (India) Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "ALKALI",
+      "company": "Alkali Metals Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+    },
+    {
+      "symbol": "GRADIENTE",
+      "company": "Gradiente Infotainment Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results/Fund Raising",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and Fund Raising"
+    },
+    {
+      "symbol": "GSFC",
+      "company": "Gujarat State Fertilizers & Chemicals Limited",
+      "date": "2026-10-12",
+      "purpose": "Board meeting Rescheduled",
+      "description": "Gujarat State Fertilizers & Chemicals Limited has informed the Exchange that the meeting of the Board of Directors of the Company scheduled to be held on October 12, 2026 To consider and approve the financial results for the period ended September 30, 2026 has been postponed"
+    },
+    {
+      "symbol": "GSFC",
+      "company": "Gujarat State Fertilizers & Chemicals Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "HCLTECH",
+      "company": "HCL Technologies Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results/Dividend",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
+      "symbol": "ICICIAMC",
+      "company": "ICICI Prudential Asset Management Company Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results/Dividend",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
+      "symbol": "PLASTIBLEN",
+      "company": "Plastiblends India Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "RBLBANK",
+      "company": "RBL Bank Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "SWANDEF",
+      "company": "Swan Defence and Heavy Industries Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "SWARAJENG",
+      "company": "Swaraj Engines Limited",
+      "date": "2026-10-12",
+      "purpose": "Financial Results",
+      "description": "Pursuant to Regulation 29(1)(a) of the Securities and Exchange Board of India (Listing Obligations and Disclosure Requirements) Regulations, 2015, we hereby inform that the Meeting of the Board of Directors of Swaraj Engines Limited will be held on 12th October, 2026 (Monday), to inter alia, consider and approve the Unaudited Financial Results of the Company for the second quarter and half year ended on 30th September, 2026."
+    },
+    {
+      "symbol": "UMIYA-MRO",
+      "company": "UMIYA BUILDCON LIMITED",
+      "date": "2026-10-12",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    }
+  ],
   "thisWeek": [],
   "allUpcoming": [
     {
@@ -315,6 +407,13 @@
       "description": "Reliance Industrial Infrastructure Limited has informed that the meeting of the Board of Directors of the Company is scheduled on October 14, 2026, inter alia, to consider and approve the Standalone and Consolidated Un-audited Financial Results of the Company for the quarter and half year ended September 30, 2026. This is for your information and records."
     },
     {
+      "symbol": "SECURCRED",
+      "company": "SecUR Credentials Limited",
+      "date": "2026-10-14",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+    },
+    {
       "symbol": "SONA",
       "company": "Sonaselection India Limited",
       "date": "2026-10-14",
@@ -483,6 +582,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
     },
     {
+      "symbol": "MWL",
+      "company": "Mangalam Worldwide Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results",
+      "description": "Intimation of Board Meeting of Mangalam Worldwide Limited to be held on Thursday, October 15, 2026."
+    },
+    {
       "symbol": "NESTLEIND",
       "company": "Nestle India Limited",
       "date": "2026-10-15",
@@ -579,6 +685,13 @@
       "date": "2026-10-16",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "DLF",
+      "company": "DLF Limited",
+      "date": "2026-10-16",
+      "purpose": "Financial Results",
+      "description": "Board Meeting Intimation for approval of Un-Audited Financial Results (Standalone and Consolidated) for the quarter and half-year ended 30th September 2026"
     },
     {
       "symbol": "FEDERALBNK",
@@ -9321,9 +9434,17 @@
       "symbol": "DLF",
       "company": "DLF Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-16",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "DLF",
+          "company": "DLF Limited",
+          "date": "2026-10-16",
+          "purpose": "Financial Results",
+          "description": "Board Meeting Intimation for approval of Un-Audited Financial Results (Standalone and Consolidated) for the quarter and half-year ended 30th September 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -19977,9 +20098,17 @@
       "symbol": "MWL",
       "company": "Mangalam Worldwide Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "MWL",
+          "company": "Mangalam Worldwide Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results",
+          "description": "Intimation of Board Meeting of Mangalam Worldwide Limited to be held on Thursday, October 15, 2026."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -25845,6 +25974,23 @@
       "nextResultDate": null,
       "lastResult": null,
       "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
+      "symbol": "SECURCRED",
+      "company": "SecUR Credentials Limited",
+      "lastResultDate": null,
+      "nextResultDate": "2026-10-14",
+      "lastResult": null,
+      "upcomingResults": [
+        {
+          "symbol": "SECURCRED",
+          "company": "SecUR Credentials Limited",
+          "date": "2026-10-14",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended Jun 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
