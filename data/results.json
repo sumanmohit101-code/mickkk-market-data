@@ -1,13 +1,13 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-10-12T17:01:10.465478+05:30",
+  "updatedAt": "2026-10-12T17:45:35.851928+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
     "autoDeleteOlderThanDays": 365,
     "dateFiles": "data/results-history/YYYY-MM-DD.json"
   },
-  "symbolCount": 3213,
+  "symbolCount": 3215,
   "historyCount": 0,
   "today": [],
   "tomorrow": [
@@ -425,6 +425,13 @@
       "date": "2026-10-15",
       "purpose": "Financial Results",
       "description": "To consider and approve the unaudited financial results for the quarter and half year ended September 30, 2026"
+    },
+    {
+      "symbol": "GRADIENTE",
+      "company": "Gradiente Infotainment Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results/Fund Raising",
+      "description": "GRADIENTE : 15-Oct-2026 :  The Company has informed the Exchange that a Board meeting to be held on October 12, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on October 15, 2026, To consider and approve the financial results for the period ended September 30, 2026 and Fund Raising"
     },
     {
       "symbol": "HDFCAMC",
@@ -1150,6 +1157,13 @@
       "description": "To consider and approve the unaudited financial results for the quarter and half year ended September 30, 2026"
     },
     {
+      "symbol": "GRADIENTE",
+      "company": "Gradiente Infotainment Limited",
+      "date": "2026-10-15",
+      "purpose": "Financial Results/Fund Raising",
+      "description": "GRADIENTE : 15-Oct-2026 :  The Company has informed the Exchange that a Board meeting to be held on October 12, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on October 15, 2026, To consider and approve the financial results for the period ended September 30, 2026 and Fund Raising"
+    },
+    {
       "symbol": "HDFCAMC",
       "company": "HDFC Asset Management Company Limited",
       "date": "2026-10-15",
@@ -1577,11 +1591,32 @@
       "description": "To consider and approve the unaudited standalone and consolidated financial results for the quarter and half year ended September 30, 2026"
     },
     {
+      "symbol": "BEPL",
+      "company": "Bhansali Engineering Polymers Limited",
+      "date": "2026-10-19",
+      "purpose": "Financial Results/Dividend",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
+      "symbol": "DELTACORP",
+      "company": "Delta Corp Limited",
+      "date": "2026-10-19",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the quarter and half year ended September 30, 2026"
+    },
+    {
       "symbol": "ELEVATE",
       "company": "Elevate Campuses Limited",
       "date": "2026-10-19",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended Jun 30, 2026"
+    },
+    {
+      "symbol": "IREDA",
+      "company": "Indian Renewable Energy Development Agency Limited",
+      "date": "2026-10-19",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the audited financial results (Standalone & Consolidated) and audited financial statements (Standalone & Consolidated) of the Company for the quarter and half year ended September 30, 2026."
     },
     {
       "symbol": "JPPOWER",
@@ -1642,6 +1677,13 @@
     {
       "symbol": "IGIL",
       "company": "International Gemological Institute Limited",
+      "date": "2026-10-21",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "INDHOTEL",
+      "company": "The Indian Hotels Company Limited",
       "date": "2026-10-21",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
@@ -2004,6 +2046,13 @@
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
     },
     {
+      "symbol": "AUBANK",
+      "company": "AU Small Finance Bank Limited",
+      "date": "2026-10-24",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "CASTROLIND",
       "company": "Castrol India Limited",
       "date": "2026-10-24",
@@ -2272,6 +2321,13 @@
     {
       "symbol": "SMARTLINK",
       "company": "Smartlink Holdings Limited",
+      "date": "2026-10-28",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "UNITDSPR",
+      "company": "United Spirits Limited",
       "date": "2026-10-28",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
@@ -2622,6 +2678,13 @@
     {
       "symbol": "KANSAINER",
       "company": "Kansai Nerolac Paints Limited",
+      "date": "2026-11-04",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "KSHINTL",
+      "company": "KSH International Limited",
       "date": "2026-11-04",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
@@ -5740,9 +5803,17 @@
       "symbol": "AUBANK",
       "company": "AU Small Finance Bank Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-24",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "AUBANK",
+          "company": "AU Small Finance Bank Limited",
+          "date": "2026-10-24",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -6858,9 +6929,17 @@
       "symbol": "BEPL",
       "company": "Bhansali Engineering Polymers Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-19",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "BEPL",
+          "company": "Bhansali Engineering Polymers Limited",
+          "date": "2026-10-19",
+          "purpose": "Financial Results/Dividend",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -9857,9 +9936,17 @@
       "symbol": "DELTACORP",
       "company": "Delta Corp Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-19",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "DELTACORP",
+          "company": "Delta Corp Limited",
+          "date": "2026-10-19",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the quarter and half year ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -13253,9 +13340,17 @@
       "symbol": "GRADIENTE",
       "company": "Gradiente Infotainment Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-15",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "GRADIENTE",
+          "company": "Gradiente Infotainment Limited",
+          "date": "2026-10-15",
+          "purpose": "Financial Results/Fund Raising",
+          "description": "GRADIENTE : 15-Oct-2026 :  The Company has informed the Exchange that a Board meeting to be held on October 12, 2026 has been re-scheduled. Further, the Company has informed the Exchange that the meeting of the Board of Directors of the Company will be held on October 15, 2026, To consider and approve the financial results for the period ended September 30, 2026 and Fund Raising"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -15235,9 +15330,17 @@
       "symbol": "INDHOTEL",
       "company": "The Indian Hotels Company Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-21",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "INDHOTEL",
+          "company": "The Indian Hotels Company Limited",
+          "date": "2026-10-21",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -15904,9 +16007,17 @@
       "symbol": "IREDA",
       "company": "Indian Renewable Energy Development Agency Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-19",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "IREDA",
+          "company": "Indian Renewable Energy Development Agency Limited",
+          "date": "2026-10-19",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the audited financial results (Standalone & Consolidated) and audited financial statements (Standalone & Consolidated) of the Company for the quarter and half year ended September 30, 2026."
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -18091,9 +18202,17 @@
       "symbol": "KSHINTL",
       "company": "KSH International Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-11-04",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "KSHINTL",
+          "company": "KSH International Limited",
+          "date": "2026-11-04",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -25509,6 +25628,15 @@
       "historyCount": 0
     },
     {
+      "symbol": "RKFAL",
+      "company": "RKFAL",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
       "symbol": "RKFORGE",
       "company": "Ramkrishna Forgings Limited",
       "lastResultDate": null,
@@ -31389,6 +31517,15 @@
       "historyCount": 0
     },
     {
+      "symbol": "TRIVENIPT",
+      "company": "Triveni Power Transmission Limited",
+      "lastResultDate": null,
+      "nextResultDate": null,
+      "lastResult": null,
+      "upcomingResults": [],
+      "historyCount": 0
+    },
+    {
       "symbol": "TROM",
       "company": "TROM",
       "lastResultDate": null,
@@ -31882,9 +32019,17 @@
       "symbol": "UNITDSPR",
       "company": "United Spirits Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-28",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "UNITDSPR",
+          "company": "United Spirits Limited",
+          "date": "2026-10-28",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
