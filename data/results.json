@@ -1,6 +1,6 @@
 {
   "source": "NSE",
-  "updatedAt": "2026-10-13T17:00:49.059832+05:30",
+  "updatedAt": "2026-10-13T17:30:34.172495+05:30",
   "timezone": "Asia/Kolkata",
   "historyPolicy": {
     "windowDays": 365,
@@ -791,6 +791,13 @@
       "description": "To consider and approve the financial results for the quarter and half year ended September 30, 2026"
     },
     {
+      "symbol": "LAGNAM",
+      "company": "Lagnam Spintex Limited",
+      "date": "2026-10-17",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "ROSSARI",
       "company": "Rossari Biotech Limited",
       "date": "2026-10-17",
@@ -1451,6 +1458,13 @@
       "description": "To consider and approve the financial results for the quarter and half year ended September 30, 2026"
     },
     {
+      "symbol": "LAGNAM",
+      "company": "Lagnam Spintex Limited",
+      "date": "2026-10-17",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
       "symbol": "ROSSARI",
       "company": "Rossari Biotech Limited",
       "date": "2026-10-17",
@@ -1715,6 +1729,13 @@
       "date": "2026-10-22",
       "purpose": "Financial Results/Dividend",
       "description": "To consider and approve the financial results for the period ended September 30, 2026 and dividend"
+    },
+    {
+      "symbol": "CREDITACC",
+      "company": "CREDITACCESS GRAMEEN LIMITED",
+      "date": "2026-10-22",
+      "purpose": "Financial Results/Other business matters",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
     },
     {
       "symbol": "CYIENT",
@@ -2279,6 +2300,13 @@
     {
       "symbol": "AARTIPHARM",
       "company": "Aarti Pharmalabs Limited",
+      "date": "2026-10-28",
+      "purpose": "Financial Results",
+      "description": "To consider and approve the financial results for the period ended September 30, 2026"
+    },
+    {
+      "symbol": "ADANIENT",
+      "company": "Adani Enterprises Limited",
       "date": "2026-10-28",
       "purpose": "Financial Results",
       "description": "To consider and approve the financial results for the period ended September 30, 2026"
@@ -3654,9 +3682,17 @@
       "symbol": "ADANIENT",
       "company": "Adani Enterprises Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-28",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "ADANIENT",
+          "company": "Adani Enterprises Limited",
+          "date": "2026-10-28",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -9439,9 +9475,17 @@
       "symbol": "CREDITACC",
       "company": "CREDITACCESS GRAMEEN LIMITED",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-22",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "CREDITACC",
+          "company": "CREDITACCESS GRAMEEN LIMITED",
+          "date": "2026-10-22",
+          "purpose": "Financial Results/Other business matters",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026 and other business matters"
+        }
+      ],
       "historyCount": 0
     },
     {
@@ -18600,9 +18644,17 @@
       "symbol": "LAGNAM",
       "company": "Lagnam Spintex Limited",
       "lastResultDate": null,
-      "nextResultDate": null,
+      "nextResultDate": "2026-10-17",
       "lastResult": null,
-      "upcomingResults": [],
+      "upcomingResults": [
+        {
+          "symbol": "LAGNAM",
+          "company": "Lagnam Spintex Limited",
+          "date": "2026-10-17",
+          "purpose": "Financial Results",
+          "description": "To consider and approve the financial results for the period ended September 30, 2026"
+        }
+      ],
       "historyCount": 0
     },
     {
