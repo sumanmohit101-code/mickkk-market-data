@@ -20,8 +20,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -39,146 +37,152 @@ jobs:
           import io
           import json
           import os
-          from datetime import datetime, timedelta
+          import time
+          from datetime import datetime, timedelta, timezone
 
           import pandas as pd
           import requests
 
-          print("=" * 60)
-          print("NSE PRICE BAND UPDATE")
-          print("=" * 60)
+          IST = timezone(timedelta(hours=5, minutes=30))
 
           session = requests.Session()
-
-          headers = {
+          session.headers.update({
               "User-Agent": (
                   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                  "AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
                   "Chrome/131.0.0.0 Safari/537.36"
               ),
-              "Accept": "*/*",
+              "Accept": "text/csv,application/csv,*/*",
               "Accept-Language": "en-US,en;q=0.9",
               "Referer": "https://www.nseindia.com/",
-              "Connection": "keep-alive",
-          }
+          })
 
-          session.headers.update(headers)
+          # Warm-up: cookies lene ke liye
+          try:
+              session.get("https://www.nseindia.com/", timeout=30)
+          except Exception as exc:
+              print("Warm-up failed (continuing):", exc)
 
-          def fetch_csv(url):
-              print("Fetching:", url)
-              r = session.get(url, timeout=60)
-              print("HTTP:", r.status_code)
-              print("Size:", len(r.content))
-              if r.status_code != 200 or len(r.content) < 100:
-                  return None
-              return pd.read_csv(io.BytesIO(r.content))
+          def fetch_csv(url, retries=3):
+              for attempt in range(1, retries + 1):
+                  try:
+                      print(f"Fetching ({attempt}/{retries}):", url)
+                      r = session.get(url, timeout=60)
+                      print("HTTP:", r.status_code, "Size:", len(r.content))
+                      if r.status_code == 404:
+                          return None  # file exist hi nahi karti
+                      if r.status_code != 200:
+                          raise RuntimeError(f"HTTP {r.status_code}")
+                      ctype = r.headers.get("Content-Type", "").lower()
+                      if "html" in ctype or len(r.content) < 50:
+                          raise RuntimeError("Not a CSV (blocked/empty)")
+                      df = pd.read_csv(io.BytesIO(r.content))
+                      df.columns = [str(c).strip() for c in df.columns]
+                      return df
+                  except Exception as exc:
+                      print("Failed:", exc)
+                      time.sleep(3 * attempt)
+              return None
 
-          today = datetime.now()
+          today = datetime.now(IST)
           selected_date = None
           bands_df = None
           changes_df = None
 
           for offset in range(0, 10):
-              check_date = today - timedelta(days=offset)
-              ddmmyyyy = check_date.strftime("%d%m%Y")
-              band_url = (
-                  "https://nsearchives.nseindia.com/"
-                  f"content/equities/sec_list_{ddmmyyyy}.csv"
-              )
-              change_url = (
-                  "https://nsearchives.nseindia.com/"
-                  f"content/equities/eq_band_changes_{ddmmyyyy}.csv"
-              )
-
-              try:
-                  test_bands = fetch_csv(band_url)
-                  if test_bands is not None and len(test_bands) > 0:
-                      selected_date = check_date
-                      bands_df = test_bands
-                      print(
-                          "Found price-band report:",
-                          check_date.strftime("%d-%m-%Y")
-                      )
-                      try:
-                          changes_df = fetch_csv(change_url)
-                      except Exception as exc:
-                          print("Price-band-change file unavailable:", exc)
-                          changes_df = None
-                      break
-              except Exception as exc:
-                  print(
-                      "Attempt failed for",
-                      check_date.strftime("%d-%m-%Y"),
-                      ":",
-                      exc
-                  )
+              d = today - timedelta(days=offset)
+              ddmmyyyy = d.strftime("%d%m%Y")
+              base = "https://nsearchives.nseindia.com/content/equities/"
+              df = fetch_csv(f"{base}sec_list_{ddmmyyyy}.csv")
+              # Validation: sahi file hai ya nahi
+              if df is not None and len(df) > 500 and "Symbol" in df.columns:
+                  selected_date = d
+                  bands_df = df
+                  changes_df = fetch_csv(f"{base}eq_band_changes_{ddmmyyyy}.csv")
+                  print("Found price-band report:", d.strftime("%d-%m-%Y"))
+                  break
 
           if selected_date is None:
-              raise Exception("Could not find latest NSE price-band report.")
+              raise SystemExit("Could not find latest NSE price-band report.")
 
-          def clean_value(value):
-              if pd.isna(value):
+          def clean_value(v):
+              if pd.isna(v):
                   return None
-              if hasattr(value, "item"):
+              if hasattr(v, "item"):
                   try:
-                      return value.item()
+                      return v.item()
                   except Exception:
                       pass
-              return value
+              if isinstance(v, str):
+                  return v.strip()
+              return v
 
-          def dataframe_to_records(df):
+          def to_records(df):
               if df is None:
                   return []
-              records = []
-              for row in df.to_dict(orient="records"):
-                  clean_row = {}
-                  for key, value in row.items():
-                      clean_row[str(key).strip()] = clean_value(value)
-                  records.append(clean_row)
-              return records
+              return [
+                  {str(k).strip(): clean_value(v) for k, v in row.items()}
+                  for row in df.to_dict(orient="records")
+              ]
 
-          os.makedirs("data", exist_ok=True)
+          def write_json(path, payload):
+              with open(path, "w", encoding="utf-8") as f:
+                  json.dump(payload, f, ensure_ascii=False, separators=(",", ":"))
+
+          os.makedirs("data/history", exist_ok=True)
           source_date = selected_date.strftime("%Y-%m-%d")
-          updated_at = datetime.utcnow().isoformat() + "Z"
+          updated_at = datetime.now(timezone.utc).isoformat()
 
-          price_band_output = {
-              "updatedAt": updated_at,
-              "source": "NSE",
-              "sourceDate": source_date,
-              "recordCount": len(bands_df),
-              "records": dataframe_to_records(bands_df),
-          }
+          band_records = to_records(bands_df)
+          change_records = to_records(changes_df)
 
-          with open("data/price-bands.json", "w", encoding="utf-8") as f:
-              json.dump(price_band_output, f, ensure_ascii=False, separators=(",", ":"))
+          # Agar same sourceDate + same data hai to rewrite skip (faltu commit nahi)
+          unchanged = False
+          try:
+              with open("data/price-bands.json", encoding="utf-8") as f:
+                  old = json.load(f)
+              unchanged = (
+                  old.get("sourceDate") == source_date
+                  and old.get("records") == band_records
+              )
+          except Exception:
+              pass
 
-          change_output = {
-              "updatedAt": updated_at,
-              "source": "NSE",
-              "sourceDate": source_date,
-              "recordCount": 0 if changes_df is None else len(changes_df),
-              "records": dataframe_to_records(changes_df),
-          }
+          if unchanged:
+              print("Data already up to date for", source_date)
+          else:
+              write_json("data/price-bands.json", {
+                  "updatedAt": updated_at, "source": "NSE",
+                  "sourceDate": source_date,
+                  "recordCount": len(band_records),
+                  "records": band_records,
+              })
+              change_payload = {
+                  "updatedAt": updated_at, "source": "NSE",
+                  "sourceDate": source_date,
+                  "recordCount": len(change_records),
+                  "records": change_records,
+              }
+              write_json("data/price-band-changes.json", change_payload)
+              # Daily history (sirf jab changes ho)
+              if change_records:
+                  write_json(
+                      f"data/history/price-band-changes-{source_date}.json",
+                      change_payload,
+                  )
 
-          with open("data/price-band-changes.json", "w", encoding="utf-8") as f:
-              json.dump(change_output, f, ensure_ascii=False, separators=(",", ":"))
-
-          print("SUCCESS")
           print("Source date:", source_date)
-          print("Price bands:", len(bands_df))
-          print("Band changes:", 0 if changes_df is None else len(changes_df))
+          print("Price bands:", len(band_records))
+          print("Band changes:", len(change_records))
           PY
 
       - name: Commit and push price-band data
         run: |
           set -e
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add data/price-bands.json
-          git add data/price-band-changes.json
+          git add data/
 
           if git diff --cached --quiet; then
             echo "No price-band data changes."
@@ -190,19 +194,16 @@ jobs:
           for attempt in 1 2 3 4 5; do
             echo "Push attempt $attempt/5..."
             git fetch origin main
-
             if git rebase origin/main; then
               if git push origin main; then
-                echo "Price-band push successful."
+                echo "Push successful."
                 exit 0
               fi
             else
-              echo "Rebase failed. Aborting and retrying..."
               git rebase --abort || true
             fi
-
             sleep 5
           done
 
-          echo "ERROR: Could not push price-band data after 5 attempts."
+          echo "ERROR: Could not push after 5 attempts."
           exit 1
