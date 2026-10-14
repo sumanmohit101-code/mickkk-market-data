@@ -2,20 +2,29 @@ name: Update NSE Results Calendar
 
 on:
   workflow_dispatch:
+    inputs:
+      backfill:
+        description: "Force full 5-quarter history backfill (re-fetch the whole window)"
+        type: boolean
+        default: false
   schedule:
-    - cron: "30 4 * * 1-5"
+    - cron: "30 4 * * 1-5"   # 10:00 IST - refresh upcoming calendar
+    - cron: "30 14 * * 1-5"  # 20:00 IST - capture results filed after market hours
 
 permissions:
   contents: write
 
+# Separate group from the stock-data workflow: both already push with
+# fetch + rebase + retry, and sharing one group could silently cancel a
+# queued run when another one is pending.
 concurrency:
-  group: market-data-main
+  group: nse-results-calendar
   cancel-in-progress: false
 
 jobs:
   update-results:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - name: Checkout repository
@@ -31,12 +40,16 @@ jobs:
       - name: Install dependencies
         run: pip install curl_cffi
 
-      - name: Fetch NSE results calendar and history
+      - name: Fetch NSE results calendar and 5-quarter history
         shell: bash
+        env:
+          FORCE_BACKFILL: ${{ github.event.inputs.backfill }}
         run: |
           python <<'PY'
           import json
+          import os
           import re
+          import time
           from collections import defaultdict
           from datetime import datetime, timedelta
           from pathlib import Path
@@ -49,28 +62,65 @@ jobs:
           today = now.date()
           tomorrow = today + timedelta(days=1)
           week_end = today + timedelta(days=(6 - today.weekday()))
-          history_cutoff = today - timedelta(days=365)
 
+          # ---- history policy: 5 quarters -------------------------------
+          KEEP_RESULTS_PER_SYMBOL = 5      # latest 5 results per stock
+          HISTORY_WINDOW_DAYS = 500        # hard window (5 quarters + filing lag)
+          UPCOMING_LOOKAHEAD_DAYS = 120
+          RECENT_REFETCH_DAYS = 45         # every run re-reads the last 45 days
+          CHUNK_DAYS = 60                  # backfill is fetched in 60-day chunks
+          BACKFILL_IF_OLDEST_NEWER_THAN_DAYS = 90
+
+          history_cutoff = today - timedelta(days=HISTORY_WINDOW_DAYS)
+          force_backfill = os.environ.get("FORCE_BACKFILL", "").strip().lower() == "true"
+
+          NSE = "https://www.nseindia.com"
           DATA_DIR = Path("data")
           RESULTS_FILE = DATA_DIR / "results.json"
           HISTORY_DIR = DATA_DIR / "results-history"
           HISTORY_DIR.mkdir(parents=True, exist_ok=True)
 
+          # NOTE: no custom User-Agent here. curl_cffi already sends headers that
+          # match the impersonated Chrome TLS fingerprint; overriding the UA with a
+          # mismatching string makes NSE more likely to block the request.
           session = requests.Session(impersonate="chrome")
           session.headers.update({
               "accept": "application/json, text/plain, */*",
               "accept-language": "en-US,en;q=0.9",
-              "referer": "https://www.nseindia.com/",
-              "user-agent": (
-                  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                  "AppleWebKit/537.36 (KHTML, like Gecko) "
-                  "Chrome/151.0.0.0 Safari/537.36"
-              ),
+              "referer": NSE + "/",
           })
 
-          home = session.get("https://www.nseindia.com/", timeout=30)
-          if home.status_code != 200:
-              raise RuntimeError(f"NSE homepage failed: {home.status_code}")
+          def warm_up():
+              home = session.get(NSE + "/", timeout=30)
+              if home.status_code != 200:
+                  raise RuntimeError(f"NSE homepage failed: {home.status_code}")
+              try:
+                  session.get(
+                      NSE + "/companies-listing/corporate-filings-financial-results",
+                      timeout=30,
+                  )
+              except Exception:
+                  pass
+
+          def get_json(url, params=None, retries=3):
+              last = None
+              for attempt in range(1, retries + 1):
+                  try:
+                      response = session.get(url, params=params, timeout=45)
+                      if response.status_code == 200:
+                          return response.json()
+                      last = f"HTTP {response.status_code}"
+                  except Exception as exc:
+                      last = repr(exc)
+                  print(f"  retry {attempt}/{retries}: {url} {params or ''} -> {last}")
+                  time.sleep(3 * attempt)
+                  try:
+                      warm_up()
+                  except Exception:
+                      pass
+              raise RuntimeError(f"{url} failed after {retries} attempts: {last}")
+
+          warm_up()
 
           def rows(payload):
               if isinstance(payload, list):
@@ -89,9 +139,12 @@ jobs:
               return str(value or "").strip()
 
           def date_of(value):
-              if not value:
-                  return None
+              """Parse NSE dates, including values that carry a time part such as
+              '27-Aug-2026 17:45:12' (NSE broadcast/filing fields do)."""
               value = clean_text(value)
+              if not value or value == "-":
+                  return None
+              value = re.split(r"[ T]", value, maxsplit=1)[0]
               for fmt in (
                   "%d-%b-%Y",
                   "%d-%B-%Y",
@@ -103,11 +156,10 @@ jobs:
                       return datetime.strptime(value, fmt).date()
                   except ValueError:
                       pass
-              try:
-                  parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
-                  return parsed.date()
-              except Exception:
-                  return None
+              return None
+
+          def fmt_param(d):
+              return d.strftime("%d-%m-%Y")
 
           def is_result_event(row):
               text = " ".join([
@@ -115,7 +167,7 @@ jobs:
                   clean_text(row.get("bm_desc")),
                   clean_text(row.get("description")),
               ]).lower()
-              return "financial result" in text or "financial results" in text
+              return "financial result" in text
 
           def event_to_item(row):
               symbol = clean_text(row.get("symbol")).upper()
@@ -132,12 +184,14 @@ jobs:
                   ),
               }
 
-          # Master symbol list. This remains the canonical list for symbolWise.
+          # ---- master symbol list ---------------------------------------
           tracked_symbols = []
+          seen_symbols = set()
           with open("symbols.txt", "r", encoding="utf-8") as f:
               for line in f:
                   symbol = line.strip().upper()
-                  if symbol and symbol not in tracked_symbols:
+                  if symbol and symbol not in seen_symbols:
+                      seen_symbols.add(symbol)
                       tracked_symbols.append(symbol)
 
           symbol_names = {}
@@ -154,56 +208,119 @@ jobs:
           except Exception as exc:
               print("Could not read symbols.json:", repr(exc))
 
-          # ------------------------------------------------------------
-          # 1) UPCOMING RESULTS: today / tomorrow / this week / allUpcoming
-          # ------------------------------------------------------------
-          event_response = session.get(
-              "https://www.nseindia.com/api/event-calendar",
-              timeout=30,
-          )
-          if event_response.status_code != 200:
-              raise RuntimeError(
-                  f"NSE event calendar failed: {event_response.status_code}"
-              )
+          # ---- previous durable state -----------------------------------
+          previous = {}
+          if RESULTS_FILE.exists():
+              try:
+                  with open(RESULTS_FILE, "r", encoding="utf-8") as f:
+                      previous = json.load(f)
+              except Exception as exc:
+                  print("Could not read previous results.json:", repr(exc))
+          if not isinstance(previous, dict):
+              previous = {}
+          existing_history = previous.get("history", []) or []
+          previous_upcoming = previous.get("allUpcoming", []) or []
 
+          # ------------------------------------------------------------
+          # 1) UPCOMING RESULTS
+          # ------------------------------------------------------------
+          def load_upcoming():
+              attempts = [
+                  {
+                      "index": "equities",
+                      "from_date": fmt_param(today),
+                      "to_date": fmt_param(today + timedelta(days=UPCOMING_LOOKAHEAD_DAYS)),
+                  },
+                  None,  # plain call = NSE default window
+              ]
+              for params in attempts:
+                  try:
+                      data = rows(get_json(NSE + "/api/event-calendar", params=params))
+                  except Exception as exc:
+                      print("event-calendar failed:", params, repr(exc))
+                      continue
+                  if data:
+                      return data
+              return None
+
+          raw_upcoming = load_upcoming()
           upcoming_map = {}
-          for row in rows(event_response.json()):
-              if not isinstance(row, dict):
-                  continue
-              item = event_to_item(row)
-              if not item or date_of(item["date"]) < today:
-                  continue
-              key = (
-                  item["symbol"],
-                  item["date"],
-                  item["description"],
-                  item["purpose"],
-              )
-              upcoming_map[key] = item
 
-          upcoming = sorted(
-              upcoming_map.values(),
-              key=lambda x: (x["date"], x["symbol"]),
+          if raw_upcoming is not None:
+              for row in raw_upcoming:
+                  if not isinstance(row, dict):
+                      continue
+                  item = event_to_item(row)
+                  if not item or date_of(item["date"]) < today:
+                      continue
+                  key = (item["symbol"], item["date"])   # one entry per stock per day
+                  old = upcoming_map.get(key)
+                  if old is None or len(item["description"]) > len(old["description"]):
+                      upcoming_map[key] = item
+          else:
+              # NSE unreachable / empty: keep the previous calendar instead of
+              # wiping it or failing the whole run (history can still update).
+              print("WARNING: event calendar unavailable, reusing previous upcoming list")
+              for item in previous_upcoming:
+                  if not isinstance(item, dict) or not item.get("symbol"):
+                      continue
+                  d = date_of(item.get("date"))
+                  if d and d >= today:
+                      clean = {k: v for k, v in item.items() if k != "declared"}
+                      upcoming_map[(clean["symbol"], clean["date"])] = clean
+              if not upcoming_map:
+                  raise RuntimeError("Event calendar failed and no previous upcoming data to fall back on")
+
+          # ------------------------------------------------------------
+          # 2) RESULT HISTORY (5 quarters)
+          # ------------------------------------------------------------
+          existing_dates = [
+              d for d in (
+                  date_of(x.get("resultDate")) for x in existing_history if isinstance(x, dict)
+              ) if d
+          ]
+          oldest_existing = min(existing_dates) if existing_dates else None
+          needs_backfill = (
+              force_backfill
+              or oldest_existing is None
+              or oldest_existing > history_cutoff + timedelta(days=BACKFILL_IF_OLDEST_NEWER_THAN_DAYS)
+          )
+          fetch_from = history_cutoff if needs_backfill else today - timedelta(days=RECENT_REFETCH_DAYS)
+          print(
+              "History fetch mode:",
+              "FULL BACKFILL" if needs_backfill else "incremental",
+              "| from", fetch_from.isoformat(),
+              "| oldest existing:", oldest_existing,
           )
 
-          # ------------------------------------------------------------
-          # 2) RESULT HISTORY: fetch NSE financial-result records.
-          #    Result date is the actual filing/broadcast date exposed by NSE.
-          # ------------------------------------------------------------
+          RESULTS_URL = NSE + "/api/corporates-financial-results"
           fetched_history = []
           for period in ("Quarterly", "Annual", "Half-Yearly", "Others"):
-              url = (
-                  "https://www.nseindia.com/api/corporates-financial-results"
-                  "?index=equities&period=" + period
-              )
+              got = 0
+              start = fetch_from
+              while start <= today:
+                  end = min(start + timedelta(days=CHUNK_DAYS - 1), today)
+                  try:
+                      data = rows(get_json(RESULTS_URL, params={
+                          "index": "equities",
+                          "period": period,
+                          "from_date": fmt_param(start),
+                          "to_date": fmt_param(end),
+                      }))
+                      fetched_history.extend(data)
+                      got += len(data)
+                  except Exception as exc:
+                      print("Financial results chunk failed:", period, start, end, repr(exc))
+                  start = end + timedelta(days=1)
+                  time.sleep(0.5)
+              # Safety net: the plain call (NSE's default recent window).
               try:
-                  response = session.get(url, timeout=30)
-                  if response.status_code != 200:
-                      print("Financial results HTTP", period, response.status_code)
-                      continue
-                  fetched_history.extend(rows(response.json()))
+                  data = rows(get_json(RESULTS_URL, params={"index": "equities", "period": period}))
+                  fetched_history.extend(data)
+                  got += len(data)
               except Exception as exc:
-                  print("Financial results error", period, repr(exc))
+                  print("Financial results default call failed:", period, repr(exc))
+              print("Financial results", period, "rows fetched:", got)
 
           def history_item(row):
               if not isinstance(row, dict):
@@ -211,21 +328,13 @@ jobs:
               symbol = clean_text(row.get("symbol")).upper()
               if not symbol:
                   return None
-
               result_date = None
-              for key in (
-                  "broadCastDate",
-                  "broadcastDate",
-                  "filingDate",
-                  "exchdisstime",
-              ):
+              for key in ("broadCastDate", "broadcastDate", "filingDate", "exchdisstime"):
                   result_date = date_of(row.get(key))
                   if result_date:
                       break
-
               if not result_date:
                   return None
-
               return {
                   "symbol": symbol,
                   "company": clean_text(row.get("companyName")),
@@ -238,19 +347,6 @@ jobs:
                   "audited": clean_text(row.get("audited")),
               }
 
-          # Keep the previous history as the durable source, then merge fresh data.
-          existing_history = []
-          if RESULTS_FILE.exists():
-              try:
-                  with open(RESULTS_FILE, "r", encoding="utf-8") as f:
-                      previous = json.load(f)
-                  if isinstance(previous, dict):
-                      existing_history = previous.get("history", []) or []
-              except Exception as exc:
-                  print("Could not read previous results.json:", repr(exc))
-
-          history_map = {}
-
           def history_key(item):
               return json.dumps({
                   "symbol": item.get("symbol"),
@@ -261,28 +357,49 @@ jobs:
                   "relatingTo": item.get("relatingTo", ""),
               }, sort_keys=True)
 
-          for item in existing_history:
-              if not isinstance(item, dict):
-                  continue
-              d = date_of(item.get("resultDate"))
-              if d and d >= history_cutoff and d <= today and item.get("symbol"):
-                  history_map[history_key(item)] = item
+          pool = {}
 
+          def add_to_pool(item):
+              d = date_of(item.get("resultDate"))
+              if not item.get("symbol") or not d or d < history_cutoff or d > today:
+                  return
+              pool[history_key(item)] = item
+
+          for item in existing_history:
+              if isinstance(item, dict):
+                  add_to_pool(item)
           for row in fetched_history:
               item = history_item(row)
-              if not item:
-                  continue
-              d = date_of(item["resultDate"])
-              if d < history_cutoff or d > today:
-                  continue
-              history_map[history_key(item)] = item
+              if item:
+                  add_to_pool(item)
 
-          history = list(history_map.values())
+          # One entry per (stock, period-end date): the ORIGINAL declaration is the
+          # earliest filing. Revised/re-filed results and Q4+Annual duplicates for
+          # the same period-end collapse into a single result.
+          groups = {}
+          for item in pool.values():
+              period_end = date_of(item.get("periodTo"))
+              gkey = (item["symbol"], period_end.isoformat() if period_end else "d:" + item["resultDate"])
+              rank = (item["resultDate"], 0 if item.get("period") == "Quarterly" else 1)
+              current = groups.get(gkey)
+              if current is None or rank < current[0]:
+                  groups[gkey] = (rank, item)
+
+          per_symbol = defaultdict(list)
+          for _, item in groups.values():
+              per_symbol[item["symbol"]].append(item)
+
+          history = []
+          for symbol, items in per_symbol.items():
+              items.sort(key=lambda x: x["resultDate"], reverse=True)
+              history.extend(items[:KEEP_RESULTS_PER_SYMBOL])   # keep latest 5 results
           history.sort(key=lambda x: (x["resultDate"], x["symbol"]), reverse=True)
 
+          if existing_history and not history:
+              raise RuntimeError("History came out empty although previous history existed; refusing to overwrite")
+
           # ------------------------------------------------------------
-          # 3) DATE FILES: one durable JSON file per result date.
-          #    These are rewritten from the rolling 1-year history on each run.
+          # 3) DATE FILES (rewritten from the retained history)
           # ------------------------------------------------------------
           by_date = defaultdict(list)
           for item in history:
@@ -290,7 +407,7 @@ jobs:
 
           for date_str, items in by_date.items():
               items.sort(key=lambda x: x["symbol"])
-              date_payload = {
+              payload = {
                   "source": "NSE",
                   "date": date_str,
                   "updatedAt": now.isoformat(),
@@ -299,53 +416,55 @@ jobs:
                   "results": items,
               }
               with open(HISTORY_DIR / f"{date_str}.json", "w", encoding="utf-8") as f:
-                  json.dump(date_payload, f, ensure_ascii=False, indent=2)
+                  json.dump(payload, f, ensure_ascii=False, separators=(",", ":"))
 
-          # Remove date files that have fallen outside the rolling 365-day window.
+          # Remove date files that no longer hold any retained result
+          # (older than the window, or pushed out by the 5-per-stock cap).
           for path in HISTORY_DIR.glob("*.json"):
-              if not re.fullmatch(r"\d{4}-\d{2}-\d{2}\.json", path.name):
-                  continue
-              file_date = date_of(path.stem)
-              if file_date and file_date < history_cutoff:
+              if re.fullmatch(r"\d{4}-\d{2}-\d{2}\.json", path.name) and path.stem not in by_date:
                   path.unlink()
 
           # ------------------------------------------------------------
-          # 4) SHIFT LOGIC:
-          #    - upcoming result date is always the nearest future date.
-          #    - once that date becomes <= today, it is no longer upcoming.
-          #    - lastResultDate comes from durable history.
+          # 4) SHIFT LOGIC
           # ------------------------------------------------------------
           latest_by_symbol = {}
-          for item in history:
-              symbol = item["symbol"]
-              old = latest_by_symbol.get(symbol)
-              if old is None or item["resultDate"] > old["resultDate"]:
-                  latest_by_symbol[symbol] = item
+          for item in history:                      # history is sorted newest-first
+              latest_by_symbol.setdefault(item["symbol"], item)
+
+          upcoming = sorted(upcoming_map.values(), key=lambda x: (x["date"], x["symbol"]))
+          for item in upcoming:
+              last = latest_by_symbol.get(item["symbol"])
+              # declared = NSE already has a result filed on/after this scheduled date.
+              item["declared"] = bool(last and last["resultDate"] >= item["date"])
 
           for item in upcoming:
-              if item["symbol"] not in tracked_symbols:
+              if item["symbol"] not in seen_symbols:
+                  seen_symbols.add(item["symbol"])
                   tracked_symbols.append(item["symbol"])
-
           for item in history:
-              if item["symbol"] not in tracked_symbols:
+              if item["symbol"] not in seen_symbols:
+                  seen_symbols.add(item["symbol"])
                   tracked_symbols.append(item["symbol"])
+          tracked_symbols = sorted(tracked_symbols)
 
-          tracked_symbols = sorted(set(tracked_symbols))
+          future_by_symbol = defaultdict(list)
+          for item in upcoming:
+              if not item["declared"]:              # next result = first NOT-yet-declared date
+                  future_by_symbol[item["symbol"]].append(item)
+
+          dates_by_symbol = defaultdict(list)
+          for item in history:
+              dates_by_symbol[item["symbol"]].append(item["resultDate"])
 
           symbol_wise = []
           for symbol in tracked_symbols:
-              future = sorted(
-                  [x for x in upcoming if x["symbol"] == symbol],
-                  key=lambda x: x["date"],
-              )
+              future = future_by_symbol.get(symbol, [])
               last = latest_by_symbol.get(symbol)
-
               company = (
                   symbol_names.get(symbol)
                   or (last or {}).get("company")
-                  or next((x["company"] for x in future if x.get("company")), symbol)
+                  or next((x["company"] for x in upcoming if x["symbol"] == symbol and x.get("company")), symbol)
               )
-
               symbol_wise.append({
                   "symbol": symbol,
                   "company": company,
@@ -353,23 +472,21 @@ jobs:
                   "nextResultDate": future[0]["date"] if future else None,
                   "lastResult": last,
                   "upcomingResults": future,
-                  "historyCount": sum(1 for x in history if x["symbol"] == symbol),
+                  "resultDates": dates_by_symbol.get(symbol, []),   # up to 5, newest first
+                  "historyCount": len(dates_by_symbol.get(symbol, [])),
               })
 
           today_results = [x for x in upcoming if x["date"] == today.isoformat()]
           tomorrow_results = [x for x in upcoming if x["date"] == tomorrow.isoformat()]
-          this_week = [
-              x for x in upcoming
-              if today <= date_of(x["date"]) <= week_end
-          ]
+          this_week = [x for x in upcoming if today <= date_of(x["date"]) <= week_end]
 
           output = {
               "source": "NSE",
               "updatedAt": now.isoformat(),
               "timezone": "Asia/Kolkata",
               "historyPolicy": {
-                  "windowDays": 365,
-                  "autoDeleteOlderThanDays": 365,
+                  "keepResultsPerSymbol": KEEP_RESULTS_PER_SYMBOL,
+                  "windowDays": HISTORY_WINDOW_DAYS,
                   "dateFiles": "data/results-history/YYYY-MM-DD.json",
               },
               "symbolCount": len(symbol_wise),
@@ -387,17 +504,15 @@ jobs:
               raise RuntimeError("No symbols available for results output")
 
           with open(RESULTS_FILE, "w", encoding="utf-8") as f:
-              json.dump(output, f, ensure_ascii=False, indent=2)
+              json.dump(output, f, ensure_ascii=False, separators=(",", ":"))
 
           print("======================================")
           print("RESULTS UPDATE COMPLETE")
           print("Tracked symbols:", len(symbol_wise))
-          print("1-year history rows:", len(history))
+          print("History rows (max 5/stock):", len(history))
           print("Symbols with last result:", sum(1 for x in symbol_wise if x["lastResultDate"]))
           print("Symbols with next result:", sum(1 for x in symbol_wise if x["nextResultDate"]))
-          print("Today:", len(today_results))
-          print("Tomorrow:", len(tomorrow_results))
-          print("This week:", len(this_week))
+          print("Today:", len(today_results), "| Tomorrow:", len(tomorrow_results), "| This week:", len(this_week))
           print("Date history files:", len(by_date))
           print("======================================")
           PY
@@ -408,8 +523,17 @@ jobs:
           python - <<'PY'
           import json
           import re
-          from datetime import date, timedelta
+          from collections import Counter
+          from datetime import date, datetime, timedelta
           from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          KEEP_RESULTS_PER_SYMBOL = 5
+          HISTORY_WINDOW_DAYS = 500
+
+          # Use IST, same as the fetch step (the runner clock is UTC).
+          today = datetime.now(ZoneInfo("Asia/Kolkata")).date()
+          cutoff = today - timedelta(days=HISTORY_WINDOW_DAYS)
 
           with open("data/results.json", "r", encoding="utf-8") as f:
               data = json.load(f)
@@ -419,42 +543,48 @@ jobs:
           if not symbol_rows:
               raise SystemExit("symbolWise is empty")
 
-          cutoff = date.today() - timedelta(days=365)
-          history_keys = set()
-
+          per_symbol = Counter()
+          history_dates = set()
           for item in history:
               if not isinstance(item, dict):
                   raise SystemExit("Invalid history row")
               d = date.fromisoformat(item["resultDate"])
-              if d < cutoff or d > date.today():
-                  raise SystemExit(
-                      f"History row outside rolling window: {item}"
-                  )
-              history_keys.add((
-                  item.get("symbol"),
-                  item.get("resultDate"),
-                  item.get("period", ""),
-                  item.get("periodFrom", ""),
-                  item.get("periodTo", ""),
-                  item.get("relatingTo", ""),
-              ))
+              if d < cutoff or d > today:
+                  raise SystemExit(f"History row outside rolling window: {item}")
+              per_symbol[item["symbol"]] += 1
+              history_dates.add(item["resultDate"])
+
+          too_many = [s for s, n in per_symbol.items() if n > KEEP_RESULTS_PER_SYMBOL]
+          if too_many:
+              raise SystemExit(f"More than {KEEP_RESULTS_PER_SYMBOL} results kept for: {too_many[:10]}")
+
+          for item in data.get("allUpcoming", []):
+              if date.fromisoformat(item["date"]) < today:
+                  raise SystemExit(f"Past event still in allUpcoming: {item}")
 
           by_date = Path("data/results-history")
+          file_dates = set()
           for path in by_date.glob("*.json"):
               if not re.fullmatch(r"\d{4}-\d{2}-\d{2}\.json", path.name):
                   raise SystemExit(f"Invalid results-history filename: {path.name}")
               payload = json.loads(path.read_text(encoding="utf-8"))
-              expected_date = path.stem
+              file_dates.add(path.stem)
               for item in payload.get("results", []):
-                  if item.get("resultDate") != expected_date:
-                      raise SystemExit(
-                          f"Date file mismatch: {path} contains {item.get('resultDate')}"
-                      )
+                  if item.get("resultDate") != path.stem:
+                      raise SystemExit(f"Date file mismatch: {path} contains {item.get('resultDate')}")
+
+          if file_dates != history_dates:
+              raise SystemExit(
+                  "Date files out of sync with history. "
+                  f"missing files: {sorted(history_dates - file_dates)[:5]} "
+                  f"stale files: {sorted(file_dates - history_dates)[:5]}"
+              )
 
           print("Validated symbolWise rows:", len(symbol_rows))
           print("Validated history rows:", len(history))
+          print("Max results kept for one stock:", max(per_symbol.values()) if per_symbol else 0)
           print("History cutoff:", cutoff.isoformat())
-          print("Validated date history directory:", by_date)
+          print("Validated date files:", len(file_dates))
           PY
 
       - name: Commit and push
