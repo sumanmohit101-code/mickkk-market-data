@@ -7,8 +7,11 @@ import time
 
 import requests
 
-MODEL = "gemini-2.5-flash-lite"
-URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent"
+# Pehla model chalega; 404 (model band/unavailable) aaye to agla try hoga.
+MODELS = [m for m in [os.environ.get("GEMINI_MODEL"), "gemini-3.5-flash-lite",
+                      "gemini-3.1-flash-lite"] if m]
+MODEL_IDX = 0
+BASE = "https://generativelanguage.googleapis.com/v1beta/models/"
 KEY = os.environ.get("GEMINI_API_KEY", "")
 MAX_PER_RUN = int(sys.argv[1]) if len(sys.argv) > 1 else 40
 PAUSE = 6  # seconds between calls (~10 per minute, free tier ke liye safe)
@@ -59,8 +62,17 @@ def ask(rec):
     body = {"contents": [{"parts": parts}],
             "generationConfig": {"responseMimeType": "application/json",
                                  "temperature": 0}}
-    r = session.post(URL, json=body, timeout=90,
-                     headers={"x-goog-api-key": KEY, "Content-Type": "application/json"})
+    global MODEL_IDX
+    while True:
+        if MODEL_IDX >= len(MODELS):
+            return "NO_MODEL"
+        r = session.post(f"{BASE}{MODELS[MODEL_IDX]}:generateContent", json=body, timeout=90,
+                         headers={"x-goog-api-key": KEY, "Content-Type": "application/json"})
+        if r.status_code == 404:
+            print(f"  Model {MODELS[MODEL_IDX]} unavailable (404), next model try kar rahe hain")
+            MODEL_IDX += 1
+            continue
+        break
     if r.status_code == 429:
         return "RATE_LIMIT"
     if r.status_code != 200:
@@ -102,12 +114,15 @@ def main():
             if not r.get("ai_done"):
                 todo.append((p, r))
     todo.sort(key=lambda x: (x[1]["date"], x[1].get("time", "")), reverse=True)
+    print("Models:", MODELS)
     print("Pending:", len(todo), "| this run:", min(len(todo), MAX_PER_RUN))
 
     done = failed = 0
     touched = set()
     for p, rec in todo[:MAX_PER_RUN]:
         res = ask(rec)
+        if res == "NO_MODEL":
+            raise SystemExit("Koi bhi model available nahi. AI Studio mein model naam check karo.")
         if res == "RATE_LIMIT":
             print("Rate limit hit, stopping. Baaki kal.")
             break
@@ -137,6 +152,7 @@ def main():
         j["recordCount"] = len(j["records"])
         with open(p, "w", encoding="utf-8") as f:
             json.dump(j, f, ensure_ascii=False, separators=(",", ":"))
+    print("Model used:", MODELS[min(MODEL_IDX, len(MODELS) - 1)])
     print(f"Done. processed={done} failed={failed} files_updated={len(touched)}")
 
 
