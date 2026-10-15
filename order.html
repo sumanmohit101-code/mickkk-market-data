@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order Tracker</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#14202b;--mute:#5d6b78;--line:#dde2e8;--bar:#1f6f8b;--bar2:#e0a526;--hot:#0f8a5f}
+@media (prefers-color-scheme:dark){:root{--bg:#0f161d;--card:#17212b;--ink:#e8eef3;--mute:#93a1ae;--line:#27333f;--bar:#4fb0cf;--bar2:#e8b84a;--hot:#43c796}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:24px;margin:0 0 4px}
+.sub{color:var(--mute);margin:0 0 18px;max-width:70ch}
+.bar-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+button,select,input{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 12px}
+button{cursor:pointer}
+button.on{background:var(--bar);border-color:var(--bar);color:#fff}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--bar2);outline-offset:2px}
+input{min-width:180px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+.card h2{font-size:16px;margin:0 0 12px}
+.row{display:grid;grid-template-columns:110px 1fr 110px;gap:10px;align-items:center;padding:4px 0;cursor:pointer}
+.row:hover .sym{text-decoration:underline}
+.sym{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.track{background:var(--bg);border-radius:4px;height:20px;overflow:hidden}
+.fill{height:100%;background:var(--bar);border-radius:4px;min-width:2px}
+.val{text-align:right;font-variant-numeric:tabular-nums}
+.val small{display:block;color:var(--mute);font-size:11px;line-height:1.1}
+.months{display:flex;align-items:flex-end;gap:6px;height:170px;padding-top:8px;overflow-x:auto}
+.m{flex:1;min-width:34px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+.m .col{width:100%;background:var(--bar2);border-radius:4px 4px 0 0;min-height:2px}
+.m .n{font-size:11px;color:var(--mute);margin-top:4px;white-space:nowrap}
+.m .v{font-size:11px;font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td,th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mute);font-weight:600}
+td.r{text-align:right;white-space:nowrap}
+a{color:var(--bar)}
+.note{color:var(--mute);font-size:13px}
+.err{color:#c0392b}
+@media (max-width:560px){.row{grid-template-columns:80px 1fr 80px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Order Tracker</h1>
+  <p class="sub">Orders each company announced to NSE, by stock. Bars show the total value of orders where an amount was stated in the announcement. This is order inflow, not a company's full order book.</p>
+
+  <div class="bar-ctl">
+    <span class="note">Period</span>
+    <button data-d="30" class="on">30 days</button>
+    <button data-d="90">90 days</button>
+    <button data-d="180">6 months</button>
+    <button data-d="365">1 year</button>
+    <select id="metric"><option value="value">Rank by order value</option><option value="count">Rank by order count</option></select>
+    <input id="q" placeholder="Search stock, e.g. LT" list="syms">
+    <datalist id="syms"></datalist>
+  </div>
+
+  <div class="card">
+    <h2 id="t1">Top stocks</h2>
+    <div id="chart"></div>
+    <p class="note" id="foot"></p>
+  </div>
+
+  <div class="card" id="detail" hidden>
+    <h2 id="dt"></h2>
+    <div class="months" id="mbars"></div>
+    <div style="overflow-x:auto;margin-top:14px"><table id="list"></table></div>
+  </div>
+  <p class="note" id="status">Loading…</p>
+</div>
+
+<script>
+const BASE = "data/orders/";
+const MONTHS_TO_LOAD = 13;
+let ALL = [], days = 30, sel = null;
+const $ = id => document.getElementById(id);
+const fmt = n => n >= 100000 ? (n/100000).toFixed(2) + " L Cr" : n.toLocaleString("en-IN", {maximumFractionDigits: 0}) + " Cr";
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+async function load() {
+  const now = new Date(), keys = [];
+  for (let i = 0; i < MONTHS_TO_LOAD; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    keys.push(d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0"));
+  }
+  const res = await Promise.all(keys.map(k =>
+    fetch(BASE + k + ".json", {cache: "no-cache"}).then(r => r.ok ? r.json() : null).catch(() => null)));
+  res.forEach(j => { if (j && j.records) ALL.push(...j.records); });
+  if (!ALL.length) {
+    $("status").innerHTML = '<span class="err">No data found in data/orders/. Run the Orders workflow first and open this page from your site.</span>';
+    return;
+  }
+  const latest = ALL.reduce((a, r) => r.date > a ? r.date : a, "");
+  $("status").textContent = "Latest announcement: " + latest + " · " + ALL.length + " order announcements loaded";
+  $("syms").innerHTML = [...new Set(ALL.map(r => r.symbol))].sort().map(s => `<option value="${esc(s)}">`).join("");
+  render();
+}
+
+function inWindow() {
+  const c = new Date(Date.now() - days * 864e5).toISOString().slice(0, 10);
+  return ALL.filter(r => r.date >= c);
+}
+
+function render() {
+  const agg = {};
+  inWindow().forEach(r => {
+    const a = agg[r.symbol] ||= {symbol: r.symbol, company: r.company, count: 0, withVal: 0, total: 0};
+    a.count++;
+    if (r.value_cr != null) { a.withVal++; a.total += r.value_cr; }
+  });
+  const byCount = $("metric").value === "count";
+  const rows = Object.values(agg)
+    .sort((a, b) => byCount ? b.count - a.count : b.total - a.total || b.count - a.count)
+    .slice(0, 25);
+  const max = Math.max(1, ...rows.map(r => byCount ? r.count : r.total));
+  $("t1").textContent = "Top 25 stocks · last " + (days === 365 ? "1 year" : days === 180 ? "6 months" : days + " days");
+  $("chart").innerHTML = rows.map(r => {
+    const v = byCount ? r.count : r.total;
+    return `<div class="row" data-s="${esc(r.symbol)}" title="${esc(r.company)}">
+      <div class="sym">${esc(r.symbol)}</div>
+      <div class="track"><div class="fill" style="width:${(v / max * 100).toFixed(1)}%"></div></div>
+      <div class="val">${byCount ? r.count + " orders" : fmt(r.total)}<small>${r.withVal}/${r.count} with value</small></div></div>`;
+  }).join("") || '<p class="note">No orders in this period.</p>';
+  $("foot").textContent = "Click a bar to see that stock's month-wise orders. 'with value' shows how many orders stated an amount; the rest are not counted in the bar.";
+  if (sel) showDetail(sel);
+}
+
+function showDetail(sym) {
+  sel = sym;
+  const recs = ALL.filter(r => r.symbol === sym).sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time));
+  if (!recs.length) { $("detail").hidden = true; return; }
+  const by = {};
+  recs.forEach(r => { const m = r.date.slice(0, 7); by[m] = (by[m] || 0) + (r.value_cr || 0); });
+  const keys = Object.keys(by).sort();
+  const mx = Math.max(1, ...keys.map(k => by[k]));
+  $("dt").textContent = sym + " · " + (recs[0].company || "") + " · monthly order value";
+  $("mbars").innerHTML = keys.map(k => `<div class="m"><div class="v">${by[k] ? fmt(by[k]) : "–"}</div><div class="col" style="height:${(by[k] / mx * 120).toFixed(0)}px"></div><div class="n">${k}</div></div>`).join("");
+  $("list").innerHTML = "<tr><th>Date</th><th>Announcement</th><th class='r'>Value</th></tr>" + recs.slice(0, 30).map(r =>
+    `<tr><td>${r.date}</td><td>${esc(r.text)}${r.pdf ? ` <a href="${esc(r.pdf)}" target="_blank" rel="noopener">PDF</a>` : ""}</td><td class="r">${r.value_cr != null ? fmt(r.value_cr) : esc(r.foreign_value || "–")}</td></tr>`).join("");
+  $("detail").hidden = false;
+  $("detail").scrollIntoView({behavior: "smooth", block: "nearest"});
+}
+
+document.querySelectorAll("[data-d]").forEach(b => b.onclick = () => {
+  document.querySelectorAll("[data-d]").forEach(x => x.classList.remove("on"));
+  b.classList.add("on"); days = +b.dataset.d; render();
+});
+$("metric").onchange = render;
+$("chart").onclick = e => { const r = e.target.closest(".row"); if (r) showDetail(r.dataset.s); };
+$("q").onchange = () => { const s = $("q").value.trim().toUpperCase(); if (s) showDetail(s); };
+load();
+</script>
+</body>
+</html>
