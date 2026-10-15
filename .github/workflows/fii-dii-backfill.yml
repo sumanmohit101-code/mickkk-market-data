@@ -1,0 +1,67 @@
+name: Backfill FII DII F&O History
+
+on:
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "Kitne din peeche tak (max 730)"
+        default: "730"
+
+concurrency:
+  group: market-data-main
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pandas xlrd openpyxl
+
+      - name: Backfill
+        run: python scripts/fii_dii_fo.py backfill "${{ github.event.inputs.days }}"
+
+      - name: Commit and push
+        if: always()
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+
+          if git diff --cached --quiet; then
+            echo "No data changes."
+            exit 0
+          fi
+
+          git commit -m "Backfill FII/DII F&O and participant history"
+
+          for attempt in 1 2 3 4 5; do
+            echo "Push attempt $attempt/5..."
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin main; then
+                echo "Push successful."
+                exit 0
+              fi
+            else
+              git rebase --abort || true
+            fi
+            sleep 5
+          done
+
+          echo "ERROR: Could not push after 5 attempts."
+          exit 1
