@@ -62,6 +62,7 @@ function parse(r){
   if(m)dur=/^m/i.test(m[2])?+m[1]:+m[1]*12;
   let cu=null;const c=t.match(/\b(?:from|by|with)\s+(?:M\/s\.?\s+)?([A-Z][A-Za-z0-9&.,'() \-]{3,70}?)(?=\s+(?:for|worth|valued|amounting|of|at|to|aggregating)\b|\s*[.;]|\s*\(|$)/);
   if(c)cu=c[1].trim();
+  if(r.ai_done){dur=r.duration_months??null;cu=r.customer||null}
   const v=r.value_cr;
   const ann=v==null?null:(dur&&dur>12?v/(dur/12):v);
   return {...r,customer:cu,dur,ann};
@@ -76,7 +77,7 @@ async function load(){
     fetch("data/revenue.json",{cache:"no-cache"}).then(r=>r.ok?r.json():{}).catch(()=>({})),
     ...keys.map(k=>fetch("data/orders/"+k+".json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).catch(()=>null))]);
   REV=rev.revenue||rev||{};
-  ALL=[];res.forEach(j=>j&&j.records&&ALL.push(...j.records.map(parse)));
+  ALL=[];res.forEach(j=>j&&j.records&&ALL.push(...j.records.filter(r=>r.ai_is_order!==false).map(parse)));
   if(!ALL.length){$("view").innerHTML='<div class="empty">No data in data/orders/. Run the Orders workflow and open this page from your deployed site.</div>';$("status").textContent="";return}
   $("syms").innerHTML=[...new Set(ALL.map(r=>r.symbol))].sort().map(s=>`<option value="${esc(s)}">`).join("");
   const hasRev=Object.keys(REV).length;
