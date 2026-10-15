@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sector Rotation</title>
+<style>
+:root{--bg:#f4f6f8;--pn:#fff;--pn2:#eef1f4;--ink:#16212c;--mute:#667584;--line:#dfe4ea;--acc:#4f46e5;--up:#0f8a5f;--dn:#d6334a;--bm:#8896a3}
+@media (prefers-color-scheme:dark){:root{--bg:#0c0f1a;--pn:#131829;--pn2:#1a2036;--ink:#e6eaf5;--mute:#8a94b0;--line:#252c45;--acc:#7c78ff;--up:#34d399;--dn:#fb7185;--bm:#8d96ad}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 Inter,system-ui,"Segoe UI",sans-serif}
+.wrap{max-width:1360px;margin:0 auto;padding:16px 16px 60px}
+header{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+h1{font-size:21px;margin:0}.note{color:var(--mute);font-size:12px}a{color:var(--acc)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--pn);border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px}
+.grp{display:flex;align-items:center;gap:4px}.grp>span{color:var(--mute);font-size:12px;margin-right:2px}
+button,select,input{font:inherit;color:var(--ink);background:var(--pn2);border:1px solid var(--line);border-radius:6px;padding:6px 10px}
+button{cursor:pointer}button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+:focus-visible{outline:2px solid var(--acc);outline-offset:1px}input{min-width:180px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:12px}
+.card{background:var(--pn);border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer}
+.card:hover{border-color:var(--acc)}
+.top{display:flex;justify-content:space-between;gap:8px}.nm{font-weight:650;font-size:15px}.par{color:var(--mute);font-size:12px}
+.ret{text-align:right;font-weight:700;font-size:17px;font-variant-numeric:tabular-nums}.ret small{display:block;font-size:11px;font-weight:600}
+.up{color:var(--up)}.dn{color:var(--dn)}.meta{color:var(--mute);font-size:12px;margin:2px 0 6px;display:flex;gap:10px;flex-wrap:wrap}
+.star{cursor:pointer;color:var(--mute);font-size:16px;background:none;border:0;padding:0 4px}.star.on{color:#e6b422}
+.ch{position:relative}svg{display:block;width:100%;height:auto}
+.leg{display:flex;gap:14px;color:var(--mute);font-size:11px;margin-top:2px}
+.tip{position:fixed;pointer-events:none;background:var(--pn);border:1px solid var(--line);border-radius:6px;padding:6px 9px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:50;display:none;font-variant-numeric:tabular-nums}
+.empty{padding:40px;text-align:center;color:var(--mute)}
+.more{display:block;margin:16px auto}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:40;display:none;overflow:auto;padding:20px 12px}
+.md{max-width:1000px;margin:0 auto;background:var(--pn);border:1px solid var(--line);border-radius:12px;padding:16px}
+.md h2{margin:0 0 2px;font-size:19px}.x{float:right}
+.tw{overflow-x:auto;margin-top:12px;max-height:50vh}table{width:100%;border-collapse:collapse;font-size:13px;min-width:640px}
+th{position:sticky;top:0;background:var(--pn2);color:var(--mute);text-align:right;padding:7px 8px;cursor:pointer;white-space:nowrap;font-size:12px}th:first-child,td:first-child{text-align:left}
+td{padding:6px 8px;border-top:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}td.nmc{text-align:left;color:var(--mute);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+</style></head><body><div class="wrap">
+<header><h1>Sector Rotation</h1><span class="note" id="asof">Loading…</span></header>
+<div class="bar">
+ <input id="q" placeholder="Search sector or industry">
+ <div class="grp"><span>Type</span><button data-t="all" class="on">All</button><button data-t="sector">Sectors</button><button data-t="industry">Industries</button></div>
+ <div class="grp"><span>Movers</span><button data-m="all" class="on">All</button><button data-m="top">Top 20</button><button data-m="bot">Bottom 20</button><button id="wl">★ Watchlist</button></div>
+</div>
+<div class="bar">
+ <div class="grp"><span>Period</span><span id="pbtn" style="display:flex;gap:4px"></span></div>
+ <div class="grp"><span>Scale</span><button data-s="lin" class="on">Lin</button><button data-s="log">Log</button></div>
+ <select id="ms" title="Minimum stocks in group"><option value="1">Min 1 stock</option><option value="2" selected>Min 2 stocks</option><option value="3">Min 3 stocks</option><option value="5">Min 5 stocks</option></select>
+ <select id="so"><option value="ret">Sort: return (high to low)</option><option value="retlow">Sort: return (low to high)</option><option value="rel">Sort: vs Nifty 500</option><option value="name">Sort: name</option><option value="n">Sort: stock count</option></select>
+</div>
+<div class="grid" id="grid"></div><button class="b more" id="more" hidden>Show more</button>
+<p class="note">Equal-weight index of the stocks in each group, rebased to 100 at the start of the period, against Nifty 500 (dashed). Groups with only 1-2 stocks mostly follow those stocks and are noisy. Sector rotation is a research signal, not a buy signal: check valuation and earnings separately.</p>
+</div>
+<div class="tip" id="tip"></div>
+<div class="ov" id="ov"><div class="md" id="md"></div></div>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const P={"1D":{n:1,c:21},"1W":{n:5},"1M":{n:21},"3M":{n:63},"6M":{n:126},"1Y":{n:252},"3Y":{n:756},"All":{n:1e9}};
+const st={type:"all",mv:"all",per:"1M",scale:"lin",q:"",wl:false,page:1,ms:2,so:"ret"};
+let D=null,STK={},WL=new Set(),CARD={},detail=null,dsort={k:"r1m",d:-1};
+try{WL=new Set(JSON.parse(localStorage.getItem("sector_wl")||"[]"))}catch(e){}
+const saveWL=()=>{try{localStorage.setItem("sector_wl",JSON.stringify([...WL]))}catch(e){}};
+const pc=v=>v==null?"–":(v>=0?"+":"")+v.toFixed(2)+"%";
+const cl=v=>v==null?"":v>=0?"up":"dn";
+
+async function getJSON(f){
+  const bases=["data/","../data/","https://raw.githubusercontent.com/sumanmohit101-code/mickkk-market-data/main/data/"];
+  for(const b of bases){try{const r=await fetch(b+f);if(r.ok)return await r.json()}catch(e){}}
+  throw new Error(f);
+}
+async function load(){
+  try{
+    const [s,k]=await Promise.all([getJSON("sectors.json"),getJSON("sector-stocks.json").catch(()=>({stocks:{}}))]);
+    D=s;STK=k.stocks||{};
+    $("asof").textContent="As of "+D.asOf+" · end-of-day · equal weight · "+Object.keys(D.groups).length+" groups";
+    render();
+  }catch(e){$("grid").innerHTML='<div class="empty">Could not load data/sectors.json. Run the Update Sector Indices workflow and open this page from your deployed site.</div>'}
+}
+function ret(s,n){const L=s.length-1,k=Math.min(n,L);return k<1?null:s[L]/s[L-k]-1}
+function win(p){const n=(P[p].c||P[p].n);return Math.min(n,D.dates.length-1)}
+
+function chart(key,W,H,big){
+  const g=D.groups[key],w=win(st.per),L=g.series.length-1,a=L-w;
+  let ix=[];const step=Math.max(1,Math.ceil(w/240));
+  for(let i=a;i<=L;i+=step)ix.push(i);if(ix[ix.length-1]!==L)ix.push(L);
+  const base=g.series[a],bb=D.benchmark?D.benchmark[a]:null;
+  const s=ix.map(i=>g.series[i]/base*100),b=bb?ix.map(i=>D.benchmark[i]/bb*100):null;
+  const dates=ix.map(i=>D.dates[i]);
+  CARD[(big?"B":"C")+key]={dates,s,b};
+  const all=b?s.concat(b):s;let lo=Math.min(...all),hi=Math.max(...all);
+  const lg=st.scale==="log";const f=v=>lg?Math.log(v):v;
+  let fl=f(lo),fh=f(hi);const pad=(fh-fl)*.06||.01;fl-=pad;fh+=pad;
+  const pl=6,pr=46,pt=8,pb=18,cw=W-pl-pr,ch=H-pt-pb;
+  const X=i=>pl+i/(ix.length-1)*cw,Y=v=>pt+(1-(f(v)-fl)/(fh-fl))*ch;
+  const path=arr=>arr.map((v,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)).join("");
+  const col=s[s.length-1]>=100?"var(--up)":"var(--dn)";
+  let grid="";for(let t=0;t<=3;t++){const fv=fl+(fh-fl)*t/3,v=lg?Math.exp(fv):fv,y=pt+(1-t/3)*ch;
+    grid+=`<line x1="${pl}" x2="${W-pr}" y1="${y}" y2="${y}" stroke="var(--line)"/><text x="${W-pr+4}" y="${y+4}" fill="var(--mute)" font-size="10">${v.toFixed(v<10?1:0)}</text>`}
+  const y100=Y(100);
+  return `<svg viewBox="0 0 ${W} ${H}" data-k="${esc(key)}" data-big="${big?1:0}">${grid}
+   ${y100>=pt&&y100<=H-pb?`<line x1="${pl}" x2="${W-pr}" y1="${y100}" y2="${y100}" stroke="var(--mute)" stroke-opacity=".5" stroke-dasharray="2 3"/>`:""}
+   ${b?`<path d="${path(b)}" fill="none" stroke="var(--bm)" stroke-width="1.3" stroke-dasharray="4 3"/>`:""}
+   <path d="${path(s)}" fill="none" stroke="${col}" stroke-width="1.8"/>
+   <text x="${pl}" y="${H-4}" fill="var(--mute)" font-size="10">${dates[0]}</text><text x="${W-pr}" y="${H-4}" fill="var(--mute)" font-size="10" text-anchor="end">${dates[dates.length-1]}</text></svg>`;
+}
+
+function rows(){
+  const q=st.q.toLowerCase(),pn=P[st.per].n;
+  let r=Object.entries(D.groups).filter(([k,g])=>(st.type==="all"||g.type===st.type)&&g.stocks>=st.ms&&(!q||(g.name+" "+(g.parent||"")).toLowerCase().includes(q))&&(!st.wl||WL.has(k)))
+   .map(([k,g])=>{const rt=ret(g.series,st.per==="1D"?1:pn),bn=D.benchmark?ret(D.benchmark,st.per==="1D"?1:pn):null;
+     return{k,g,rt,bn,rel:(rt!=null&&bn!=null)?rt-bn:null,td:ret(g.series,1)}});
+  const so=st.so;
+  r.sort((a,b)=>so==="name"?a.g.name.localeCompare(b.g.name):so==="n"?b.g.stocks-a.g.stocks:so==="retlow"?(a.rt??-9)-(b.rt??-9):so==="rel"?(b.rel??-9)-(a.rel??-9):(b.rt??-9)-(a.rt??-9));
+  if(st.mv==="top"){r.sort((a,b)=>(b.rt??-9)-(a.rt??-9));r=r.slice(0,20)}
+  if(st.mv==="bot"){r.sort((a,b)=>(a.rt??9)-(b.rt??9));r=r.slice(0,20)}
+  return r;
+}
+function render(){
+  if(!D)return;CARD={};
+  const r=rows(),n=st.page*24;
+  $("grid").innerHTML=r.slice(0,n).map(x=>{const g=x.g;
+   return`<div class="card" data-k="${esc(x.k)}"><div class="top"><div><span class="nm">${esc(g.name)}</span>${g.parent?`<div class="par">in ${esc(g.parent)}</div>`:`<div class="par">Sector</div>`}</div>
+    <div class="ret ${cl(x.rt)}">${pc(x.rt==null?null:x.rt*100)}<small class="${cl(x.rel)}">${x.rel==null?"":pc(x.rel*100)+" vs N500"}</small></div><button class="star ${WL.has(x.k)?"on":""}" data-w="${esc(x.k)}" title="Watchlist">${WL.has(x.k)?"★":"☆"}</button></div>
+    <div class="meta"><span>${g.stocks} stocks</span><span class="up">▲ ${g.up}</span><span class="dn">▼ ${g.down}</span><span class="${cl(x.td)}">Today ${pc(x.td==null?null:x.td*100)}</span></div>
+    <div class="ch">${chart(x.k,400,190,false)}</div></div>`}).join("")||'<div class="empty">No groups match these filters.</div>';
+  $("more").hidden=r.length<=n;$("more").textContent="Show more ("+(r.length-n)+" left)";
+}
+
+function openDetail(k){
+  detail=k;const g=D.groups[k];
+  const list=Object.entries(STK).filter(([s,v])=>g.type==="sector"?v.sector===g.name:v.industry===g.name).map(([s,v])=>({s,...v}));
+  const rt=ret(g.series,P[st.per].n===1?1:P[st.per].n);
+  const H=["r1d","r1w","r1m","r3m","r6m","r1y"],HL=["1D","1W","1M","3M","6M","1Y"];
+  list.sort((a,b)=>dsort.k==="s"?a.s.localeCompare(b.s)*-dsort.d:((b[dsort.k]??-999)-(a[dsort.k]??-999))*-dsort.d);
+  $("md").innerHTML=`<button class="x" id="cx">Close</button><h2>${esc(g.name)}</h2><div class="par">${g.type==="industry"?"Industry in "+esc(g.parent||""):"Sector"} · ${g.stocks} stocks · ${st.per} <span class="${cl(rt)}">${pc(rt==null?null:rt*100)}</span></div>
+   <div class="ch" style="margin-top:8px">${chart(k,900,300,true)}</div><div class="leg"><span >— ${esc(g.name)}</span><span>- - Nifty 500</span></div>
+   <div class="tw"><table><thead><tr><th data-d="s">Symbol</th><th>Name</th><th>Close</th>${H.map((h,i)=>`<th data-d="${h}">${HL[i]}${dsort.k===h?(dsort.d<0?" ↓":" ↑"):""}</th>`).join("")}</tr></thead><tbody>${
+    list.map(x=>`<tr><td><b>${esc(x.s)}</b></td><td class="nmc" title="${esc(x.name)}">${esc(x.name)}</td><td>${x.close}</td>${H.map(h=>`<td class="${cl(x[h])}">${pc(x[h])}</td>`).join("")}</tr>`).join("")||'<tr><td colspan="9">No stock data.</td></tr>'}</tbody></table></div>`;
+  $("ov").style.display="block";
+}
+
+document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-t]").forEach(x=>x.classList.remove("on"));b.classList.add("on");st.type=b.dataset.t;st.page=1;render()});
+document.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-m]").forEach(x=>x.classList.remove("on"));b.classList.add("on");st.mv=b.dataset.m;st.page=1;render()});
+document.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-s]").forEach(x=>x.classList.remove("on"));b.classList.add("on");st.scale=b.dataset.s;render();if(detail&&$("ov").style.display==="block")openDetail(detail)});
+$("pbtn").innerHTML=Object.keys(P).map(p=>`<button data-p="${p}" class="${p===st.per?"on":""}">${p}</button>`).join("");
+$("pbtn").onclick=e=>{const p=e.target.dataset.p;if(!p)return;st.per=p;document.querySelectorAll("[data-p]").forEach(x=>x.classList.toggle("on",x.dataset.p===p));st.page=1;render()};
+$("q").oninput=e=>{st.q=e.target.value;st.page=1;render()};
+$("ms").onchange=e=>{st.ms=+e.target.value;st.page=1;render()};
+$("so").onchange=e=>{st.so=e.target.value;render()};
+$("wl").onclick=()=>{st.wl=!st.wl;$("wl").classList.toggle("on",st.wl);st.page=1;render()};
+$("more").onclick=()=>{st.page++;render()};
+$("grid").onclick=e=>{
+  const w=e.target.closest("[data-w]");if(w){e.stopPropagation();const k=w.dataset.w;WL.has(k)?WL.delete(k):WL.add(k);saveWL();render();return}
+  const c=e.target.closest(".card");if(c)openDetail(c.dataset.k)};
+$("ov").onclick=e=>{
+  if(e.target.id==="ov"||e.target.id==="cx"){$("ov").style.display="none";$("tip").style.display="none";return}
+  const th=e.target.closest("th[data-d]");if(th){const k=th.dataset.d;dsort={k,d:dsort.k===k?-dsort.d:-1};openDetail(detail)}};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){$("ov").style.display="none";$("tip").style.display="none"}});
+function hover(e){
+  const svg=e.target.closest("svg[data-k]");const tip=$("tip");
+  if(!svg){tip.style.display="none";return}
+  const c=CARD[(svg.dataset.big==="1"?"B":"C")+svg.dataset.k];if(!c)return;
+  const r=svg.getBoundingClientRect(),W=svg.viewBox.baseVal.width,pl=6,pr=46,cw=W-pl-pr;
+  const x=(e.clientX-r.left)/r.width*W,i=Math.max(0,Math.min(c.s.length-1,Math.round((x-pl)/cw*(c.s.length-1))));
+  tip.innerHTML=`<b>${c.dates[i]}</b><br>${esc(D.groups[svg.dataset.k].name)}: ${c.s[i].toFixed(2)}${c.b?`<br>Nifty 500: ${c.b[i].toFixed(2)}`:""}`;
+  tip.style.display="block";tip.style.left=Math.min(e.clientX+14,innerWidth-190)+"px";tip.style.top=(e.clientY+14)+"px";
+}
+document.addEventListener("mousemove",hover);
+load();
+</script></body></html>
