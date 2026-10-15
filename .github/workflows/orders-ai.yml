@@ -1,0 +1,66 @@
+name: Orders AI Enrich
+
+on:
+  schedule:
+    - cron: "0 15 * * 1-5" # 20:30 IST, Monday-Friday (orders-tracker ke baad)
+  workflow_dispatch:
+
+concurrency:
+  group: market-data-main
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  enrich:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Enrich orders with Gemini
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/orders_ai.py 40
+
+      - name: Commit and push
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/orders
+
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+
+          git commit -m "Auto-enrich orders with AI"
+
+          for attempt in 1 2 3 4 5; do
+            echo "Push attempt $attempt/5..."
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin main; then
+                echo "Push successful."
+                exit 0
+              fi
+            else
+              git rebase --abort || true
+            fi
+            sleep 5
+          done
+
+          echo "ERROR: Could not push after 5 attempts."
+          exit 1
