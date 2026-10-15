@@ -30,7 +30,7 @@ jobs:
           pip install requests
 
       - name: Fetch order announcements
-        run: python script/orders_tracker.py 3
+        run: python scripts/orders_tracker.py 3
 
       - name: Commit and push
         run: |
