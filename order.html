@@ -30,6 +30,7 @@ tr:hover td{background:var(--pn2)}
 .pill{display:inline-block;min-width:58px;text-align:center;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
 .p4{background:var(--g1);color:#fff}.p3{background:var(--g2);color:#10210a}.p2{background:var(--am);color:#2a2000}.p1{border:1px solid var(--line);color:var(--mute)}
 .mini{height:6px;background:var(--pn2);border-radius:3px;overflow:hidden;margin-top:4px;min-width:90px}.mini i{display:block;height:100%;background:var(--acc)}
+.rep{display:inline-block;margin-left:8px;padding:1px 8px;border:1px solid var(--am);color:var(--am);border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}
 .sub td{background:var(--pn2)}.sub h4{margin:6px 0;font-size:14px}
 .more{display:block;margin:12px auto}.empty{padding:30px;text-align:center;color:var(--mute)}
 a{color:var(--acc)}.note{color:var(--mute);font-size:12px;margin-top:10px}
@@ -45,6 +46,7 @@ a{color:var(--acc)}.note{color:var(--mute);font-size:12px;margin-top:10px}
  <input id="fm" type="number" min="0" step="0.1" placeholder="Min order size %" style="max-width:150px">
  <input id="fv" type="number" min="0" placeholder="Min value (Cr)" style="max-width:140px">
  <label class="ck"><input type="checkbox" id="fo" checked>Only with value</label>
+ <label class="ck"><input type="checkbox" id="fr">Only repeat orders (2+)</label>
  <button class="b" id="rf">Refresh</button>
 </div>
 <div id="view"></div>
@@ -54,7 +56,7 @@ a{color:var(--acc)}.note{color:var(--mute);font-size:12px;margin-top:10px}
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const cr=n=>n==null?"–":n>=100000?"₹"+(n/100000).toFixed(2)+" L Cr":n>=1?"₹"+n.toLocaleString("en-IN",{maximumFractionDigits:1})+" Cr":"₹"+(n*100).toFixed(1)+" L";
-let ALL=[],REV={},view="all",sort={k:"date",d:-1},shown=100,open=new Set();
+let CNT={},ALL=[],REV={},view="all",sort={k:"date",d:-1},shown=100,open=new Set();
 
 function parse(r){
   const t=r.text||"";
@@ -88,22 +90,24 @@ function filtered(){
   const c=$("fc").value.trim().toLowerCase(),u=$("fu").value.trim().toLowerCase(),
    cut=new Date(Date.now()-$("fp").value*864e5).toISOString().slice(0,10),
    mp=parseFloat($("fm").value),mv=parseFloat($("fv").value),ov=$("fo").checked;
-  return ALL.filter(r=>r.date>=cut&&(!c||(r.symbol+" "+r.company).toLowerCase().includes(c))
+  const rows=ALL.filter(r=>r.date>=cut&&(!c||(r.symbol+" "+r.company).toLowerCase().includes(c))
    &&(!u||(r.customer||"").toLowerCase().includes(u))
    &&(!ov||r.value_cr!=null)&&(isNaN(mv)||(r.value_cr||0)>=mv)
    &&(isNaN(mp)||(pct(r.symbol,r.ann)||0)>=mp));
+  CNT={};rows.forEach(r=>CNT[r.symbol]=(CNT[r.symbol]||0)+1);
+  return $("fr").checked?rows.filter(r=>CNT[r.symbol]>=2):rows;
 }
 function render(){
   const rows=filtered(),withV=rows.filter(r=>r.value_cr!=null);
   const tot=withV.reduce((a,r)=>a+r.value_cr,0),cos=new Set(rows.map(r=>r.symbol)).size;
-  $("kpis").innerHTML=[["Orders",rows.length],["With value",withV.length],["Total value",cr(tot)],["Companies",cos]].map(k=>`<div class="kpi"><b>${k[1]}</b><span>${k[0]}</span></div>`).join("");
+  $("kpis").innerHTML=[["Orders",rows.length],["With value",withV.length],["Total value",cr(tot)],["Companies",cos],["Repeat companies",Object.values(CNT).filter(n=>n>=2).length]].map(k=>`<div class="kpi"><b>${k[1]}</b><span>${k[0]}</span></div>`).join("");
   view==="all"?renderAll(rows):renderCo(rows);
 }
 function renderAll(rows){
   const g={date:r=>r.date+r.time,company:r=>r.company||"",value:r=>r.value_cr??-1,ann:r=>r.ann??-1,pct:r=>pct(r.symbol,r.ann)??-1,dur:r=>r.dur??-1};
   rows=[...rows].sort((a,b)=>{const x=g[sort.k](a),y=g[sort.k](b);return(x>y?1:x<y?-1:0)*sort.d});
   const H=(k,l,r)=>`<th class="${r?"r":""}" data-k="${k}">${l}${sort.k===k?(sort.d<0?" ↓":" ↑"):""}</th>`;
-  const body=rows.slice(0,shown).map(r=>`<tr><td><span class="co" data-s="${esc(r.symbol)}" title="${esc(r.company)}">${esc(r.company||r.symbol)}</span></td>
+  const body=rows.slice(0,shown).map(r=>`<tr><td><span class="co" data-s="${esc(r.symbol)}" title="${esc(r.company)}">${esc(r.company||r.symbol)}</span>${CNT[r.symbol]>=2?`<span class="rep" title="Same company, ${CNT[r.symbol]} orders in this period">↻ ${CNT[r.symbol]} orders</span>`:""}</td>
    <td class="cu" title="${esc(r.text)}">${esc(r.customer||"Not mentioned")}</td><td class="num">${r.date}</td>
    <td class="r num">${cr(r.value_cr)}</td><td class="num">${r.dur?r.dur+" months":"Not mentioned"}</td><td class="r num">${cr(r.ann)}</td>
    <td class="r">${pill(pct(r.symbol,r.ann))}</td><td class="r num">${REV[r.symbol]?cr(REV[r.symbol]):"–"}</td>
@@ -117,14 +121,14 @@ function renderCo(rows){
   const mx=Math.max(1,...list.map(o=>o.tot));
   let h=`<div class="tw"><table><thead><tr><th></th><th>Company</th><th class="r">Order size %</th><th class="r">Orders</th><th class="r">Total value</th><th class="r">Company revenue</th></tr></thead><tbody>`;
   list.forEach(o=>{const op=open.has(o.sym);
-   h+=`<tr data-t="${esc(o.sym)}" style="cursor:pointer"><td>${op?"▾":"▸"}</td><td><span class="co">${esc(o.name||o.sym)}</span><div class="mini"><i style="width:${o.tot/mx*100}%"></i></div></td>
+   h+=`<tr data-t="${esc(o.sym)}" style="cursor:pointer"><td>${op?"▾":"▸"}</td><td><span class="co">${esc(o.name||o.sym)}</span>${o.list.length>=2?`<span class="rep">↻ Repeat</span>`:""}<div class="mini"><i style="width:${o.tot/mx*100}%"></i></div></td>
    <td class="r">${pill(o.p)}</td><td class="r num">${o.list.length} orders</td><td class="r num">${cr(o.tot)}</td><td class="r num">${REV[o.sym]?cr(REV[o.sym]):"–"}</td></tr>`;
    if(op)h+=`<tr class="sub"><td></td><td colspan="5"><h4>Individual orders</h4><table style="min-width:0"><thead><tr><th>Date</th><th>Customer</th><th class="r">Contract value</th><th>Duration</th><th class="r">Annual value</th><th class="r">Revenue %</th><th>PDF</th></tr></thead><tbody>`+
    [...o.list].sort((x,y)=>y.date.localeCompare(x.date)).map(r=>`<tr><td class="num">${r.date}</td><td class="cu" title="${esc(r.text)}">${esc(r.customer||"Not mentioned")}</td><td class="r num">${cr(r.value_cr)}</td><td>${r.dur?r.dur+" months":"Not mentioned"}</td><td class="r num">${cr(r.ann)}</td><td class="r">${pill(pct(o.sym,r.ann))}</td><td>${r.pdf?`<a href="${esc(r.pdf)}" target="_blank" rel="noopener">PDF</a>`:""}</td></tr>`).join("")+`</tbody></table></td></tr>`});
   $("view").innerHTML=h+`</tbody></table>${list.length?"":'<div class="empty">No companies match these filters.</div>'}</div>`;
 }
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));b.classList.add("on");view=b.dataset.v;shown=100;render()});
-["fc","fu","fp","fm","fv","fo"].forEach(i=>$(i).addEventListener("input",()=>{shown=100;render()}));
+["fc","fu","fp","fm","fv","fo","fr"].forEach(i=>$(i).addEventListener("input",()=>{shown=100;render()}));
 $("rf").onclick=()=>{ALL=[];load()};
 $("view").onclick=e=>{
   const th=e.target.closest("th[data-k]");if(th){sort={k:th.dataset.k,d:sort.k===th.dataset.k?-sort.d:-1};return render()}
