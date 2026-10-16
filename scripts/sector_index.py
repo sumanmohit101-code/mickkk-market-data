@@ -101,15 +101,31 @@ def main():
         sec_cols.setdefault(info["sector"], []).append(sym)
         ind_cols.setdefault(info["industry"], []).append(sym)
 
+    # Optional: Gemini themes (data/sector-themes.json)
+    theme_of, theme_cols, theme_parent = {}, {}, {}
+    try:
+        theme_of = json.load(open(find_data_file("sector-themes.json"), encoding="utf-8")).get("themes", {})
+    except SystemExit:
+        pass
+    for sym in closes.columns:
+        th = theme_of.get(sym)
+        if th and th != "Other":
+            theme_cols.setdefault(th, []).append(sym)
+    theme_cols = {k: v for k, v in theme_cols.items() if len(v) >= 2}
+    for th, cols in theme_cols.items():
+        inds = pd.Series([stocks[c]["industry"] for c in cols]).value_counts()
+        theme_parent[th] = inds.index[0]
+
     last_r = rets.iloc[-1]
-    for kind, cmap in (("sector", sec_cols), ("industry", ind_cols)):
+    for kind, cmap in (("sector", sec_cols), ("industry", ind_cols), ("theme", theme_cols)):
         for name, cols in cmap.items():
             idx = build(cols)
             lr = last_r[cols].dropna()
             groups[f"{kind}:{name}"] = {
                 "type": kind,
                 "name": name,
-                "parent": smap["industries"].get(name, {}).get("sector") if kind == "industry" else None,
+                "parent": (smap["industries"].get(name, {}).get("sector") if kind == "industry"
+                           else theme_parent.get(name) if kind == "theme" else None),
                 "stocks": len(cols),
                 "up": int((lr > 0).sum()),
                 "down": int((lr < 0).sum()),
@@ -134,7 +150,7 @@ def main():
         if c.empty:
             continue
         row = {"name": stocks[sym]["name"], "sector": stocks[sym]["sector"],
-               "industry": stocks[sym]["industry"], "close": round(float(c.iloc[-1]), 2)}
+               "industry": stocks[sym]["industry"], "theme": theme_of.get(sym), "close": round(float(c.iloc[-1]), 2)}
         for k, n in LOOKBACKS.items():
             if len(c) > n and c.iloc[-1 - n] > 0:
                 row[k] = round(float(c.iloc[-1] / c.iloc[-1 - n] - 1) * 100, 2)
