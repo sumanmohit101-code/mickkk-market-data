@@ -4,6 +4,7 @@ Input : data/sector-map.json, data/<A-Z|0-9>/<SYMBOL>.json, data/indices/NIFTY50
 Output: data/sectors.json        (chart series, 100 par rebased)
         data/sector-stocks.json  (har stock ke returns + sector/industry)
 """
+import glob
 import json
 import os
 import sys
@@ -40,8 +41,16 @@ def stock_path(sym):
     return os.path.join("data", folder, f"{sym}.json")
 
 
+def find_data_file(name):
+    """data/ mein, na mile to data/<A-Z>/ mein (galat move hui file ke liye)."""
+    for p in [os.path.join("data", name)] + sorted(glob.glob(os.path.join("data", "*", name))):
+        if os.path.exists(p):
+            return p
+    raise SystemExit(f"{name} data/ mein nahi mili.")
+
+
 def main():
-    with open("data/sector-map.json", encoding="utf-8") as f:
+    with open(find_data_file("sector-map.json"), encoding="utf-8") as f:
         smap = json.load(f)
     stocks = smap["stocks"]
 
