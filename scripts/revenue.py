@@ -43,15 +43,28 @@ def get_revenue_cr(sym):
     return None
 
 
+def get_mcap_cr(sym):
+    for suffix in (".NS", ".BO"):
+        try:
+            v = yf.Ticker(sym + suffix).fast_info["market_cap"]
+            if v and v > 0:
+                return round(float(v) / 1e7, 1)
+        except Exception:
+            pass
+    return None
+
+
 def main():
     old = {}
     meta = {}
+    mcap = {}
     if os.path.exists(OUT):
         try:
             with open(OUT, encoding="utf-8") as f:
                 j = json.load(f)
             old = j.get("revenue", {})
             meta = j.get("fiscalYearEnd", {})
+            mcap = j.get("marketCap", {})
         except Exception as exc:
             print("Could not read old file:", exc)
 
@@ -68,6 +81,9 @@ def main():
             revenue[sym], meta[sym] = res
             ok += 1
             row_fail = 0
+            m = get_mcap_cr(sym)
+            if m:
+                mcap[sym] = m
         else:
             miss += 1
             row_fail += 1
@@ -90,6 +106,7 @@ def main():
             "unit": "INR crore, annual",
             "revenue": dict(sorted(revenue.items())),
             "fiscalYearEnd": dict(sorted(meta.items())),
+            "marketCap": dict(sorted(mcap.items())),
         }, f, ensure_ascii=False, separators=(",", ":"))
     print(f"Done. fetched={ok} missing={miss} total_in_file={len(revenue)}")
 
