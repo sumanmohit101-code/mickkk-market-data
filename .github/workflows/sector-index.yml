@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: market-data-main
+  group: sector-index
   cancel-in-progress: false
 
 permissions:
