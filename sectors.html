@@ -26,6 +26,7 @@ button{cursor:pointer}button.on{background:var(--acc);border-color:var(--acc);co
 .pin td{background:var(--pn2);font-weight:650}.tw2{overflow-x:auto;background:var(--pn);border:1px solid var(--line);border-radius:10px}.tw2 tbody tr{cursor:pointer}.tw2 tbody tr:hover td{filter:brightness(1.08)}.tw2 td:first-child{min-width:190px}.sub2{display:block;color:var(--mute);font-size:11px;font-weight:400}
 .gd h3{margin:16px 0 4px;font-size:14px}.gd p,.gd li{color:var(--mute);margin:3px 0}.gd li{margin-left:18px}.gd b{color:var(--ink)}
 .ret small.mu{color:var(--mute);font-weight:500}
+.ord{color:var(--acc);font-weight:600}.rrgl{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:12px}.rrgl div{background:var(--pn);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--mute)}.rrgl b{display:block;font-size:13px;margin-bottom:2px}
 .empty{padding:40px;text-align:center;color:var(--mute)}
 .more{display:block;margin:16px auto}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:40;display:none;overflow:auto;padding:20px 12px}
@@ -38,17 +39,17 @@ td{padding:6px 8px;border-top:1px solid var(--line);text-align:right;font-varian
 <header><h1>Sector Rotation</h1><span><span class="note" id="asof">Loading…</span> <button id="gb">Guide: how to read</button></span></header>
 <div class="bar">
  <input id="q" placeholder="Search sector or industry">
- <div class="grp"><span>View</span><button data-v="cards" class="on">Cards</button><button data-v="table">Table</button></div>
- <div class="grp"><span>Type</span><button data-t="all" class="on">All</button><button data-t="sector">Sectors</button><button data-t="industry">Industries</button></div>
+ <div class="grp"><span>View</span><button data-v="cards" class="on">Cards</button><button data-v="table">Table</button><button data-v="rrg">Rotation</button></div>
+ <div class="grp"><span>Type</span><button data-t="all" class="on">All</button><button data-t="sector">Sectors</button><button data-t="industry">Industries</button><button data-t="theme">Themes</button></div>
  <div class="grp"><span>Movers</span><button data-m="all" class="on">All</button><button data-m="top">Top 20</button><button data-m="bot">Bottom 20</button><button id="wl">★ Watchlist</button></div>
 </div>
 <div class="bar">
  <div class="grp"><span>Period</span><span id="pbtn" style="display:flex;gap:4px"></span></div>
  <div class="grp"><span>Scale</span><button data-s="lin" class="on">Lin</button><button data-s="log">Log</button></div>
  <select id="ms" title="Minimum stocks in group"><option value="1">Min 1 stock</option><option value="2" selected>Min 2 stocks</option><option value="3">Min 3 stocks</option><option value="5">Min 5 stocks</option></select>
- <select id="so"><option value="ret">Sort: return (high to low)</option><option value="retlow">Sort: return (low to high)</option><option value="rel">Sort: vs Nifty 500</option><option value="name">Sort: name</option><option value="n">Sort: stock count</option></select>
+ <select id="so"><option value="ret">Sort: return (high to low)</option><option value="retlow">Sort: return (low to high)</option><option value="rel">Sort: vs Nifty 500</option><option value="name">Sort: name</option><option value="n">Sort: stock count</option><option value="ord">Sort: most new orders (30d)</option></select>
 </div>
-<div class="tw2" id="tbl" hidden></div><div class="grid" id="grid"></div><button class="b more" id="more" hidden>Show more</button>
+<div id="rrg" hidden></div><div class="tw2" id="tbl" hidden></div><div class="grid" id="grid"></div><button class="b more" id="more" hidden>Show more</button>
 <p class="note">Equal-weight index of the stocks in each group, rebased to 100 at the start of the period, against Nifty 500 (dashed). Press <b>Guide</b> at the top for an explanation of every number. Groups with only 1-2 stocks mostly follow those stocks and are noisy. Sector rotation is a research signal, not a buy signal: check valuation and earnings separately.</p>
 </div>
 <div class="tip" id="tip"></div>
@@ -58,10 +59,11 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const P={"1D":{n:1,c:21},"1W":{n:5},"1M":{n:21},"3M":{n:63},"6M":{n:126},"1Y":{n:252},"3Y":{n:756},"All":{n:1e9}};
 const st={type:"all",mv:"all",per:"1M",scale:"lin",q:"",wl:false,page:1,ms:2,so:"ret"};
-let D=null,STK={},WL=new Set(),CARD={},detail=null,dsort={k:"r1m",d:-1};
+let ORD={},D=null,STK={},WL=new Set(),CARD={},detail=null,dsort={k:"r1m",d:-1};
 try{WL=new Set(JSON.parse(localStorage.getItem("sector_wl")||"[]"))}catch(e){}
 const saveWL=()=>{try{localStorage.setItem("sector_wl",JSON.stringify([...WL]))}catch(e){}};
 const pc=v=>v==null?"–":(v>=0?"+":"")+v.toFixed(2)+"%";
+const crf=n=>n>=100000?"₹"+(n/100000).toFixed(2)+" L Cr":"₹"+Math.round(n).toLocaleString("en-IN")+" Cr";
 const cl=v=>v==null?"":v>=0?"up":"dn";
 
 async function getJSON(f){
@@ -73,6 +75,11 @@ async function load(){
   try{
     const [s,k]=await Promise.all([getJSON("sectors.json"),getJSON("sector-stocks.json").catch(()=>({stocks:{}}))]);
     D=s;STK=k.stocks||{};
+    try{const now=new Date(),ks=[0,1].map(i=>{const d=new Date(now.getFullYear(),now.getMonth()-i,1);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")});
+      const fs=await Promise.all(ks.map(m=>getJSON("orders/"+m+".json").catch(()=>null)));
+      const cut=new Date(Date.now()-30*864e5).toISOString().slice(0,10);
+      fs.forEach(j=>j&&(j.records||[]).forEach(r=>{if(r.ai_is_order===false||r.date<cut)return;const x=STK[r.symbol];if(!x)return;
+        [["sector:"+x.sector],["industry:"+x.industry],x.theme?["theme:"+x.theme]:null].forEach(a=>{if(!a)return;const o=ORD[a[0]]||={n:0,v:0,c:new Set()};o.n++;o.v+=r.value_cr||0;o.c.add(r.symbol)})}))}catch(e){}
     $("asof").textContent="As of "+D.asOf+" · end-of-day · equal weight · history from "+D.dates[0]+" · "+Object.keys(D.groups).length+" groups";
     render();
   }catch(e){$("grid").innerHTML='<div class="empty">Could not load data/sectors.json. Run the Update Sector Indices workflow and open this page from your deployed site.</div>'}
@@ -107,11 +114,11 @@ function chart(key,W,H,big){
 
 function rows(){
   const q=st.q.toLowerCase(),pn=P[st.per].n;
-  let r=Object.entries(D.groups).filter(([k,g])=>(st.type==="all"||g.type===st.type)&&g.stocks>=st.ms&&(!q||(g.name+" "+(g.parent||"")).toLowerCase().includes(q))&&(!st.wl||WL.has(k)))
+  let r=Object.entries(D.groups).filter(([k,g])=>(st.type==="all"?g.type!=="theme":g.type===st.type)&&g.stocks>=st.ms&&(!q||(g.name+" "+(g.parent||"")).toLowerCase().includes(q))&&(!st.wl||WL.has(k)))
    .map(([k,g])=>{const rt=ret(g.series,st.per==="1D"?1:pn),bn=D.benchmark?ret(D.benchmark,st.per==="1D"?1:pn):null;
      return{k,g,rt,bn,rel:(rt!=null&&bn!=null)?rt-bn:null,td:ret(g.series,1)}});
   const so=st.so;
-  r.sort((a,b)=>so==="name"?a.g.name.localeCompare(b.g.name):so==="n"?b.g.stocks-a.g.stocks:so==="retlow"?(a.rt??-9)-(b.rt??-9):so==="rel"?(b.rel??-9)-(a.rel??-9):(b.rt??-9)-(a.rt??-9));
+  r.sort((a,b)=>so==="name"?a.g.name.localeCompare(b.g.name):so==="ord"?((ORD[b.k]?.n||0)-(ORD[a.k]?.n||0)):so==="n"?b.g.stocks-a.g.stocks:so==="retlow"?(a.rt??-9)-(b.rt??-9):so==="rel"?(b.rel??-9)-(a.rel??-9):(b.rt??-9)-(a.rt??-9));
   if(st.mv==="top"){r.sort((a,b)=>(b.rt??-9)-(a.rt??-9));r=r.slice(0,20)}
   if(st.mv==="bot"){r.sort((a,b)=>(a.rt??9)-(b.rt??9));r=r.slice(0,20)}
   return r;
@@ -119,12 +126,13 @@ function rows(){
 function render(){
   if(!D)return;CARD={};
   const r=rows(),n=st.page*24;
-  $("tbl").hidden=view!=="table";$("grid").hidden=view==="table";
+  $("tbl").hidden=view!=="table";$("rrg").hidden=view!=="rrg";$("grid").hidden=view!=="cards";
   if(view==="table"){renderTable(r);$("more").hidden=true;return}
+  if(view==="rrg"){renderRRG(r);$("more").hidden=true;return}
   $("grid").innerHTML=r.slice(0,n).map(x=>{const g=x.g;
    return`<div class="card" data-k="${esc(x.k)}"><div class="top"><div><span class="nm">${esc(g.name)}</span>${g.parent?`<div class="par">in ${esc(g.parent)}</div>`:`<div class="par">Sector</div>`}</div>
     <div class="ret ${cl(x.rt)}" title="Big number: this group's return over ${st.per}. Below: Nifty 500 return, and the gap (percentage points).">${pc(x.rt==null?null:x.rt*100)}<small class="mu">${x.bn==null?"":"N500 "+pc(x.bn*100)}</small><small class="${cl(x.rel)}">${x.rel==null?"":(x.rel>=0?"+":"")+(x.rel*100).toFixed(2)+" pts vs N500"}</small></div><button class="star ${WL.has(x.k)?"on":""}" data-w="${esc(x.k)}" title="Watchlist">${WL.has(x.k)?"★":"☆"}</button></div>
-    <div class="meta"><span>${g.stocks} stocks</span><span class="up">▲ ${g.up}</span><span class="dn">▼ ${g.down}</span><span class="${cl(x.td)}">Today ${pc(x.td==null?null:x.td*100)}</span></div>
+    <div class="meta"><span>${g.stocks} stocks</span><span class="up">▲ ${g.up}</span><span class="dn">▼ ${g.down}</span>${ORD[x.k]?`<span class="ord" title="Order announcements in the last 30 days from ${ORD[x.k].c.size} companies (value counts only orders that state an amount)">📦 ${ORD[x.k].n} orders · ${crf(ORD[x.k].v)}</span>`:""}<span class="${cl(x.td)}">Today ${pc(x.td==null?null:x.td*100)}</span></div>
     <div class="ch">${chart(x.k,400,190,false)}</div></div>`}).join("")||'<div class="empty">No groups match these filters.</div>';
   $("more").hidden=r.length<=n;$("more").textContent="Show more ("+(r.length-n)+" left)";
 }
@@ -135,13 +143,45 @@ function heat(v){if(v==null)return"";const a=Math.min(Math.abs(v)/20,1)*.5;retur
 function renderTable(r){
   const a=r.map(x=>{const v={},b={};TP.forEach(([l,n])=>{v[l]=ret(x.g.series,n);b[l]=D.benchmark?ret(D.benchmark,n):null});
     const rel=l=>(v[l]!=null&&b[l]!=null)?v[l]-b[l]:null;return{k:x.k,g:x.g,v,rel1M:rel("1M"),rel3M:rel("3M")}});
-  const val=(x,k)=>k==="name"?x.g.name:k==="stocks"?x.g.stocks:(k==="rel1M"||k==="rel3M")?x[k]:x.v[k];
+  const val=(x,k)=>k==="ord"?(ORD[x.k]?.n||0):k==="name"?x.g.name:k==="stocks"?x.g.stocks:(k==="rel1M"||k==="rel3M")?x[k]:x.v[k];
   const f=tsort.d===-1?1:-1;
   a.sort((p,q)=>{const A=val(p,tsort.k),B=val(q,tsort.k);return typeof A==="string"?A.localeCompare(B)*f:((B??-9)-(A??-9))*f});
   const th=(k,l)=>`<th data-ts="${k}">${l}${tsort.k===k?(tsort.d<0?" ↓":" ↑"):""}</th>`;
   const cell=(v,sign)=>`<td class="${cl(v)}" style="${heat(v==null?null:v*100)}">${v==null?"–":(sign&&v>=0?"+":"")+(v*100).toFixed(2)+"%"}</td>`;
-  $("tbl").innerHTML=`<table style="min-width:900px"><thead><tr>${th("name","Group")}${th("stocks","Stocks")}${TP.map(([l])=>th(l,l)).join("")}${th("rel1M","1M vs N500 (pts)")}${th("rel3M","3M vs N500 (pts)")}</tr></thead><tbody>${
-   a.map(x=>`<tr data-k="${esc(x.k)}"><td><b>${esc(x.g.name)}</b><span class="sub2">${x.g.parent?"in "+esc(x.g.parent):"Sector"}</span></td><td>${x.g.stocks}</td>${TP.map(([l])=>cell(x.v[l],true)).join("")}${cell(x.rel1M,true)}${cell(x.rel3M,true)}</tr>`).join("")||'<tr><td colspan="10">No groups match these filters.</td></tr>'}</tbody></table>`;
+  $("tbl").innerHTML=`<table style="min-width:900px"><thead><tr>${th("name","Group")}${th("stocks","Stocks")}${TP.map(([l])=>th(l,l)).join("")}${th("rel1M","1M vs N500 (pts)")}${th("rel3M","3M vs N500 (pts)")}${th("ord","Orders 30d")}</tr></thead><tbody>${
+   a.map(x=>`<tr data-k="${esc(x.k)}"><td><b>${esc(x.g.name)}</b><span class="sub2">${x.g.parent?"in "+esc(x.g.parent):"Sector"}</span></td><td>${x.g.stocks}</td>${TP.map(([l])=>cell(x.v[l],true)).join("")}${cell(x.rel1M,true)}${cell(x.rel3M,true)}<td>${ORD[x.k]?ORD[x.k].n:"–"}</td></tr>`).join("")||'<tr><td colspan="11">No groups match these filters.</td></tr>'}</tbody></table>`;
+}
+function rrgPoints(g){
+  const N=D.benchmark;if(!N)return null;const L=g.series.length,MA=63,LAG=10;if(L<MA+LAG+16)return null;
+  const rs=g.series.map((v,i)=>v/N[i]*100),pre=[0];rs.forEach(v=>pre.push(pre[pre.length-1]+v));
+  const ratio=[];for(let i=MA-1;i<L;i++)ratio.push(rs[i]/((pre[i+1]-pre[i+1-MA])/MA)*100);
+  const pt=k=>({x:ratio[k],y:ratio[k]/ratio[k-LAG]*100});const e=ratio.length-1;
+  return[pt(e-15),pt(e-10),pt(e-5),pt(e)];
+}
+function renderRRG(r){
+  const items=r.map(x=>({k:x.k,g:x.g,p:rrgPoints(x.g)})).filter(x=>x.p).slice(0,90);
+  if(!items.length){$("rrg").innerHTML='<div class="empty">Not enough history for the rotation chart.</div>';return}
+  const W=900,H=560,pl=46,pr=14,pt=14,pb=34;let mx=0,my=0;
+  items.forEach(i=>i.p.forEach(q=>{mx=Math.max(mx,Math.abs(q.x-100));my=Math.max(my,Math.abs(q.y-100))}));
+  mx=Math.max(mx*1.12,1);my=Math.max(my*1.12,1);
+  const X=v=>pl+(v-100+mx)/(2*mx)*(W-pl-pr),Y=v=>pt+(1-(v-100+my)/(2*my))*(H-pt-pb),cx=X(100),cy=Y(100);
+  const quad=(a,b)=>a>=100?(b>=100?"Leading":"Weakening"):(b>=100?"Improving":"Lagging");
+  const col={Leading:"#2fb67e",Weakening:"#e6b422",Lagging:"#e5484d",Improving:"#4f8cff"};
+  const Q={Leading:[],Weakening:[],Lagging:[],Improving:[]};
+  let dots="";items.forEach(i=>{const l=i.p[3],q=quad(l.x,l.y);Q[q].push(i);
+    dots+=`<polyline points="${i.p.map(z=>X(z.x).toFixed(1)+","+Y(z.y).toFixed(1)).join(" ")}" fill="none" stroke="${col[q]}" stroke-opacity=".45" stroke-width="1.5"/>
+    <g data-k="${esc(i.k)}" style="cursor:pointer"><circle cx="${X(l.x).toFixed(1)}" cy="${Y(l.y).toFixed(1)}" r="5.5" fill="${col[q]}"><title>${esc(i.g.name)}: RS-Ratio ${l.x.toFixed(1)}, momentum ${l.y.toFixed(1)} (${q})</title></circle>
+    <text x="${(X(l.x)+8).toFixed(1)}" y="${(Y(l.y)+4).toFixed(1)}" font-size="10" fill="var(--ink)">${esc(i.g.name.length>16?i.g.name.slice(0,15)+"…":i.g.name)}</text></g>`});
+  const bg=(x,y,w,h,c)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}" fill-opacity=".08"/>`;
+  $("rrg").innerHTML=`<div class="card" style="cursor:default"><div style="overflow-x:auto"><svg viewBox="0 0 ${W} ${H}" style="min-width:640px">
+   ${bg(cx,pt,W-pr-cx,cy-pt,col.Leading)}${bg(cx,cy,W-pr-cx,H-pb-cy,col.Weakening)}${bg(pl,cy,cx-pl,H-pb-cy,col.Lagging)}${bg(pl,pt,cx-pl,cy-pt,col.Improving)}
+   <line x1="${cx}" x2="${cx}" y1="${pt}" y2="${H-pb}" stroke="var(--mute)" stroke-opacity=".6"/><line x1="${pl}" x2="${W-pr}" y1="${cy}" y2="${cy}" stroke="var(--mute)" stroke-opacity=".6"/>
+   <text x="${W-pr-6}" y="${pt+14}" text-anchor="end" font-size="13" font-weight="700" fill="${col.Leading}">LEADING</text><text x="${W-pr-6}" y="${H-pb-8}" text-anchor="end" font-size="13" font-weight="700" fill="${col.Weakening}">WEAKENING</text>
+   <text x="${pl+6}" y="${H-pb-8}" font-size="13" font-weight="700" fill="${col.Lagging}">LAGGING</text><text x="${pl+6}" y="${pt+14}" font-size="13" font-weight="700" fill="${col.Improving}">IMPROVING</text>
+   <text x="${(pl+W-pr)/2}" y="${H-8}" text-anchor="middle" font-size="11" fill="var(--mute)">RS-Ratio: strength vs Nifty 500 (right = stronger)</text>
+   <text transform="translate(12 ${(pt+H-pb)/2}) rotate(-90)" text-anchor="middle" font-size="11" fill="var(--mute)">Momentum (up = improving)</text>${dots}</svg></div>
+   <div class="rrgl">${["Leading","Improving","Weakening","Lagging"].map(q=>`<div><b style="color:${col[q]}">${q} (${Q[q].length})</b>${Q[q].map(i=>esc(i.g.name)).join(", ")||"–"}</div>`).join("")}</div>
+   <p class="note">Each dot is a group; the tail shows where it was 5, 10 and 15 trading days ago. Pick Sectors, Industries or Themes above to keep the chart readable. Click a dot to open the group.</p></div>`;
 }
 function openGuide(){
   $("md").innerHTML=`<button class="x" id="cx">Close</button><h2>How to read this page</h2><div class="gd">
@@ -158,6 +198,11 @@ function openGuide(){
   <h3>Cards, Table and the detail popup</h3>
   <ul><li><b>Table</b> view puts every group's 1D to 1Y returns side by side, with the gap to Nifty 500 for 1M and 3M. Click a column heading to sort. Greener means stronger.</li>
   <li>Click any card or table row to open its stocks. The top rows show the group index, Nifty 500 and the difference, so you can compare each stock with both.</li></ul>
+  <h3>Rotation view</h3>
+  <ul><li>Each dot is a group. <b>Right</b> = stronger than Nifty 500 over the last 3 months or so, <b>up</b> = that strength is rising. <b>Leading</b> (strong, rising), <b>Weakening</b> (strong, fading), <b>Lagging</b> (weak, falling), <b>Improving</b> (weak, but turning up). Healthy rotation usually moves clockwise: Improving, then Leading, then Weakening, then Lagging.</li></ul>
+  <h3>Orders badge and Themes</h3>
+  <ul><li><b>📦 orders</b> on a card: order announcements from the group's companies in the last 30 days. The value adds only orders that state an amount. Sort by "most new orders" to see where business is flowing in.</li>
+  <li><b>Themes</b> split big buckets like Engineering into smaller businesses (Ship Building, Heat Exchangers...). They are assigned by AI from company names, so a few may be wrong.</li></ul>
   <h3>Filters</h3>
   <ul><li><b>Top 20 / Bottom 20</b>: strongest and weakest groups for the selected period. <b>Min stocks</b>: hides groups with too few stocks. <b>Watchlist</b>: press the star on a card to save it (stored in this browser).</li></ul>
   <h3>A simple way to spot rotation</h3>
@@ -183,11 +228,11 @@ function pinned(g){
 }
 function openDetail(k){
   detail=k;const g=D.groups[k];
-  const list=Object.entries(STK).filter(([s,v])=>g.type==="sector"?v.sector===g.name:v.industry===g.name).map(([s,v])=>({s,...v}));
+  const list=Object.entries(STK).filter(([s,v])=>g.type==="sector"?v.sector===g.name:g.type==="theme"?v.theme===g.name:v.industry===g.name).map(([s,v])=>({s,...v}));
   const rt=ret(g.series,P[st.per].n===1?1:P[st.per].n);
   const H=["r1d","r1w","r1m","r3m","r6m","r1y"],HL=["1D","1W","1M","3M","6M","1Y"];
   list.sort((a,b)=>dsort.k==="s"?a.s.localeCompare(b.s)*-dsort.d:((b[dsort.k]??-999)-(a[dsort.k]??-999))*-dsort.d);
-  $("md").innerHTML=`<button class="x" id="cx">Close</button><h2>${esc(g.name)}</h2><div class="par">${g.type==="industry"?"Industry in "+esc(g.parent||""):"Sector"} · ${g.stocks} stocks · ${st.per} <span class="${cl(rt)}">${pc(rt==null?null:rt*100)}</span></div>
+  $("md").innerHTML=`<button class="x" id="cx">Close</button><h2>${esc(g.name)}</h2><div class="par">${g.type==="industry"?"Industry in "+esc(g.parent||""):g.type==="theme"?"Theme in "+esc(g.parent||""):"Sector"} · ${g.stocks} stocks · ${st.per} <span class="${cl(rt)}">${pc(rt==null?null:rt*100)}</span></div>
    <div class="ch" style="margin-top:8px">${chart(k,900,300,true)}</div><div class="leg"><span >— ${esc(g.name)}</span><span>- - Nifty 500</span></div>
    <div class="tw"><table><thead><tr><th data-d="s">Symbol</th><th>Name</th><th>Close</th>${H.map((h,i)=>`<th data-d="${h}">${HL[i]}${dsort.k===h?(dsort.d<0?" ↓":" ↑"):""}</th>`).join("")}</tr></thead><tbody>${pinned(g)}${
     list.map(x=>`<tr><td><b>${esc(x.s)}</b></td><td class="nmc" title="${esc(x.name)}">${esc(x.name)}</td><td>${x.close}</td>${H.map(h=>`<td class="${cl(x[h])}">${pc(x[h])}</td>`).join("")}</tr>`).join("")||'<tr><td colspan="9">No stock data.</td></tr>'}</tbody></table></div>`;
@@ -207,6 +252,7 @@ $("ms").onchange=e=>{st.ms=+e.target.value;st.page=1;render()};
 $("so").onchange=e=>{st.so=e.target.value;render()};
 $("wl").onclick=()=>{st.wl=!st.wl;$("wl").classList.toggle("on",st.wl);st.page=1;render()};
 $("more").onclick=()=>{st.page++;render()};
+$("rrg").onclick=e=>{const g=e.target.closest("g[data-k]");if(g)openDetail(g.dataset.k)};
 $("grid").onclick=e=>{
   const w=e.target.closest("[data-w]");if(w){e.stopPropagation();const k=w.dataset.w;WL.has(k)?WL.delete(k):WL.add(k);saveWL();render();return}
   const c=e.target.closest(".card");if(c)openDetail(c.dataset.k)};
