@@ -23,6 +23,9 @@ button{cursor:pointer}button.on{background:var(--acc);border-color:var(--acc);co
 .ch{position:relative}svg{display:block;width:100%;height:auto}
 .leg{display:flex;gap:14px;color:var(--mute);font-size:11px;margin-top:2px}
 .tip{position:fixed;pointer-events:none;background:var(--pn);border:1px solid var(--line);border-radius:6px;padding:6px 9px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:50;display:none;font-variant-numeric:tabular-nums}
+.pin td{background:var(--pn2);font-weight:650}.tw2{overflow-x:auto;background:var(--pn);border:1px solid var(--line);border-radius:10px}.tw2 tbody tr{cursor:pointer}.tw2 tbody tr:hover td{filter:brightness(1.08)}.tw2 td:first-child{min-width:190px}.sub2{display:block;color:var(--mute);font-size:11px;font-weight:400}
+.gd h3{margin:16px 0 4px;font-size:14px}.gd p,.gd li{color:var(--mute);margin:3px 0}.gd li{margin-left:18px}.gd b{color:var(--ink)}
+.ret small.mu{color:var(--mute);font-weight:500}
 .empty{padding:40px;text-align:center;color:var(--mute)}
 .more{display:block;margin:16px auto}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:40;display:none;overflow:auto;padding:20px 12px}
@@ -32,9 +35,10 @@ button{cursor:pointer}button.on{background:var(--acc);border-color:var(--acc);co
 th{position:sticky;top:0;background:var(--pn2);color:var(--mute);text-align:right;padding:7px 8px;cursor:pointer;white-space:nowrap;font-size:12px}th:first-child,td:first-child{text-align:left}
 td{padding:6px 8px;border-top:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}td.nmc{text-align:left;color:var(--mute);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 </style></head><body><div class="wrap">
-<header><h1>Sector Rotation</h1><span class="note" id="asof">Loading…</span></header>
+<header><h1>Sector Rotation</h1><span><span class="note" id="asof">Loading…</span> <button id="gb">Guide: how to read</button></span></header>
 <div class="bar">
  <input id="q" placeholder="Search sector or industry">
+ <div class="grp"><span>View</span><button data-v="cards" class="on">Cards</button><button data-v="table">Table</button></div>
  <div class="grp"><span>Type</span><button data-t="all" class="on">All</button><button data-t="sector">Sectors</button><button data-t="industry">Industries</button></div>
  <div class="grp"><span>Movers</span><button data-m="all" class="on">All</button><button data-m="top">Top 20</button><button data-m="bot">Bottom 20</button><button id="wl">★ Watchlist</button></div>
 </div>
@@ -44,8 +48,8 @@ td{padding:6px 8px;border-top:1px solid var(--line);text-align:right;font-varian
  <select id="ms" title="Minimum stocks in group"><option value="1">Min 1 stock</option><option value="2" selected>Min 2 stocks</option><option value="3">Min 3 stocks</option><option value="5">Min 5 stocks</option></select>
  <select id="so"><option value="ret">Sort: return (high to low)</option><option value="retlow">Sort: return (low to high)</option><option value="rel">Sort: vs Nifty 500</option><option value="name">Sort: name</option><option value="n">Sort: stock count</option></select>
 </div>
-<div class="grid" id="grid"></div><button class="b more" id="more" hidden>Show more</button>
-<p class="note">Equal-weight index of the stocks in each group, rebased to 100 at the start of the period, against Nifty 500 (dashed). Groups with only 1-2 stocks mostly follow those stocks and are noisy. Sector rotation is a research signal, not a buy signal: check valuation and earnings separately.</p>
+<div class="tw2" id="tbl" hidden></div><div class="grid" id="grid"></div><button class="b more" id="more" hidden>Show more</button>
+<p class="note">Equal-weight index of the stocks in each group, rebased to 100 at the start of the period, against Nifty 500 (dashed). Press <b>Guide</b> at the top for an explanation of every number. Groups with only 1-2 stocks mostly follow those stocks and are noisy. Sector rotation is a research signal, not a buy signal: check valuation and earnings separately.</p>
 </div>
 <div class="tip" id="tip"></div>
 <div class="ov" id="ov"><div class="md" id="md"></div></div>
@@ -69,7 +73,7 @@ async function load(){
   try{
     const [s,k]=await Promise.all([getJSON("sectors.json"),getJSON("sector-stocks.json").catch(()=>({stocks:{}}))]);
     D=s;STK=k.stocks||{};
-    $("asof").textContent="As of "+D.asOf+" · end-of-day · equal weight · "+Object.keys(D.groups).length+" groups";
+    $("asof").textContent="As of "+D.asOf+" · end-of-day · equal weight · history from "+D.dates[0]+" · "+Object.keys(D.groups).length+" groups";
     render();
   }catch(e){$("grid").innerHTML='<div class="empty">Could not load data/sectors.json. Run the Update Sector Indices workflow and open this page from your deployed site.</div>'}
 }
@@ -115,14 +119,68 @@ function rows(){
 function render(){
   if(!D)return;CARD={};
   const r=rows(),n=st.page*24;
+  $("tbl").hidden=view!=="table";$("grid").hidden=view==="table";
+  if(view==="table"){renderTable(r);$("more").hidden=true;return}
   $("grid").innerHTML=r.slice(0,n).map(x=>{const g=x.g;
    return`<div class="card" data-k="${esc(x.k)}"><div class="top"><div><span class="nm">${esc(g.name)}</span>${g.parent?`<div class="par">in ${esc(g.parent)}</div>`:`<div class="par">Sector</div>`}</div>
-    <div class="ret ${cl(x.rt)}">${pc(x.rt==null?null:x.rt*100)}<small class="${cl(x.rel)}">${x.rel==null?"":pc(x.rel*100)+" vs N500"}</small></div><button class="star ${WL.has(x.k)?"on":""}" data-w="${esc(x.k)}" title="Watchlist">${WL.has(x.k)?"★":"☆"}</button></div>
+    <div class="ret ${cl(x.rt)}" title="Big number: this group's return over ${st.per}. Below: Nifty 500 return, and the gap (percentage points).">${pc(x.rt==null?null:x.rt*100)}<small class="mu">${x.bn==null?"":"N500 "+pc(x.bn*100)}</small><small class="${cl(x.rel)}">${x.rel==null?"":(x.rel>=0?"+":"")+(x.rel*100).toFixed(2)+" pts vs N500"}</small></div><button class="star ${WL.has(x.k)?"on":""}" data-w="${esc(x.k)}" title="Watchlist">${WL.has(x.k)?"★":"☆"}</button></div>
     <div class="meta"><span>${g.stocks} stocks</span><span class="up">▲ ${g.up}</span><span class="dn">▼ ${g.down}</span><span class="${cl(x.td)}">Today ${pc(x.td==null?null:x.td*100)}</span></div>
     <div class="ch">${chart(x.k,400,190,false)}</div></div>`}).join("")||'<div class="empty">No groups match these filters.</div>';
   $("more").hidden=r.length<=n;$("more").textContent="Show more ("+(r.length-n)+" left)";
 }
 
+const TP=[["1D",1],["1W",5],["1M",21],["3M",63],["6M",126],["1Y",252]];
+let view="cards",tsort={k:"1M",d:-1};
+function heat(v){if(v==null)return"";const a=Math.min(Math.abs(v)/20,1)*.5;return"background:"+(v>=0?"rgba(52,211,153,":"rgba(251,113,133,")+a.toFixed(2)+")"}
+function renderTable(r){
+  const a=r.map(x=>{const v={},b={};TP.forEach(([l,n])=>{v[l]=ret(x.g.series,n);b[l]=D.benchmark?ret(D.benchmark,n):null});
+    const rel=l=>(v[l]!=null&&b[l]!=null)?v[l]-b[l]:null;return{k:x.k,g:x.g,v,rel1M:rel("1M"),rel3M:rel("3M")}});
+  const val=(x,k)=>k==="name"?x.g.name:k==="stocks"?x.g.stocks:(k==="rel1M"||k==="rel3M")?x[k]:x.v[k];
+  const f=tsort.d===-1?1:-1;
+  a.sort((p,q)=>{const A=val(p,tsort.k),B=val(q,tsort.k);return typeof A==="string"?A.localeCompare(B)*f:((B??-9)-(A??-9))*f});
+  const th=(k,l)=>`<th data-ts="${k}">${l}${tsort.k===k?(tsort.d<0?" ↓":" ↑"):""}</th>`;
+  const cell=(v,sign)=>`<td class="${cl(v)}" style="${heat(v==null?null:v*100)}">${v==null?"–":(sign&&v>=0?"+":"")+(v*100).toFixed(2)+"%"}</td>`;
+  $("tbl").innerHTML=`<table style="min-width:900px"><thead><tr>${th("name","Group")}${th("stocks","Stocks")}${TP.map(([l])=>th(l,l)).join("")}${th("rel1M","1M vs N500 (pts)")}${th("rel3M","3M vs N500 (pts)")}</tr></thead><tbody>${
+   a.map(x=>`<tr data-k="${esc(x.k)}"><td><b>${esc(x.g.name)}</b><span class="sub2">${x.g.parent?"in "+esc(x.g.parent):"Sector"}</span></td><td>${x.g.stocks}</td>${TP.map(([l])=>cell(x.v[l],true)).join("")}${cell(x.rel1M,true)}${cell(x.rel3M,true)}</tr>`).join("")||'<tr><td colspan="10">No groups match these filters.</td></tr>'}</tbody></table>`;
+}
+function openGuide(){
+  $("md").innerHTML=`<button class="x" id="cx">Close</button><h2>How to read this page</h2><div class="gd">
+  <h3>What you are looking at</h3><p>Every card is a sector or an industry. Its line is an <b>equal-weight index</b>: the average daily move of all stocks in that group, so a small stock counts as much as a large one. It starts at 100 at the beginning of the selected period.</p>
+  <h3>The two percentages on each card</h3>
+  <ul><li><b>Big number (top right)</b>: how much the group moved over the selected period (1W, 1M, 3M...). Example: +5.70% on 1M means the group's index is 5.70% higher than 1 month ago.</li>
+  <li><b>Small lines below it</b>: the Nifty 500 return for the same period, and the gap in <b>percentage points (pts)</b>: group return minus Nifty 500 return. Example: group +5.70% and Nifty 500 -1.32% gives +7.02 pts. Green means the group is beating the market, red means it is lagging.</li></ul>
+  <h3>Other numbers on the card</h3>
+  <ul><li><b>Stocks</b>: how many stocks are in the group. <b>▲ / ▼</b>: how many of them rose or fell today. <b>Today</b>: the group's move today.</li></ul>
+  <h3>The chart</h3>
+  <ul><li>Solid line: the group (green if it is above 100, red if below). Dashed line: Nifty 500. Both start at 100, so the gap between them is the out- or under-performance.</li>
+  <li><b>Lin</b> shows plain values. <b>Log</b> shows equal percentage moves as equal heights, which is better for long periods like 1Y, 3Y and All.</li>
+  <li>Move the mouse over a chart to see the exact date and values.</li></ul>
+  <h3>Cards, Table and the detail popup</h3>
+  <ul><li><b>Table</b> view puts every group's 1D to 1Y returns side by side, with the gap to Nifty 500 for 1M and 3M. Click a column heading to sort. Greener means stronger.</li>
+  <li>Click any card or table row to open its stocks. The top rows show the group index, Nifty 500 and the difference, so you can compare each stock with both.</li></ul>
+  <h3>Filters</h3>
+  <ul><li><b>Top 20 / Bottom 20</b>: strongest and weakest groups for the selected period. <b>Min stocks</b>: hides groups with too few stocks. <b>Watchlist</b>: press the star on a card to save it (stored in this browser).</li></ul>
+  <h3>A simple way to spot rotation</h3>
+  <ol style="color:var(--mute)"><li>Open <b>Table</b> view with Type = Sectors and compare 1W, 1M and 3M.</li>
+  <li>Groups that are strong on 3M and 1M and still positive on 1W have a steady trend.</li>
+  <li>Groups weak on 3M but turning up on 1W and 1M may be starting to improve.</li>
+  <li>Groups strong on 3M but falling on 1W and 1M may be losing momentum.</li>
+  <li>Open the group, look at its stocks, then check valuation and earnings before any decision.</li></ol>
+  <h3>Things to keep in mind</h3>
+  <ul><li>Groups with only 1 to 3 stocks mostly follow those stocks and are noisy. Use Min stocks 3 or more.</li>
+  <li>Returns are price returns and ignore dividends. A one-day move above 25% for a single stock is ignored, because it is usually a data glitch or a split.</li>
+  <li>Sector and industry labels come from a Chartink list. Some stocks are unclassified and left out, and a few labels may be wrong.</li>
+  <li>This is a research tool and not investment advice.</li></ul></div>`;
+  $("ov").style.display="block";
+}
+function pinned(g){
+  const N=[1,5,21,63,126,252],gR=N.map(n=>ret(g.series,n)),bR=D.benchmark?N.map(n=>ret(D.benchmark,n)):N.map(()=>null);
+  const c=v=>`<td class="${cl(v)}">${pc(v==null?null:v*100)}</td>`;
+  const d=gR.map((v,i)=>(v!=null&&bR[i]!=null)?(v-bR[i])*100:null);
+  return`<tr class="pin"><td>GROUP</td><td class="nmc">${esc(g.name)} (equal-weight index)</td><td>–</td>${gR.map(c).join("")}</tr>`+
+   (D.benchmark?`<tr class="pin"><td>NIFTY 500</td><td class="nmc">Benchmark index</td><td>–</td>${bR.map(c).join("")}</tr>
+   <tr class="pin"><td>GAP</td><td class="nmc">Group minus Nifty 500 (pts)</td><td>–</td>${d.map(v=>`<td class="${cl(v)}">${v==null?"–":(v>=0?"+":"")+v.toFixed(2)}</td>`).join("")}</tr>`:"");
+}
 function openDetail(k){
   detail=k;const g=D.groups[k];
   const list=Object.entries(STK).filter(([s,v])=>g.type==="sector"?v.sector===g.name:v.industry===g.name).map(([s,v])=>({s,...v}));
@@ -131,7 +189,7 @@ function openDetail(k){
   list.sort((a,b)=>dsort.k==="s"?a.s.localeCompare(b.s)*-dsort.d:((b[dsort.k]??-999)-(a[dsort.k]??-999))*-dsort.d);
   $("md").innerHTML=`<button class="x" id="cx">Close</button><h2>${esc(g.name)}</h2><div class="par">${g.type==="industry"?"Industry in "+esc(g.parent||""):"Sector"} · ${g.stocks} stocks · ${st.per} <span class="${cl(rt)}">${pc(rt==null?null:rt*100)}</span></div>
    <div class="ch" style="margin-top:8px">${chart(k,900,300,true)}</div><div class="leg"><span >— ${esc(g.name)}</span><span>- - Nifty 500</span></div>
-   <div class="tw"><table><thead><tr><th data-d="s">Symbol</th><th>Name</th><th>Close</th>${H.map((h,i)=>`<th data-d="${h}">${HL[i]}${dsort.k===h?(dsort.d<0?" ↓":" ↑"):""}</th>`).join("")}</tr></thead><tbody>${
+   <div class="tw"><table><thead><tr><th data-d="s">Symbol</th><th>Name</th><th>Close</th>${H.map((h,i)=>`<th data-d="${h}">${HL[i]}${dsort.k===h?(dsort.d<0?" ↓":" ↑"):""}</th>`).join("")}</tr></thead><tbody>${pinned(g)}${
     list.map(x=>`<tr><td><b>${esc(x.s)}</b></td><td class="nmc" title="${esc(x.name)}">${esc(x.name)}</td><td>${x.close}</td>${H.map(h=>`<td class="${cl(x[h])}">${pc(x[h])}</td>`).join("")}</tr>`).join("")||'<tr><td colspan="9">No stock data.</td></tr>'}</tbody></table></div>`;
   $("ov").style.display="block";
 }
@@ -141,6 +199,9 @@ document.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{document.querySe
 document.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-s]").forEach(x=>x.classList.remove("on"));b.classList.add("on");st.scale=b.dataset.s;render();if(detail&&$("ov").style.display==="block")openDetail(detail)});
 $("pbtn").innerHTML=Object.keys(P).map(p=>`<button data-p="${p}" class="${p===st.per?"on":""}">${p}</button>`).join("");
 $("pbtn").onclick=e=>{const p=e.target.dataset.p;if(!p)return;st.per=p;document.querySelectorAll("[data-p]").forEach(x=>x.classList.toggle("on",x.dataset.p===p));st.page=1;render()};
+document.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-v]").forEach(x=>x.classList.remove("on"));b.classList.add("on");view=b.dataset.v;render()});
+$("gb").onclick=openGuide;
+$("tbl").onclick=e=>{const th=e.target.closest("th[data-ts]");if(th){const k=th.dataset.ts;tsort={k,d:tsort.k===k?-tsort.d:-1};render();return}const tr=e.target.closest("tr[data-k]");if(tr)openDetail(tr.dataset.k)};
 $("q").oninput=e=>{st.q=e.target.value;st.page=1;render()};
 $("ms").onchange=e=>{st.ms=+e.target.value;st.page=1;render()};
 $("so").onchange=e=>{st.so=e.target.value;render()};
