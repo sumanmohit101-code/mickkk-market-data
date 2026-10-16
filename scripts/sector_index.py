@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 import numpy as np
 import pandas as pd
 
-DAYS = int(sys.argv[1]) if len(sys.argv) > 1 else 1000   # kitne trading days chart mein
+DAYS = int(sys.argv[1]) if len(sys.argv) > 1 else 1300   # kitne trading days chart mein
 OUTLIER = 0.25    # ek din mein |return| > 25% ho to us stock ka us din ka return ignore
               # (split/bonus ki wajah se unadjusted price girna pakadne ke liye)
 LOOKBACKS = {"r1d": 1, "r1w": 5, "r1m": 21, "r3m": 63, "r6m": 126, "r1y": 252}
