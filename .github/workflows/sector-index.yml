@@ -30,7 +30,7 @@ jobs:
           pip install pandas numpy
 
       - name: Build sector and industry indices
-        run: python script/sector_index.py 1300
+        run: python scripts/sector_index.py 1300
 
       - name: Commit and push
         run: |
