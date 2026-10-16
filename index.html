@@ -3463,12 +3463,18 @@ function getDataBaseCandidates(){
   return [...new Set(candidates)];
 }
 
+let _dataBase = null; // jo base ek baar chal gaya use yaad rakho (404 par baar-baar 4 jagah try na ho)
 async function fetchJsonFromCandidates(relativePath){
+  const all = getDataBaseCandidates();
+  const raw = all[all.length - 1]; // raw.githubusercontent.com
+  const order = _dataBase ? [_dataBase, ...(raw !== _dataBase ? [raw] : [])] : all;
   let lastError = null;
-  for (const base of getDataBaseCandidates()) {
+  for (const base of order) {
     try {
-      const res = await fetch(base + relativePath, {cache:'no-store'});
+      // no-cache = har baar server se poochta hai (ETag), par file badli na ho to download nahi hoti
+      const res = await fetch(base + relativePath, {cache:'no-cache'});
       if (!res.ok) { lastError = new Error(`${res.status} ${res.statusText}`); continue; }
+      if (base !== raw) _dataBase = base;
       return await res.json();
     } catch(e) { lastError = e; }
   }
