@@ -68,6 +68,14 @@ jobs:
                   skipped += 1
                   continue
 
+              # Stock files ke naam hamesha UPPERCASE hote hain (ABB.json).
+              # sector-map.json, revenue.json jaisi lowercase files stock nahi hain,
+              # unhe A-Z folder mein kabhi move mat karo.
+              if src.stem != src.stem.upper():
+                  print(f"PROTECTED (not a stock file): {src}")
+                  skipped += 1
+                  continue
+
               symbol = src.stem.upper()
 
               # Only move files that look like stock symbols.
@@ -84,6 +92,20 @@ jobs:
                   shutil.move(str(src), str(dest))
                   moved += 1
 
+          # Pehle se galat move ho chuki non-stock files wapas data/ mein laao.
+          restored = 0
+          for sub in data_dir.iterdir():
+              if sub.is_dir() and re.fullmatch(r"[A-Z]|0-9", sub.name):
+                  for f in sub.glob("*.json"):
+                      if f.stem != f.stem.upper():
+                          target = data_dir / f.name
+                          if not target.exists():
+                              shutil.move(str(f), str(target))
+                              print(f"RESTORED: {f} -> {target}")
+                              restored += 1
+                          else:
+                              print(f"CONFLICT (dono jagah hai, haath se dekho): {f} aur {target}")
+          print(f"Restored non-stock files: {restored}")
           print(f"Moved existing stock JSON files: {moved}")
           print(f"Protected non-stock files: {skipped}")
           PY
