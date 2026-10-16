@@ -31,15 +31,17 @@ tr:hover td{background:var(--pn2)}
 .p4{background:var(--g1);color:#fff}.p3{background:var(--g2);color:#10210a}.p2{background:var(--am);color:#2a2000}.p1{border:1px solid var(--line);color:var(--mute)}
 .mini{height:6px;background:var(--pn2);border-radius:3px;overflow:hidden;margin-top:4px;min-width:90px}.mini i{display:block;height:100%;background:var(--acc)}
 .rep{display:inline-block;margin-left:8px;padding:1px 8px;border:1px solid var(--am);color:var(--am);border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}
+.up{color:var(--g1)}.dn{color:#d6334a}
+.gcards{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:12px}.gc{min-width:215px;background:var(--pn);border:1px solid var(--line);border-radius:8px;padding:10px 12px}.gc .gr{color:var(--g1);font-weight:700;font-size:18px}.gc small{color:var(--mute);display:block}.bars{display:flex;align-items:center;gap:6px}.bars b{font-size:12px;line-height:1.2}
 .sub td{background:var(--pn2)}.sub h4{margin:6px 0;font-size:14px}
 .more{display:block;margin:12px auto}.empty{padding:30px;text-align:center;color:var(--mute)}
 a{color:var(--acc)}.note{color:var(--mute);font-size:12px;margin-top:10px}
 </style></head><body><div class="wrap">
 <header><h1>Order Tracker Dashboard</h1><span class="note" id="status">Loading…</span></header>
-<div class="tabs"><button class="tab on" data-v="all">All Orders</button><button class="tab" data-v="co">Company View</button></div>
+<div class="tabs"><button class="tab on" data-v="all">All Orders</button><button class="tab" data-v="co">Company View</button><button class="tab" data-v="ob">Orderbook View</button></div>
 <div class="warn">Order details are extracted automatically from NSE announcements and can contain errors. Check the PDF before making any investment decision.</div>
 <div class="kpis" id="kpis"></div>
-<div class="filters">
+<div class="filters" id="fbar">
  <input id="fc" placeholder="Company or symbol" list="syms"><datalist id="syms"></datalist>
  <input id="fu" placeholder="Customer contains">
  <select id="fp"><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="180">Last 6 months</option><option value="365">Last 1 year</option><option value="1825">All (5 years)</option></select>
@@ -49,6 +51,11 @@ a{color:var(--acc)}.note{color:var(--mute);font-size:12px;margin-top:10px}
  <label class="ck"><input type="checkbox" id="fr">Only repeat orders (2+)</label>
  <button class="b" id="rf">Refresh</button>
 </div>
+<div class="filters" id="obbar" hidden>
+ <input id="oq" placeholder="Search company or symbol">
+ <input id="omb" type="number" min="0" value="500" style="max-width:170px" title="Minimum order book (Cr)" placeholder="Min order book (Cr)">
+ <input id="omc" type="number" min="0" value="500" style="max-width:170px" title="Minimum market cap (Cr)" placeholder="Min market cap (Cr)">
+</div>
 <div id="view"></div>
 <p class="note">Order size % = annual order value ÷ company's annual revenue (from data/revenue.json). Annual value spreads the contract over its duration when the announcement states one. Without revenue data the % shows "–".</p>
 </div>
@@ -56,7 +63,8 @@ a{color:var(--acc)}.note{color:var(--mute);font-size:12px;margin-top:10px}
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const cr=n=>n==null?"–":n>=100000?"₹"+(n/100000).toFixed(2)+" L Cr":n>=1?"₹"+n.toLocaleString("en-IN",{maximumFractionDigits:1})+" Cr":"₹"+(n*100).toFixed(1)+" L";
-let CNT={},ALL=[],REV={},view="all",sort={k:"date",d:-1},shown=100,open=new Set();
+const cl=v=>v==null?"":v>=0?"up":"dn";
+let OB={},MC={},osort={k:"g",d:-1},CNT={},ALL=[],REV={},view="all",sort={k:"date",d:-1},shown=100,open=new Set();
 
 function parse(r){
   const t=r.text||"";
@@ -78,7 +86,8 @@ async function load(){
   const [rev,...res]=await Promise.all([
     fetch("data/revenue.json",{cache:"no-cache"}).then(r=>r.ok?r.json():{}).catch(()=>({})),
     ...keys.map(k=>fetch("data/orders/"+k+".json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).catch(()=>null))]);
-  REV=rev.revenue||rev||{};
+  REV=rev.revenue||rev||{};MC=rev.marketCap||{};
+  try{const r=await fetch("data/orderbook.json",{cache:"no-cache"});OB=r.ok?(await r.json()).companies||{}:{}}catch(e){}
   ALL=[];res.forEach(j=>j&&j.records&&ALL.push(...j.records.filter(r=>r.ai_is_order!==false).map(parse)));
   if(!ALL.length){$("view").innerHTML='<div class="empty">No data in data/orders/. Run the Orders workflow and open this page from your deployed site.</div>';$("status").textContent="";return}
   $("syms").innerHTML=[...new Set(ALL.map(r=>r.symbol))].sort().map(s=>`<option value="${esc(s)}">`).join("");
@@ -98,6 +107,8 @@ function filtered(){
   return $("fr").checked?rows.filter(r=>CNT[r.symbol]>=2):rows;
 }
 function render(){
+  $("fbar").hidden=view==="ob";$("obbar").hidden=view!=="ob";$("kpis").hidden=view==="ob";
+  if(view==="ob")return renderOB();
   const rows=filtered(),withV=rows.filter(r=>r.value_cr!=null);
   const tot=withV.reduce((a,r)=>a+r.value_cr,0),cos=new Set(rows.map(r=>r.symbol)).size;
   $("kpis").innerHTML=[["Orders",rows.length],["With value",withV.length],["Total value",cr(tot)],["Companies",cos],["Repeat companies",Object.values(CNT).filter(n=>n>=2).length]].map(k=>`<div class="kpi"><b>${k[1]}</b><span>${k[0]}</span></div>`).join("");
@@ -115,6 +126,39 @@ function renderAll(rows){
   $("view").innerHTML=`<div class="tw"><table><thead><tr>${H("company","Company")}<th>Customer</th>${H("date","Date")}${H("value","Contract value",1)}${H("dur","Duration")}${H("ann","Annual value",1)}${H("pct","Order size %",1)}<th class="r">Company revenue</th><th>PDF</th></tr></thead><tbody>${body||""}</tbody></table>${rows.length?"":'<div class="empty">No orders match these filters.</div>'}</div>`
    +(rows.length>shown?`<button class="b more" id="mo">Show more (${rows.length-shown} left)</button>`:"");
 }
+function obRows(){
+  const q=$("oq").value.trim().toLowerCase(),mb=+$("omb").value||0,mm=+$("omc").value||0;
+  return Object.entries(OB).map(([sym,c])=>{
+    const p=c.points||[];if(!p.length)return null;
+    const last=p[p.length-1],t=new Date(last.asOf).getTime();let prev=null,best=1e9;
+    for(const x of p){const d=(t-new Date(x.asOf).getTime())/864e5,e=Math.abs(d-365);if(d>=270&&d<=460&&e<best){best=e;prev=x}}
+    const rev=REV[sym];
+    return{sym,name:c.name,last,p,g:prev?(last.value_cr/prev.value_cr-1)*100:null,rev,br:rev?last.value_cr/rev:null,mc:MC[sym]};
+  }).filter(r=>r&&r.last.value_cr>=mb&&(!mm||(r.mc||0)>=mm)&&(!q||(r.sym+" "+r.name).toLowerCase().includes(q)));
+}
+function bars(p){
+  p=p.slice(-8);const mx=Math.max(...p.map(x=>x.value_cr)),w=9,h=26;
+  const svg=`<svg width="${p.length*(w+2)}" height="${h}" viewBox="0 0 ${p.length*(w+2)} ${h}">${p.map((x,i)=>{const bh=Math.max(2,x.value_cr/mx*h);return`<rect x="${i*(w+2)}" y="${h-bh}" width="${w}" height="${bh}" rx="1" fill="${i&&x.value_cr<p[i-1].value_cr?"#d6334a":"var(--acc)"}"/>`}).join("")}</svg>`;
+  const ch=p.length>1?(p[p.length-1].value_cr/p[0].value_cr-1)*100:null;
+  return`<div class="bars">${svg}<b>${cr(p[p.length-1].value_cr)}<br><span class="${cl(ch)}">${ch==null?"":(ch>=0?"▲ ":"▼ ")+Math.abs(ch).toFixed(0)+"%"}</span></b></div>`;
+}
+function renderOB(){
+  if(!Object.keys(OB).length){$("view").innerHTML='<div class="empty">No order book data yet. Run the <b>Update Order Book</b> workflow once with days = 120 (Actions tab). Order books come from investor presentations and results, so data builds up after each quarter.</div>';return}
+  const r=obRows();
+  const top=[...r].filter(x=>x.g!=null).sort((a,b)=>b.g-a.g).slice(0,8);
+  const val=(x,k)=>k==="name"?x.name:k==="g"?x.g:k==="ob"?x.last.value_cr:k==="rev"?x.rev:k==="br"?x.br:k==="mc"?x.mc:k==="asof"?x.last.asOf:x.last.announced;
+  const f=osort.d===-1?1:-1;
+  r.sort((a,b)=>{const A=val(a,osort.k),B=val(b,osort.k);return typeof A==="string"?A.localeCompare(B)*f:((B??-1e9)-(A??-1e9))*f});
+  const th=(k,l)=>`<th data-os="${k}" class="${k==="name"?"":"r"}">${l}${osort.k===k?(osort.d<0?" ↓":" ↑"):""}</th>`;
+  const body=r.slice(0,shown).map(x=>`<tr><td><span class="co" data-s="${esc(x.sym)}">${esc(x.name)}</span><span style="display:block;color:var(--mute);font-size:11px">NSE: ${esc(x.sym)}</span></td>
+   <td class="r num ${cl(x.g)}">${x.g==null?"–":(x.g>=0?"+":"")+x.g.toFixed(0)+"%"}</td><td class="r num"><b>${cr(x.last.value_cr)}</b></td><td class="r num">${x.rev?cr(x.rev):"–"}</td>
+   <td class="r num ${x.br>=2?"up":""}">${x.br==null?"–":x.br.toFixed(2)+"x"}</td><td class="r num">${x.mc?cr(x.mc):"–"}</td>
+   <td class="r num">${x.last.asOf}${x.last.pdf?` <a href="${esc(x.last.pdf)}" target="_blank" rel="noopener">PDF</a>`:""}</td><td class="r num">${esc(x.last.announced||"")}</td><td>${bars(x.p)}</td></tr>`).join("");
+  $("view").innerHTML=(top.length?`<h3 style="margin:4px 0 8px;font-size:15px">Top order book gainers (1 year)</h3><div class="gcards">${top.map((x,i)=>`<div class="gc"><span class="gr">+${x.g.toFixed(0)}%</span> <small>#${i+1} · ${esc(x.name)} (${esc(x.sym)})</small>${bars(x.p)}</div>`).join("")}</div>`:"")+
+   `<div class="tw"><table><thead><tr>${th("name","Company")}${th("g","Growth (1Y)")}${th("ob","Order book")}${th("rev","Revenue")}${th("br","Book / Revenue")}${th("mc","Market cap")}${th("asof","As of")}${th("ann","Last updated")}<th>History</th></tr></thead><tbody>${body}</tbody></table>${r.length?"":'<div class="empty">No companies match these filters.</div>'}</div>`+
+   (r.length>shown?`<button class="b more" id="mo">Show more (${r.length-shown} left)</button>`:"")+
+   `<p class="note">Order book = total unexecuted orders a company reports in its investor presentation or results, extracted by AI from the PDF. Growth compares the latest figure with the one about a year earlier, so it needs two reports. Book / Revenue = order book ÷ latest annual revenue: above 2x means more than two years of revenue is already booked. Verify against the PDF.</p>`;
+}
 function renderCo(rows){
   const a={};rows.forEach(r=>{const o=a[r.symbol]||={sym:r.symbol,name:r.company,list:[],tot:0,ann:0};o.list.push(r);if(r.value_cr!=null){o.tot+=r.value_cr;o.ann+=r.ann}});
   const list=Object.values(a).map(o=>({...o,p:pct(o.sym,o.ann)})).sort((x,y)=>(y.p??-1)-(x.p??-1)||y.tot-x.tot).slice(0,100);
@@ -128,9 +172,10 @@ function renderCo(rows){
   $("view").innerHTML=h+`</tbody></table>${list.length?"":'<div class="empty">No companies match these filters.</div>'}</div>`;
 }
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));b.classList.add("on");view=b.dataset.v;shown=100;render()});
-["fc","fu","fp","fm","fv","fo","fr"].forEach(i=>$(i).addEventListener("input",()=>{shown=100;render()}));
+["fc","fu","fp","fm","fv","fo","fr","oq","omb","omc"].forEach(i=>$(i).addEventListener("input",()=>{shown=100;render()}));
 $("rf").onclick=()=>{ALL=[];load()};
 $("view").onclick=e=>{
+  const os=e.target.closest("th[data-os]");if(os){const k=os.dataset.os;osort={k,d:osort.k===k?-osort.d:-1};return render()}
   const th=e.target.closest("th[data-k]");if(th){sort={k:th.dataset.k,d:sort.k===th.dataset.k?-sort.d:-1};return render()}
   if(e.target.id==="mo"){shown+=100;return render()}
   const s=e.target.closest(".co[data-s]");if(s){$("fc").value=s.dataset.s;render();return}
