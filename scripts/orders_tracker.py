@@ -14,7 +14,6 @@ API = "https://www.nseindia.com/api/corporate-announcements"
 DIR = "data/orders"
 SUMMARY = "data/orders-summary.json"
 
-ORDER_DESC = re.compile(r"bagging|receipt of order|award of order|order", re.I)
 ORDER_TEXT = re.compile(
     r"\b(order|orders|loa|letter of award|letter of intent|work order|contract)\b", re.I
 )
@@ -129,6 +128,14 @@ def parse_date(s):
     return None
 
 
+def rec_key(r):
+    """Har announcement ki apni pakki ID: company + date/time + PDF (ya text).
+    NSE ka seq_id par bharosa nahi karte (wo din badalne par repeat ho sakta hai)."""
+    basis = r.get("pdf") or str(r.get("text", ""))[:200]
+    raw = f"{r.get('symbol', '')}|{r.get('date', '')} {r.get('time', '')}|{basis}"
+    return hashlib.md5(raw.encode()).hexdigest()
+
+
 def make_record(row):
     desc = str(row.get("desc", "")).strip()
     text = str(row.get("attchmntText", "")).strip()
@@ -139,11 +146,7 @@ def make_record(row):
         return None
     symbol = str(row.get("symbol", "")).strip()
     value, foreign = extract_value(text)
-    uid = str(row.get("seq_id") or "") or hashlib.md5(
-        f"{symbol}|{dt.isoformat()}|{text}".encode()
-    ).hexdigest()
-    return {
-        "id": uid,
+    rec = {
         "date": dt.strftime("%Y-%m-%d"),
         "time": dt.strftime("%H:%M:%S"),
         "symbol": symbol,
@@ -154,6 +157,8 @@ def make_record(row):
         "foreign_value": foreign,
         "pdf": row.get("attchmntFile"),
     }
+    rec["id"] = rec_key(rec)
+    return rec
 
 
 # ---------- storage (monthly files) ----------
@@ -162,14 +167,21 @@ def month_path(ym):
 
 
 def load_month(ym):
+    """Purani ID wali records ko nayi pakki ID par le aata hai (migration).
+    File padhne mein dikkat ho to ruk jaata hai, kabhi khaali se overwrite nahi karta."""
     p = month_path(ym)
-    if os.path.exists(p):
-        try:
-            with open(p, encoding="utf-8") as f:
-                return {r["id"]: r for r in json.load(f).get("records", [])}
-        except Exception as exc:
-            print("Could not read", p, exc)
-    return {}
+    if not os.path.exists(p):
+        return {}
+    try:
+        with open(p, encoding="utf-8") as f:
+            recs = json.load(f).get("records", [])
+    except Exception as exc:
+        raise SystemExit(f"STOP: {p} padh nahi paaya ({exc}). Overwrite nahi karunga.")
+    out = {}
+    for r in recs:
+        r["id"] = rec_key(r)
+        out[r["id"]] = r
+    return out
 
 
 def save_month(ym, store):
@@ -206,7 +218,6 @@ def cleanup(today):
             removed += 1
             print("Deleted old file:", name)
         elif ym == cutoff_ym:
-            # cutoff wale mahine ke andar ke purane din hatao
             store = load_month(ym)
             kept = {k: v for k, v in store.items() if v["date"] >= cutoff.strftime("%Y-%m-%d")}
             if len(kept) != len(store):
@@ -221,7 +232,7 @@ def cleanup(today):
 def build_summary(today):
     """Pichhle 90 din ka ranking."""
     recs = []
-    for i in range(4):  # last ~4 months ki files
+    for i in range(4):
         d = (today.replace(day=1) - timedelta(days=30 * i))
         recs.extend(load_month(d.strftime("%Y-%m")).values())
     recs = {r["id"]: r for r in recs}.values()
@@ -278,10 +289,14 @@ def main():
     changed = 0
     for ym, recs in by_month.items():
         store = load_month(ym)
+        before = len(store)
         for r in recs:
-            store[r["id"]] = r
+            store.setdefault(r["id"], r)   # purani (AI se bhari) record ko overwrite nahi karte
+        if len(store) < before:
+            raise SystemExit(f"STOP: {ym} mein records kam ho rahe hain ({before} -> {len(store)}).")
         if save_month(ym, store):
             changed += 1
+        print(f"{ym}: {before} -> {len(store)} records")
     print("Month files updated:", changed)
 
     cleanup(today)
