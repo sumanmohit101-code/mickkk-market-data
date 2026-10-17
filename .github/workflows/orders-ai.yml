@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: orders-ai
+  group: orders-data
   cancel-in-progress: false
 
 permissions:
