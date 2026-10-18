@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mickkk Market Chart Terminal</title>
-<script src="js/vendor/lightweight-charts.standalone.production.js"></script>
-<link rel="stylesheet" href="css/app.css">
+<script src="lightweight-charts.standalone.production.js"></script>
+<link rel="stylesheet" href="app.css">
 </head>
 <body>
 <nav>
@@ -78,7 +78,7 @@
         <button class="tbtn" onclick="openIndicatorsModal()">fx Indicators</button>
         <button class="tbtn" id="replay-btn" onclick="toggleReplayMode()">▶ Replay</button>
         <div class="tsep"></div>
-        <button class="tbtn active" id="btn-vol" onclick="toggleVolume(this)">Vol</button>
+        <button class="tbtn active" id="btn-vol" title="MICKKK Volume" onclick="toggleVolume(this)">Vol</button>
         <div class="tsep"></div>
         <button class="tbtn" title="Set Price Alert (🔔)" onclick="openPriceAlertModal()">🔔 Alert</button>
         <button class="tbtn" title="My Active Alerts" onclick="openMyAlertsModal()">📋 My Alerts</button>
@@ -193,7 +193,7 @@
 <!-- PRICE ALERT MODAL -->
 <div class="modal-overlay" id="alert-modal" onclick="if(event.target===this)closePriceAlertModal()">
   <div class="ind-modal" style="width:380px;">
-    <h3 style="font-size:15px;margin-bottom:12px;color:var(--text);font-family:var(--mono)">🔔 Set Price Alert</h3>
+    <h3 style="font-size:15px;margin-bottom:12px;color:var(--text);font-family:var(--mono)">🔔 Create Alert</h3>
     <div style="display:flex;flex-direction:column;gap:10px;font-family:var(--mono);font-size:12px;">
       <div>Stock: <b id="alert-stock-name" style="color:var(--accent)">—</b></div>
       <div>
@@ -396,7 +396,7 @@
     </div>
 
     <div class="ind-section">
-      <div class="ind-section-title">🔊 Pocket Pivot Volume & Stats</div>
+      <div class="ind-section-title">🔊 MICKKK Volume — Pocket Pivot, HVQ, Volume MA & Stats</div>
       <div class="ind-option">
         <label>Enable Pocket Pivot Engine (Badges, U/D, Rel Vol)</label>
         <label class="switch"><input type="checkbox" id="ind-ppv" checked onchange="toggleIndicator('ppv')"><span class="slider"></span></label>
@@ -638,16 +638,17 @@
   </div>
 </div>
 
-<script src="js/01-config-data.js"></script>
-<script src="js/02-alerts-storage-toolbar.js"></script>
-<script src="js/03-grid-layout.js"></script>
-<script src="js/04-drawings-engine.js"></script>
-<script src="js/05-watchlists.js"></script>
-<script src="js/06-load-and-cache.js"></script>
-<script src="js/07-indicators-core.js"></script>
-<script src="js/08-overlays-volume-pivot.js"></script>
-<script src="js/09-rsi-rs-cpr-ema.js"></script>
-<script src="js/10-info-zoom-live-replay.js"></script>
+<script src="01-config-data.js"></script>
+<script src="02-alerts-storage-toolbar.js"></script>
+<script src="03-grid-layout.js"></script>
+<script src="04-drawings-engine.js"></script>
+<script src="05-watchlists.js"></script>
+<script src="06-load-and-cache.js"></script>
+<script src="07-indicators-core.js"></script>
+<script src="08-overlays-volume-pivot.js"></script>
+<script src="09-rsi-rs-cpr-ema.js"></script>
+<script src="10-info-zoom-live-replay.js"></script>
+<script src="11-indicator-legend-alerts.js"></script>
 <div class="replay-bar" id="replay-bar">
   <button class="pane-legend-btn" title="Start" onclick="replayStart()">⏮</button>
   <button class="pane-legend-btn" title="Previous candle" onclick="replayStep(-1)">◀</button>
