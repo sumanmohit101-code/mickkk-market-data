@@ -1,705 +1,662 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
-:root{
-  --bg:#080b0f;--surface:#0e1318;--card:#131a22;--card2:#18212c;--border:#1e2d3d;
-  --text:#d4e4f0;--muted:#5a7a94;--accent:#00d4ff;--green:#00e676;--red:#ff3d5a;
-  --amber:#ffab00;--purple:#a78bfa;--font:'Space Grotesk',sans-serif;--mono:'JetBrains Mono',monospace;--radius:10px;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mickkk Market Chart Terminal</title>
+<script src="lightweight-charts.standalone.production.js"></script>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<nav>
+  <div class="logo-group">
+    <div class="logo">MICKKK<span class="dotcom">.com</span></div>
+    <div class="nav-divider">|</div>
+    <div class="header-tagline">Trade Smarter. Track Everything.</div>
+    <div class="header-charts-badge">
+      <span class="badge-title">Charts</span>
+      <span class="badge-sub">MICKKK Market Data</span>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="journal.html">Trading Journal</a>
+    <a href="market-breadth.html">Market Breadth</a>
+    <a href="charts.html" class="active">Charts</a>
+    <button class="tbtn" id="theme-btn" onclick="toggleTheme()" style="margin-left:8px;">☀️ Light</button>
+  </div>
+</nav>
 
-body.light-theme {
-  --bg:#ffffff;--surface:#f8f9fd;--card:#ffffff;--card2:#f0f3f8;--border:#e0e3eb;
-  --text:#131722;--muted:#707a8a;
-}
+  <div class="chart-toolbar">
+      <div class="symbol-header-box">
+        <div class="top-symbol-search-wrap">
+          <button class="top-stock-btn" onclick="openSearchModal(-1)">
+            <span id="top-stock-btn-label">🔍 Select Instrument</span>
+            <span style="font-size:10px;color:var(--muted)">▼</span>
+          </button>
+          <button class="top-compare-plus" id="top-compare-plus" title="Compare" aria-label="Compare" onclick="openCompareSearch(0);event.stopPropagation();">＋</button>
+        </div>
 
-*{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;}
-body{background:var(--bg);color:var(--text);font-family:var(--font);overflow:hidden;transition:background 0.2s, color 0.2s;}
-::-webkit-scrollbar{width:5px;height:5px;} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
-@keyframes spin{to{transform:rotate(360deg)}}
+        <div class="sym-info-container" id="symbol-header">
+          <div class="sym-top-line">
+            <span class="sym-name">—</span>
+          </div>
+          <div class="sym-full">Select a stock or index to view its chart</div>
+        </div>
+      </div>
 
-/* ===== NAVBAR LAYOUT (ZERO GAP) ===== */
-body{
-  display:flex !important;
-  flex-direction:column !important;
-  height:100vh !important;
-  overflow:hidden !important;
-  margin:0 !important;
-  padding:0 !important;
-}
-
-nav{
-  position:relative !important;
-  top:auto !important;
-  left:auto !important;
-  right:auto !important;
-  width:100% !important;
-  height:32px !important; /* Optimized Compact Size */
-  flex-shrink:0 !important;
-  z-index:200;
-  background:rgba(8,11,15,0.95);
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 14px;
-}
-.logo{font-size:16px !important;}
-.header-tagline{font-size:10.5px !important;}
-.nav-links a{padding:3px 8px !important;font-size:11.5px !important;}
-body.light-theme nav{background:rgba(255,255,255,0.92);}
-
-.logo-group{display:flex;align-items:center;gap:10px;}
-.logo{font-size:19px;font-weight:700;letter-spacing:2px;color:var(--accent);font-family:var(--mono);}
-.logo .dotcom{color:var(--text);}
-.header-tagline{font-size:11.5px;color:var(--muted);font-weight:400;font-family:var(--font);}
-.nav-divider{color:var(--border);font-size:14px;}
-
-.header-charts-badge{
-  display:flex;flex-direction:column;align-items:flex-start;
-  background:var(--card);border:1px solid var(--accent);padding:2px 8px;
-  border-radius:6px;line-height:1.1;
-}
-.header-charts-badge .badge-title{font-size:11px;font-weight:700;color:var(--accent);font-family:var(--mono);}
-.header-charts-badge .badge-sub{font-size:8.5px;color:var(--muted);font-family:var(--font);}
-
-.nav-links{display:flex;align-items:center;gap:4px;}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:12.5px;font-weight:500;padding:5px 12px;border-radius:6px;transition:all 0.2s;}
-.nav-links a:hover,.nav-links a.active{color:var(--accent);background:rgba(0,212,255,0.08);}
-
-/* ===== SHELL CONTAINER (ZERO GAP) ===== */
-.shell{
-  flex:1 !important;
-  height:calc(100vh - 38px) !important;
-  min-height:0 !important;
-  padding-top:0 !important; /* <-- YEH 0 KARTE HI GAP COMPLETELY KHATAM HO JAYEGA */
-  display:flex !important;
-  flex-direction:row !important;
-  align-items:stretch !important;
-  position:relative !important;
-  box-sizing:border-box !important;
-  overflow:hidden !important;
-}
-
-/* ===== DRAWING TOOLBAR WITH COLLAPSE TOGGLE ===== */
-.drawing-bar{
-  position:absolute;left:0;top:0 !important;bottom:0;width:44px;
-  background:var(--surface);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:8px;z-index:60;
-  transition:width 0.2s ease-in-out, padding 0.2s ease-in-out;
-}
-.drawing-bar.collapsed {
-  width: 0px !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  border-right: none !important;
-}
-
-.draw-bar-floating-toggle {
-  position:absolute;left:0;bottom:5px;top:auto;z-index:65;
-  width:30px;height:17px;padding:0;background:rgba(14,19,24,.94);
-  border:1px solid var(--border);border-radius:7px;color:var(--accent);
-  cursor:pointer;font-size:11px;display:none;align-items:center;justify-content:center;
-  box-shadow:0 4px 12px rgba(0,0,0,.45);font-family:var(--mono);
-}
-.drawing-bar .draw-toolbar-collapse{margin-top:auto;width:40px;height:18px;min-height:18px;border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--accent);font:700 11px var(--mono);cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.drawing-bar .draw-toolbar-collapse:hover{background:var(--card2);color:var(--text);}
-
-.draw-btn{
-  width:34px;height:32px;border-radius:6px;border:1px solid transparent;
-  background:transparent;color:var(--muted);cursor:pointer;display:flex;
-  align-items:center;justify-content:center;font-size:15px;transition:all 0.15s;
-}
-.draw-btn:hover{background:var(--card);color:var(--text);}
-.draw-btn.active{background:rgba(0,212,255,0.15);color:var(--accent);border-color:var(--accent);}
-.chart-wrap.drawing-move-mode{cursor:grab;}
-.chart-wrap.drawing-dragging{cursor:grabbing;}
-
-
-/* ===== PROFESSIONAL DRAWING TOOLKIT ===== */
-.drawing-bar{width:48px;padding:7px 0;gap:5px;overflow-y:auto;overflow-x:visible;}
-.draw-btn{width:38px;height:30px;font-size:14px;border-radius:7px;position:relative;}
-.draw-btn[data-group]::after{content:'⌄';position:absolute;right:2px;bottom:1px;font-size:7px;color:var(--muted);}
-.draw-sep{width:30px;height:1px;background:var(--border);margin:3px 0;flex:none;}
-.icon-tool-wrap{position:relative;width:38px;height:30px;flex:none;}
-.icon-tool-wrap>.draw-btn{width:38px;height:30px;}
-.icon-palette{position:fixed;left:0;top:0;display:grid;visibility:hidden;pointer-events:none;grid-template-columns:repeat(4,30px);gap:4px;padding:6px;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:0 12px 28px rgba(0,0,0,.45);z-index:10000;white-space:normal;}
-.icon-tool-wrap.palette-open{z-index:10001;}
-.icon-tool-wrap.palette-open .icon-palette{visibility:visible;pointer-events:auto;}
-.icon-palette button{width:30px;height:30px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:5px;cursor:pointer;font:700 15px var(--mono);}
-.icon-palette button:hover{color:var(--accent);border-color:var(--accent);background:var(--card2);}
-body.light-theme .icon-palette{box-shadow:0 12px 28px rgba(0,0,0,.18);}
-
-.drawing-style-pop{position:fixed;z-index:650;display:none;width:218px;background:rgba(14,19,24,.97);border:1px solid var(--border);border-radius:8px;box-shadow:0 14px 34px rgba(0,0,0,.5);padding:5px;font-family:var(--mono);backdrop-filter:blur(8px);}
-.drawing-style-pop.open{display:block;}
-.drawing-style-pop h4{display:none;}
-.draw-style-mini{display:flex;align-items:center;gap:5px;height:28px;}
-.draw-style-mini .ds-mini-color{width:20px;height:20px;padding:0;border:1px solid var(--border);border-radius:2px;background:transparent;cursor:pointer;}
-.draw-style-mini select{height:24px;min-width:62px;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:5px;padding:2px 5px;font:600 10px var(--mono);outline:none;}
-.draw-style-mini button{height:24px;min-width:25px;padding:0 6px;border-radius:5px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;font:700 11px var(--mono);}
-.draw-style-mini button:hover{background:var(--card);color:var(--text);border-color:var(--border);}
-.draw-style-mini .ds-alert-btn.active{color:#ffd54f;background:rgba(255,213,79,.12);border-color:rgba(255,213,79,.35);}
-.draw-style-mini .ds-delete-btn{color:var(--muted);}
-.draw-style-mini .ds-delete-btn:hover{color:var(--red);border-color:rgba(255,61,90,.35);}
-.draw-style-more{display:none;margin-top:5px;padding-top:5px;border-top:1px solid var(--border);}
-.drawing-style-pop.expanded .draw-style-more{display:grid;}
-.draw-style-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
-.draw-style-field{display:flex;flex-direction:column;gap:2px;}
-.draw-style-field.full{grid-column:1/-1;}
-.draw-style-field label{font-size:8px;color:var(--muted);text-transform:uppercase;}
-.draw-style-field input,.draw-style-field select{width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:4px;font:9px var(--mono);outline:none;box-sizing:border-box;}
-.draw-style-field input[type=color]{height:24px;padding:1px;}
-.draw-style-actions{display:flex;gap:4px;margin-top:6px;}
-.draw-style-actions button{flex:1;padding:5px 4px;border-radius:4px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font:600 9px var(--mono);}
-.draw-style-actions button:hover{border-color:var(--accent);}
-.draw-style-actions .danger{color:var(--red);}
-.draw-pos-stats{margin-top:5px;padding:5px;background:var(--card);border-radius:5px;font-size:8.5px;line-height:1.45;color:var(--muted);}
-.draw-alert-row{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:5px;padding:4px 5px;background:var(--card);border-radius:5px;font-size:8px;color:var(--muted);}
-.draw-alert-row select{flex:1;min-width:0;}
-.drawing-save-status{position:fixed;right:12px;bottom:12px;z-index:620;padding:6px 9px;border:1px solid var(--border);background:rgba(14,19,24,.94);border-radius:6px;color:var(--muted);font:9px var(--mono);pointer-events:none;opacity:0;transition:opacity .2s;}
-.drawing-save-status.show{opacity:1;}
-
-
-/* ===== MAIN CHART AREA ===== */
-.main{flex:1;display:flex;flex-direction:column;min-width:0;height:100%;width:100%;background:var(--bg);overflow:hidden;}
-.main.tools-collapsed .chart-wrap{padding-left:0;}
-.main:not(.tools-collapsed) .chart-wrap{padding-left:44px;}
-.chart-toolbar{
-  width:100% !important;
-  height:32px !important;
-  flex-shrink:0 !important;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 12px;
-  border-bottom:1px solid var(--border);
-  background:var(--surface);
-  position:relative;
-  z-index:22;
-  margin:0 !important;
-}
-
-.symbol-header-box{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  transform:none !important; /* Left se 44px indentation hata diya taaki natural start ho */
-  min-height:30px;
-}
-
-.top-stock-btn{
-  display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);
-  padding:3px 8px;border-radius:6px;cursor:pointer;color:var(--text);font-family:var(--mono);
-  font-size:12.5px;font-weight:700;transition:all 0.15s;
-}
-.top-stock-btn:hover{border-color:var(--accent);background:rgba(0,212,255,0.08);}
-
-.sym-info-container{display:flex;flex-direction:column;gap:0;min-width:0;flex:0 1 auto;}
-.sym-top-line{display:flex;align-items:baseline;gap:8px;}
-.sym-top-line .sym-name{font-size:16px;font-weight:700;font-family:var(--mono);color:var(--text);letter-spacing:0.5px;}
-.sym-top-line .sym-price{font-size:16px;font-weight:700;font-family:var(--mono);}
-.sym-top-line .sym-chg{font-size:11px;font-weight:600;font-family:var(--mono);padding:2px 6px;border-radius:4px;}
-.sym-chg.pos{color:var(--green);background:rgba(0,230,118,0.1);}
-.sym-chg.neg{color:var(--red);background:rgba(255,61,90,0.1);}
-.sym-full{font-size:10.5px;color:var(--muted);font-weight:400;white-space:nowrap;overflow:visible;text-overflow:clip;max-width:520px;min-width:0;line-height:11px;}
-
-.toolbar-controls{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
-.tbtn{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:3px 8px;border-radius:5px;font-size:10.5px;cursor:pointer;font-family:var(--font);transition:all 0.15s;white-space:nowrap;}
-.tbtn:hover{color:var(--text);border-color:var(--accent);}
-.tbtn.active{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,0.08);}
-.tsep{width:1px;height:14px;background:var(--border);margin:0 2px;}
-
-/* SINGLE LINE OHLC BOX */
-.ohlc-box{display:flex;
-  position:absolute;top:8px;left:54px;z-index:80;font-family:var(--mono);
-  font-size:11px;color:var(--muted);background:rgba(14,19,24,0.88);
-  padding:4px 10px;border-radius:6px;backdrop-filter:blur(8px);border:1px solid var(--border);
-  box-shadow:0 4px 12px rgba(0,0,0,0.4);pointer-events:none;
-  display:flex;align-items:center;gap:8px;white-space:nowrap;
-}
-body.light-theme .ohlc-box{display:flex;background:rgba(255,255,255,0.92);}
-.pane-price .ohlc-box{top:8px;left:8px;}
-.ohlc-box b{color:var(--text);}
-.ohlc-box .lg{color:var(--green);} .ohlc-box .lr{color:var(--red);}
-
-/* 52W + CIRCUIT BAND INFO TABLE (TOP-RIGHT CORNER CARD) */
-.combined-info-table {
-  position:absolute;top:8px;right:76px;min-width:154px;max-width:162px;z-index:25;font-family:var(--mono);
-  font-size:9.5px;background:rgba(14,19,24,0.92);backdrop-filter:blur(8px);
-  border:1px solid var(--border);border-radius:6px;padding:6px 10px;
-  display:flex;flex-direction:column;gap:4px;box-shadow:0 4px 16px rgba(0,0,0,0.5);
-  pointer-events:none;
-}
-body.light-theme .combined-info-table{background:rgba(255,255,255,0.95);}
-
-.info-card-section{display:flex;flex-direction:column;gap:2px;}
-.info-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
-.info-card-divider{height:1px;background:var(--border);margin:4px 0;}
-.info-card-footer{font-weight:700;color:var(--text);font-size:9.5px;text-align:center;padding-top:1px;letter-spacing:0.3px;}
-
-.widget-badge{padding:1px 5px;border-radius:3px;font-weight:600;}
-/* ===== COMPARE PANE + RSI HIGHLIGHT ===== */
-.pane-compare{flex:0.9;min-height:70px;display:none;position:relative;background:var(--bg);border-top:1px solid var(--border);}
-.compare-fill-canvas,.rsi-bg-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;}
-.pane-compare .pane-legend,.pane-rsi .pane-legend{z-index:15;}
-.compare-type-select{height:20px;min-width:58px;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:1px 4px;font:600 9px var(--mono);outline:none;}
-.compare-add-btn{width:auto;min-width:20px;height:20px;border:1px solid var(--border);background:var(--card);color:var(--accent);border-radius:4px;cursor:pointer;font:700 14px var(--mono);line-height:16px;}
-.compare-add-btn:hover{border-color:var(--accent);background:rgba(0,212,255,.08);}
-.global-compare-btn{min-width:78px;}
-.replay-bar{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);display:none;align-items:center;gap:7px;padding:6px 9px;background:rgba(14,19,24,.97);border:1px solid var(--accent);border-radius:8px;box-shadow:0 10px 28px rgba(0,0,0,.45);z-index:800;font:10px var(--mono);color:var(--text);}
-.replay-bar.open{display:flex;}
-.replay-bar input[type=range]{width:min(360px,38vw);accent-color:var(--accent);}
-.replay-date{min-width:86px;text-align:center;color:var(--accent);font-weight:700;}
-.replay-btn{height:22px;padding:2px 7px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--text);cursor:pointer;font:700 10px var(--mono);}
-.replay-btn:hover{border-color:var(--accent);}
-.replay-live{color:var(--red);font-weight:700;}
-.vp-fill{position:absolute;inset:0;pointer-events:none;z-index:17;}
-body.light-theme .replay-bar{background:rgba(255,255,255,.98);}
-.info-card-group{display:flex;flex-direction:column;gap:2px;}
-.info-card-group+.info-card-group{border-top:1px solid var(--border);padding-top:4px;margin-top:4px;}
-.info-card-result{font-size:8.5px;color:var(--muted);white-space:nowrap;line-height:12px;}
-.info-card-result-stack{display:flex;flex-direction:column;gap:1px;}
-.info-card-result b{color:var(--text);font-weight:700;}
-.info-card-result b{color:var(--text);font-weight:700;}
-.info-card-compact{display:flex;flex-direction:column;gap:2px;min-width:104px;}
-.info-card-compact .info-row{gap:5px;min-width:0;}
-.info-card-compact .info-row span:first-child{white-space:nowrap;}
-.info-card-group{padding:2px 0 4px;}
-.info-card-group + .info-card-group{border-top:1px solid var(--border);padding-top:6px;margin-top:1px;}
-.info-card-footer{padding-top:2px;font-weight:700;color:var(--text);}
-
-.bg-pos{background:rgba(0,230,118,0.2);color:var(--green);}
-.bg-neg{background:rgba(255,61,90,0.2);color:var(--red);}
-.bg-amber{background:rgba(255,171,0,0.2);color:var(--amber);}
-
-/* POCKET PIVOT STATS WIDGET */
-.ppv-stats-widget{
-  position:absolute;top:0;left:54px;z-index:25;font-family:var(--mono);
-  font-size:10px;display:flex;flex-direction:column;align-items:flex-start;gap:3px;
-  pointer-events:none;
-  transition:top 0.1s ease;
-}
-.ppv-table-row{
-  display:flex;align-items:center;border:1px solid var(--border);
-  border-radius:4px;overflow:hidden;background:rgba(19,26,34,0.90);backdrop-filter:blur(6px);
-}
-body.light-theme .ppv-table-row{background:rgba(255,255,255,0.95);}
-.ppv-cell{
-  padding:3px 7px;border-right:1px solid var(--border);font-weight:500;color:var(--text);white-space:nowrap;
-}
-.ppv-cell:last-child{border-right:none;}
-.ppv-cell.bg-green{background:rgba(8,153,129,0.22);color:#089981;}
-.ppv-cell.bg-red{background:rgba(242,54,69,0.22);color:#f23645;}
-.ppv-cell.bg-neutral{background:rgba(42,46,57,0.5);color:var(--text);}
-
-/* ZERO GAP CHART CONTAINER & SEPARATE PANES */
-.chart-wrap{flex:1;position:relative;min-height:0;width:100%;height:100%;margin:0;padding:0;overflow:hidden;transition:padding-left .2s ease;}
-
-.chart-grid {
-  width: 100%; height: 100%; display: grid; gap: 2px; background: var(--border);
-}
-.chart-grid.grid-1x1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
-.chart-grid.grid-1x2, .chart-grid.grid-stock-index { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
-.chart-grid.grid-2x1 { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
-.chart-grid.grid-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
-.chart-grid.grid-3x2 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
-.chart-grid.grid-4x2 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
-
-.chart-grid.grid-1x2 > .chart-panel:nth-child(2),
-.chart-grid.grid-2x1 > .chart-panel:nth-child(2),
-.chart-grid.grid-2x2 > .chart-panel:nth-child(n+3),
-.chart-grid.grid-3x2 > .chart-panel:nth-child(n+4),
-.chart-grid.grid-4x2 > .chart-panel:nth-child(n+5) {
-  padding-bottom: 0 !important;
-  box-sizing: border-box;
-}
-
-.chart-grid.grid-1x1 .panel-top-bar { display: none !important; }
-
-.chart-panel {
-  position: relative; background: var(--bg); width: 100%; height: 100%;
-  display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--border);
-  padding-bottom: 0 !important; /* YEH NEECHE KE FALTU 24px GAP KO KHATAM KAREGA */
-  box-sizing: border-box;
-}
-
-.panel-top-bar {
-  display: flex; align-items: center; justify-content: space-between; padding: 2px 6px;
-  background: var(--surface); border-bottom: 1px solid var(--border); z-index: 20; height: 26px;
-  flex-shrink: 0;
-}
-
-.panel-stock-btn {
-  background: var(--card); border: 1px solid var(--border); color: var(--text);
-  font-family: var(--mono); font-size: 10.5px; font-weight: 700; padding: 1px 6px;
-  border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 4px;
-}
-.panel-stock-btn:hover { border-color: var(--accent); background: rgba(0,212,255,0.08); }
-
-.panel-tf-group { display: flex; align-items: center; gap: 2px; }
-.panel-tf-btn {
-  background: transparent; border: 1px solid transparent; color: var(--muted);
-  font-family: var(--mono); font-size: 10px; font-weight: 700; padding: 1px 5px;
-  border-radius: 3px; cursor: pointer; transition: all 0.15s;
-}
-.panel-tf-btn:hover { color: var(--text); background: var(--card); }
-.panel-tf-btn.active { color: var(--accent); background: rgba(0,212,255,0.18); border-color: var(--accent); }
-
-.panel-chart-container {
-  flex: 1; display: flex; flex-direction: column;
-  position: relative; width: 100%; height: 100%; overflow: hidden;
-}
-
-/* --- START: PANE PROPORTIONS & GRABBABLE SPLITTERS --- */
-.pane-box { position: relative; width: 100%; overflow: hidden; }
-.pane-price { flex: 7.0; min-height: 80px; }
-.pane-rsi { flex: 0.8; min-height: 25px; }
-.pane-macd { flex: 0.8; min-height: 25px; display: none; }
-.pane-rs { flex: 0.8; min-height: 25px; }
-.pane-axis { flex: 0 0 26px !important; height: 26px !important; min-height: 26px !important; max-height: 26px !important; background: var(--surface) !important; border-top: 1px solid var(--border) !important; position: relative !important; width: 100% !important; overflow: hidden !important; flex-shrink: 0 !important; }
-/* TRADINGVIEW PANE TITLE BAR (Title + ▲ ▼ + ⚙️ + ✕) */
-.pane-legend {
-  position: absolute;
-  top: 4px;
-  left: 6px;
-  z-index: 15;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  font: 600 10px var(--mono);
-  color: var(--muted);
-  background: rgba(8, 11, 15, 0.78);
-  padding: 2px 6px;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  pointer-events: auto;
-  user-select: none;
-}
-body.light-theme .pane-legend {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(0, 0, 0, 0.1);
-  color: var(--text);
-}
-.pane-legend .legend-title {
-  margin-right: 4px;
-  color: var(--text);
-  font-weight: 700;
-}
-.pane-legend-btn {
-  background: transparent;
-  border: none;
-  color: var(--muted);
-  cursor: pointer;
-  font-size: 10px;
-  padding: 1px 4px;
-  border-radius: 3px;
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s;
-}
-.pane-legend-btn:hover {
-  color: var(--accent);
-  background: rgba(0, 212, 255, 0.15);
-}
+      <div class="toolbar-controls">
+        <button class="tbtn active" id="btn-type-candle" onclick="setChartType('candle', this)">Candle</button>
+        <button class="tbtn" id="btn-type-bar" onclick="setChartType('bar', this)">Bar</button>
+        <button class="tbtn" id="btn-type-line" onclick="setChartType('line', this)">Line</button>
+        <div class="tsep"></div>
+        <button class="tbtn" onclick="setRange('1M',this)">1M</button>
+        <button class="tbtn" onclick="setRange('3M',this)">3M</button>
+        <button class="tbtn" onclick="setRange('6M',this)">6M</button>
+        <button class="tbtn active" onclick="setRange('1Y',this)">1Y</button>
+        <button class="tbtn" onclick="setRange('ALL',this)">All</button>
+        <div class="tsep"></div>
+        <button class="tbtn active" id="btn-daily" onclick="setInterval_('D',this)">D</button>
+        <button class="tbtn" id="btn-weekly" onclick="setInterval_('W',this)">W</button>
+        <button class="tbtn" id="btn-monthly" onclick="setInterval_('M',this)">M</button>
+        <div class="tsep"></div>
+        <button class="tbtn" id="btn-scale-reg" onclick="setPriceScaleMode('reg', this)">Reg</button>
+        <button class="tbtn active" id="btn-scale-log" onclick="setPriceScaleMode('log', this)">Log</button>
+        <button class="tbtn" id="btn-scale-pct" onclick="setPriceScaleMode('pct', this)">%</button>
+        <div class="tsep"></div>
+        <span style="font-size:11.5px;color:var(--muted);font-weight:600;font-family:var(--mono);">Grid:</span>
+        <select class="tbtn" id="grid-select" onchange="changeGridFormat(this.value)" style="font-weight:600;color:var(--accent);">
+          <option value="1x1" selected>1 Chart (Full)</option>
+          <option value="1x2">2 Charts (1x2)</option>
+          <option value="2x1">2 Charts (2x1)</option>
+          <option value="stock-index">Stock + NIFTY Smallcap 250</option>
+          <option value="2x2">4 Charts (2x2)</option>
+          <option value="3x2">6 Charts (3x2)</option>
+          <option value="4x2">8 Charts (4x2)</option>
+        </select>
+        <div class="tsep"></div>
+        <button class="tbtn" onclick="openIndicatorsModal()">fx Indicators</button>
+        <button class="tbtn" id="replay-btn" onclick="toggleReplayMode()">▶ Replay</button>
+        <div class="tsep"></div>
+        <button class="tbtn active" id="btn-vol" title="MICKKK Volume" onclick="toggleVolume(this)">Vol</button>
+        <div class="tsep"></div>
+        <button class="tbtn" title="Set Price Alert (🔔)" onclick="openPriceAlertModal()">🔔 Alert</button>
+        <button class="tbtn" title="My Active Alerts" onclick="openMyAlertsModal()">📋 My Alerts</button>
+        <button class="tbtn" title="Toggle Fullscreen (⛶)" onclick="toggleFullScreen()">⛶</button>
+        <button class="tbtn" title="Take Screenshot (📷)" onclick="captureChartScreenshot()">📷</button>
+      </div>
+    </div>
   
-/* Easy-to-grab Splitters with 9px invisible hit area */
-.pane-splitter {
-  height:1px;background:transparent;cursor:row-resize;position:relative;z-index:30;flex-shrink:0;transition:background .12s,height .12s;
-}
-.pane-splitter::after{content:'';position:absolute;top:-4px;bottom:-4px;left:0;right:0;z-index:5;}
-.pane-splitter:hover,.pane-splitter.dragging{height:2px;background:var(--accent);}
-/* --- END: PANE PROPORTIONS & GRABBABLE SPLITTERS --- */
+<div class="shell">
+  <button class="draw-bar-floating-toggle" id="floating-draw-toggle" title="Show Drawing Toolbar" onclick="toggleDrawingToolbar()">›</button>
+  <aside class="watchlist-dock" id="watchlist-dock">
+    <div class="watchlist-panel" id="watchlist-panel">
+    <div class="watchlist-head">
+      <select id="watchlist-select" class="watchlist-select" onchange="selectWatchlist(this.value)"></select>
+      <button class="watchlist-icon-btn" title="Rename watchlist" onclick="renameCurrentWatchlist()">✎</button>
+      <button class="watchlist-icon-btn" title="Delete watchlist" onclick="deleteCurrentWatchlist()">×</button>
+      <button class="watchlist-icon-btn watchlist-hide-btn" title="Hide watchlist panel" onclick="toggleWatchlistPanel(false)">›</button>
+    </div>
+    <div class="watchlist-actions">
+      <button class="watchlist-action" onclick="addWatchlistUI()">＋ Watchlist</button>
+      <button class="watchlist-action" onclick="addSectionUI()">＋ Section</button>
+      <button class="watchlist-action" onclick="addStockUI()">＋ Stock</button>
+    </div>
+    <div class="watchlist-body" id="watchlist-body"></div>
+    <div class="watchlist-status" id="watchlist-status"></div>
+    </div>
+    <button class="watchlist-sleek-toggle" id="watchlist-sleek-toggle" title="Hide Watchlist" onclick="toggleWatchlistPanel(false)">›</button>
+  </aside>
 
-.panel-overlay-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 18; }
+  <aside class="drawing-bar" id="drawing-toolbar">
+    <button class="draw-btn active" id="tool-cursor" title="Cursor / Select" onclick="setTool('cursor',this)">⌁</button>
+    <button class="draw-btn" id="tool-move" title="Move Drawing — drag any selected object" onclick="setTool('move',this)">✥</button>
+    <button class="draw-btn" id="tool-trendline" title="Trend Line — 2 points" onclick="setTool('trendline',this)">╱</button>
+    <button class="draw-btn" id="tool-ray" title="Ray — 2 points" onclick="setTool('ray',this)">↗</button>
+    <button class="draw-btn" id="tool-hline" title="Horizontal Line" onclick="setTool('hline',this)">━</button>
+    <button class="draw-btn" id="tool-vline" title="Vertical Line" onclick="setTool('vline',this)">│</button>
+    <button class="draw-btn" id="tool-arrowup" title="Arrow Up" onclick="setTool('arrowup',this)">↑</button>
+    <button class="draw-btn" id="tool-arrowdown" title="Arrow Down" onclick="setTool('arrowdown',this)">↓</button>
+    <div class="icon-tool-wrap" id="icon-tool-wrap" tabindex="0">
+      <button class="draw-btn" id="tool-icons" title="Icons — click to choose" onclick="toggleIconPalette(event,this)">★</button>
+      <div class="icon-palette" onmousedown="event.stopPropagation()">
+        <button type="button" title="Arrow Up" onclick="setDrawingIcon('↑')">↑</button>
+        <button type="button" title="Arrow Down" onclick="setDrawingIcon('↓')">↓</button>
+        <button type="button" title="Up Triangle" onclick="setDrawingIcon('▲')">▲</button>
+        <button type="button" title="Down Triangle" onclick="setDrawingIcon('▼')">▼</button>
+        <button type="button" title="Circle" onclick="setDrawingIcon('●')">●</button>
+        <button type="button" title="Diamond" onclick="setDrawingIcon('◆')">◆</button>
+        <button type="button" title="Star" onclick="setDrawingIcon('★')">★</button>
+        <button type="button" title="Flag" onclick="setDrawingIcon('⚑')">⚑</button>
+        <button type="button" title="Check" onclick="setDrawingIcon('✓')">✓</button>
+        <button type="button" title="Cross" onclick="setDrawingIcon('✕')">✕</button>
+        <button type="button" title="Warning" onclick="setDrawingIcon('!')">!</button>
+        <button type="button" title="Target" onclick="setDrawingIcon('◎')">◎</button>
+      </div>
+    </div>
+    <button class="draw-btn" id="tool-rectangle" title="Rectangle" onclick="setTool('rectangle',this)">□</button>
+    <button class="draw-btn" id="tool-circle" title="Circle / Ellipse" onclick="setTool('circle',this)">○</button>
+    <button class="draw-btn" id="tool-curve" title="3-Point Curve" onclick="setTool('curve',this)">⌒</button>
+    <button class="draw-btn" id="tool-fibonacci" title="Fibonacci Retracement" onclick="setTool('fibonacci',this)">F%</button>
+    <button class="draw-btn" id="tool-measure" title="Ruler — days / bars / % / price" onclick="setTool('measure',this)">↔</button>
+    <button class="draw-btn" id="tool-long" title="Long Position — entry / target / stop" onclick="setTool('long',this)">L↗</button>
+    <button class="draw-btn" id="tool-short" title="Short Position — entry / target / stop" onclick="setTool('short',this)">S↘</button>
+    <button class="draw-btn" id="tool-text" title="Text Note" onclick="setTool('text',this)">T</button>
+    <button class="draw-btn" id="tool-eraser" title="Delete drawing under cursor" onclick="setTool('eraser',this)">⌫</button>
+    <div class="draw-sep"></div>
+    <button class="draw-btn" title="Edit selected drawing" onclick="editSelectedDrawing()">⚙</button>
+    <button class="draw-btn" title="Clear all drawings" onclick="clearDrawings()" style="color:var(--red);">×</button>
+    <div class="draw-sep"></div>
+    <button class="draw-btn" title="Zoom In" onclick="zoomChart(0.72)">＋</button>
+    <button class="draw-btn" title="Zoom Out" onclick="zoomChart(1.35)">−</button>
+    <button class="draw-btn" title="Reset Chart View" onclick="resetChartView()">↺</button>
+    <button class="draw-toolbar-collapse" title="Hide Drawing Toolbar" onclick="toggleDrawingToolbar()">‹</button>
+  </aside>
 
-/* --- START: ATTRACTIVE NEON TRADING LOADER --- */
-.loading {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  background: rgba(8, 11, 15, 0.92); backdrop-filter: blur(8px); z-index: 100;
-}
-.loading-card {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  background: rgba(19, 26, 34, 0.85); border: 1px solid var(--border);
-  padding: 24px 36px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-}
-.candlestick-anim {
-  display: flex; align-items: center; gap: 8px; height: 42px; margin-bottom: 14px;
-}
-.c-bar {
-  width: 6px; border-radius: 2px; position: relative;
-  animation: candlePulse 1.2s ease-in-out infinite alternate;
-}
-.c-bar::before, .c-bar::after {
-  content: ''; position: absolute; left: 50%; width: 1.5px;
-  background: currentColor; transform: translateX(-50%);
-}
-.c-bar::before { top: -6px; height: 6px; }
-.c-bar::after  { bottom: -6px; height: 6px; }
+  <div class="main">
+    
+    <div class="chart-wrap">
 
-.c-bar.green {
-  background: var(--green); color: var(--green);
-  box-shadow: 0 0 10px rgba(0, 230, 118, 0.4);
-}
-.c-bar.red {
-  background: var(--red); color: var(--red);
-  box-shadow: 0 0 10px rgba(255, 61, 90, 0.4);
-}
-.c-bar.cyan {
-  background: var(--accent); color: var(--accent);
-  box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
-}
+      <!-- TOP-RIGHT CORNER CARD: 52W + EMAs + ATR + CIRCUIT BANDS + GSM SURVEILLANCE -->
+      <div class="combined-info-table" id="widget-combined-info" style="display:none"></div>
+      
+      <div class="ppv-stats-widget" id="ppv-stats-widget" style="display:none"></div>
 
-.c-bar:nth-child(1) { height: 16px; animation-delay: 0.1s; }
-.c-bar:nth-child(2) { height: 26px; animation-delay: 0.3s; }
-.c-bar:nth-child(3) { height: 34px; animation-delay: 0.5s; }
-.c-bar:nth-child(4) { height: 20px; animation-delay: 0.2s; }
-.c-bar:nth-child(5) { height: 28px; animation-delay: 0.4s; }
+      <div class="chart-grid grid-1x1" id="chart-grid-container"></div>
 
-@keyframes candlePulse {
-  0%   { transform: scaleY(0.6); opacity: 0.7; }
-  100% { transform: scaleY(1.2); opacity: 1; }
-}
+      <div class="empty-state" id="empty-state">
+        <div class="big">📈</div>
+        <div>Type stock symbol directly on screen or press ▲ / ▼ Arrow Keys to switch stocks</div>
+      </div>
+      <!-- START: ATTRACTIVE LOADING GRAPHIC -->
+      <div class="loading" id="loading" style="display:none">
+        <div class="loading-card">
+          <div class="candlestick-anim">
+            <div class="c-bar green"></div>
+            <div class="c-bar red"></div>
+            <div class="c-bar cyan"></div>
+            <div class="c-bar green"></div>
+            <div class="c-bar red"></div>
+          </div>
+          <div class="loading-title">MICKKK <span>TERMINAL</span></div>
+          <div class="loading-sub">Fetching Candlesticks & Indicators…</div>
+          <div class="loading-bar-wrap">
+            <div class="loading-bar-fill"></div>
+          </div>
+        </div>
+      </div>
+      <!-- END: ATTRACTIVE LOADING GRAPHIC -->
+    </div>
+  </div>
+</div>
 
-.loading-title {
-  font: 700 12px var(--mono); color: var(--text); letter-spacing: 1.5px; margin-bottom: 4px;
-}
-.loading-title span { color: var(--accent); }
-.loading-sub {
-  font: 400 10px var(--font); color: var(--muted); margin-bottom: 12px;
-}
-.loading-bar-wrap {
-  width: 130px; height: 2.5px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; position: relative;
-}
-.loading-bar-fill {
-  position: absolute; height: 100%; width: 45%;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  animation: loadShim 1.2s infinite ease-in-out;
-}
-@keyframes loadShim {
-  0%   { left: -50%; }
-  100% { left: 100%; }
-}
-/* --- END: ATTRACTIVE NEON TRADING LOADER --- */
-  
-.empty-state{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted);font-size:13px;text-align:center;padding:20px;}
-.empty-state .big{font-size:32px;}
+<!-- PRICE ALERT MODAL -->
+<div class="modal-overlay" id="alert-modal" onclick="if(event.target===this)closePriceAlertModal()">
+  <div class="ind-modal" style="width:380px;">
+    <h3 style="font-size:15px;margin-bottom:12px;color:var(--text);font-family:var(--mono)">🔔 Create Alert</h3>
+    <div style="display:flex;flex-direction:column;gap:10px;font-family:var(--mono);font-size:12px;">
+      <div>Stock: <b id="alert-stock-name" style="color:var(--accent)">—</b></div>
+      <div>
+        Target Price (₹): 
+        <input type="number" id="alert-price-input" style="width:100%;margin-top:4px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-family:var(--mono);">
+      </div>
+      <div>
+        Condition:
+        <select id="alert-condition-input" style="width:100%;margin-top:4px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-family:var(--mono);">
+          <option value="ABOVE">Price goes ABOVE target</option>
+          <option value="BELOW">Price goes BELOW target</option>
+        </select>
+      </div>
+      <div style="font-size:10.5px;color:var(--muted);line-height:1.4;">
+        * Local Browser Sound & Telegram Mobile Push alert trigger honge.
+      </div>
+      <div id="alert-save-status" style="font-size:11px;color:var(--muted);min-height:14px;"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:16px;">
+      <button class="tbtn" style="flex:1;padding:8px;" onclick="closePriceAlertModal()">Cancel</button>
+      <button class="tbtn active" style="flex:1;padding:8px;" id="alert-save-btn" onclick="savePriceAlert()">Set Alert</button>
+    </div>
+  </div>
+</div>
 
-/* MODALS */
-.modal-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(4px);
-  z-index:500;display:none;align-items:center;justify-content:center;
-}
-.modal-overlay.open{display:flex;}
+<!-- MY ALERTS MODAL -->
+<div class="modal-overlay" id="my-alerts-modal" onclick="if(event.target===this)closeMyAlertsModal()">
+  <div class="ind-modal" style="width:420px;">
+    <h3 style="font-size:15px;margin-bottom:12px;color:var(--text);font-family:var(--mono)">📋 My Active Alerts</h3>
+    <div id="my-alerts-list" style="display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto;font-family:var(--mono);font-size:12px;">
+      <div style="color:var(--muted);text-align:center;padding:16px;">Loading…</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:16px;">
+      <button class="tbtn" style="flex:1;padding:8px;" onclick="closeMyAlertsModal()">Close</button>
+    </div>
+  </div>
+</div>
 
-.search-modal-box{
-  width:460px;background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;box-shadow:0 20px 40px rgba(0,0,0,0.6);overflow:hidden;
-}
-.search-modal-header{padding:14px;border-bottom:1px solid var(--border);}
-.search-modal-header input{
-  width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);
-  padding:10px 14px;border-radius:8px;font-size:14px;outline:none;font-family:var(--font);
-}
 
-.instrument-tabs{display:flex;gap:6px;margin-bottom:10px;}
-.instrument-tab{flex:1;border:1px solid var(--border);background:var(--card);color:var(--muted);padding:8px 10px;border-radius:7px;cursor:pointer;font:600 11px var(--mono);transition:.15s;}
-.instrument-tab:hover{border-color:var(--accent);color:var(--text);}
-.instrument-tab.active{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.08);}
-.instrument-tab span{display:inline-flex;min-width:22px;justify-content:center;margin-left:4px;padding:1px 5px;border-radius:10px;background:var(--surface);color:var(--muted);font-size:9px;}
-.instrument-tab.active span{color:var(--accent);}
-.search-modal-results{max-height:360px;overflow-y:auto;padding:6px;}
-.search-row-item{
-  display:flex;align-items:center;justify-content:space-between;padding:10px 14px;
-  border-radius:6px;cursor:pointer;transition:background 0.15s;
-}
-.search-row-item:hover, .search-row-item.highlighted{background:var(--card2);border-left:3px solid var(--accent);}
-.search-row-item .s-name{font-size:13px;color:var(--text);}
-.search-row-item .s-sym{font-size:11px;color:var(--accent);font-family:var(--mono);font-weight:600;}
+<div class="drawing-style-pop" id="drawing-style-pop">
+  <div class="draw-style-mini">
+    <input class="ds-mini-color" type="color" id="ds-color" value="#00d4ff" title="Color">
+    <select id="ds-width" title="Width"><option value="1" selected>1px</option><option value="1.5">1.5px</option><option value="2" selected>2px</option><option value="3">3px</option><option value="4">4px</option></select>
+    <button type="button" title="More settings" onclick="toggleDrawingStyleMore()">⚙</button>
+    <button type="button" class="ds-alert-btn" id="ds-alert-btn" title="Alert on crossing" onclick="toggleDrawingAlert()">🔔</button>
+    <button type="button" class="ds-delete-btn" title="Delete drawing" onclick="deleteSelectedDrawing();closeDrawingStyle()">🗑</button>
+  </div>
+  <div class="draw-style-more">
+    <div class="draw-style-grid">
+      <div class="draw-style-field"><label>Line</label><select id="ds-style"><option value="solid">Solid</option><option value="dashed">Dashed</option><option value="dotted">Dotted</option></select></div>
+      <div class="draw-style-field"><label>Fill</label><input type="color" id="ds-fill" value="#00d4ff"></div>
+      <div class="draw-style-field full"><label>Fill opacity</label><input type="range" id="ds-opacity" min="0" max="100" value="12" oninput="document.getElementById('ds-opacity-val').textContent=this.value+'%'"><span id="ds-opacity-val" style="font-size:8px;color:var(--muted)">12%</span></div>
+      <div class="draw-style-field full" id="ds-rr-wrap" style="display:none"><label>Risk / reward</label><input type="number" id="ds-rr" min="0.25" max="20" step="0.25" value="2"></div>
+    </div>
+    <div class="draw-alert-row" id="ds-alert-row">
+      <span>Crossing alert</span><select id="ds-alert-direction"><option value="both">Both</option><option value="up">Up only</option><option value="down">Down only</option></select>
+    </div>
+    <div class="draw-pos-stats" id="ds-stats" style="display:none"></div>
+    <div class="draw-style-actions"><button onclick="applyDrawingStyle()">Apply</button><button onclick="closeDrawingStyle()">Close</button><button class="danger" onclick="deleteSelectedDrawing();closeDrawingStyle()">Delete</button></div>
+  </div>
+</div>
+<div class="drawing-save-status" id="drawing-save-status">Drawings saved</div>
 
-.ind-modal{width:440px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:0 20px 40px rgba(0,0,0,0.6);max-height:90vh;overflow-y:auto;}
-.ind-section{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);}
-.ind-section-title{font-size:13px;font-weight:700;color:var(--accent);font-family:var(--mono);margin-bottom:10px;}
+<div class="modal-overlay" id="search-modal" onclick="if(event.target===this)closeSearchModal()">
+  <div class="search-modal-box">
+    <div class="search-modal-header">
+      <div class="instrument-tabs" id="instrument-tabs">
+        <button type="button" class="instrument-tab active" id="tab-stocks" onclick="setSearchMode('stock')">📈 Stocks <span id="stock-count-badge">0</span></button>
+        <button type="button" class="instrument-tab" id="tab-indices" onclick="setSearchMode('index')">📊 Indices <span id="index-count-badge">0</span></button>
+      </div>
+      <input type="text" id="modal-search-input" placeholder="🔍 Search stock symbol or company name..." oninput="filterSearchModal()">
+    </div>
+    <div class="search-modal-results" id="modal-search-results"></div>
+  </div>
+</div>
 
-.ema-row{display:flex;align-items:center;gap:8px;padding:5px 0;}
-.ema-lbl{font-size:11.5px;font-weight:600;font-family:var(--mono);width:115px;}
-.ema-input-num{width:52px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px 6px;border-radius:4px;font-size:11.5px;font-family:var(--mono);outline:none;}
-.ema-color-picker{width:28px;height:26px;border:none;background:transparent;cursor:pointer;}
-.ema-select-width{background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px 6px;border-radius:4px;font-size:11px;outline:none;}
+<!-- EDITABLE INDICATORS MODAL -->
+<div class="modal-overlay" id="ind-modal" onclick="if(event.target===this)closeIndicatorsModal()">
+  <div class="ind-modal">
+    <h3 style="font-size:15px;margin-bottom:14px;color:var(--text);font-family:var(--mono)">Indicators Settings</h3>
+    <div class="ind-quick-nav" id="ind-quick-nav">
+  <button onclick="jumpIndicatorSection('EMA')">EMA</button><button onclick="jumpIndicatorSection('Smart')">Bar Color</button><button onclick="jumpIndicatorSection('MCP')">MCP</button><button onclick="jumpIndicatorSection('Volume')">Volume</button><button onclick="jumpIndicatorSection('RSI')">RSI</button><button onclick="jumpIndicatorSection('Relative')">RS</button><button onclick="jumpIndicatorSection('Trendlines')">Trend</button><button onclick="jumpIndicatorSection('Supertrend')">ST</button><button onclick="jumpIndicatorSection('MACD')">MACD</button><button onclick="jumpIndicatorSection('CPR')">CPR</button><button onclick="jumpIndicatorSection('Gap')">Gap</button><button onclick="jumpIndicatorSection('Climax')">Climax</button><button onclick="jumpIndicatorSection('52-Week')">52W</button><button onclick="jumpIndicatorSection('Merged Info')">Info</button>
+</div>
+    
+    <div class="ind-section">
+      <div class="ind-section-title">📊 Exponential Moving Averages (EMAs)</div>
+      <div class="ema-row">
+        <label class="switch"><input type="checkbox" id="ema1-en" checked onchange="updateEMAConfig()"><span class="slider"></span></label>
+        <span class="ema-lbl">EMA 1:</span>
+        <input type="number" id="ema1-len" value="9" min="1" max="500" class="ema-input-num" onchange="updateEMAConfig()">
+        <input type="color" id="ema1-color" value="#ffffff" class="ema-color-picker" onchange="updateEMAConfig()">
+        <select id="ema1-width" class="ema-select-width" onchange="updateEMAConfig()"><option value="1" selected>1px</option><option value="2">2px</option><option value="3">3px</option></select>
+      </div>
 
-.ind-option{display:flex;align-items:center;justify-content:space-between;padding:7px 0;}
-.ind-option label{font-size:12.5px;font-weight:500;cursor:pointer;color:var(--text);}
+      <div class="ema-row">
+        <label class="switch"><input type="checkbox" id="ema2-en" checked onchange="updateEMAConfig()"><span class="slider"></span></label>
+        <span class="ema-lbl">EMA 2:</span>
+        <input type="number" id="ema2-len" value="21" min="1" max="500" class="ema-input-num" onchange="updateEMAConfig()">
+        <input type="color" id="ema2-color" value="#c58b1b" class="ema-color-picker" onchange="updateEMAConfig()">
+        <select id="ema2-width" class="ema-select-width" onchange="updateEMAConfig()"><option value="1" selected>1px</option><option value="2">2px</option><option value="3">3px</option></select>
+      </div>
 
-.switch{position:relative;display:inline-block;width:36px;height:18px;}
-.switch input{opacity:0;width:0;height:0;}
-.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:var(--card);border:1px solid var(--border);transition:.2s;border-radius:20px;}
-.slider:before{position:absolute;content:"";height:12px;width:12px;left:2px;bottom:2px;background-color:var(--muted);transition:.2s;border-radius:50%;}
-input:checked + .slider{background-color:var(--accent);}
-input:checked + .slider:before{transform:translateX(18px);background-color:#fff;}
+      <div class="ema-row">
+        <label class="switch"><input type="checkbox" id="ema3-en" checked onchange="updateEMAConfig()"><span class="slider"></span></label>
+        <span class="ema-lbl">EMA 3:</span>
+        <input type="number" id="ema3-len" value="55" min="1" max="500" class="ema-input-num" onchange="updateEMAConfig()">
+        <input type="color" id="ema3-color" value="#4b55a2" class="ema-color-picker" onchange="updateEMAConfig()">
+        <select id="ema3-width" class="ema-select-width" onchange="updateEMAConfig()"><option value="1" selected>1px</option><option value="2">2px</option><option value="3">3px</option></select>
+      </div>
 
-/* WATCHLIST OVERLAY */
-.watchlist-toggle{
-  position:absolute;left:50px;top:54px;z-index:75;
-  background:var(--card);border:1px solid var(--border);color:var(--accent);
-  padding:4px 8px;border-radius:6px;cursor:pointer;font:600 11px var(--mono);
-  box-shadow:0 4px 12px rgba(0,0,0,.35);display:flex;align-items:center;gap:5px;
-}
-.watchlist-toggle:hover{border-color:var(--accent);background:rgba(0,212,255,.08);}
-.watchlist-panel{
-  position:absolute;left:50px;top:88px;width:285px;max-height:calc(100vh - 110px);
-  z-index:74;background:rgba(14,19,24,.98);border:1px solid var(--border);
-  border-radius:9px;box-shadow:0 18px 42px rgba(0,0,0,.58);display:none;overflow:hidden;
-  backdrop-filter:blur(12px);
-}
-body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
-.watchlist-panel.open{display:flex;flex-direction:column;}
-.watchlist-head{padding:9px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;}
-.watchlist-select{flex:1;min-width:0;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:5px;padding:5px 7px;font:600 11px var(--mono);outline:none;}
-.watchlist-icon-btn{width:27px;height:27px;border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:5px;cursor:pointer;font-size:14px;line-height:1;}
-.watchlist-icon-btn:hover{color:var(--accent);border-color:var(--accent);}
-.watchlist-actions{display:flex;gap:5px;padding:7px 10px;border-bottom:1px solid var(--border);}
-.watchlist-action{flex:1;border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:5px;padding:5px 6px;font:600 10px var(--font);cursor:pointer;}
-.watchlist-action:hover{color:var(--accent);border-color:var(--accent);}
-.watchlist-body{overflow:auto;padding:6px 5px 9px;}
-.watch-section{margin:0 0 5px;border:1px solid transparent;border-radius:6px;}
-.watch-section-head{display:flex;align-items:center;gap:5px;padding:5px 6px;color:var(--accent);font:700 10.5px var(--mono);cursor:pointer;}
-.watch-section-head:hover{background:rgba(0,212,255,.05);}
-.watch-section-head .watch-chevron{width:12px;text-align:center;color:var(--muted);}
-.watch-section-head .watch-section-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.watch-section-head .watch-section-menu{color:var(--muted);font-size:11px;opacity:.75;}
-.watch-items{padding:0 3px 3px 20px;}
-.watch-item{display:flex;align-items:center;gap:6px;padding:5px 6px;border-radius:5px;cursor:pointer;min-width:0;}
-.watch-item:hover{background:var(--card2);}
-.watch-item.active{background:rgba(0,212,255,.09);border-left:2px solid var(--accent);padding-left:4px;}
-.watch-item .watch-sym{font:700 10.5px var(--mono);color:var(--text);white-space:nowrap;}
-.watch-item .watch-name{font:400 9px var(--font);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
-.watch-quote{display:flex;flex-direction:column;align-items:flex-end;min-width:64px;line-height:10px;margin-left:auto;font-family:var(--mono);font-size:9px;}
-.watch-price{color:var(--text);font-weight:700;}
-.watch-change.pos{color:var(--green);}.watch-change.neg{color:var(--red);}.watch-change.na{color:var(--muted);}
-.watch-item .watch-remove{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:11px;padding:0 2px;opacity:0;}
-.watch-item:hover .watch-remove{opacity:1;}
-.watch-item .watch-remove:hover{color:var(--red);}
-.watch-empty{padding:18px 10px;text-align:center;color:var(--muted);font-size:11px;line-height:1.5;}
-.watchlist-status{padding:4px 10px;color:var(--muted);font-size:9px;min-height:17px;border-top:1px solid var(--border);}
+      <div class="ema-row">
+        <label class="switch"><input type="checkbox" id="ema4-en" checked onchange="updateEMAConfig()"><span class="slider"></span></label>
+        <span class="ema-lbl">EMA 4:</span>
+        <input type="number" id="ema4-len" value="200" min="1" max="500" class="ema-input-num" onchange="updateEMAConfig()">
+        <input type="color" id="ema4-color" value="#f87171" class="ema-color-picker" onchange="updateEMAConfig()">
+        <select id="ema4-width" class="ema-select-width" onchange="updateEMAConfig()"><option value="1" selected>1px</option><option value="2">2px</option><option value="3">3px</option></select>
+      </div>
+      <div class="ema-row">
+        <label class="switch"><input type="checkbox" id="ema5-en" onchange="updateEMAConfig()"><span class="slider"></span></label>
+        <span class="ema-lbl">EMA 5:</span>
+        <input type="number" id="ema5-len" value="10" min="1" max="500" class="ema-input-num" onchange="updateEMAConfig()">
+        <input type="color" id="ema5-color" value="#00d4ff" class="ema-color-picker" onchange="updateEMAConfig()">
+        <select id="ema5-width" class="ema-select-width" onchange="updateEMAConfig()"><option value="1" selected>1px</option><option value="2">2px</option><option value="3">3px</option></select>
+      </div>
 
-/* RIGHT DOCK TRADINGVIEW FIXES */
-.shell{display:flex !important;flex-direction:row !important;align-items:stretch !important;}
-.main{order:2 !important;flex:1 1 auto !important;min-width:0 !important;width:auto !important;}
-.drawing-bar{
-  position:absolute !important;
-  left:0 !important;
-  top:0 !important; /* Toolbar ke theek neeche se chipak kar start hoga */
-  bottom:0 !important;
-  width:44px !important;
-  background:var(--surface);
-  border-right:1px solid var(--border);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:8px 0;
-  gap:6px;
-  z-index:60;
-}
+      <div class="ind-option" style="margin-top:6px;">
+        <label>EMA 1 & EMA 2 Ribbon Fill (Green/Red Shading)</label>
+        <label class="switch"><input type="checkbox" id="ema-env-en" checked onchange="updateEMAConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ind-option" style="margin-top:6px;">
+        <label>EMA Alignment 10 / 20 / 50 / 200 — Background</label>
+        <label class="switch"><input type="checkbox" id="ema-align-en" checked onchange="updateEMAAlignmentConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">Alignment range:</span>
+        <input type="number" id="ema-align-range" value="2.0" min="0.1" max="20" step="0.1" class="ema-input-num" onchange="updateEMAAlignmentConfig()">
+        <span style="font-size:11px;color:var(--muted)">% max spread</span>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">Highlight color:</span>
+        <input type="color" id="ema-align-color" value="#00e676" class="ema-color-picker" onchange="updateEMAAlignmentConfig()">
+        <span style="font-size:11px;color:var(--muted)">background</span>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">Intensity:</span>
+        <input type="range" id="ema-align-opacity" min="1" max="35" step="1" value="1" style="width:110px" oninput="updateEMAAlignmentConfig()">
+        <span id="ema-align-opacity-val" style="font-size:11px;color:var(--muted);min-width:38px">1%</span>
+      </div>
+    </div>
 
-/* Dedicated, very slim right rail for the watchlist. */
-/* Watchlist dock: Minimum width (22px) aur arrow shifted to TOP */
-.watchlist-dock{
-  order:3 !important;
-  position:relative !important;
-  width:0 !important;
-  min-width:0 !important;
-  max-width:0 !important;
-  height:100% !important;
-  display:flex !important;
-  align-items:stretch !important;
-  justify-content:flex-start !important;
-  z-index:100 !important;
-  background:var(--surface) !important;
-  border-left:0 !important;
-  flex:0 0 0 !important;
-}
-.watchlist-dock.open{
-  width:310px !important;min-width:310px !important;max-width:310px !important;
-  flex:0 0 310px !important;
-}
-.watchlist-dock.open .watchlist-sleek-toggle{left:50%!important;right:auto!important;transform:translateX(-50%)!important;}
-.watchlist-dock .watchlist-toggle{display:none !important;}
-.watchlist-dock .watchlist-panel{
-  position:absolute !important;right:0 !important;left:auto !important;top:0 !important;bottom:0 !important;
-  width:310px !important;min-width:310px !important;max-width:310px !important;height:100% !important;
-  max-height:none !important;margin:0 !important;border-radius:0 !important;
-  border-top:0 !important;border-right:0 !important;border-bottom:0 !important;
-  border-left:1px solid var(--border) !important;box-shadow:-12px 0 30px rgba(0,0,0,.28) !important;
-  backdrop-filter:none !important;z-index:110 !important;
-}
-.watchlist-dock .watchlist-panel.open{display:flex !important;}
-.watchlist-dock .watchlist-hide-btn{color:var(--accent) !important;font-size:20px !important;font-weight:700 !important;}
-.watchlist-dock .watchlist-hide-btn:hover{background:rgba(0,212,255,.08) !important;}
-.watchlist-dock .watchlist-panel{overflow:hidden !important;}
-.watchlist-dock .watchlist-panel .watchlist-body{scrollbar-width:thin;}
-.shell.watchlist-open .watchlist-dock .watchlist-toggle{display:none !important;}
-.chart-toolbar{padding-right:12px !important;}
-.watchlist-dock .watchlist-sleek-toggle{position:absolute!important;right:0!important;left:auto!important;bottom:5px!important;transform:translateX(-100%)!important;width:30px!important;height:17px!important;padding:0!important;border:1px solid var(--border)!important;border-radius:7px!important;background:var(--card)!important;color:var(--accent)!important;font:700 11px var(--mono)!important;display:flex!important;align-items:center!important;justify-content:center!important;cursor:pointer!important;z-index:120!important;box-shadow:0 4px 12px rgba(0,0,0,.38)!important;}
-.watchlist-dock .watchlist-sleek-toggle:hover{background:var(--card2)!important;color:var(--text)!important;}
+    <!-- START: MODAL INDICATORS CHECKBOXES ON -->
+    <div class="ind-section">
+      <div class="ind-section-title">🕯️ Smart Bar Color Rules & Inside Bar</div>
+      <div class="ind-option">
+        <label>Master Enable Smart Bar Colors</label>
+        <label class="switch"><input type="checkbox" id="candle-clr-en" checked onchange="updateSmartBarConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row">
+        <label class="switch"><input type="checkbox" id="smart-body-en" checked onchange="updateSmartBarConfig()"><span class="slider"></span></label>
+        <span class="ema-lbl" style="width:75px;">Body > %:</span>
+        <input type="number" id="smart-body-pct" value="4" min="0.1" max="20" step="0.5" class="ema-input-num" onchange="updateSmartBarConfig()">
+        <input type="color" id="smart-body-color" value="#2196f3" class="ema-color-picker" onchange="updateSmartBarConfig()">
+      </div>
+      <div class="ema-row">
+        <label class="switch"><input type="checkbox" id="smart-range-en" checked onchange="updateSmartBarConfig()"><span class="slider"></span></label>
+        <span class="ema-lbl" style="width:75px;">Range < %:</span>
+        <input type="number" id="smart-range-pct" value="3.0" min="0.1" max="20" step="0.1" class="ema-input-num" onchange="updateSmartBarConfig()">
+        <input type="color" id="smart-range-color" value="#ffffff" class="ema-color-picker" onchange="updateSmartBarConfig()">
+      </div>
+      <div class="ema-row">
+        <label class="switch"><input type="checkbox" id="smart-nr7-en" checked onchange="updateSmartBarConfig()"><span class="slider"></span></label>
+        <span class="ema-lbl" style="width:75px;">NR7 Color:</span>
+        <input type="color" id="smart-nr7-color" value="#ff9900" class="ema-color-picker" onchange="updateSmartBarConfig()">
+      </div>
+      <div class="ind-option" style="margin-top:8px;">
+        <label>Inside Bar (IB / WIB Labels)</label>
+        <label class="switch"><input type="checkbox" id="ib-label-en" checked onchange="toggleIndicator('ibLabel')"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">IB Max Mother Bar:</span>
+        <input type="number" id="ib-mother-range" value="8" min="1" max="50" step="0.5" class="ema-input-num" onchange="updateIBConfig()">
+        <span style="font-size:11px;color:var(--muted)">% Range</span>
+      </div>
+    </div>
 
-/* SINGLE common crosshair for the whole panel: price + volume + RSI + RS + bottom axis. */
-.shared-crosshair-v{
-  position:absolute;top:0;bottom:28px;width:1px;
-  border-left:1px dashed rgba(212,228,240,0.6);
-  pointer-events:none;z-index:50;display:none;
-}
-.shared-axis-date{ display:none!important; }
+    <div class="ind-section">
+      <div class="ind-section-title">🌀 Mini Coil Pattern (MCP)</div>
+      <div class="ind-option">
+        <label>Enable Mini Coil Pattern</label>
+        <label class="switch"><input type="checkbox" id="mcp-en" checked onchange="updateMCPConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">Max Wide Bar %:</span>
+        <input type="number" id="mcp-r1" value="8.0" step="0.1" min="0.1" max="30" class="ema-input-num" onchange="updateMCPConfig()">
+      </div>
+      <div class="ind-option">
+        <label>Show Only Last MCP</label>
+        <label class="switch"><input type="checkbox" id="mcp-last-only" onchange="updateMCPConfig()"><span class="slider"></span></label>
+      </div>
+    </div>
 
-/* Indicator panes use the main price chart as the single X-axis. */
-.pane-rsi,.pane-rs{overflow:hidden;}
-.rs-fill-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
-.pane-rs .pane-legend{z-index:15;}
+    <div class="ind-section">
+      <div class="ind-section-title">🔊 MICKKK Volume — Pocket Pivot, HVQ, Volume MA & Stats</div>
+      <div class="ind-option">
+        <label>Enable Pocket Pivot Engine (Badges, U/D, Rel Vol)</label>
+        <label class="switch"><input type="checkbox" id="ind-ppv" checked onchange="toggleIndicator('ppv')"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row" style="margin-top:6px;">
+        <label class="switch"><input type="checkbox" id="volma-en" checked onchange="updateVolMAConfig()"><span class="slider"></span></label>
+        <span class="ema-lbl">Vol MA:</span>
+        <input type="number" id="volma-len" value="30" min="1" max="500" class="ema-input-num" onchange="updateVolMAConfig()">
+        <input type="color" id="volma-color" value="#ff9800" class="ema-color-picker" onchange="updateVolMAConfig()">
+        <select id="volma-width" class="ema-select-width" onchange="updateVolMAConfig()"><option value="1" selected>1px</option><option value="2">2px</option><option value="3">3px</option></select>
+      </div>
+      <div class="ind-option" style="margin-top:8px;">
+        <label>Visible Range Volume Profile</label>
+        <label class="switch"><input type="checkbox" id="vp-en" onchange="updateVolumeProfileConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ind-option">
+        <label>POC — Full Horizontal Line</label>
+        <label class="switch"><input type="checkbox" id="vp-poc-en" checked onchange="updateVolumeProfileConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">Rows:</span><input type="number" id="vp-rows" value="24" min="8" max="100" step="1" class="ema-input-num" onchange="updateVolumeProfileConfig()">
+        <span class="ema-lbl">VA:</span><input type="number" id="vp-va" value="70" min="50" max="90" step="1" class="ema-input-num" onchange="updateVolumeProfileConfig()"><span style="font-size:11px;color:var(--muted)">%</span>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">Width:</span><input type="number" id="vp-width" value="28" min="10" max="50" step="1" class="ema-input-num" onchange="updateVolumeProfileConfig()"><span style="font-size:11px;color:var(--muted)">%</span>
+        <span class="ema-lbl">Opacity:</span><input type="number" id="vp-opacity" value="55" min="10" max="100" step="5" class="ema-input-num" onchange="updateVolumeProfileConfig()"><span style="font-size:11px;color:var(--muted)">%</span>
+      </div>
+    </div>
 
-@media(max-width:860px){
-  .ppv-stats-widget{font-size:9px;left:54px;}
-  .combined-info-table{right:28px;font-size:9px;}
-  .ohlc-box{display:flex!important;font-size:9.5px;padding:4px 8px;gap:4px;left:54px;}
-  .sym-top-line .sym-name{font-size:15px;}
-  .sym-top-line .sym-price{font-size:15px;}
-  .chart-grid.grid-1x2, .chart-grid.grid-2x1, .chart-grid.grid-stock-index, .chart-grid.grid-2x2, .chart-grid.grid-3x2, .chart-grid.grid-4x2 { grid-template-columns: 1fr; }
-  .watchlist-dock.open{width:min(300px,78vw)!important;min-width:min(300px,78vw)!important;max-width:min(300px,78vw)!important;flex-basis:min(300px,78vw)!important;}
-  .watchlist-dock:not(.open){width:0!important;min-width:0!important;max-width:0!important;flex-basis:0!important;border-left:0!important;}
-  .watchlist-dock.open .watchlist-panel{width:100%!important;min-width:100%!important;max-width:100%!important;}
-}
+    <div class="ind-section">
+      <div class="ind-section-title">📉 RSI & RSI Moving Average</div>
+      <div class="ind-option">
+        <label>Enable RSI Indicator</label>
+        <label class="switch"><input type="checkbox" id="rsi-en" checked onchange="updateRSIConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ind-option" style="margin-top:4px;">
+        <label>RSI > 60 Background Highlight</label>
+        <label class="switch"><input type="checkbox" id="rsi-highlight-en" checked onchange="updateRSIHighlightConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">Highlight threshold:</span>
+        <input type="number" id="rsi-highlight-thresh" value="60" min="50" max="95" step="1" class="ema-input-num" onchange="updateRSIHighlightConfig()">
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">Highlight color:</span>
+        <input type="color" id="rsi-highlight-color" value="#ffc107" class="ema-color-picker" onchange="updateRSIHighlightConfig()">
+        <span style="font-size:11px;color:var(--muted)">background</span>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">Intensity:</span>
+        <input type="range" id="rsi-highlight-opacity" min="1" max="35" step="1" value="1" style="width:110px" oninput="updateRSIHighlightConfig()">
+        <span id="rsi-highlight-opacity-val" style="font-size:11px;color:var(--muted);min-width:38px">1%</span>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">RSI Line:</span>
+        <input type="number" id="rsi-len" value="14" min="1" max="100" class="ema-input-num" onchange="updateRSIConfig()">
+        <input type="color" id="rsi-color" value="#9c27b0" class="ema-color-picker" onchange="updateRSIConfig()">
+        <select id="rsi-width" class="ema-select-width" onchange="updateRSIConfig()"><option value="1">1px</option><option value="2" selected>2px</option><option value="3">3px</option></select>
+      </div>
+      <div class="ema-row">
+        <label class="switch"><input type="checkbox" id="rsima-en" checked onchange="updateRSIConfig()"><span class="slider"></span></label>
+        <span class="ema-lbl">RSI MA:</span>
+        <input type="number" id="rsima-len" value="9" min="1" max="100" class="ema-input-num" onchange="updateRSIConfig()">
+        <input type="color" id="rsima-color" value="#ffab00" class="ema-color-picker" onchange="updateRSIConfig()">
+        <select id="rsima-width" class="ema-select-width" onchange="updateRSIConfig()"><option value="1" selected>1px</option><option value="2">2px</option><option value="3">3px</option></select>
+      </div>
+      <div class="ema-row">
+        <label class="switch"><input type="checkbox" id="rsi-thresh-en" checked onchange="updateRSIConfig()"><span class="slider"></span></label>
+        <span class="ema-lbl">High/Low:</span>
+        <input type="number" id="rsi-upper" value="60" min="50" max="95" class="ema-input-num" onchange="updateRSIConfig()">
+        <input type="number" id="rsi-lower" value="40" min="5" max="50" class="ema-input-num" onchange="updateRSIConfig()">
+      </div>
+    </div>
 
-/* ===== V6 USER REQUEST PATCH ===== */
-.top-symbol-search-wrap{display:flex;align-items:center;gap:3px;}
-.top-compare-plus{width:24px;height:24px;border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:5px;cursor:pointer;font:700 15px var(--mono);display:flex;align-items:center;justify-content:center;transition:.15s;}
-.top-compare-plus:hover{color:var(--accent);border-color:var(--accent);background:rgba(0,212,255,.08);}
-.compare-settings-pop{position:absolute;top:27px;left:4px;z-index:30;min-width:150px;background:rgba(14,19,24,.98);border:1px solid var(--border);border-radius:6px;padding:6px;box-shadow:0 10px 22px rgba(0,0,0,.45);}
-.compare-settings-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 2px;font:600 9px var(--mono);color:var(--muted);}
-.compare-settings-row select,.compare-settings-row button{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:3px 5px;font:600 9px var(--mono);cursor:pointer;}
-.pane-compare{position:relative;}
-.compare-settings-type{display:flex;gap:3px;flex:1;}
-.compare-settings-type button{flex:1;background:var(--card);border:1px solid var(--border);color:var(--muted);border-radius:4px;padding:3px 4px;font:700 8px var(--mono);cursor:pointer;}
-.compare-settings-type button:hover{color:var(--accent);border-color:var(--accent);}
-.pane-ohlcv{flex:0 0 30px;min-height:30px;background:var(--surface);border-top:1px solid var(--border);position:relative;overflow:hidden;}
-.ohlcv-strip{display:none;}
-.ohlcv-strip b{color:var(--text);}
-.compare-ohlcv-strip{margin-left:auto;font:600 8px var(--mono);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:46%;pointer-events:none;}
-.compare-ohlcv-strip b{color:var(--text);}
-.ind-quick-nav{position:sticky;top:-20px;z-index:40;display:flex;flex-wrap:wrap;gap:4px;padding:6px 0 8px;background:var(--surface);border-bottom:1px solid var(--border);margin-bottom:10px;}
-.ind-quick-nav button{border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:4px;padding:3px 6px;font:700 8.5px var(--mono);cursor:pointer;}
-.ind-quick-nav button:hover{color:var(--accent);border-color:var(--accent);}
-body.light-theme .compare-settings-pop{background:rgba(255,255,255,.98);}
+    <div class="ind-section">
+      <div class="ind-section-title">📈 Relative Strength of Stock</div>
+      <div class="ind-option">
+        <label>Enable Relative Strength</label>
+        <label class="switch"><input type="checkbox" id="rs-en" checked onchange="updateRelativeStrengthConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl" style="width:88px;">Compare With:</span>
+        <select id="rs-benchmark" class="ema-select-width" style="flex:1;min-width:180px;" onchange="updateRelativeStrengthConfig()">
+          <option value="NIFTYSMALLCAP250">NIFTY SMALLCAP 250</option>
+        </select>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">Average:</span>
+        <input type="number" id="rs-ma-len" value="20" min="1" max="500" class="ema-input-num" onchange="updateRelativeStrengthConfig()">
+        <input type="color" id="rs-color" value="#00d4ff" class="ema-color-picker" onchange="updateRelativeStrengthConfig()">
+        <select id="rs-width" class="ema-select-width" onchange="updateRelativeStrengthConfig()"><option value="1" selected>1px</option><option value="2">2px</option><option value="3">3px</option></select>
+      </div>
+    </div>
 
-/* ===== Indicator legend (TradingView style) ===== */
-.ind-legend{position:absolute;top:6px;left:8px;z-index:25;font-family:var(--mono);font-size:11px;display:flex;flex-direction:column;gap:2px;max-width:70%;pointer-events:none}
-.ind-legend>*{pointer-events:auto}
-.il-head{display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:var(--muted);background:var(--card);border:1px solid var(--border);border-radius:6px;padding:2px 8px;width:max-content;opacity:.92}
-.il-row{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid transparent;border-radius:6px;padding:2px 6px;width:max-content;max-width:100%;opacity:.92}
-.il-row:hover{border-color:var(--border);opacity:1}
-.il-row.off .il-name{opacity:.4;text-decoration:line-through}
-.il-name{color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.il-btns{display:none;gap:2px}.il-row:hover .il-btns{display:inline-flex}
-.il-btn{background:none;border:0;color:var(--muted);cursor:pointer;font-size:12px;padding:0 3px;line-height:1.2}.il-btn:hover{color:var(--accent)}
-#ind-modal.single .ind-section{display:none}#ind-modal.single .ind-section.show{display:block}
-#ind-modal.single .ind-quick-nav{display:none}
-#ind-single-bar{display:none;align-items:center;justify-content:space-between;margin:-6px 0 10px;font-size:11px;color:var(--muted)}
-#ind-modal.single #ind-single-bar{display:flex}
-.mk-toast{position:fixed;right:16px;bottom:16px;z-index:9999;display:flex;flex-direction:column;gap:8px}
-.mk-toast div{background:var(--card);border:1px solid var(--accent);color:var(--text);font-family:var(--mono);font-size:12px;border-radius:8px;padding:10px 14px;box-shadow:0 6px 20px rgba(0,0,0,.4);max-width:340px}
+    <div class="ind-section">
+      <div class="ind-section-title">📐 Trendlines with Breaks [LuxAlgo]</div>
+      <div class="ind-option">
+        <label>Enable Trendline Breakouts / Breakdowns</label>
+        <label class="switch"><input type="checkbox" id="trendline-breakout-en" checked onchange="updateTrendlineBreakoutConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row"><span class="ema-lbl">Swing lookback:</span><input type="number" id="trendline-length" value="14" min="2" max="100" step="1" class="ema-input-num" onchange="updateTrendlineBreakoutConfig()"></div>
+      <div class="ema-row"><span class="ema-lbl">Slope multiplier:</span><input type="number" id="trendline-mult" value="1.0" min="0" max="10" step="0.1" class="ema-input-num" onchange="updateTrendlineBreakoutConfig()"></div>
+      <div class="ema-row"><span class="ema-lbl">Slope method:</span><select id="trendline-method" class="ema-select-width" style="width:82px" onchange="updateTrendlineBreakoutConfig()"><option value="Atr" selected>Atr</option><option value="Stdev">Stdev</option><option value="Linreg">Linreg</option></select></div>
+      <div class="ind-option"><label>Backpaint</label><label class="switch"><input type="checkbox" id="trendline-backpaint" checked onchange="updateTrendlineBreakoutConfig()"><span class="slider"></span></label></div>
+      <div class="ind-option"><label>Show Extended Lines</label><label class="switch"><input type="checkbox" id="trendline-show-en" onchange="updateTrendlineBreakoutConfig()"><span class="slider"></span></label></div>
+      <div class="ema-row"><span class="ema-lbl">Up line:</span><input type="color" id="trendline-breakout-color" value="#00e676" class="ema-color-picker" onchange="updateTrendlineBreakoutConfig()"><span class="ema-lbl">Down line:</span><input type="color" id="trendline-breakdown-color" value="#ff3d5a" class="ema-color-picker" onchange="updateTrendlineBreakoutConfig()"></div>
+    </div>
+
+    <div class="ind-section">
+      <div class="ind-section-title">📈 Supertrend ×2</div>
+      <div class="ind-option"><label>Supertrend 1</label><label class="switch"><input type="checkbox" id="st1-en" onchange="updateSupertrendConfig()"><span class="slider"></span></label></div>
+      <div class="ema-row"><span class="ema-lbl">ATR / Factor:</span><input type="number" id="st1-atr" value="10" min="1" max="200" class="ema-input-num" onchange="updateSupertrendConfig()"><input type="number" id="st1-factor" value="3" min="0.1" max="20" step="0.1" class="ema-input-num" onchange="updateSupertrendConfig()"><input type="color" id="st1-up" value="#00e676" class="ema-color-picker" onchange="updateSupertrendConfig()"><input type="color" id="st1-down" value="#ff3d5a" class="ema-color-picker" onchange="updateSupertrendConfig()"></div>
+      <div class="ind-option"><label>Supertrend 2</label><label class="switch"><input type="checkbox" id="st2-en" onchange="updateSupertrendConfig()"><span class="slider"></span></label></div>
+      <div class="ema-row"><span class="ema-lbl">ATR / Factor:</span><input type="number" id="st2-atr" value="14" min="1" max="200" class="ema-input-num" onchange="updateSupertrendConfig()"><input type="number" id="st2-factor" value="2" min="0.1" max="20" step="0.1" class="ema-input-num" onchange="updateSupertrendConfig()"><input type="color" id="st2-up" value="#26a69a" class="ema-color-picker" onchange="updateSupertrendConfig()"><input type="color" id="st2-down" value="#ef5350" class="ema-color-picker" onchange="updateSupertrendConfig()"></div>
+    </div>
+
+    <div class="ind-section">
+      <div class="ind-section-title">📊 MACD (12, 26, 9)</div>
+      <div class="ind-option"><label>Enable MACD Indicator</label><label class="switch"><input type="checkbox" id="macd-en" onchange="updateMACDConfig()"><span class="slider"></span></label></div>
+      <div class="ema-row">
+        <span class="ema-lbl">Fast / Slow:</span>
+        <input type="number" id="macd-fast" value="12" min="1" max="100" class="ema-input-num" onchange="updateMACDConfig()">
+        <input type="number" id="macd-slow" value="26" min="1" max="100" class="ema-input-num" onchange="updateMACDConfig()">
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl">Signal Line:</span>
+        <input type="number" id="macd-signal" value="9" min="1" max="100" class="ema-input-num" onchange="updateMACDConfig()">
+        <input type="color" id="macd-color" value="#2962ff" class="ema-color-picker" onchange="updateMACDConfig()">
+      </div>
+    </div>
+
+         <!-- START: CPR SECTION (Default Unchecked) -->
+    <div class="ind-section">
+      <div class="ind-section-title">📐 CPR — Weekly & Monthly</div>
+      <div class="ind-option">
+        <label>Weekly CPR</label>
+        <label class="switch"><input type="checkbox" id="cpr-weekly-en" onchange="updateCPRConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl" style="width:88px;">Weekly Color:</span>
+        <input type="color" id="cpr-weekly-color" value="#00d4ff" class="ema-color-picker" onchange="updateCPRConfig()">
+      </div>
+      <div class="ind-option">
+        <label>Monthly CPR</label>
+        <label class="switch"><input type="checkbox" id="cpr-monthly-en" onchange="updateCPRConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl" style="width:88px;">Monthly Color:</span>
+        <input type="color" id="cpr-monthly-color" value="#ff9800" class="ema-color-picker" onchange="updateCPRConfig()">
+      </div>
+      <div class="ind-option">
+        <label>Show CPR Values / Labels</label>
+        <label class="switch"><input type="checkbox" id="cpr-labels-en" onchange="updateCPRConfig()"><span class="slider"></span></label>
+      </div>
+    </div>
+    <!-- END: CPR SECTION -->
+
+   
+    <div class="ind-section">
+      <div class="ind-section-title">📦 Gap Detector</div>
+      <div class="ind-option">
+        <label>Enable Gap Detector Shaded Boxes</label>
+        <label class="switch"><input type="checkbox" id="gap-en" checked onchange="updateGapConfig()"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="ind-section">
+      <div class="ind-section-title">⚡ Weekly Tight Close, Climax & Overextension</div>
+      <div class="ind-option">
+        <label>Weekly Tight Close (3WTC / 4WTC / 5WTC)</label>
+        <label class="switch"><input type="checkbox" id="wtc-en" checked onchange="toggleIndicator('wtc')"><span class="slider"></span></label>
+      </div>
+      <div class="ind-option">
+        <label>9 EMA Sell Signal (Red Cross ❌)</label>
+        <label class="switch"><input type="checkbox" id="ema9sell-en" checked onchange="toggleIndicator('ema9Sell')"><span class="slider"></span></label>
+      </div>
+      <div class="ind-option">
+        <label>Selling Climax Signal (Green Cross ❌)</label>
+        <label class="switch"><input type="checkbox" id="sellclimax-en" checked onchange="toggleIndicator('sellClimax')"><span class="slider"></span></label>
+      </div>
+      <div class="ind-option">
+        <label>Buying Climax Signal (Red Triangle ▼)</label>
+        <label class="switch"><input type="checkbox" id="buyclimax-en" checked onchange="toggleIndicator('buyClimax')"><span class="slider"></span></label>
+      </div>
+      <div class="ind-option">
+        <label>ATR% Extension from SMA50 (🔴 Dot)</label>
+        <label class="switch"><input type="checkbox" id="atr-ext-en" checked onchange="updateATRExtConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl" style="width:88px;">ATR Length:</span>
+        <input type="number" id="atr-ext-len" value="14" min="1" max="100" class="ema-input-num" onchange="updateATRExtConfig()">
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl" style="width:88px;">MA Length:</span>
+        <input type="number" id="atr-ext-ma-len" value="50" min="1" max="500" class="ema-input-num" onchange="updateATRExtConfig()">
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl" style="width:88px;">Threshold:</span>
+        <input type="number" id="atr-ext-thresh" value="10.0" min="1" max="50" step="0.5" class="ema-input-num" onchange="updateATRExtConfig()">
+        <span style="font-size:11px;color:var(--muted)">ATR multiples</span>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl" style="width:88px;">Info ATR:</span>
+        <select id="info-atr-len" class="ema-select-width" onchange="updateInfoAtrLength()">
+          <option value="5">ATR 5</option><option value="9">ATR 9</option><option value="10">ATR 10</option><option value="14" selected>ATR 14</option><option value="20">ATR 20</option><option value="21">ATR 21</option><option value="50">ATR 50</option>
+        </select>
+      </div>
+    </div>
+    <!-- END: MODAL INDICATORS CHECKBOXES ON -->
+    
+    <div class="ind-section">
+      <div class="ind-section-title">📅 52-Week High / Low</div>
+      <div class="ind-option">
+        <label>Show dotted 52W High / Low lines</label>
+        <label class="switch"><input type="checkbox" id="52wl-en" checked onchange="update52WLinesConfig()"><span class="slider"></span></label>
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl" style="width:88px;">52W High:</span>
+        <input type="color" id="52w-high-color" value="#ff9800" style="width:38px;height:25px;padding:1px;border:1px solid var(--border);background:var(--card);border-radius:4px;" onchange="update52WLinesConfig()">
+      </div>
+      <div class="ema-row">
+        <span class="ema-lbl" style="width:88px;">52W Low:</span>
+        <input type="color" id="52w-low-color" value="#00d4ff" style="width:38px;height:25px;padding:1px;border:1px solid var(--border);background:var(--card);border-radius:4px;" onchange="update52WLinesConfig()">
+      </div>
+    </div>
+
+    <div class="ind-section" style="border:none;margin:0;padding:0;">
+      <div class="ind-section-title">🚀 Other Indicators & Merged Info Card</div>
+      <div class="ind-option">
+        <label>Merged Info Card (52W + EMAs + Circuit + GSM)</label>
+        <label class="switch"><input type="checkbox" id="ind-tables" checked onchange="toggleIndicator('tables')"><span class="slider"></span></label>
+      </div>
+    </div>
+    
+    <div style="display:flex;gap:8px;margin-top:16px;">
+      <button class="tbtn" style="flex:1;padding:8px;" onclick="resetToDefaults()">🔄 Reset Defaults</button>
+      <button class="tbtn active" style="flex:1;padding:8px;" onclick="closeIndicatorsModal()">Apply Changes</button>
+    </div>
+  </div>
+</div>
+
+<script src="01-config-data.js"></script>
+<script src="02-alerts-storage-toolbar.js"></script>
+<script src="03-grid-layout.js"></script>
+<script src="04-drawings-engine.js"></script>
+<script src="05-watchlists.js"></script>
+<script src="06-load-and-cache.js"></script>
+<script src="07-indicators-core.js"></script>
+<script src="08-overlays-volume-pivot.js"></script>
+<script src="09-rsi-rs-cpr-ema.js"></script>
+<script src="10-info-zoom-live-replay.js"></script>
+<script src="11-indicator-legend-alerts.js"></script>
+<div class="replay-bar" id="replay-bar">
+  <button class="pane-legend-btn" title="Start" onclick="replayStart()">⏮</button>
+  <button class="pane-legend-btn" title="Previous candle" onclick="replayStep(-1)">◀</button>
+  <button class="pane-legend-btn" id="replay-play-btn" title="Play/Pause" onclick="toggleReplayPlay()">▶</button>
+  <button class="pane-legend-btn" title="Next candle" onclick="replayStep(1)">▶</button>
+  <input type="range" id="replay-slider" min="0" max="1" value="0" oninput="setReplayIndex(this.value)">
+  <span id="replay-date">—</span>
+  <button class="pane-legend-btn" title="Exit replay" onclick="exitReplayMode()">✕</button>
+</div>
+</body>
+</html>
