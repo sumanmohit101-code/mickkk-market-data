@@ -60,7 +60,7 @@ function checkPriceAlerts(symbol, currentPrice) {
           osc.frequency.value = 880;
           osc.start(); osc.stop(audioCtx.currentTime + 0.6);
         } catch(e){}
-        alert(`🚨 PRICE ALERT: ${symbol} has reached ₹${currentPrice.toFixed(2)} (Target: ₹${alt.targetPrice.toFixed(2)})!`);
+        toast(`🚨 PRICE ALERT: ${symbol} has reached ₹${currentPrice.toFixed(2)} (Target: ₹${alt.targetPrice.toFixed(2)})`);
       }
     }
   });
@@ -248,7 +248,7 @@ function ensureSeriesType(panel) {
   }
 
   panel.seriesType = currentChartType;
-  panel.candleSeries.priceScale().applyOptions({ scaleMargins: { top: 0.02, bottom: 0.30 }, autoScale: true });
+  panel.candleSeries.priceScale().applyOptions({ scaleMargins: { top: 0.02, bottom: 0.28 }, autoScale: true });
 }
 
 /* ============ PRICE SCALE MODE SWITCHER ============ */
@@ -304,4 +304,3 @@ function setInterval_(interval, btn){
   });
   if (currentSymbol) rebuildAllPanels();
 }
-
