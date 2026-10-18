@@ -686,3 +686,20 @@ body.light-theme .watchlist-panel{background:rgba(255,255,255,.98);}
 .ind-quick-nav button{border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:4px;padding:3px 6px;font:700 8.5px var(--mono);cursor:pointer;}
 .ind-quick-nav button:hover{color:var(--accent);border-color:var(--accent);}
 body.light-theme .compare-settings-pop{background:rgba(255,255,255,.98);}
+
+/* ===== Indicator legend (TradingView style) ===== */
+.ind-legend{position:absolute;top:6px;left:8px;z-index:25;font-family:var(--mono);font-size:11px;display:flex;flex-direction:column;gap:2px;max-width:70%;pointer-events:none}
+.ind-legend>*{pointer-events:auto}
+.il-head{display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:var(--muted);background:var(--card);border:1px solid var(--border);border-radius:6px;padding:2px 8px;width:max-content;opacity:.92}
+.il-row{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid transparent;border-radius:6px;padding:2px 6px;width:max-content;max-width:100%;opacity:.92}
+.il-row:hover{border-color:var(--border);opacity:1}
+.il-row.off .il-name{opacity:.4;text-decoration:line-through}
+.il-name{color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.il-btns{display:none;gap:2px}.il-row:hover .il-btns{display:inline-flex}
+.il-btn{background:none;border:0;color:var(--muted);cursor:pointer;font-size:12px;padding:0 3px;line-height:1.2}.il-btn:hover{color:var(--accent)}
+#ind-modal.single .ind-section{display:none}#ind-modal.single .ind-section.show{display:block}
+#ind-modal.single .ind-quick-nav{display:none}
+#ind-single-bar{display:none;align-items:center;justify-content:space-between;margin:-6px 0 10px;font-size:11px;color:var(--muted)}
+#ind-modal.single #ind-single-bar{display:flex}
+.mk-toast{position:fixed;right:16px;bottom:16px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.mk-toast div{background:var(--card);border:1px solid var(--accent);color:var(--text);font-family:var(--mono);font-size:12px;border-radius:8px;padding:10px 14px;box-shadow:0 6px 20px rgba(0,0,0,.4);max-width:340px}
