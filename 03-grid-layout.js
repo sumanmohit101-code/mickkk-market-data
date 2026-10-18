@@ -325,7 +325,7 @@ function createPanelChartInstance(index, tf) {
     priceFormat: { type: 'volume' },
     priceScaleId: 'vol',
   });
-  priceC.priceScale('vol').applyOptions({ scaleMargins: { top: 0.90, bottom: 0.001 }, autoScale: true });
+  priceC.priceScale('vol').applyOptions({ scaleMargins: { top: 0.76, bottom: 0.0 }, autoScale: true });
 
   const rsiContainer = document.getElementById(`pane-rsi-${index}`);
   const rsiC = LightweightCharts.createChart(rsiContainer, {
@@ -447,19 +447,14 @@ function createPanelChartInstance(index, tf) {
       const vr=source.timeScale().getVisibleRange();
       if(!vr) return;
       syncingCompareTime=true;
+      // Compare pane sirf FOLLOWER hai: main chart ka range compare ko diya jaata hai, ulta kabhi nahi.
       if(source===priceC){
         compareC.timeScale().setVisibleRange(vr);
-      }else{
-        priceC.timeScale().setVisibleRange(vr);
-        rsiC.timeScale().setVisibleRange(vr);
-        rsC.timeScale().setVisibleRange(vr);
-        macdC.timeScale().setVisibleRange(vr);
-        axisC.timeScale().setVisibleRange(vr);
       }
     }catch(e){} finally { syncingCompareTime=false; }
   };
   priceC.timeScale().subscribeVisibleLogicalRangeChange(()=>syncCompareTimeRange(priceC));
-  compareC.timeScale().subscribeVisibleLogicalRangeChange(()=>syncCompareTimeRange(compareC));
+  compareC.applyOptions({ handleScroll:false, handleScale:false });
 
   const sharedCrosshair = document.getElementById(`shared-crosshair-${index}`);
   const panelContainer = document.getElementById(`panel-chart-${index}`);
@@ -905,4 +900,3 @@ function updateModalHighlight(results) {
     else el.classList.remove('highlighted');
   });
 }
-
