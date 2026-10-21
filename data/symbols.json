@@ -4620,6 +4620,10 @@
     "name": "HDFC Life Insurance Company Limited"
   },
   {
+    "symbol": "HDFIRE",
+    "name": "HD Fire Protect Limited"
+  },
+  {
     "symbol": "HDIL",
     "name": "Housing Development and Infrastructure Limited"
   },
@@ -5022,6 +5026,10 @@
   {
     "symbol": "IIFLCAPS",
     "name": "IIFL Capital Services Limited"
+  },
+  {
+    "symbol": "IIRM",
+    "name": "IIRM Holdings India Limited"
   },
   {
     "symbol": "IITL",
@@ -6500,6 +6508,10 @@
     "name": "LMW Limited"
   },
   {
+    "symbol": "LOANFRONT",
+    "name": "LOANFRONT"
+  },
+  {
     "symbol": "LODHA",
     "name": "Lodha Developers Limited"
   },
@@ -7942,6 +7954,10 @@
   {
     "symbol": "OLAELEC",
     "name": "Ola Electric Mobility Limited"
+  },
+  {
+    "symbol": "OLAELEC-RE",
+    "name": "Ola Electric Mobility Ltd-RE"
   },
   {
     "symbol": "OLECTRA",
