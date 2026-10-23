@@ -1924,6 +1924,10 @@
     "name": "Bombay Dyeing & Mfg Company Limited"
   },
   {
+    "symbol": "BONFIG",
+    "name": "Bonfiglioli Transmissions Limited"
+  },
+  {
     "symbol": "BONLON",
     "name": "Bonlon Industries Limited"
   },
@@ -4942,6 +4946,10 @@
   {
     "symbol": "ICICIGI",
     "name": "ICICI Lombard General Insurance Company Limited"
+  },
+  {
+    "symbol": "ICICILIFE",
+    "name": "ICICI Life Insurance Limited"
   },
   {
     "symbol": "ICICIPRULI",
@@ -10560,6 +10568,10 @@
     "name": "SMS Pharmaceuticals Limited"
   },
   {
+    "symbol": "SMT",
+    "name": "Sahajanand Medical Technologies Limited"
+  },
+  {
     "symbol": "SMVD",
     "name": "SMVD"
   },
@@ -11646,6 +11658,10 @@
   {
     "symbol": "TOLINS",
     "name": "Tolins Tyres Limited"
+  },
+  {
+    "symbol": "TONBO",
+    "name": "Tonbo Imaging India Limited"
   },
   {
     "symbol": "TORNTPHARM",
@@ -12826,6 +12842,10 @@
   {
     "symbol": "ZENTEC",
     "name": "Zen Technologies Limited"
+  },
+  {
+    "symbol": "ZETWERK",
+    "name": "Zetwerk Manufacturing Businesses Limited"
   },
   {
     "symbol": "ZFCVINDIA",
