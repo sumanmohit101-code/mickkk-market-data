@@ -1852,6 +1852,10 @@
     "name": "BLS E-Services Limited"
   },
   {
+    "symbol": "BLSPOLY",
+    "name": "BLS Polymers Limited"
+  },
+  {
     "symbol": "BLUECHIP",
     "name": "Blue Chip India Limited"
   },
@@ -10058,6 +10062,10 @@
   {
     "symbol": "SEYAIND",
     "name": "Seya Industries Limited"
+  },
+  {
+    "symbol": "SFCTECH",
+    "name": "SFC Environmental Technologies Limited"
   },
   {
     "symbol": "SFL",
