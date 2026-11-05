@@ -1604,6 +1604,10 @@
     "name": "BCPL Railway Infrastructure Limited"
   },
   {
+    "symbol": "BCSSL",
+    "name": "Bombay Coated and Special Steels Limited"
+  },
+  {
     "symbol": "BDL",
     "name": "Bharat Dynamics Limited"
   },
@@ -2006,6 +2010,10 @@
   {
     "symbol": "BRIGHTBR",
     "name": "Bright Brothers Limited"
+  },
+  {
+    "symbol": "BRIGHTOUTD",
+    "name": "Bright Outdoor Media Limited"
   },
   {
     "symbol": "BRITANNIA",
